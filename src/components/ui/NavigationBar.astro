@@ -46,83 +46,8 @@ const savedNavActions = navActions.map((action: any) => ({
 <header class:list={['header', { [`header--${type}`]: type }]}>
 	<div class="container">
 		<nav aria-label="main navigation" role="navigation" class="header__nav">
-			{/* Logo */}
-			<a href={`/`} class="header__logo">
-				<img src={logo.src} alt={logo.alt} width="72" height="72" class="block dark:hidden" />
-				<img src={logo.srcDark} alt={logo.alt} width="72" height="72" class="hidden dark:block" />
-				{logo.text && <span>{logo.text}</span>}
-			</a>
-
-			{/* Menu toggle */}
-			<button
-				id="header-toggle"
-				class="header__toggle group/toggle"
-				aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
-				<div class="header__toggle-inner">
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-				</div>
-			</button>
-
-			{/* Navigation links */}
-			<ul role="menubar" aria-label="Select page" class="header__menu peer/menu">
-				{
-					navItems.map((item) => (
-						<li role="none" class="header__menu-item group/menuItem">
-							{!item.submenu ? (
-								<a
-									href={item.link}
-									role="menuitem"
-									class={`header__menu-link ${isActivePath(item.link) ? 'active' : ''}`}
-								>
-									{item.name}
-								</a>
-							) : (
-								<span
-									role="menuitem"
-									class={`header__menu-link ${isActivePath(item.link) ? 'active' : ''}`}
-								>
-									{item.name}
-
-									<Icon name="plus" class="header__menu-chevron size-sm" />
-								</span>
-							)}
-							{item.submenu && (
-								<div class="header__submenu">
-									<ul class="header__submenu-inner">
-										{item.submenu.map((subItem) => (
-											<li role="none" class="header__submenu-item">
-												<a
-													href={subItem.link}
-													role="menuitem"
-													class={`header__submenu-link ${isActivePath(subItem.link) ? 'active' : ''}`}
-												>
-													{subItem.name}
-												</a>
-											</li>
-										))}
-										<DecorationBorder type="all" style="dashed" extraClasses="hidden lg:block" />
-									</ul>
-								</div>
-							)}
-						</li>
-					))
-				}
-			</ul>
-
-			{/* Navigation action buttons */}
-			<div class="header__actions">
-				{
-					savedNavActions.map((action) => (
-						<Button link={action.link} classes="header__action w-full" style="neutral">
-							{action.name}
-						</Button>
-					))
-				}
-			</div>
+			{/* Logo removed as per request */}
+			<div class="flex-grow"></div>
 
 			{/* Theme Switcher */}
 			<Switcher />

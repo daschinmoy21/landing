@@ -1,76 +1,514 @@
 ---
-// Home Page
-// ------------
-// Description: The home page is a page that displays the most important information.
-
-// Components
-// - Layout
 import Layout from '../layouts/Layout.astro'
+import Section from '../components/ui/Section.astro'
+import Row from '../components/ui/Row.astro'
+import Col from '../components/ui/Col.astro'
 
-// - Blocks
-import Hero from '../components/blocks/hero/CenteredHeroCTA.astro'
-import Brand from '../components/blocks/brand/Marquee.astro'
-import Features from '../components/blocks/features/MasonryGrid.astro'
-import ScrollSpySteps from '../components/blocks/onboarding/Steps.astro'
-import TestimonialMasonry from '../components/blocks/testimonials/TestimonialMasonry.astro'
-import Faq from '../components/blocks/faq/StickyFaq.astro'
-import CTA from '../components/blocks/cta/CTAPrimary.astro'
-
-// Content
-// - SEO
 const SEO = {
-	title:
-		'Mizu Light Astro Theme | Modern SaaS & Startup Landing Page Template for Fast Product Launches by Oxygenna',
-	description:
-		'Launch your next big idea with Mizu Light — a sleek, responsive Astro theme built for SaaS startups and tech companies. Streamline onboarding, showcase features beautifully, and convert visitors into users faster.'
-}
-// - Hero data
-const heroData = {
-	title: 'Launch smarter Start faster',
-	subtitle: 'build for the future',
-	buttonLink: '/pricing',
-	buttonText: 'Try it for free!',
-	text: 'Let AI handle the heavy lifting — from data insights to launch strategies — so you can focus on creating products that customers love'
-}
-// - Brand data
-const brandData = {
-	title: 'Built in collaboration with'
-}
-// - Testimonial data
-const testimonialData = {
-	title: 'Loved by early adopters everywhere',
-	subtitle: 'What other are saying'
-}
-// - FAQ data
-const faqData = {
-	title: 'Frequently Asked Questions',
-	subtitle: 'Everything you need to know'
-}
-// - CTA data
-const ctaData = {
-	title: 'Launch your next big idea today',
-	text: 'Join creators, teams, and startups already turning their ideas into reality. Get started in minutes and see how simple launching can be when everything works together seamlessly.',
-	buttonLink: '/pricing',
-	buttonText: 'Try it for free!'
+  title: 'Russel | Serverless Compute Research',
+  description: 'A student-led research experiment exploring structural deduplication and hardware-isolated microVMs to drastically reduce cold starts and deployment overhead.'
 }
 ---
 
-<Layout title={SEO.title} description={SEO.description}>
-	<Hero
-		title={heroData.title}
-		subtitle={heroData.subtitle}
-		buttonLink={heroData.buttonLink}
-		buttonText={heroData.buttonText}
-	/>
-	<Brand title={brandData.title} />
-	<Features />
-	<ScrollSpySteps />
-	<TestimonialMasonry title={testimonialData.title} subtitle={testimonialData.subtitle} />
-	<Faq subtitle={faqData.subtitle} title={faqData.title} />
-	<CTA
-		title={ctaData.title}
-		text={ctaData.text}
-		buttonLink={ctaData.buttonLink}
-		buttonText={ctaData.buttonText}
-	/>
+<Layout title={SEO.title} description={SEO.description} navigation="transparent" footer="none">
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-200 via-neutral-50 to-neutral-50 dark:from-neutral-800 dark:via-neutral-950 dark:to-neutral-950"></div>
+    <div class="absolute inset-0 bg-[url('/bgs/dot-gray-dark.svg')] bg-size-[18px] opacity-30 dark:opacity-100 opacity-10"></div>
+    
+    <div class="container container-compact relative z-10 pt-16 pb-12">
+      <!-- Hero Bento -->
+      <Row classes="mb-12">
+        <Col span="12" classes="pl-6 md:pl-10">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <!-- Main title -->
+            <div class="col-span-2 p-3 md:p-4 rounded-lg border border-neutral-200 bg-white/80 dark:border-neutral-700 dark:bg-neutral-900/50">
+              <div class="inline-flex items-center gap-2 px-2 py-0.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 text-[10px] font-mono mb-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"></span>
+                In Progress
+              </div>
+              <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-neutral-900 dark:text-white leading-tight">
+                Russel
+              </h1>
+              <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 mt-0 font-medium tracking-tight mb-4">
+                Serverless Runtime Environment
+              </p>
+              <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-800 pt-4">
+                <span>Technical blogs soon.</span>
+                <a href="https://x.com/crimxnhaze" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 transition-colors font-semibold border border-neutral-200 dark:border-neutral-700 shadow-sm">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  Follow on X
+                </a>
+                <span>for updates.</span>
+              </div>
+            </div>
+            
+            <!-- Description -->
+            <div class="p-4 rounded-lg border border-neutral-200 bg-white/80 dark:border-neutral-700 dark:bg-neutral-900/50 flex items-center">
+              <p class="text-xl md:text-2xl text-neutral-700 dark:text-neutral-300 font-semibold leading-snug">
+                Exploring structural deduplication for microVMs.
+              </p>
+            </div>
+            
+            <!-- Stats -->
+            <div class="p-3 md:p-4 rounded-lg border border-primary-200 bg-primary-50 dark:border-primary-500/20 dark:bg-primary-500/5 flex flex-col justify-center">
+              <div>
+                <div class="text-3xl font-bold text-neutral-900 dark:text-white leading-none">~1MB</div>
+                <div class="text-[10px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mt-1">payload</div>
+              </div>
+              <div class="mt-3">
+                <div class="text-3xl font-bold text-green-600 dark:text-green-400 leading-none">247ms</div>
+                <div class="text-[10px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mt-1">deploy</div>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <!-- Terminal -->
+      <Row classes="mb-12 px-6 md:px-10">
+        <Col span="12" classes="max-w-4xl">
+          <div class="rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/80 shadow-lg">
+            <div class="flex items-center gap-2 px-4 py-2.5 bg-neutral-100 dark:bg-neutral-800/50 border-b border-neutral-200 dark:border-neutral-700">
+              <div class="w-3 h-3 rounded-full bg-red-400"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400"></div>
+              <span class="ml-3 text-sm text-neutral-500 dark:text-neutral-400 font-mono">russeld — deploy -p 3000:3000 --vm-id test-vm ./go-dashboard</span>
+            </div>
+            <div class="p-4 font-mono text-sm">
+              <div class="text-neutral-500">$ russel deploy -p 3000:3000 --vm-id test-vm ./go-dashboard</div>
+              <div class="text-primary-600 dark:text-primary-400">→ Initializing microVM runtime...</div>
+              <div class="text-primary-600 dark:text-primary-400">→ Loading foundation layer (Go 1.22)...</div>
+              <div class="text-primary-600 dark:text-primary-400">→ Mapping code payload (1.2MB)...</div>
+              <div class="text-green-600 dark:text-green-400">✓ Deployed in <span class="font-bold">247ms</span></div>
+              <div class="text-neutral-500 mt-1">$ curl -I localhost:3000</div>
+              <div class="text-green-600 dark:text-green-400">HTTP/2 200 — 12ms TTFB</div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  </section>
+
+  <Section id="benchmarks" type="alt" spacerTop={false} spacerBottom={true} classes="pt-4" fullWidth={true}>
+    <div class="container container-compact">
+      <Row>
+        <Col span="12" classes="mb-8 pl-6 md:pl-10">
+          <h5 class="text-primary-600 dark:text-primary-400 font-mono text-xs tracking-wider uppercase mb-1">Benchmark Data</h5>
+          <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white leading-tight">Performance Results</h2>
+          <p class="text-xl text-neutral-600 dark:text-neutral-400 mt-4 max-w-2xl leading-relaxed">
+            Comparing cold starts and build times between Russel and legacy container runtimes.
+          </p>
+        </Col>
+      </Row>
+
+      <Row classes="gap-6 px-6 md:px-10 justify-center">
+        <!-- Cold Build -->
+        <Col span="12" md="6" lg="4">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col shadow-sm transition-all hover:shadow-md group min-h-[220px]">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-neutral-500 uppercase tracking-widest leading-none">Cold Build</h3>
+              <div class="w-2 h-2 rounded-full bg-green-500"></div>
+            </div>
+            <div class="flex-grow flex flex-col justify-center gap-1">
+              <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span class="text-5xl font-bold text-neutral-900 dark:text-white font-mono tracking-tighter">185ms</span>
+                <span class="text-lg text-neutral-500 dark:text-neutral-400 font-medium tracking-tight">vs Docker: 11.4s</span>
+              </div>
+              <p class="text-sm text-green-600 dark:text-green-500 font-semibold mt-1">62x faster</p>
+            </div>
+          </div>
+        </Col>
+
+        <!-- Incremental Build -->
+        <Col span="12" md="6" lg="4">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col shadow-sm transition-all hover:shadow-md group min-h-[220px]">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-neutral-500 uppercase tracking-widest leading-none">Incremental Build</h3>
+              <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+            </div>
+            <div class="flex-grow flex flex-col justify-center gap-1">
+              <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span class="text-5xl font-bold text-neutral-900 dark:text-white font-mono tracking-tighter">242ms</span>
+                <span class="text-lg text-neutral-500 dark:text-neutral-400 font-medium tracking-tight">vs Docker: 955ms</span>
+              </div>
+              <p class="text-sm text-blue-600 dark:text-blue-500 font-semibold mt-1">3.9x faster</p>
+            </div>
+          </div>
+        </Col>
+
+        <!-- Boot Time (penalty) -->
+        <Col span="12" md="6" lg="4">
+          <div class="relative p-8 rounded-2xl border border-orange-200 dark:border-orange-800/50 bg-orange-50/30 dark:bg-orange-900/10 h-full flex flex-col shadow-sm transition-all hover:shadow-md group min-h-[220px] overflow-hidden">
+            <div class="absolute -right-6 top-4 rotate-45 bg-orange-500/10 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-widest py-1 px-8 border border-orange-500/20">Improving Soon</div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-orange-800 dark:text-orange-500 uppercase tracking-widest leading-none">VM Boot Time</h3>
+              <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
+            </div>
+            <div class="flex-grow flex flex-col justify-center gap-1">
+              <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span class="text-4xl lg:text-5xl font-bold text-orange-950 dark:text-orange-100 font-mono tracking-tighter">11.8s</span>
+                <span class="text-lg text-orange-700/80 dark:text-orange-400/80 font-medium tracking-tight">vs Docker: 1.7s</span>
+              </div>
+              <p class="text-sm text-orange-800 dark:text-orange-300 font-medium mt-1 leading-tight">Currently slower than containers. <br/>MicroVM snapshots arriving in Phase 1.</p>
+            </div>
+          </div>
+        </Col>
+
+        <!-- Disk Scaling -->
+        <Col span="12" md="6" lg="6">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col shadow-sm transition-all hover:shadow-md group min-h-[200px]">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-neutral-500 uppercase tracking-widest leading-none">Disk Scaling</h3>
+              <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+            </div>
+            <div class="flex-grow flex flex-col justify-center gap-2">
+              <div class="text-5xl font-bold text-neutral-900 dark:text-white font-mono tracking-tighter">~1MB</div>
+              <p class="text-sm text-neutral-400 leading-tight">Per new instance via QCOW2</p>
+            </div>
+          </div>
+        </Col>
+
+        <!-- Cross-App Deduplication -->
+        <Col span="12" md="6" lg="6">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col shadow-sm transition-all hover:shadow-md group min-h-[200px]">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-neutral-500 uppercase tracking-widest leading-none">Cross-App Dedupe</h3>
+              <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+            </div>
+            <div class="flex-grow flex flex-col justify-center gap-2">
+              <div class="text-5xl font-bold text-neutral-900 dark:text-white font-mono tracking-tighter">304ms</div>
+              <p class="text-sm text-neutral-400 leading-tight">New app with shared runtime</p>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      <!-- Beyond Container Layers Section -->
+      <Row classes="px-6 md:px-10 mt-12 mb-4">
+        <Col span="12">
+          <div class="p-6 md:p-8 rounded-xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/10 shadow-sm">
+            <h3 class="text-2xl text-green-800 dark:text-green-400 mb-4 font-bold flex items-center gap-2">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Beyond Container Layers
+            </h3>
+            <div class="grid md:grid-cols-2 gap-8">
+              <div class="space-y-4">
+                <p class="text-lg text-green-900 dark:text-green-300 leading-relaxed font-semibold">
+                  Traditional container caching works at the image layer level. Russel redefines deduplication by moving it into the <strong>host virtualization stack.</strong>
+                </p>
+                <p class="text-base text-green-800 dark:text-neutral-400 leading-relaxed">
+                  Instead of layering filesystems that must be pulled and unpacked, we map immutable structural blocks directly into isolated microVMs as read-only volumes. This eliminates the "cold pull" bottleneck entirely.
+                </p>
+              </div>
+              <div class="bg-white/40 dark:bg-black/20 p-5 rounded-lg border border-green-200/50 dark:border-green-800/50 flex flex-col justify-center">
+                <ul class="space-y-4">
+                  <li class="flex gap-3 text-sm text-green-900 dark:text-green-300">
+                    <span class="text-green-600 font-bold text-lg leading-none">→</span>
+                    <span><strong>Block vs Layer:</strong> Deduplication happens across all tenants at the MicroVM transport level.</span>
+                  </li>
+                  <li class="flex gap-3 text-sm text-green-900 dark:text-green-300">
+                    <span class="text-green-600 font-bold text-lg leading-none">→</span>
+                    <span><strong>Zero-Copy:</strong> Foundations are shared once in host RAM and mapped explicitly via virtio-fs.</span>
+                  </li>
+                  <li class="flex gap-3 text-sm text-green-900 dark:text-green-300">
+                    <span class="text-green-600 font-bold text-lg leading-none">→</span>
+                    <span><strong>Atomic Deploys:</strong> App updates are just pointer swaps in the shared storage engine.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  </Section>
+
+  <!-- The Core - Economics -->
+  <Section spacerTop={true} spacerBottom={true} fullWidth={true}>
+
+    <div class="container container-compact">
+      <Row>
+        <Col span="12" classes="mb-8 pl-6 md:pl-10">
+          <h5 class="text-primary-600 dark:text-primary-400 font-mono text-xs tracking-wider uppercase mb-1">The Core Concept</h5>
+          <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white leading-tight">Exploring serverless efficiency</h2>
+          <p class="text-xl text-neutral-600 dark:text-neutral-400 mt-4 max-w-2xl leading-relaxed">
+            Investigating if we can bend the trade-off between performance and efficiency.
+          </p>
+        </Col>
+      </Row>
+
+      <!-- 2x2 Grid Economics -->
+      <Row classes="gap-6 px-6 md:px-10 mx-auto justify-center max-w-3xl">
+        <Col span="6">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col justify-start min-h-[220px]">
+            <h3 class="text-3xl font-bold text-neutral-900 dark:text-white mb-4">The Problem</h3>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Containers bundle entire runtimes. Every deploy duplicates 100MB+ blocks.
+            </p>
+          </div>
+        </Col>
+        
+        <Col span="6">
+          <div class="p-8 rounded-2xl border border-primary-200 dark:border-primary-500/30 bg-primary-50 dark:bg-primary-500/5 h-full flex flex-col justify-start border-2 min-h-[220px]">
+            <h3 class="text-3xl font-bold text-neutral-900 dark:text-white mb-4">The Solution</h3>
+            <p class="text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed font-medium">
+              Separate code from shared foundations. Map payloads to pre-warmed VMs.
+            </p>
+          </div>
+        </Col>
+
+        <Col span="6">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col justify-start min-h-[220px]">
+            <h3 class="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Isolation</h3>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Hardware-isolated kernel per tenant. Zero-trust by design.
+            </p>
+          </div>
+        </Col>
+
+        <Col span="6">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 h-full flex flex-col justify-start min-h-[220px]">
+            <h3 class="text-3xl font-bold text-neutral-900 dark:text-white mb-4">Updates</h3>
+            <p class="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Patch foundation once, apply to all VMs. Security without rebuilds.
+            </p>
+          </div>
+        </Col>
+      </Row>
+    </div>
+  </Section>
+
+  <Section id="architecture" type="alt" spacerTop={true} spacerBottom={true} fullWidth={true}>
+    <div class="container container-compact">
+      <Row>
+        <Col span="12" classes="mb-8 pl-6 md:pl-10">
+          <h5 class="text-primary-600 dark:text-primary-400 font-mono text-xs tracking-wider uppercase mb-1">System Architecture</h5>
+          <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white">How Russel Works</h2>
+          <p class="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 mt-4 max-w-3xl leading-relaxed">
+            Modular architecture: CLI → Control Plane → Rust Engine + Shared Cache
+          </p>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span="12">
+          <div class="p-8 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 shadow-inner overflow-hidden">
+            <!-- Visual Diagram -->
+            <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-stretch justify-center gap-8 py-8 w-full">
+                
+              <!-- Left Side: Control Plane Flow -->
+              <div class="flex flex-col items-center flex-1">
+                <!-- CLI -->
+                <div class="flex flex-col items-center w-full">
+                  <div class="w-full max-w-sm px-6 py-4 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-mono text-sm font-bold border border-neutral-700 dark:border-neutral-200 shadow-lg text-center flex items-center justify-between">
+                    <span>CLI Tool</span>
+                    <span class="text-[10px] bg-white/20 dark:bg-black/10 px-2 py-1 rounded">Go</span>
+                  </div>
+                  <div class="h-8 w-px border-l-2 border-dashed border-neutral-300 dark:border-neutral-700"></div>
+                </div>
+
+                <!-- Control Plane -->
+                <div class="flex flex-col items-center w-full">
+                  <div class="w-full max-w-sm px-6 py-4 rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 text-sm font-bold text-neutral-700 dark:text-neutral-300 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                      <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                      Control Plane (russel-d)
+                    </div>
+                  </div>
+                  <div class="h-8 w-px border-l-2 border-dashed border-neutral-300 dark:border-neutral-700 flex items-center justify-center">
+                    <div class="bg-neutral-50 dark:bg-neutral-900 px-2 text-[10px] text-neutral-500 font-mono">gRPC</div>
+                  </div>
+                </div>
+
+                <!-- Rust Engine -->
+                <div class="w-full max-w-sm p-6 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50/30 dark:bg-blue-900/10 text-center relative shadow-sm">
+                  <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded bg-blue-600 text-white text-[10px] uppercase font-bold tracking-widest shadow-sm">Engine Layer</div>
+                  <h4 class="text-xl font-bold text-blue-900 dark:text-blue-300 mb-4 font-mono">russel-engine (Rust)</h4>
+                  <div class="grid grid-cols-2 gap-2">
+                     <div class="p-2 rounded bg-white/70 dark:bg-black/40 border border-blue-200/50 dark:border-blue-800/50 text-xs font-bold text-blue-800 dark:text-blue-400">VM Lifecycle</div>
+                     <div class="p-2 rounded bg-white/70 dark:bg-black/40 border border-blue-200/50 dark:border-blue-800/50 text-xs font-bold text-blue-800 dark:text-blue-400">Networking</div>
+                  </div>
+                </div>
+
+                <!-- Hypervisor Connect -->
+                <div class="h-8 w-px border-l-2 border-dashed border-neutral-300 dark:border-neutral-700"></div>
+                <div class="w-full max-w-sm px-6 py-4 rounded-xl border-2 border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/30 text-orange-800 dark:text-orange-400 font-bold flex items-center justify-center gap-2">
+                   <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
+                   Cloud Hypervisor (KVM)
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="hidden md:flex flex-col items-center justify-center px-4">
+                 <div class="h-full w-px bg-gradient-to-b from-transparent via-neutral-300 dark:via-neutral-700 to-transparent"></div>
+              </div>
+
+              <!-- Right Side: Shared Cache Layer -->
+              <div class="flex flex-col items-stretch flex-1 gap-6 justify-center">
+                <!-- Cache Layer -->
+                <div class="w-full p-6 rounded-xl border-2 border-dashed border-green-500/50 bg-green-50/20 dark:bg-green-950/10 text-center relative">
+                   <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded bg-green-600 text-white text-[10px] uppercase font-bold tracking-widest shadow-sm">Cache Layer</div>
+                   <h4 class="text-lg font-bold text-green-900 dark:text-green-300 mb-2">Shared Runtime Cache</h4>
+                   <p class="text-xs text-green-700 dark:text-green-500 mb-3">Immutable, content-addressed, and shared across all VMs.</p>
+                   <div class="inline-flex items-center justify-center px-3 py-1.5 rounded bg-white dark:bg-neutral-800 text-xs border border-green-200 dark:border-green-800 text-green-700 dark:text-green-500 font-mono shadow-sm">
+                      /shared/runtime-cache
+                   </div>
+                </div>
+
+                <!-- Connection -> VM -->
+                <div class="flex items-center justify-center h-8">
+                   <svg class="w-6 h-6 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </div>
+
+                <!-- MicroVM Instance -->
+                <div class="w-full p-6 rounded-xl border border-neutral-300 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800 relative shadow-md">
+                   <div class="absolute top-0 right-0 p-3"><div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div></div>
+                   <h5 class="text-sm font-bold text-neutral-900 dark:text-white mb-4 font-mono flex items-center gap-2">
+                     <svg class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                     Isolated MicroVM
+                   </h5>
+                   <div class="space-y-3">
+                     <div class="flex justify-between items-center text-xs pb-2 border-b border-neutral-200 dark:border-neutral-700">
+                        <span class="text-neutral-500 font-semibold">Guest Kernel</span>
+                        <span class="text-neutral-400 font-mono">vmlinux</span>
+                     </div>
+                     <div class="p-3 rounded-lg bg-white dark:bg-neutral-700 text-xs border border-neutral-200 dark:border-neutral-600 font-mono flex items-center justify-between shadow-sm">
+                        <span>Read-Only Cache Mount</span>
+                        <span class="text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded">virtio-fs</span>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+
+    </div>
+  </Section>
+
+  <!-- Vision & Roadmap -->
+  <Section spacerTop={true} spacerBottom={true} fullWidth={true}>
+    <div class="container container-compact">
+      <Row>
+        <Col span="12" classes="mb-8 pl-6 md:pl-10">
+          <h5 class="text-primary-600 dark:text-primary-400 font-mono text-xs tracking-wider uppercase mb-1">Vision & Roadmap</h5>
+          <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white">Future Directions</h2>
+        </Col>
+      </Row>
+
+      <Row classes="px-6 md:px-10 mx-auto justify-center max-w-4xl mt-8">
+        <Col span="12">
+          <div class="relative pl-8 md:pl-0 border-l border-neutral-200 dark:border-neutral-700 md:border-l-0 md:space-y-12">
+            <!-- Timeline Line (Desktop) -->
+            <div class="hidden md:block absolute left-1/2 top-4 bottom-4 w-px bg-neutral-200 dark:bg-neutral-700 -translate-x-1/2"></div>
+            
+            <!-- Phase 1 -->
+            <div class="relative flex flex-col md:flex-row md:justify-between items-start md:items-center mb-8 md:mb-0 group">
+              <!-- Node Point -->
+              <div class="absolute left-[-37px] md:left-1/2 top-2 md:top-1/2 w-4 h-4 rounded-full bg-primary-500 border-4 border-neutral-50 dark:border-neutral-950 md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-sm transition-transform group-hover:scale-125 duration-300"></div>
+              
+              <!-- Content Left -->
+              <div class="md:w-[45%] pb-2 md:pb-0 text-left md:text-right">
+                <span class="text-xs font-bold font-mono text-primary-600 dark:text-primary-400 uppercase tracking-widest mb-1 block">Phase 1</span>
+                <h3 class="text-2xl font-bold text-neutral-900 dark:text-white">Speed</h3>
+              </div>
+              
+              <!-- Content Right -->
+              <div class="md:w-[45%] text-left md:pl-8">
+                <div class="p-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary-300 dark:hover:border-primary-800">
+                  <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    Implementing faster boot using VM snapshots to reduce startup time from seconds to milliseconds.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="relative flex flex-col md:flex-row-reverse md:justify-between items-start md:items-center mb-8 md:mb-0 group">
+              <div class="absolute left-[-37px] md:left-1/2 top-2 md:top-1/2 w-4 h-4 rounded-full bg-blue-500 border-4 border-neutral-50 dark:border-neutral-950 md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-sm transition-transform group-hover:scale-125 duration-300"></div>
+              
+              <div class="md:w-[45%] pb-2 md:pb-0 text-left">
+                <span class="text-xs font-bold font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1 block">Phase 2</span>
+                <h3 class="text-2xl font-bold text-neutral-900 dark:text-white">Scaling</h3>
+              </div>
+              
+              <div class="md:w-[45%] text-left md:pr-8 md:text-right">
+                <div class="p-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-800 text-left">
+                  <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    Adding horizontal scaling with built-in reverse proxy for fast load balancing and traffic management.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="relative flex flex-col md:flex-row md:justify-between items-start md:items-center mb-8 md:mb-0 group">
+              <div class="absolute left-[-37px] md:left-1/2 top-2 md:top-1/2 w-4 h-4 rounded-full bg-purple-500 border-4 border-neutral-50 dark:border-neutral-950 md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-sm transition-transform group-hover:scale-125 duration-300"></div>
+              
+              <div class="md:w-[45%] pb-2 md:pb-0 text-left md:text-right">
+                <span class="text-xs font-bold font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest mb-1 block">Phase 3</span>
+                <h3 class="text-2xl font-bold text-neutral-900 dark:text-white">Orchestration</h3>
+              </div>
+              
+              <div class="md:w-[45%] text-left md:pl-8">
+                <div class="p-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-purple-300 dark:hover:border-purple-800">
+                  <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    Expanding to multi-node orchestration for distributed workloads and maximum high availability.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Long Term -->
+            <div class="relative flex flex-col md:flex-row-reverse md:justify-between items-start md:items-center group">
+              <div class="absolute left-[-37px] md:left-1/2 top-2 md:top-1/2 w-4 h-4 rounded-full bg-neutral-300 dark:bg-neutral-600 border-4 border-neutral-50 dark:border-neutral-950 md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-sm transition-transform group-hover:scale-125 duration-300"></div>
+              
+              <div class="md:w-[45%] pb-2 md:pb-0 text-left">
+                <span class="text-xs font-bold font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-1 block">Long-term</span>
+                <h3 class="text-2xl font-bold text-neutral-900 dark:text-white">Vision</h3>
+              </div>
+              
+              <div class="md:w-[45%] text-left md:pr-8 md:text-right">
+                <div class="p-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900/50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-neutral-400 dark:hover:border-neutral-600 text-left">
+                  <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    Hardware virtualization meets declarative state management for the next generation of cloud infrastructure.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </Col>
+      </Row>
+    </div>
+  </Section>
+  <!-- Follow -->
+  <Section type="alt" spacerTop={true} spacerBottom={true}>
+    <Row>
+      <Col span="12" classes="text-center">
+        <h2 class="text-xl text-neutral-900 dark:text-white mb-2">Follow the progress</h2>
+        <p class="text-base text-neutral-600 dark:text-neutral-400 max-w-md mx-auto mb-6">Technical blogs soon. Follow on X for updates.</p>
+        <div class="flex gap-3 justify-center">
+          <a href="https://x.com/crimxnhaze" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800/50 hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 transition-colors text-base font-semibold shadow-sm hover:shadow-md">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Follow on X
+          </a>
+        </div>
+      </Col>
+    </Row>
+  </Section>
 </Layout>
+
+<style>
+  .container-compact {
+    @apply max-w-5xl px-8 md:px-12 lg:px-20;
+  }
+  
+  section {
+    @apply bg-neutral-50 dark:bg-neutral-950 px-4 md:px-0;
+  }
+</style>
