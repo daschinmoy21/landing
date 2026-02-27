@@ -6,7 +6,7 @@ export interface Logo {
 	src: string
 	srcDark: string
 	alt: string
-	text: string
+	text?: string
 }
 
 export interface NavSubItem {

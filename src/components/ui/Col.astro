@@ -16,6 +16,8 @@ type Props = {
 	span?: string
 	spanTablet?: string
 	spanMobile?: string
+	md?: string
+	lg?: string
 	start?: string
 	align?: string
 	classes?: string
@@ -25,6 +27,8 @@ const {
 	span,
 	spanTablet = '12',
 	spanMobile = '12',
+	md,
+	lg,
 	start,
 	align,
 	classes,
@@ -38,8 +42,8 @@ const hasContent = Astro.slots.default
 	class:list={[
 		'col',
 		{ ['col-span-' + `${spanMobile}`]: spanMobile },
-		{ ['lg:col-span-' + `${span}`]: span },
-		{ ['md:col-span-' + `${spanTablet}`]: spanTablet },
+		{ ['lg:col-span-' + `${lg || span}`]: lg || span },
+		{ ['md:col-span-' + `${md || spanTablet}`]: md || spanTablet },
 		{ ['text-' + `${align}`]: align },
 		{ ['lg:col-start-' + `${start}`]: start },
 		{ [`${classes}`]: classes },
