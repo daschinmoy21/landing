@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Russel Landing - Review Report</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+		.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+		.report-section { border: 1px solid #222226; background: #0a0a0b; position: relative; }
+		.corner-box { position: absolute; width: 20px; height: 20px; border: 1px solid #222226; background: #000; }
+	</style>
+</head>
+<body class="bg-black text-[#fafafa]">
+	<main class="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-12">
+		<header class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// REVIEW</div>
+					<h1 class="text-4xl font-bold tracking-tight md:text-6xl">Russel Landing</h1>
+				</div>
+				<div class="mono text-left text-xs text-[#666] md:text-right">
+					<div>COMMANDCODE REPORT</div>
+					<div class="text-[#444]">2026-07-13</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// OVERALL</div>
+					<div class="text-6xl font-bold tracking-tight md:text-7xl">28</div>
+					<div class="mt-1 text-lg text-[#666]">/ 50</div>
+					<div class="mt-4 inline-flex border border-[#fbbf24]/30 bg-[#fbbf24]/10 px-3 py-1 text-sm text-[#fbbf24]">NEEDS SECTION REFINEMENT</div>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// TL;DR</div>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Hero has personality — the ASCII background, monospace headline, and benchmark card combination is distinctive. Below the fold, sections flatten into identical dark slabs. No max-width containment means content runs edge-to-edge at 1344px wide on desktop. Feature cards are visually identical. The comparison table highlight column is imperceptible.</p>
+					<p class="mt-4 text-sm leading-6 text-[#fbbf24]">Apply max-width containment first, then add section-to-section visual rhythm through alternating backgrounds, card differentiation, and layout variation.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// HEURISTIC SCORES</div>
+			<div class="overflow-x-auto">
+				<table class="w-full min-w-[720px] border-collapse text-sm">
+					<thead>
+						<tr class="border-b border-[#222226] text-left mono text-xs text-[#666]">
+							<th class="py-3 pr-4 font-normal">#</th>
+							<th class="py-3 pr-4 font-normal">HEURISTIC</th>
+							<th class="py-3 pr-4 font-normal">SCORE</th>
+							<th class="py-3 font-normal">KEY FINDING</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">1</td>
+							<td class="py-4 pr-4 text-[#fafafa]">First impression</td>
+							<td class="py-4 pr-4 text-[#34d399]">7/10</td>
+							<td class="py-4 text-[#a0a0a0]">Hero has real personality with ASCII art + monospace aesthetic. Falls flat below the fold — no visual second act.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">2</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Hierarchy</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">6/10</td>
+							<td class="py-4 text-[#a0a0a0]">No max-width containment. Feature cards mechanically identical. Comparison table highlight invisible.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">3</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Color voice</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5/10</td>
+							<td class="py-4 text-[#a0a0a0]">Palette has emerald accent bones but applied flatly. Every section uses identical bg/border/card treatment.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">4</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Type voice</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5/10</td>
+							<td class="py-4 text-[#a0a0a0]">Monospace + Inter pairing works. Body runs 60-100+ chars per line with no measure control. Section titles under-scaled.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">5</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Interaction feel</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5/10</td>
+							<td class="py-4 text-[#a0a0a0]">FAQ toggles with no transition. No scroll reveal or section entrance animation. No keyboard focus styles.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// SIGNALS & NEXT MODES</div>
+			<div class="grid gap-6 md:grid-cols-2">
+				<div>
+					<div class="mb-3 text-xl font-semibold">Medium Risk</div>
+					<ul class="space-y-3 text-sm text-[#a0a0a0]">
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Hero personality + benchmark card position</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Comparison table differentiator content</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Architecture SVG composition</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Phases timeline transparency</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>Zero color identity below the fold</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>FAQ and roadmap sharing same grid template</li>
+						<li><span class="mono mr-2 text-[#ef4444]">FAIL</span>No max-width containment on any section</li>
+						<li><span class="mono mr-2 text-[#ef4444]">FAIL</span>Comparison table highlight column invisible</li>
+					</ul>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// RECOMMENDED NEXT MODES</div>
+					<div class="flex flex-wrap gap-2">
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#34d399]">/design relayout</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design recolor</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design typeset</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design interaction</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// WHAT'S WORKING</div>
+			<div class="grid gap-4 md:grid-cols-3">
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Hero identity</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">ASCII background with green tint + scanlines creates genuine atmosphere. The benchmark card right-column placement is the correct proof element positioning.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Developer audience signal</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">The CLI-inspired section dividers and monospace aesthetic unmistakably signal "for developers who live in the terminal."</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Content honesty</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">FAQ answers are direct about project maturity. The phases timeline is refreshingly transparent about what's done, active, and planned.</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// PRIORITY ISSUES</div>
+			<div class="space-y-5">
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P0</div>
+					<h2 class="mb-2 text-lg font-semibold">No max-width containment</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Content runs edge-to-edge on wide viewports. Text lines exceed 100 characters. Sections feel adrift in black space without anchor points.</p>
+					<div class="border-l border-[#34d399] pl-4 text-sm leading-6 text-[#34d399]">FIXED: Added 1100px max-width section-inner containers to all sections and section dividers.</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P1</div>
+					<h2 class="mb-2 text-lg font-semibold">Feature cards are visually identical</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Four identical dark cards in a row with no visual differentiation. The title/cmd/description pattern repeats mechanically — no way to scan.</p>
+					<div class="border-l border-[#34d399] pl-4 text-sm leading-6 text-[#34d399]">FIXED: Added left-border accent differentiation (cards 1+2 green, cards 3+4 muted), bumped card title weight to 700, added visual breathing with 28px top padding.</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P1</div>
+					<h2 class="mb-2 text-lg font-semibold">Sections have no visual rhythm</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Every section uses identical bg color, border treatment, and card style. The only visual break between sections is a 1px border and a 10px label.</p>
+					<div class="border-l border-[#34d399] pl-4 text-sm leading-6 text-[#34d399]">FIXED: Alternated section backgrounds (config showcase left column uses bg-alt, system design section uses bg-alt). Creates subtle visual cadence.</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">P1</div>
+					<h2 class="mb-2 text-lg font-semibold">FAQ and roadmap share the same grid template</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Two different content types (FAQ accordion + CTA card and phases timeline + roadmap cards) used the same 0.8fr/1.2fr grid layout. This flattens both sections.</p>
+					<div class="border-l border-[#34d399] pl-4 text-sm leading-6 text-[#34d399]">FIXED: Gave FAQ its own column layout (max-width 680px centered) with CTA card below accordion, not side-by-side. Roadmap keeps the grid layout.</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#fccf03]">P2</div>
+					<h2 class="mb-2 text-lg font-semibold">Comparison table highlight column invisible</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">The Russel highlight column used accent-glow (8% opacity on dark) — a barely perceptible tint. Users couldn't tell which column was featured.</p>
+					<div class="border-l border-[#34d399] pl-4 text-sm leading-6 text-[#34d399]">FIXED: Boosted highlight column to 12% accent opacity, added accent-muted border-left/right. Now has visible differentiation.</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// CHANGES APPLIED</div>
+			<div class="space-y-4">
+				<div class="border-l-2 border-[#34d399] pl-4">
+					<div class="mono mb-1 text-xs text-[#34d399]">LAYOUT</div>
+					<p class="text-sm text-[#a0a0a0]">Added 1100px max-width containment to all content sections via section-inner class. Section dividers now use centered inner wrapper.</p>
+				</div>
+				<div class="border-l-2 border-[#34d399] pl-4">
+					<div class="mono mb-1 text-xs text-[#34d399]">CARDS</div>
+					<p class="text-sm text-[#a0a0a0]">Feature cards now have differentiated left-border accents (green on 1+2, muted on 3+4). Bumped title weight to 700, description size to 13px.</p>
+				</div>
+				<div class="border-l-2 border-[#34d399] pl-4">
+					<div class="mono mb-1 text-xs text-[#34d399]">RHYTHM</div>
+					<p class="text-sm text-[#a0a0a0]">Config showcase left column and system design section now use bg-alt for visual contrast. Creates alternating section cadence on scroll.</p>
+				</div>
+				<div class="border-l-2 border-[#34d399] pl-4">
+					<div class="mono mb-1 text-xs text-[#34d399]">TABLE</div>
+					<p class="text-sm text-[#a0a0a0]">Comparison table highlight column contrast boosted from 8% to 12% accent opacity. Added accent-muted border for visible column framing.</p>
+				</div>
+				<div class="border-l-2 border-[#34d399] pl-4">
+					<div class="mono mb-1 text-xs text-[#34d399]">FAQ</div>
+					<p class="text-sm text-[#a0a0a0]">Separated FAQ from roadmap grid template. FAQ now has its own column layout with CTA card below accordion instead of side-by-side.</p>
+				</div>
+				<div class="border-l-2 border-[#34d399] pl-4">
+					<div class="mono mb-1 text-xs text-[#34d399]">TYPE</div>
+					<p class="text-sm text-[#a0a0a0]">Bumped section title from 28px to 32px. Added 44ch max-width to hero subtitle and measure control on paragraph text.</p>
+				</div>
+			</div>
+		</section>
+
+		<footer class="mono py-8 text-center text-xs tracking-widest text-[#444]">
+			Generated with CommandCode - 2026-07-13
+		</footer>
+	</main>
+</body>
+</html>

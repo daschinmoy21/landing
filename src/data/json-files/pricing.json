@@ -4,31 +4,30 @@
 	"note": "No hidden fees, cancel anytime.",
 	"plans": [
 		{
-			"id": "starter",
-			"name": "Starter",
-			"tagline": "Get started with the essentials",
+			"id": "community",
+			"name": "Community",
+			"tagline": "Free and self-hosted on your own hardware",
 			"prices": {
-				"annually": 19,
-				"monthly": 24
+				"annually": 0,
+				"monthly": 0
 			},
 			"prices_notes": {
-				"annually": "/month, billed annually",
-				"monthly": "/month, billed monthly"
+				"annually": "forever",
+				"monthly": "forever"
 			},
-			"cta": { "label": "View All Features", "href": "/signup?plan=starter" },
+			"cta": { "label": "Deploy Community", "href": "https://github.com/russel-project/russel" },
 			"features": [
-				"Up to 3 active projects",
-				"Basic integrations (Slack, Google Drive, Dropbox)",
-				"Email support during business hours",
-				"10GB secure storage",
-				"Simple task management tools",
-				"Community access & knowledge base"
+				"Single node deployments",
+				"Dual runtime (Containers/microVMs)",
+				"Nix reproducible build pipeline",
+				"Local console and CLI",
+				"Community support & documentation"
 			]
 		},
 		{
-			"id": "basic",
-			"name": "Basic",
-			"tagline": "Power and flexibility for growing teams",
+			"id": "pro",
+			"name": "Pro / Team",
+			"tagline": "Deploy and manage small clusters",
 			"prices": {
 				"annually": 29,
 				"monthly": 35
@@ -37,38 +36,36 @@
 				"annually": "/month, billed annually",
 				"monthly": "/month, billed monthly"
 			},
-			"cta": { "label": "View All Features", "href": "/signup?plan=starter" },
+			"cta": { "label": "Request Beta Access", "href": "/contact?tier=pro" },
 			"tag": "Most Popular",
 			"featured": true,
 			"features": [
-				"Unlimited projects and team members",
-				"All integrations (CRM, analytics, communication tools)",
-				"Priority chat & email support",
-				"20GB secure storage",
-				"Custom branding & white-label options",
-				"Advanced reporting and dashboards"
+				"Multi-node fleet scheduling",
+				"Distributed state (Raft consensus)",
+				"Sealed secrets (memory-injection)",
+				"CVE checking build pipeline",
+				"Priority email & chat support"
 			]
 		},
 		{
-			"id": "pro",
-			"name": "Pro",
-			"tagline": "Tailored solutions for large organizations",
+			"id": "enterprise",
+			"name": "Enterprise",
+			"tagline": "High-density scale and compliance",
 			"prices": {
-				"annually": 49,
-				"monthly": 55
+				"annually": 99,
+				"monthly": 119
 			},
 			"prices_notes": {
 				"annually": "/month, billed annually",
 				"monthly": "/month, billed monthly"
 			},
-			"cta": { "label": "View All Features", "href": "/signup?plan=starter" },
+			"cta": { "label": "Contact Sales", "href": "/contact?tier=enterprise" },
 			"features": [
-				"Everything in basic",
-				"Dedicated success manager",
-				"Priority chat & email support",
-				"Unlimited secure storage",
-				"Custom data residency options (EU/US, APAC)",
-				"Governance, risk & compliance tools"
+				"Unlimited cluster scaling",
+				"Multi-tenant Wireguard Mesh",
+				"Custom SLA & 24/7 support",
+				"Custom build system integrations",
+				"Governance & compliance controls"
 			]
 		}
 	]

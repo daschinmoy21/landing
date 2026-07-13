@@ -1,191 +1,275 @@
 ---
-// Components
-// - Layout
+// src/pages/terms.astro
 import Layout from '../layouts/Layout.astro'
-import Row from '../components/ui/Row.astro'
-import Col from '../components/ui/Col.astro'
-// - Blocks
-import Hero from '../components/blocks/hero/SimpleHeroNeutral.astro'
-import SectionSticky from '../components/blocks/basic/StickySidebarTransparent.astro'
-// - UI
-import Header from '../components/ui/Header.astro'
 
-// Content
-// - SEO
 const SEO = {
-	title: 'Mizu Light Astro Theme | Terms & Conditions',
+	title: 'Russel — Terms of Service',
 	description:
-		'Review the terms and conditions for using the Mizu Light Astro Theme, including licensing, usage rights, and support policies.'
-}
-// - Hero
-const heroData = {
-	title: 'Clear and  Fair Use of Our Services',
-	subtitle: 'Terms & Conditions',
-	text: 'Welcome to our platform. These Terms and Conditions outline the rules, responsibilities, and limitations that apply when using our product. Please read them carefully, as by continuing to use our services, you agree to comply with them.'
+		'Read the terms of service and beta participation agreements for Russel MicroVM Platform.'
 }
 ---
 
 <Layout title={SEO.title} description={SEO.description}>
-	<Hero
-		title={heroData.title}
-		subtitle={heroData.subtitle}
-		text={heroData.text}
-		textClasses="max-w-xl!"
-	/>
-	<SectionSticky>
-		<Header
-			title="About This Agreement"
-			subtitle="Introduction"
-			headingLevel="h2"
-			titleClasses="bg-white dark:bg-neutral-950"
-			slot="sidebar"
-		/>
-		<Row decorationBorder="top bottom" decorationBorderStyle="dashed" style="transparent">
-			<Col span="12" style="transparent">
-				<div class="text-basic bg-white p-8 dark:bg-neutral-950 [&_h3]:text-xl!">
-					<h3>Welcome to Mizu Light</h3>
-					<p>
-						Welcome to Mizu Light! We’re excited to have you here. Our platform is designed to help
-						you launch, manage, and scale your product with clarity and confidence. By using Mizu
-						Light, you agree to these Terms and Conditions, so please take a moment to read them
-						carefully.
-					</p>
-					<p>
-						Your satisfaction matters to us. If you have any questions or concerns about these
-						terms, please reach out. Our team is here to support you and ensure that your experience
-						with Mizu Light is both seamless and rewarding.
-					</p>
-					<h3>Acceptance of Terms</h3>
-					<p>
-						By accessing or using our services, you agree to comply with and be bound by these Terms
-						of Service as well as our Privacy Policy. If you do not agree with any part of these
-						terms, you may not use our services. Your continued use of Mizu Light constitutes
-						acceptance of these terms.
-					</p>
-					<p>
-						We may update these terms from time to time. Any changes will be posted on our website,
-						and it is your responsibility to review them periodically. Continued use of the service
-						after changes have been published indicates your acceptance of the revised terms.
-					</p>
-					<h3>Our Commitment to You</h3>
-					<p>
-						At Mizu Light, we are committed to delivering reliable and high-quality services. Our
-						mission is to help you bring your ideas to life and create meaningful impact through
-						streamlined workflows and innovative tools. We continually work to improve our platform
-						so that you always have the best possible experience.
-					</p>
-					<p>
-						We value your feedback and suggestions. Please don’t hesitate to share your thoughts on
-						how we can improve. Your input helps us enhance Mizu Light and shape it into a platform
-						that grows with your needs.
-					</p>
-				</div>
-			</Col>
-		</Row>
-	</SectionSticky>
-	<SectionSticky>
-		<Header
-			title="Registration and Use"
-			subtitle="User Accounts"
-			headingLevel="h2"
-			titleClasses="bg-white dark:bg-neutral-950"
-			slot="sidebar"
-		/>
-		<Row decorationBorder="top bottom" decorationBorderStyle="dashed" style="transparent">
-			<Col span="12" style="transparent">
-				<div class="text-basic bg-white p-8 dark:bg-neutral-950 [&_h3]:text-xl!">
-					<h3>Registration</h3>
-					<p>
-						To access certain features of Mizu Light, you will need to create a user account. During
-						registration, you must provide accurate and complete information. This ensures that we
-						can deliver the best possible service and maintain the security and proper functionality
-						of your account.
-					</p>
-					<p>
-						By registering, you also agree to keep your details up to date. Providing false or
-						outdated information may affect your access to specific features of Mizu Light or result
-						in limitations on your account.
-					</p>
-					<h3>Account Security</h3>
-					<p>
-						You are solely responsible for maintaining the confidentiality and security of your
-						account. Do not share your password with others, and notify us immediately if you
-						suspect any unauthorized access or use of your account.
-					</p>
-					<p>
-						For enhanced protection, we recommend using a strong, unique password for your Mizu
-						Light account and enabling two-factor authentication when available. Regularly updating
-						your password further reduces the risk of unauthorized access.
-					</p>
-					<h3>Account Usage</h3>
-					<p>
-						As the account holder, you are responsible for all activities carried out under your
-						account. This includes any actions performed by individuals who may have gained access
-						to it. Please ensure your account is used responsibly and in accordance with these
-						Terms.
-					</p>
-					<p>
-						If we detect suspicious or unauthorized activity, we may take protective measures, which
-						could include temporarily suspending access, requesting additional verification, or
-						other actions necessary to secure your information. Our priority is to safeguard your
-						account and data.
-					</p>
-				</div>
-			</Col>
-		</Row>
-	</SectionSticky>
-	<SectionSticky>
-		<Header
-			title="General Restrictions and Liability"
-			subtitle="Limitations and Liability"
-			headingLevel="h2"
-			titleClasses="bg-white dark:bg-neutral-950"
-			slot="sidebar"
-		/>
-		<Row decorationBorder="top bottom" decorationBorderStyle="dashed" style="transparent">
-			<Col span="12" style="transparent">
-				<div class="text-basic bg-white p-8 dark:bg-neutral-950 [&_h3]:text-xl!">
-					<h3>General Limitations</h3>
-					<p>
-						Mizu Light is provided on an “as is” and “as available” basis. We do not warrant that
-						the service will be uninterrupted, error-free, or fully secure. All warranties—express
-						or implied—are disclaimed, including, but not limited to, implied warranties of
-						merchantability, fitness for a particular purpose, and non-infringement.
-					</p>
-					<p>
-						We are not liable for damages arising from the use or inability to use our services,
-						including but not limited to direct, indirect, incidental, special, consequential, or
-						punitive damages. This includes, without limitation, loss of profits, data, or other
-						intangible assets.
-					</p>
-					<h3>Third-Party Services</h3>
-					<p>
-						Mizu Light may include links to third-party websites or services that are not owned or
-						controlled by us. We do not endorse, warrant, or assume responsibility for any such
-						third-party content, materials, products, or services. Accessing and using these
-						services is solely at your own risk.
-					</p>
-					<p>
-						We are not liable for any loss or damage resulting from your interactions with
-						third-party websites or services, including the sharing of your personal information.
-						You are responsible for reviewing the terms and privacy policies of any third-party
-						services you choose to use.
-					</p>
-					<h3>Maximum Liability</h3>
-					<p>
-						In no event shall our total liability to you, for all claims arising out of or relating
-						to the use or inability to use Mizu Light, exceed the amount paid by you, if any, for
-						accessing Mizu Light during the twelve (12) months immediately preceding the date of the
-						claim. This limitation applies regardless of the nature of the claim—whether based in
-						contract, warranty, tort, or otherwise.
-					</p>
-					<p>
-						Some jurisdictions do not allow the exclusion or limitation of liability for
-						consequential or incidental damages. In such cases, our liability will be limited to the
-						maximum extent permitted under applicable law.
-					</p>
-				</div>
-			</Col>
-		</Row>
-	</SectionSticky>
+	<div class="terms-page-wrapper">
+		<!-- Page Header -->
+		<section class="hero-header-section">
+			<div class="section-inner">
+				<span class="section-subtitle">// LEGAL FRAMEWORK</span>
+				<h1 class="section-title">Terms of Service &amp; Beta Agreement</h1>
+				<p class="section-desc">
+					Please review the rules, guidelines, and disclaimers for using the Russel platform and participating in our private beta trial.
+				</p>
+			</div>
+		</section>
+
+		<!-- Main Layout -->
+		<section class="content-section">
+			<div class="section-inner content-grid">
+				<!-- Sidebar Table of Contents -->
+				<aside class="terms-sidebar">
+					<div class="sidebar-sticky">
+						<span class="sidebar-title">// SECTIONS</span>
+						<nav class="sidebar-nav">
+							<a href="#overview" class="sidebar-link">1. Agreement Overview</a>
+							<a href="#license" class="sidebar-link">2. Open Source &amp; License</a>
+							<a href="#usage" class="sidebar-link">3. Acceptable Use Policy</a>
+							<a href="#beta" class="sidebar-link">4. Beta Program Specifics</a>
+							<a href="#liability" class="sidebar-link">5. Disclaimers &amp; Liability</a>
+						</nav>
+					</div>
+				</aside>
+
+				<!-- Terms Content -->
+				<main class="terms-body">
+					<!-- Section 1 -->
+					<article id="overview" class="terms-article">
+						<h3>1. Agreement Overview</h3>
+						<p>
+							Welcome to Russel. Russel is a self-hosted microVM and container deployment orchestrator developed by our contributors. By accessing or deploying our software, including participating in the Russel private beta, you agree to comply with and be bound by these Terms of Service.
+						</p>
+						<p>
+							We recommend reviewing these terms regularly as we continue to update the software, compile new releases, and expand the orchestration features. Your continued use of the platform constitutes an active acceptance of any updated terms.
+						</p>
+					</article>
+
+					<!-- Section 2 -->
+					<article id="license" class="terms-article">
+						<h3>2. Open Source &amp; License</h3>
+						<p>
+							Russel is designed with open-source principles. When publicly released, the core codebase will be licensed under the permissive MIT license.
+						</p>
+						<p>
+							During the private beta phase, access to pre-release binaries, documentation, and specific orchestration modules is granted solely to registered beta participants. You may not distribute, relicense, or reverse-engineer pre-release binary components unless explicitly authorized under separate terms by the contributors.
+						</p>
+					</article>
+
+					<!-- Section 3 -->
+					<article id="usage" class="terms-article">
+						<h3>3. Acceptable Use Policy</h3>
+						<p>
+							When deploying Russel, you are solely responsible for compliance with local and international laws. Specifically, you agree not to use Russel to host, compile, or distribute:
+						</p>
+						<ul class="custom-bullet-list">
+							<li>Malicious software, cryptojackers, or denial-of-service tools.</li>
+							<li>Unlicensed or copyrighted material without appropriate permissions.</li>
+							<li>Applications designed to breach or compromise third-party cloud infrastructure.</li>
+						</ul>
+						<p>
+							Failure to comply with acceptable use guidelines will result in immediate termination of your beta account, revocation of gRPC registration keys, and restriction from future releases.
+						</p>
+					</article>
+
+					<!-- Section 4 -->
+					<article id="beta" class="terms-article">
+						<h3>4. Beta Program Specifics</h3>
+						<p>
+							Russel's current releases are pre-production beta software. You acknowledge that features, configuration files (such as <code>Russelfile.toml</code>), APIs, and command line tools may change, break, or be deprecated at any time.
+						</p>
+						<p>
+							We strongly advise against running mission-critical enterprise production workloads on private beta releases. Data loss, VM state crashes, and network routing interruptions are possible as we harden KVM and virtiofs configurations.
+						</p>
+					</article>
+
+					<!-- Section 5 -->
+					<article id="liability" class="terms-article">
+						<h3>5. Disclaimers &amp; Liability</h3>
+						<p>
+							RUSSEL IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+						</p>
+						<p>
+							IN NO EVENT SHALL THE CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+						</p>
+					</article>
+				</main>
+			</div>
+		</section>
+	</div>
 </Layout>
+
+<style>
+	.terms-page-wrapper {
+		background-color: #040803;
+		color: var(--text-color, oklch(0.90 0.008 145));
+		font-family: var(--font-sans, 'Inter', sans-serif);
+		padding: 64px 24px;
+	}
+
+	.section-inner {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.hero-header-section {
+		margin-bottom: 48px;
+		text-align: left;
+	}
+
+	.section-subtitle {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 11px;
+		color: var(--accent, oklch(0.65 0.15 145));
+		letter-spacing: 0.1em;
+		font-weight: 600;
+	}
+
+	.section-title {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: clamp(24px, 3.5vw, 42px);
+		line-height: 1.15;
+		font-weight: 700;
+		color: #fff;
+		margin: 8px 0 16px;
+		letter-spacing: -0.04em;
+	}
+
+	.section-desc {
+		font-size: 15px;
+		color: var(--text-muted, oklch(0.58 0.020 145));
+		max-width: 680px;
+		line-height: 1.6;
+	}
+
+	/* Two-column layout */
+	.content-section {
+		border-top: 1px solid var(--border-color, oklch(0.11 0.022 145));
+		padding-top: 48px;
+	}
+
+	.content-grid {
+		display: grid;
+		grid-template-columns: 250px 1fr;
+		gap: 48px;
+		align-items: start;
+	}
+
+	@media (max-width: 768px) {
+		.content-grid {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+	}
+
+	/* Sidebar styling */
+	.terms-sidebar {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+	}
+
+	.sidebar-sticky {
+		position: sticky;
+		top: 120px;
+	}
+
+	.sidebar-title {
+		display: block;
+		font-size: 10px;
+		color: var(--text-faint, oklch(0.36 0.015 145));
+		letter-spacing: 0.15em;
+		margin-bottom: 16px;
+		font-weight: 600;
+	}
+
+	.sidebar-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.sidebar-link {
+		color: var(--text-muted, oklch(0.58 0.020 145));
+		text-decoration: none;
+		font-size: 12px;
+		transition: color 0.2s ease;
+	}
+
+	.sidebar-link:hover {
+		color: var(--accent, oklch(0.65 0.15 145));
+	}
+
+	/* Body styling */
+	.terms-body {
+		display: flex;
+		flex-direction: column;
+		gap: 48px;
+	}
+
+	.terms-article {
+		border-bottom: 1px solid var(--border-subtle, oklch(0.08 0.015 145));
+		padding-bottom: 32px;
+	}
+
+	.terms-article:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.terms-article h3 {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 16px;
+		font-weight: 700;
+		color: #fff;
+		margin-bottom: 16px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.terms-article p {
+		font-size: 14.5px;
+		color: var(--text-muted, oklch(0.58 0.020 145));
+		line-height: 1.7;
+		margin-bottom: 16px;
+	}
+
+	.terms-article p code {
+		background-color: rgba(255, 255, 255, 0.03);
+		border: 1px solid var(--border-subtle, oklch(0.08 0.015 145));
+		padding: 2px 6px;
+		border-radius: 4px;
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 12px;
+		color: var(--accent, oklch(0.65 0.15 145));
+	}
+
+	.custom-bullet-list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 24px 0;
+	}
+
+	.custom-bullet-list li {
+		position: relative;
+		padding-left: 20px;
+		margin-bottom: 10px;
+		font-size: 14px;
+		color: var(--text-muted, oklch(0.58 0.020 145));
+		line-height: 1.6;
+	}
+
+	.custom-bullet-list li::before {
+		content: "•";
+		position: absolute;
+		left: 0;
+		color: var(--accent, oklch(0.65 0.15 145));
+		font-weight: bold;
+	}
+</style>

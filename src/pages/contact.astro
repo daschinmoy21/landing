@@ -1,63 +1,330 @@
 ---
-// Components
-// - Layout
+// src/pages/contact.astro
 import Layout from '../layouts/Layout.astro'
 
-// - Blocks
-import Hero from '../components/blocks/hero/SimpleHeroBasic.astro'
-import ContactInfo from '../components/blocks/contact/ContactInfoCards.astro'
-import Brand from '../components/blocks/brand/Marquee.astro'
-import Faq from '../components/blocks/faq/StickyFaq.astro'
-import CTA from '../components/blocks/cta/CTAPrimary.astro'
-
-// Content
-// - SEO
 const SEO = {
-	title: 'Mizu Light Astro Theme | Contact',
+	title: 'Russel — Get in Touch',
 	description:
-		'Get in touch with the Mizu Light team for support, customization, or partnership inquiries. We’re here to help you make the most of your Astro theme.'
-}
-// - Hero data
-const heroData = {
-	title: 'Got a question before take-off?',
-	subtitle: 'Let’s Connect',
-	text: 'Reach out directly to the team that can best help you. We’re here to answer questions and guide you ahead of launch.',
-}
-// - Contact data
-const contactData = {
-	title: 'Choose support, sales, or requests and let’s get started.'
-}
-// - Brand data
-const brandData = {
-	title: 'Built in collaboration with'
-}
-// - FAQ data
-const faqData = {
-	title: 'Everything you need to know',
-	subtitle: 'Frequently Asked Questions'
-}
-// - CTA data
-const ctaData = {
-	title: 'Let’s Build the Future Together',
-	text: 'We’re always looking for passionate, driven people to join our team. Even if you don’t see the perfect role listed, we’d still love to hear from you. Send us your CV and let’s explore how we can grow together.',
-	buttonLink: '/contact',
-	buttonText: 'Send Your CV'
+		'Connect with the contributors of the Russel project. Request beta access or ask technical questions.'
 }
 ---
 
 <Layout title={SEO.title} description={SEO.description}>
-	<Hero
-		title={heroData.title}
-		subtitle={heroData.subtitle}
-		text={heroData.text}
-	/>
-	<ContactInfo title={contactData.title} />
-	<Brand title={brandData.title} />
-	<Faq subtitle={faqData.subtitle} title={faqData.title} />
-	<CTA
-		title={ctaData.title}
-		text={ctaData.text}
-		buttonLink={ctaData.buttonLink}
-		buttonText={ctaData.buttonText}
-	/>
+	<div class="contact-page-wrapper">
+		<!-- Page Header -->
+		<section class="hero-header-section">
+			<div class="section-inner">
+				<span class="section-subtitle">// CONNECT</span>
+				<h1 class="section-title">Connect with the Russel Team</h1>
+				<p class="section-desc">
+					Got questions about KVM configurations, Nix builder sandboxes, or want to register for our private developer beta? We would love to hear from you.
+				</p>
+			</div>
+		</section>
+
+		<!-- Split Layout -->
+		<section class="split-content-section">
+			<div class="section-inner split-grid">
+				<!-- Left Column: Registration Form -->
+				<div class="form-container">
+					<span class="column-label">// REQUEST BETA ACCESS</span>
+					<form class="custom-contact-form" action="https://formspree.io/f/placeholder" method="POST">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" id="name" name="name" placeholder="John Doe" required />
+						</div>
+						<div class="form-group">
+							<label for="email">Email Address</label>
+							<input type="email" id="email" name="email" placeholder="john@example.com" required />
+						</div>
+						<div class="form-group">
+							<label for="infrastructure">Target Infrastructure Setup</label>
+							<select id="infrastructure" name="infrastructure">
+								<option value="bare-metal">Bare-Metal Linux Node</option>
+								<option value="homelab">Local Homelab Setup</option>
+								<option value="cloud-kvm">Cloud Provider VM (with Nested KVM)</option>
+								<option value="other">Other Setup / Inquiry</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="message">Message / Use Case Details</label>
+							<textarea id="message" name="message" rows="5" placeholder="Tell us about the services you plan to host..." required></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary form-submit">// SUBMIT REQUEST</button>
+					</form>
+				</div>
+
+				<!-- Right Column: Contact Cards -->
+				<div class="cards-container">
+					<span class="column-label">// SUPPORT &amp; COMMUNITY CHANNELS</span>
+					
+					<!-- Card 1 -->
+					<div class="contact-info-card">
+						<div class="card-icon">✉</div>
+						<div class="card-info">
+							<h4>Direct Email</h4>
+							<p>For general inquiries, enterprise deployment support, or partnership requests, email us directly.</p>
+							<a href="mailto:russel@example.com" class="info-link">russel@example.com</a>
+						</div>
+					</div>
+
+					<!-- Card 2 -->
+					<div class="contact-info-card">
+						<div class="card-icon">💻</div>
+						<div class="card-info">
+							<h4>GitHub Discussions</h4>
+							<p>Report bugs, propose features for <code>Russelfile.toml</code>, or view Nix builder logs directly on our repository.</p>
+							<a href="https://github.com/russel-project/russel" class="info-link">github.com/russel-project/russel</a>
+						</div>
+					</div>
+
+					<!-- Card 3 -->
+					<div class="contact-info-card">
+						<div class="card-icon">💬</div>
+						<div class="card-info">
+							<h4>Developer Discord</h4>
+							<p>Join other developers hosting hardware-isolated services. Share tips on cloud-hypervisor, virtiofsd, and host kernels.</p>
+							<a href="https://discord.gg/placeholder" class="info-link">Join Russel Discord</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 </Layout>
+
+<style>
+	.contact-page-wrapper {
+		background-color: #040803;
+		color: var(--text-color, oklch(0.90 0.008 145));
+		font-family: var(--font-sans, 'Inter', sans-serif);
+		padding: 64px 24px;
+	}
+
+	.section-inner {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.hero-header-section {
+		margin-bottom: 48px;
+		text-align: left;
+	}
+
+	.section-subtitle {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 11px;
+		color: var(--accent, oklch(0.65 0.15 145));
+		letter-spacing: 0.1em;
+		font-weight: 600;
+	}
+
+	.section-title {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: clamp(24px, 3.5vw, 42px);
+		line-height: 1.15;
+		font-weight: 700;
+		color: #fff;
+		margin: 8px 0 16px;
+		letter-spacing: -0.04em;
+	}
+
+	.section-desc {
+		font-size: 15px;
+		color: var(--text-muted, oklch(0.58 0.020 145));
+		max-width: 680px;
+		line-height: 1.6;
+	}
+
+	/* Split layout section */
+	.split-content-section {
+		border-top: 1px solid var(--border-color, oklch(0.11 0.022 145));
+		padding-top: 48px;
+	}
+
+	.split-grid {
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: 64px;
+		align-items: start;
+	}
+
+	@media (max-width: 992px) {
+		.split-grid {
+			grid-template-columns: 1fr;
+			gap: 48px;
+		}
+	}
+
+	.column-label {
+		display: block;
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 10px;
+		color: var(--text-faint, oklch(0.36 0.015 145));
+		letter-spacing: 0.15em;
+		margin-bottom: 24px;
+		font-weight: 600;
+	}
+
+	/* Form Styling */
+	.custom-contact-form {
+		background-color: var(--card-bg, #0a1405);
+		border: 1px solid var(--border-color, oklch(0.11 0.022 145));
+		border-radius: 8px;
+		padding: 32px;
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	@media (max-width: 480px) {
+		.custom-contact-form {
+			padding: 20px;
+		}
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.form-group label {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 11px;
+		color: var(--text-color, oklch(0.90 0.008 145));
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.form-group input,
+	.form-group select,
+	.form-group textarea {
+		background-color: #040803;
+		border: 1px solid var(--border-color, oklch(0.11 0.022 145));
+		border-radius: 4px;
+		color: #fff;
+		font-family: var(--font-sans, 'Inter', sans-serif);
+		font-size: 14px;
+		padding: 12px 16px;
+		width: 100%;
+		box-sizing: border-box;
+		outline: none;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.form-group input:focus,
+	.form-group select:focus,
+	.form-group textarea:focus {
+		border-color: var(--accent, oklch(0.65 0.15 145));
+		box-shadow: 0 0 8px var(--accent-glow, oklch(0.65 0.15 145 / 0.08));
+	}
+
+	.form-group input::placeholder,
+	.form-group textarea::placeholder {
+		color: var(--text-faint, oklch(0.36 0.015 145));
+	}
+
+	.form-submit {
+		margin-top: 8px;
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-weight: 700;
+	}
+
+	/* Contact Cards */
+	.cards-container {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.contact-info-card {
+		background-color: var(--card-bg, #0a1405);
+		border: 1px solid var(--border-color, oklch(0.11 0.022 145));
+		border-radius: 8px;
+		padding: 24px;
+		display: flex;
+		gap: 20px;
+		transition: all 0.3s ease;
+	}
+
+	.contact-info-card:hover {
+		border-color: var(--accent, oklch(0.65 0.15 145));
+		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--accent-glow, oklch(0.65 0.15 145 / 0.08));
+		transform: translateY(-2px);
+	}
+
+	.card-icon {
+		font-size: 24px;
+		color: var(--accent, oklch(0.65 0.15 145));
+		flex-shrink: 0;
+		line-height: 1;
+	}
+
+	.card-info {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.card-info h4 {
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 14px;
+		font-weight: 700;
+		color: #fff;
+		margin: 0;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.card-info p {
+		font-size: 13px;
+		color: var(--text-muted, oklch(0.58 0.020 145));
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.info-link {
+		color: var(--accent, oklch(0.65 0.15 145));
+		font-family: var(--font-mono, 'JetBrains Mono', monospace);
+		font-size: 12.5px;
+		text-decoration: none;
+		width: fit-content;
+		border-bottom: 1px solid transparent;
+		transition: border-color 0.2s ease;
+	}
+
+	.info-link:hover {
+		border-color: var(--accent, oklch(0.65 0.15 145));
+	}
+
+	.btn {
+		font-family: var(--font-sans, 'Inter', sans-serif);
+		font-weight: 600;
+		font-size: 12px;
+		padding: 12px 24px;
+		border-radius: 6px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.btn-primary {
+		background: rgba(237, 255, 239, 0.92);
+		color: #050505;
+		border: 1px solid rgba(237, 255, 239, 0.92);
+	}
+
+	.btn-primary:hover {
+		background-color: transparent;
+		color: var(--text-color, oklch(0.90 0.008 145));
+		border-color: var(--accent, oklch(0.65 0.15 145));
+	}
+</style>

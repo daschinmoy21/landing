@@ -20,12 +20,14 @@
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.1",
     "@vercel/analytics": "^1.6.1",
     "astro": "^5.16.15",
     "astro-icon": "^1.1.5",
     "astro-integration-lottie": "^0.3.2",
     "astro-swiper": "^1.3.0",
     "lottie-web": "^5.13.0",
+    "ogl": "^1.0.11",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
@@ -33,10 +35,11 @@
     "react-dom": "^19.2.3",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
+    "three": "^0.185.1",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@astrojs/partytown": "^2.1.4",
+    "@astrojs/partytown": "^2.1.7",
     "@tailwindcss/typography": "^0.5.19"
   }
 }

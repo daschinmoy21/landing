@@ -22,9 +22,9 @@ const { page } = Astro.props as any
 // Content
 // - SEO
 const SEO = {
-	title: 'Mizu Light Astro Theme | Blog',
+	title: 'Russel — Blog & Insights',
 	description:
-		'Read the latest articles, tips, and insights on building fast, modern Astro websites with Mizu Light. Stay inspired and learn from our design and development guides.'
+		'Read the latest updates, engineering logs, and roadmap progress from the contributors of the Russel MicroVM platform.'
 }
 
 // Sort blog posts by publication date (newest first)
@@ -35,9 +35,9 @@ const sortedBlogPosts = page.data.sort((a: any, b: any) => {
 
 <Layout title={SEO.title} description={SEO.description}>
 	<Hero
-		subtitle="Insights & Ideas"
-		title="Fresh perspectives from the team"
-		text="Stay up to date with the latest articles, resources, and practical tips. Our blog covers design, technology, and everything in between."
+		subtitle="Engineering Log"
+		title="Latest updates & engineering deep-dives"
+		text="Follow our development journey as we implement multi-node scheduling, secure sealed secrets memory injection, and KVM virtualization hardening."
 	/>
 	<PostCards data={sortedBlogPosts} />
 </Layout>

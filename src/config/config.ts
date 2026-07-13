@@ -23,17 +23,17 @@ export interface Config {
 
 export const configData: Config = {
 	siteTitle:
-		'Mizu Light Astro Theme | Modern SaaS & Startup Landing Page Template for Fast Product Launches by Oxygenna',
+		'Russel — self-hosted microVM & container deployment platform',
 	siteDescription:
-		'Launch your next big idea with Mizu Light — a sleek, responsive Astro theme built for SaaS startups and tech companies. Streamline onboarding, showcase features beautifully, and convert visitors into users faster.',
+		'Russel boots services as hardware-isolated microVMs in under 2 seconds, or as fast immutable containers. Self-hosted, zero-drift, no lock-in.',
 	ogImage: '/og.jpg',
 	logo: {
 		src: '/logo-light.svg',
 		srcDark: '/logo-dark.svg',
-		alt: 'Mizu Light logo'
+		alt: 'Russel logo'
 	},
 	canonical: true,
 	noindex: false,
-	mode: 'auto',
+	mode: 'dark',
 	scrollAnimations: true
 }
