@@ -496,6 +496,26 @@ h1.hero-title {
   align-items: center;
 }
 
+.scroll-down-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-top: 12px;
+}
+
+.scroll-down-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 @media (max-width: 480px) {
   .cta-group {
     flex-direction: column;
@@ -2308,9 +2328,15 @@ export default function PierreLanding() {
 								onSubmit={(email) => console.log('Waitlist signup:', email)}
 							/>
 						</div>
-						<a href="#features" className="btn btn-secondary" style={{ fontSize: '14px' }}>
-							Explore features
-						</a>
+						<button
+							className="scroll-down-btn"
+							onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+							aria-label="Scroll to features"
+						>
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<path d="M12 5v14M5 12l7 7 7-7" />
+							</svg>
+						</button>
 					</div>
 				</div>
 			</div>
