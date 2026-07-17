@@ -137,7 +137,7 @@ const CSS = `
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -190,7 +190,7 @@ const CSS = `
 
 /* Content width containment */
 .section-inner {
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -198,7 +198,7 @@ const CSS = `
 .section-divider-label {
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   color: var(--text-faint);
   padding: 14px 0;
   border-bottom: 1px solid var(--border-color);
@@ -207,7 +207,7 @@ const CSS = `
 }
 
 .section-divider-label-inner {
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 48px;
 }
@@ -414,7 +414,7 @@ const CSS = `
 .hero-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   color: var(--accent);
   margin-bottom: 16px;
   font-weight: 700;
@@ -689,14 +689,11 @@ h1.hero-title {
   margin-bottom: 48px;
 }
 
-.features-subtitle {
-  font-family: var(--font-mono);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+.features-desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 56ch;
 }
 
 .features-title {
@@ -828,7 +825,7 @@ p.features-desc {
 
 /* Config & Terminal Showcase */
 .config-showcase-section {
-  max-width: 1100px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -1285,11 +1282,10 @@ p.features-desc {
 .cta-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   color: var(--accent);
   margin-bottom: 24px;
   font-weight: 700;
-  text-transform: uppercase;
 }
 
 .cta-title {
@@ -1403,7 +1399,7 @@ p.features-desc {
   position: absolute;
   top: 50%;
   left: 50%;
-  border: 1px dashed rgba(99, 254, 19, 0.08);
+  border: 1px dashed rgba(99, 254, 19, 0.18);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
@@ -1912,7 +1908,6 @@ p.features-desc {
 `;
 
 export default function PierreLanding() {
-  const [openFaq, setOpenFaq] = React.useState({});
   const [activeRuntime, setActiveRuntime] = React.useState('container');
   const [cliStep, setCliStep] = React.useState(0);
 
@@ -1934,13 +1929,6 @@ export default function PierreLanding() {
     }, 1500);
     return () => clearInterval(cliInterval);
   }, []);
-
-  const toggleFaq = (index) => {
-    setOpenFaq(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
 
   return (
     <div className="pierre-page">
@@ -1981,8 +1969,8 @@ export default function PierreLanding() {
       <section className="features-section" id="features">
         <div className="section-inner">
         <div className="features-header">
-          <div className="features-subtitle">Dual engine runtimes</div>
           <h2 className="features-title">One Orchestrator, Any Isolation Boundary</h2>
+          <p className="features-desc">Dual engine runtimes. Containers for speed. MicroVMs for hardware-enforced isolation. One orchestrator manages both — switch runtimes with a single config line.</p>
         </div>
 
         <div className="unified-features-box">
@@ -2195,7 +2183,6 @@ export default function PierreLanding() {
             </svg>
           </div>
           
-          <span className="cta-eyebrow">Russel Private Beta</span>
           
           <h2 className="cta-title">
             Deploy without the<br />runtime trade-offs.
