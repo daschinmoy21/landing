@@ -1,6 +1,8 @@
 import React from 'react';
 import AsciiBackground from './AsciiBackground.jsx';
 import AnimatedCardStack from './ui/animate-card-animation';
+import SpecularButton from './ui/SpecularButton.jsx';
+import './ui/SpecularButton.css';
 
 const logo01 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg";
 const logo02 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg";
@@ -131,7 +133,7 @@ const CSS = `
   backdrop-filter: blur(8px);
   z-index: 100;
   border-bottom: 1px solid var(--border-color);
-  padding: 24px 48px;
+  padding: 16px 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -221,23 +223,29 @@ const CSS = `
 }
 
 .hero-inner {
-  max-width: 1100px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: 80px 48px 64px;
+  padding: 88px 48px 80px;
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 48px;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 80px;
   align-items: center;
-  min-height: min(720px, calc(100vh - 64px));
+  min-height: min(760px, calc(100vh - 64px));
+}
+
+@media (min-width: 993px) {
+  .hero-inner {
+    padding-bottom: 360px;
+  }
 }
 
 @media (max-width: 992px) {
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 64px 24px;
+    gap: 56px;
+    padding: 72px 24px 64px;
     min-height: auto;
   }
 }
@@ -249,21 +257,110 @@ const CSS = `
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 20px 0;
+  padding: 28px 0;
   text-align: left;
+  max-width: 640px;
 }
 
 .hero-bench-col {
   z-index: 2;
   width: 100%;
+  min-width: 0;
+  max-width: 1040px;
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateY(400px);
 }
 
-@media (min-width: 993px) {
+@media (max-width: 992px) {
   .hero-bench-col {
-    min-width: 740px;
+    transform: none;
+  }
+}
+
+@media (min-width: 993px) and (max-width: 2000px) {
+  .hero-bench-col {
+    transform: translate(-300px, 300px);
+  }
+}
+
+.bench-stack {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-rows: 430px auto;
+  align-items: center;
+  gap: 16px;
+  width: min(800px, calc(100vw - 96px));
+}
+
+.bench-stack-stage {
+  min-width: 0;
+  width: min(680px, calc(100vw - 224px));
+  max-width: none;
+  overflow: visible;
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.bench-stack-controls {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 20;
+  grid-column: 2;
+  grid-row: 2;
+  margin-top: -6px;
+  transform: none;
+  align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+  .bench-stack {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .bench-stack-stage {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .bench-stack-stage > .absolute {
+    width: calc(100% - 16px) !important;
+  }
+
+  .bench-stack-controls {
+    grid-row: 2;
+    grid-column: 1;
+    justify-content: center;
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-inner {
+    gap: 36px;
+    padding: 48px 20px 56px;
+  }
+
+  h1.hero-title {
+    font-size: clamp(28px, 8vw, 34px);
+    line-height: 1.08;
+    margin-bottom: 20px;
+  }
+
+  .hero-text-card {
+    padding: 12px 0;
+  }
+
+  .hero-subhead {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
   }
 }
 
@@ -325,11 +422,11 @@ const CSS = `
 
 h1.hero-title {
   font-family: var(--font-sans);
-  font-size: clamp(32px, 3.8vw, 48px);
+  font-size: clamp(34px, 4vw, 56px);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin: 0 0 24px;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 0 0 28px;
   color: var(--text-color);
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
 }
@@ -347,9 +444,9 @@ h1.hero-title {
 
 .hero-subhead {
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: rgba(238, 248, 239, 0.85);
-  margin-bottom: 20px;
+  margin-bottom: 26px;
   font-family: var(--font-sans);
 }
 
@@ -513,6 +610,8 @@ h1.hero-title {
 .bar-row .lbl {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
   font-family: var(--font-mono);
   font-size: 11px;
   margin-bottom: 6px;
@@ -520,11 +619,18 @@ h1.hero-title {
 
 .bar-row .lbl .name {
   color: var(--text-muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bar-row .lbl .t {
   color: var(--text-color);
   font-weight: bold;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .bar-track {
@@ -1846,34 +1952,30 @@ export default function PierreLanding() {
       <div className="hero-section-grid" id="top">
         <AsciiBackground />
         <div className="hero-inner">
-          <div className="hero-text-card" style={{ transform: 'translateY(-24px)' }}>
+          <div className="hero-text-card">
             <h1 className="hero-title">
-              Deploy anything. Boot <span className="hero-gradient-text">FAST</span>. Stay in control.
+              Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in control.
             </h1>
             <p className="hero-subhead" style={{ fontSize: '15.5px', color: 'rgba(238, 248, 239, 0.85)', lineHeight: '1.7', marginBottom: '28px' }}>
-              One workflow for Wasm, containers, and microVMs. Reproducible builds.<br />
+              One workflow for containers and microVMs. Reproducible builds.<br />
               <span style={{ color: 'var(--text-muted)', fontSize: '13.5px', marginTop: '12px', display: 'block' }}>
-                Wasm at the edge. Containers for speed. MicroVMs for security.<br />
+                Containers for speed. MicroVMs for security.<br />
                 Managed or self-hosted. Zero drift.
               </span>
             </p>
             <div className="cta-group">
-              <a href="#early-access" className="btn btn-primary">
-                Request early access
-              </a>
+              <SpecularButton>Request early access</SpecularButton>
               <a href="#early-access" className="btn btn-secondary">
                 Explore features
               </a>
             </div>
           </div>
 
-          <div className="hero-bench-col" style={{ marginTop: '180px' }}>
+          <div className="hero-bench-col">
             <AnimatedCardStack />
           </div>
         </div>
       </div>
-
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 01 // ENGINE FEATURES &amp; INTEGRATIONS</div></div>
 
       {/* Features Cards Grid (Bring your own sub layout) */}
       <section className="features-section" id="features">
@@ -2044,8 +2146,6 @@ export default function PierreLanding() {
         </div>
         </div>
       </section>
-
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 02 // PRIVATE BETA ACCESS</div></div>
 
       {/* Centered CTA Section with Orbiting Logos */}
       <section className="centered-cta-section" id="early-access">

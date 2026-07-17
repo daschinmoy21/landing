@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface Card {
@@ -68,6 +68,7 @@ const positionStyles = [
 const exitAnimation = {
   y: 360,
   scale: 1,
+  opacity: 0,
   zIndex: 10,
 }
 
@@ -78,6 +79,18 @@ const enterAnimation = {
 
 function CardContent({ contentType }: { contentType: 1 | 2 | 3 }) {
   const data = cardData[contentType]
+
+  const readableAppName = {
+    'basic-http': 'HTTP Server',
+    'static-test': 'Static Site Server',
+    'filebrowser': 'Filebrowser',
+  }[data.app] ?? data.app
+
+  const shortLabel = (label: string) => {
+    if (label.includes('microVM')) return 'Russel microVM'
+    if (label.includes('container')) return 'Russel container'
+    return 'Podman baseline'
+  }
 
   // Find max e2e value for scaling the progress bars
   const e2eValues = data.e2e.map(row => parseFloat(row.val))
@@ -92,15 +105,15 @@ function CardContent({ contentType }: { contentType: 1 | 2 | 3 }) {
           <div className="bench-card-dot yellow"></div>
           <div className="bench-card-dot green"></div>
         </div>
-        <div className="bench-card-title" style={{ textTransform: 'uppercase' }}>benchmark · {data.app}</div>
+        <div className="bench-card-title" style={{ textTransform: 'uppercase' }}>benchmark · {readableAppName}</div>
       </div>
 
       {/* Body */}
-      <div className="bench-card-body" style={{ padding: '16px 20px 20px' }}>
-        <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', letterSpacing: '0.05em', color: '#fff', textTransform: 'uppercase', margin: '0 0 4px 0' }}>
-          {data.app} · boot race
+      <div className="bench-card-body" style={{ padding: '18px 24px 22px' }}>
+        <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', fontWeight: 700, letterSpacing: '0.05em', color: '#fff', textTransform: 'uppercase', margin: '0 0 6px 0' }}>
+          {readableAppName}
         </h4>
-        <div className="sub" style={{ marginBottom: '14px', fontSize: '9.5px' }}>build → boot → serve (lower is better)</div>
+        <div className="sub" style={{ marginBottom: '16px', fontSize: '11px' }}>Russel vs Podman</div>
 
         {/* E2E Bars */}
         <div className="bars" style={{ marginBottom: '20px' }}>
@@ -109,13 +122,13 @@ function CardContent({ contentType }: { contentType: 1 | 2 | 3 }) {
             // ensure winner looks visually different, scale width relative to maximum (with 10% minimum width)
             const percent = Math.max(10, Math.round((valNum / maxE2E) * 100))
             return (
-              <div className="bar-row" key={idx} style={{ marginBottom: '12px' }}>
-                <div className="lbl" style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '11px', marginBottom: '4px' }}>
+              <div className="bar-row" key={idx} style={{ marginBottom: '14px' }}>
+                <div className="lbl" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', alignItems: 'baseline', gap: '12px', fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 600, marginBottom: '6px', minWidth: 0 }}>
                   <span className="name" style={{ color: row.winner ? 'var(--text-color)' : 'var(--text-muted)' }}>
-                    {row.label}
+                    {shortLabel(row.label)}
                   </span>
                   <span className="t" style={{ color: row.winner ? 'var(--accent)' : 'var(--text-color)' }}>
-                    {row.val} <span style={{ fontSize: '9px', color: 'var(--text-faint)' }}>({row.desc})</span>
+                    {row.val}
                   </span>
                 </div>
                 <div className="bar-track">
@@ -124,28 +137,6 @@ function CardContent({ contentType }: { contentType: 1 | 2 | 3 }) {
               </div>
             )
           })}
-        </div>
-
-        {/* Spawn-to-Ready stats */}
-        <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
-          <h5 style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 8px 0' }}>
-            // Spawn-to-Ready (excluding build)
-          </h5>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px' }}>
-            {data.spawn.map((row, idx) => {
-              const isCtr = row.label.includes("container")
-              return (
-                <div key={idx} style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', padding: '6px 8px', fontFamily: 'var(--font-mono)' }}>
-                  <div style={{ fontSize: '8px', color: 'var(--text-faint)', textTransform: 'uppercase', marginBottom: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {row.label.replace("Russel ", "")}
-                  </div>
-                  <div style={{ fontSize: '11px', fontWeight: 'bold', color: isCtr ? 'var(--accent)' : '#fff' }}>
-                    {row.val}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
         </div>
 
       </div>
@@ -179,7 +170,7 @@ function AnimatedCard({
         duration: 1,
         bounce: 0,
       }}
-      className="absolute flex h-[300px] flex-col overflow-hidden rounded-xl border border-border shadow-2xl will-change-transform"
+      className="absolute flex h-[360px] flex-col overflow-hidden rounded-xl border border-border shadow-2xl will-change-transform"
       style={{
         zIndex,
         left: "50%",
@@ -187,8 +178,8 @@ function AnimatedCard({
         bottom: 0,
         backgroundColor: '#000000',
         borderColor: 'var(--border-color, oklch(0.11 0.022 145))',
-        width: '720px',
-        maxWidth: 'calc(100% - 24px)'
+        width: '640px',
+        maxWidth: 'calc(100% - 16px)'
       }}
     >
       <CardContent contentType={card.contentType} />
@@ -199,36 +190,41 @@ function AnimatedCard({
 export default function AnimatedCardStack() {
   const [cards, setCards] = useState(initialCards)
   const [isAnimating, setIsAnimating] = useState(false)
-  const [nextId, setNextId] = useState(4)
+  const nextId = useRef(4)
+  const nextButtonRef = useRef<HTMLButtonElement>(null)
 
   const handleAnimate = () => {
     setIsAnimating(true)
 
-    const nextContentType = ((cards[2].contentType % 3) + 1) as 1 | 2 | 3
-
-    setCards([...cards.slice(1), { id: nextId, contentType: nextContentType }])
-    setNextId((prev) => prev + 1)
+    setCards((currentCards) => {
+      const nextContentType = ((currentCards[2].contentType % 3) + 1) as 1 | 2 | 3
+      return [...currentCards.slice(1), { id: nextId.current, contentType: nextContentType }]
+    })
+    nextId.current += 1
     setIsAnimating(false)
   }
 
+  useEffect(() => {
+    const interval = window.setInterval(() => nextButtonRef.current?.click(), 4000)
+    return () => window.clearInterval(interval)
+  }, [])
+
   return (
-    <div className="flex w-full flex-col items-center justify-center pt-2">
-      <div className="relative h-[370px] overflow-hidden" style={{ width: '740px', maxWidth: '100%' }}>
+    <div className="bench-stack">
+      <button
+        ref={nextButtonRef}
+        type="button"
+        onClick={handleAnimate}
+        aria-hidden="true"
+        tabIndex={-1}
+        style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none', overflow: 'hidden' }}
+      />
+      <div className="bench-stack-stage relative h-[430px]">
         <AnimatePresence initial={false}>
           {cards.slice(0, 3).map((card, index) => (
             <AnimatedCard key={card.id} card={card} index={index} isAnimating={isAnimating} />
           ))}
         </AnimatePresence>
-      </div>
-
-      <div className="relative z-10 mt-8 flex w-full items-center justify-center py-2">
-        <button
-          onClick={handleAnimate}
-          className="flex h-9 cursor-pointer select-none items-center justify-center gap-1 overflow-hidden border border-border px-8 font-mono text-[11px] text-white transition-all hover:bg-neutral-900 active:scale-[0.98]"
-          style={{ borderColor: 'var(--border-color)', backgroundColor: 'rgba(255,255,255,0.03)', textTransform: 'uppercase', letterSpacing: '0.1em' }}
-        >
-          Next
-        </button>
       </div>
     </div>
   )

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Russel Landing - Checkup Report</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+		.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+		.report-section { border: 1px solid #222226; background: #0a0a0b; position: relative; }
+		.corner-box { position: absolute; width: 20px; height: 20px; border: 1px solid #222226; background: #000; }
+	</style>
+</head>
+<body class="bg-black text-[#fafafa]">
+	<main class="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-12">
+		<header class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// CHECKUP</div>
+					<h1 class="text-4xl font-bold tracking-tight md:text-6xl">Russel Landing</h1>
+				</div>
+				<div class="mono text-left text-xs text-[#666] md:text-right">
+					<div>COMMANDCODE REPORT</div>
+					<div class="text-[#444]">2026-07-13</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// OVERALL</div>
+					<div class="text-6xl font-bold tracking-tight md:text-7xl">35</div>
+					<div class="mt-1 text-lg text-[#666]">/ 60</div>
+					<div class="mt-4 inline-flex border border-[#fbbf24]/30 bg-[#fbbf24]/10 px-3 py-1 text-sm text-[#fbbf24]">WATCH</div>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// TL;DR</div>
+					<p class="text-sm leading-6 text-[#a0a0a0]">The page has real design intention and works for sighted mouse users on any device. But it ships with zero keyboard accessibility, no focus styles, and no reduced-motion support. That&rsquo;s a blocker.</p>
+					<p class="mt-4 text-sm leading-6 text-[#fbbf24]">Add visible focus rings to all interactive elements and respect prefers-reduced-motion. /design interaction</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// VITAL SIGNS</div>
+			<div class="overflow-x-auto">
+				<table class="w-full min-w-[720px] border-collapse text-sm">
+					<thead>
+						<tr class="border-b border-[#222226] text-left mono text-xs text-[#666]">
+							<th class="py-3 pr-4 font-normal">#</th>
+							<th class="py-3 pr-4 font-normal">VITAL SIGN</th>
+							<th class="py-3 pr-4 font-normal">STATUS</th>
+							<th class="py-3 pr-4 font-normal">SCORE</th>
+							<th class="py-3 font-normal">EVIDENCE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">1</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Intentionality</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">Watch</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5/10</td>
+							<td class="py-4 text-[#a0a0a0]">Real decisions exist but roadmap boxes are mechanically repeated.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">2</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Readability</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">Watch</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5/10</td>
+							<td class="py-4 text-[#a0a0a0]">Body text 12-13px, uncontrolled measure on wide viewports. Small feature descriptions.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">3</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Usability</td>
+							<td class="py-4 pr-4 text-[#34d399]">Healthy</td>
+							<td class="py-4 pr-4 text-[#34d399]">10/10</td>
+							<td class="py-4 text-[#a0a0a0]">Primary task achievable. CTA prominent. Navigation works. FAQ accordion functional.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">4</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Responsiveness</td>
+							<td class="py-4 pr-4 text-[#34d399]">Healthy</td>
+							<td class="py-4 pr-4 text-[#34d399]">10/10</td>
+							<td class="py-4 text-[#a0a0a0]">Breakpoints at 1200/992/768/576/480. Layouts stack correctly. No iOS input zoom triggers.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">5</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Speed</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">Watch</td>
+							<td class="py-4 pr-4 text-[#fbbf24]">5/10</td>
+							<td class="py-4 text-[#a0a0a0]">Single 2760-line component. WebGL backgrounds. External Google Fonts dependency.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">6</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Accessibility</td>
+							<td class="py-4 pr-4 text-[#f43f5e]">Critical</td>
+							<td class="py-4 pr-4 text-[#f43f5e]">0/10</td>
+							<td class="py-4 text-[#a0a0a0]">No focus styles, no reduced-motion, no ARIA labels, no skip link. Keyboard users blocked.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// SIGNALS</div>
+			<div class="grid gap-6 md:grid-cols-2">
+				<div>
+					<div class="mb-3 text-xl font-semibold">Risk Assessment</div>
+					<ul class="space-y-3 text-sm text-[#a0a0a0]">
+						<li><span class="mono mr-2 text-[#f43f5e]">FAIL</span>No keyboard navigation — focus styles absent on all interactive elements</li>
+						<li><span class="mono mr-2 text-[#f43f5e]">FAIL</span>No prefers-reduced-motion support — animations run unconditionally</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>Body text measure exceeds 100ch on wide viewports</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>Roadmap boxes are mechanically identical with no hierarchy</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Responsive breakpoints handle mobile through desktop well</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Core task (understand + request access) is achievable</li>
+					</ul>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// NEXT MODES</div>
+					<div class="flex flex-wrap gap-2">
+						<span class="border border-[#f43f5e] px-3 py-1 text-sm text-[#f43f5e]">/design interaction</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design typeset</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design relayout</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design surface</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// PRESCRIPTIONS</div>
+			<div class="space-y-5">
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">CRITICAL</div>
+					<h2 class="mb-2 text-lg font-semibold">No keyboard accessibility</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">No focus-visible styles on any button, link, or accordion toggle. FAQ buttons are interactive only via mouse click. No ARIA labels, no skip link, comparison table lacks caption and scope attributes. Keyboard users cannot reliably navigate or operate the page.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: Add focus-visible styles, respect prefers-reduced-motion, add ARIA labels. /design interaction + /design surface</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">WATCH</div>
+					<h2 class="mb-2 text-lg font-semibold">Readability under strain</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Body paragraphs have no max-width measure control. On 1440px viewports, lines exceed 100 characters. Feature card descriptions at 12px are small for comfortable reading. Section labels at 10px are the smallest text on the page — barely legible.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: Add max-width to paragraphs, bump body minimum to 14px. /design typeset</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">WATCH</div>
+					<h2 class="mb-2 text-lg font-semibold">Uniform roadmap grid</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Five mechanically identical &ldquo;Planned&rdquo; boxes with no visual hierarchy. A Wasm edge runtime and multi-node scheduling get the same treatment.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: Vary card sizes or visual treatment to reflect priority. /design relayout</div>
+				</article>
+			</div>
+		</section>
+
+		<footer class="mono py-8 text-center text-xs tracking-widest text-[#444]">
+			Generated with CommandCode - 2026-07-13
+		</footer>
+	</main>
+</body>
+</html>

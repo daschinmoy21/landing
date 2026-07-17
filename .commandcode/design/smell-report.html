@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Russel Landing - Smell Report</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+		.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+		.report-section { border: 1px solid #222226; background: #0a0a0b; position: relative; }
+		.corner-box { position: absolute; width: 20px; height: 20px; border: 1px solid #222226; background: #000; }
+	</style>
+</head>
+<body class="bg-black text-[#fafafa]">
+	<main class="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-12">
+		<header class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// SMELL</div>
+					<h1 class="text-4xl font-bold tracking-tight md:text-6xl">Russel Landing</h1>
+				</div>
+				<div class="mono text-left text-xs text-[#666] md:text-right">
+					<div>COMMANDCODE REPORT</div>
+					<div class="text-[#444]">2026-07-13</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// OVERALL</div>
+					<div class="text-6xl font-bold tracking-tight md:text-7xl">7</div>
+					<div class="mt-1 text-lg text-[#666]">/ 10</div>
+					<div class="mt-4 inline-flex border border-[#fbbf24]/30 bg-[#fbbf24]/10 px-3 py-1 text-sm text-[#fbbf24]">PRESENT</div>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// TL;DR</div>
+					<p class="text-sm leading-6 text-[#a0a0a0]">The Russel landing page makes several real design decisions that avoid the obvious AI tells. But three odors linger where the design stopped making project-specific choices: identical roadmap cards, Inter as the default type, and a dark-terminal-green palette that&rsquo;s the domain&rsquo;s first reflex.</p>
+					<p class="mt-4 text-sm leading-6 text-[#fbbf24]">Attack the feature tile grid by varying roadmap boxes. Evaluate whether terminal green is the strongest color strategy for a dual-runtime product.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// HEURISTIC SCORES</div>
+			<div class="overflow-x-auto">
+				<table class="w-full min-w-[720px] border-collapse text-sm">
+					<thead>
+						<tr class="border-b border-[#222226] text-left mono text-xs text-[#666]">
+							<th class="py-3 pr-4 font-normal">#</th>
+							<th class="py-3 pr-4 font-normal">HEURISTIC</th>
+							<th class="py-3 pr-4 font-normal">SCORE</th>
+							<th class="py-3 font-normal">KEY FINDING</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">1</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Tech gradient</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">No blue-violet, indigo-cyan, or purple-to-teal gradient anywhere. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">2</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Generic tech hue</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">Green (145 hue) is not the default blue-purple SaaS reflex. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">3</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Feature tile grid</td>
+							<td class="py-4 pr-4 text-[#f43f5e]">0/1</td>
+							<td class="py-4 text-[#a0a0a0]">Detected. Roadmap &ldquo;Planned&rdquo; boxes are 5 identical cards in a uniform grid.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">4</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Accent rail</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">No decorative colored stripes on card edges. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">5</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Unearned blur</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">Header blur sits over dark solid bg, not a decorative glass effect. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">6</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Stat monument</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">Microstats are small, contextual, and tied to product claims. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">7</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Icon topper</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">No rounded-square icons above section headings. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">8</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Bounce everywhere</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">Motion is restrained: subtle ease-in-out floats, no elastic or spring bounce. Clean.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">9</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Default type</td>
+							<td class="py-4 pr-4 text-[#f43f5e]">0/1</td>
+							<td class="py-4 text-[#a0a0a0]">Detected. Inter + JetBrains Mono is competent but unsurprising for a dev tool.</td>
+						</tr>
+						<tr class="border-b border-[#1a1a1e]">
+							<td class="py-4 pr-4 text-[#555]">10</td>
+							<td class="py-4 pr-4 text-[#fafafa]">Center stack</td>
+							<td class="py-4 pr-4 text-[#34d399]">1/1</td>
+							<td class="py-4 text-[#a0a0a0]">Hero is left-aligned with right-positioned card. No centered-just-because composition. Clean.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// DOMAIN ASSESSMENT</div>
+			<div class="grid gap-6 md:grid-cols-2">
+				<div>
+					<div class="mb-3 text-xl font-semibold">Domain Default Trap</div>
+					<ul class="space-y-3 text-sm text-[#a0a0a0]">
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>Not the default blue-purple SaaS gradient</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>No hero illustration with floating 3D blobs</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>No rounded feature cards with icon toppers</li>
+						<li><span class="mono mr-2 text-[#34d399]">PASS</span>No oversized stat monuments with animated counters</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>Dark green terminal aesthetic is the dev-infra domain reflex</li>
+						<li><span class="mono mr-2 text-[#fbbf24]">WATCH</span>Inter + JetBrains Mono is the default monospace-tool pairing</li>
+					</ul>
+				</div>
+				<div>
+					<div class="mono mb-3 text-xs tracking-widest text-[#666]">// NEXT MODES</div>
+					<div class="flex flex-wrap gap-2">
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design relayout</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design typeset</span>
+						<span class="border border-[#333] px-3 py-1 text-sm text-[#a0a0a0]">/design recolor</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// WHAT'S WORKING</div>
+			<div class="grid gap-4 md:grid-cols-3">
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Hero composition</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Left-aligned headline with right-positioned benchmark card creates real tension, not center-stacked safety.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Proof elements</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Benchmark card with concrete numbers (1.7s vs 2.7s vs 10.0s), architecture SVG, runtime comparison graphic &mdash; all product-specific evidence.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Motion restraint</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Subtle ease-in-out floats on AI logos, translateY(-2px) card hover, cubic-bezier transitions. No bounce, no elastic, no spring.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">CLI cadence</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">// 01 // section dividers, terminal window cards, ASCII background &mdash; the CLI-inspired rhythm matches the developer audience without cosplay.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">Specific iconography</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Claude, Codex, Hermes, and Grok logos are named and animated. Runtime graphic toggles between container and microVM with active states.</p>
+				</article>
+				<article class="border border-[#1f1f24] p-4">
+					<h2 class="mb-2 text-sm font-semibold">No AI gradients</h2>
+					<p class="text-sm leading-6 text-[#a0a0a0]">Zero blue-violet, indigo-cyan, or purple-to-teal gradients anywhere on the page. Genuinely clean on this odor.</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-6 text-xs tracking-widest text-[#666]">// DETECTED SMELLS</div>
+			<div class="space-y-5">
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">SMELL &mdash; Heuristic 3</div>
+					<h2 class="mb-2 text-lg font-semibold">Feature tile grid</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">The 5 roadmap &ldquo;Planned&rdquo; boxes are identical in every visual dimension: same padding, same border, same internal structure (tag &rarr; h4 &rarr; p), all tagged &ldquo;Planned.&rdquo; Zero hierarchy among items covering fundamentally different domains (runtime, Wasm, secrets, CVE pipeline, scheduling). The Wasm edge runtime and multi-node scheduling get the same visual weight.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: Vary box sizes, group related items, or give strategic features more visual prominence. /design relayout</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#f43f5e]">SMELL &mdash; Heuristic 9</div>
+					<h2 class="mb-2 text-lg font-semibold">Default type</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Inter is the default sans-serif for 2024&ndash;2026 web projects. JetBrains Mono is the default monospace for developer tools. Together they&rsquo;re the &ldquo;safe default monospace tool&rdquo; pairing. A project with the visual ambition of ASCII dithering, scanlines, and CLI-inspired cadence deserves a type choice with more character.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: Keep JetBrains Mono (it earns its place) but replace Inter with something more editorial. /design typeset</div>
+				</article>
+				<article class="border border-[#2a1d22] bg-[#110b0d] p-5">
+					<div class="mono mb-2 text-xs text-[#fbbf24]">WATCH &mdash; Domain Assessment</div>
+					<h2 class="mb-2 text-lg font-semibold">Domain default trap</h2>
+					<p class="mb-4 text-sm leading-6 text-[#a0a0a0]">Dark green base (#040803) + green terminal accent (oklch 145 hue) + monospace headings + terminal window cards = the textbook developer infrastructure aesthetic. If someone described &ldquo;a landing page for a container/orchestration dev tool,&rdquo; the guess would be: dark, green, monospace, terminal windows. The execution is strong enough that it&rsquo;s not a failure &mdash; but the palette is exactly what you&rsquo;d predict from the domain.</p>
+					<div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">FIX: Consider whether terminal green is the strongest color lane for a product whose differentiator is dual runtime orchestration, not terminal aesthetic. /design recolor</div>
+				</article>
+			</div>
+		</section>
+
+		<footer class="mono py-8 text-center text-xs tracking-widest text-[#444]">
+			Generated with CommandCode - 2026-07-13
+		</footer>
+	</main>
+</body>
+</html>
