@@ -1,5 +1,20 @@
 import React from 'react';
 import AsciiBackground from './AsciiBackground.jsx';
+import AnimatedCardStack from './ui/animate-card-animation';
+
+const logo01 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg";
+const logo02 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg";
+const logo03 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg";
+const logo04 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg";
+const logo05 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg";
+const logo06 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg";
+const logo07 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg";
+const logo08 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg";
+const logo09 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg";
+const logo10 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wasm/wasm-original.svg";
+const logo11 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg";
+const logo12 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg";
+const logo13 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg";
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
@@ -28,6 +43,16 @@ const CSS = `
   --selection-bg: oklch(0.68 0.16 145 / 0.2);
   --font-mono: 'JetBrains Mono', monospace;
   --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Clash-Display', var(--font-sans);
+}
+
+.pierre-page h1,
+.pierre-page h2,
+.pierre-page h3,
+.pierre-page h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .pierre-page {
@@ -189,27 +214,31 @@ const CSS = `
 .hero-section-grid {
   display: block;
   border-bottom: 1px solid var(--border-color);
-  min-height: min(760px, calc(100vh - 92px));
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: #0a1206;
+  background: radial-gradient(circle at 50% 50%, rgba(10, 20, 5, 0.6) 0%, #040803 100%);
 }
 
 .hero-inner {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 64px 48px 42px;
+  padding: 80px 48px 64px;
   position: relative;
-  min-height: inherit;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: center;
+  min-height: min(720px, calc(100vh - 64px));
 }
 
 @media (max-width: 992px) {
-  .hero-section-grid {
-    min-height: auto;
-  }
   .hero-inner {
-    padding: 48px 24px;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 64px 24px;
+    min-height: auto;
   }
 }
 
@@ -217,53 +246,24 @@ const CSS = `
   position: relative;
   z-index: 2;
   display: flex;
-  min-height: 500px;
-  max-width: 480px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 40px 0;
+  padding: 20px 0;
   text-align: left;
-}
-
-@media (max-width: 768px) {
-  .hero-text-card {
-    min-height: 380px;
-    max-width: 100%;
-    padding: 24px 0;
-  }
-}
-
-.hero-bench-card {
-  padding: 24px 0;
-  width: 100%;
-  max-width: 480px;
-  text-align: left;
-}
-
-@media (max-width: 768px) {
-  .hero-bench-card {
-    padding: 24px 0;
-  }
 }
 
 .hero-bench-col {
-  position: absolute;
-  right: 48px;
-  bottom: 42px;
   z-index: 2;
-  width: min(40%, 480px);
+  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-@media (max-width: 992px) {
+@media (min-width: 993px) {
   .hero-bench-col {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    margin: 28px auto 0;
+    min-width: 740px;
   }
 }
 
@@ -314,23 +314,57 @@ const CSS = `
 }
 
 /* Hero elements */
-h1.hero-title {
+.hero-eyebrow {
   font-family: var(--font-mono);
-  font-size: clamp(28px, 3.2vw, 46px);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 16px;
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.06em;
-  margin: 0 0 22px;
-  color: var(--text-color);
-  text-shadow: 0 0 22px rgba(255, 255, 255, 0.18);
 }
 
-p.hero-subtitle {
-  font-size: 14px;
-  color: rgba(238, 248, 239, 0.75);
+h1.hero-title {
+  font-family: var(--font-sans);
+  font-size: clamp(32px, 3.8vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 24px;
+  color: var(--text-color);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+.hero-gradient-text {
+  font-style: italic;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent) 30%, var(--accent-alt) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  text-shadow: 0 0 30px rgba(99, 254, 19, 0.15);
+}
+
+.hero-subhead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(238, 248, 239, 0.85);
+  margin-bottom: 20px;
+  font-family: var(--font-sans);
+}
+
+.hero-divider-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 20px 0;
+}
+
+.hero-description-bullets {
+  font-size: 13.5px;
   line-height: 1.7;
-  margin: 0 0 30px;
-  max-width: 44ch;
+  color: var(--text-muted);
+  margin-bottom: 32px;
 }
 
 .cta-group {
@@ -343,15 +377,16 @@ p.hero-subtitle {
   .cta-group {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
   }
 }
 
 .btn {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 13px;
-  padding: 12px 24px;
-  border-radius: 6px;
+  font-size: 13.5px;
+  padding: 12px 28px;
+  border-radius: 8px; /* Tasteful rounded corners */
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -362,25 +397,50 @@ p.hero-subtitle {
 }
 
 .btn-primary {
-  background: rgba(237, 255, 239, 0.92);
-  color: #050505;
-  border: 1px solid rgba(237, 255, 239, 0.92);
+  background: var(--accent);
+  color: #040803;
+  border: 1px solid var(--accent);
 }
 
 .btn-primary:hover {
   background-color: transparent;
-  color: var(--text-color);
+  color: var(--accent);
 }
 
 .btn-secondary {
-  background-color: rgba(0, 0, 0, 0.38);
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.38);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .btn-secondary:hover {
-  border-color: var(--accent);
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.hero-microstats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.microstat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.microstat-item .mono-symbol {
+  font-family: var(--font-mono);
   color: var(--accent);
+  font-weight: 700;
+}
+
+.microstat-item .stat-label {
+  color: var(--text-muted);
 }
 
 /* Benchmark Card */
@@ -973,15 +1033,31 @@ p.features-desc {
 }
 
 .roadmap-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .roadmap-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .roadmap-card {
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  transition: all 0.25s ease;
+}
+
+.roadmap-card:hover {
+  border-color: var(--text-faint);
+  transform: translateY(-1px);
 }
 
 .roadmap-card-icon {
@@ -1006,6 +1082,33 @@ p.features-desc {
   gap: 8px;
 }
 
+.roadmap-card.featured {
+  grid-column: span 2;
+  border-color: var(--accent);
+  background: rgba(99, 254, 19, 0.03);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.roadmap-card.featured:hover {
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 20px rgba(99, 254, 19, 0.15);
+}
+
+.roadmap-card.highlight {
+  border-color: var(--accent-alt-muted);
+  background: rgba(255, 59, 238, 0.02);
+}
+
+.roadmap-card.highlight:hover {
+  border-color: var(--accent-alt-soft);
+}
+
+@media (max-width: 640px) {
+  .roadmap-card.featured {
+    grid-column: span 1;
+  }
+}
+
 .roadmap-state {
   font-family: var(--font-mono);
   font-size: 9.5px;
@@ -1024,13 +1127,256 @@ p.features-desc {
   line-height: 1.55;
 }
 
-/* FAQ Layout */
-.faq-layout {
+/* Centered CTA Section (Image 1) */
+.centered-cta-section {
+  position: relative;
+  padding: 120px 24px;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  background: radial-gradient(circle at 50% 50%, rgba(10, 20, 5, 0.4) 0%, #040803 100%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.cta-content-wrapper {
+  position: relative;
+  z-index: 5;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  max-width: 680px;
-  margin-top: 32px;
+  align-items: center;
+}
+
+.cta-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid var(--accent);
+  border-radius: 14px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  box-shadow: 0 0 25px var(--accent-glow);
+  background-color: rgba(4, 8, 3, 0.85);
+}
+
+.cta-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cta-logo .pulse {
+  fill: var(--accent);
+}
+
+.cta-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cta-title {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 5.5vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  color: #fff;
+  margin: 0 0 24px;
+  text-shadow: 0 0 30px rgba(255,255,255,0.1);
+}
+
+.cta-subtitle {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 56ch;
+  margin-bottom: 32px;
+}
+
+.cta-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  text-transform: uppercase;
+}
+
+.cta-tags .divider {
+  color: var(--border-color);
+}
+
+.cta-input-bar {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(4, 8, 3, 0.85);
+  border: 1px solid var(--border-color);
+  padding: 6px 6px 6px 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(12px);
+}
+
+.cta-input-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 15px 45px rgba(99, 254, 19, 0.08);
+}
+
+.cta-input-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  padding: 8px 0;
+}
+
+.cta-input-bar input::placeholder {
+  color: var(--text-faint);
+}
+
+.cta-submit-btn {
+  background: var(--accent);
+  color: #040803;
+  border: none;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cta-submit-btn:hover {
+  background-color: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+.cta-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Orbiting background */
+.orbit-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 900px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px dashed rgba(99, 254, 19, 0.08);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-ring-1 {
+  width: 380px;
+  height: 380px;
+  animation: rotate-clockwise 35s linear infinite;
+}
+
+.orbit-ring-2 {
+  width: 600px;
+  height: 600px;
+  animation: rotate-counter 55s linear infinite;
+}
+
+.orbit-ring-3 {
+  width: 820px;
+  height: 820px;
+  animation: rotate-clockwise 80s linear infinite;
+}
+
+/* Logos on the rings */
+.orbit-logo-item {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  background-color: #040803;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbit-logo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: all 0.25s ease;
+}
+
+.orbit-logo-item:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.orbit-ring-1 .orbit-logo-item {
+  animation: counter-rotate-clockwise 35s linear infinite;
+}
+
+.orbit-ring-2 .orbit-logo-item {
+  animation: counter-rotate-counter 55s linear infinite;
+}
+
+.orbit-ring-3 .orbit-logo-item {
+  animation: counter-rotate-clockwise 80s linear infinite;
+}
+
+@keyframes rotate-clockwise {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotate-counter {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes counter-rotate-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes counter-rotate-counter {
+  from { transform: rotate(-360deg); }
+  to { transform: rotate(0deg); }
 }
 
 .faq-cta-row {
@@ -1500,74 +1846,30 @@ export default function PierreLanding() {
       <div className="hero-section-grid" id="top">
         <AsciiBackground />
         <div className="hero-inner">
-        
-        <div className="hero-text-card">
-          <h1 className="hero-title">
-            One <span style={{ color: 'var(--accent)' }}>config</span>.<br />
-            Two <span style={{ color: 'var(--accent)' }}>runtimes</span>.<br />
-            Near-zero <span style={{ color: 'var(--accent)' }}>overhead</span>.
-          </h1>
-          <p className="hero-subtitle" style={{ fontSize: '15.5px', color: 'rgba(238, 248, 239, 0.85)', lineHeight: '1.7' }}>
-            Hot-swap between lightweight Podman containers and hardware-isolated Cloud Hypervisor microVMs with zero downtime.
-          </p>
-          <div className="cta-group">
-            <a href="#early-access" className="btn btn-primary">
-              Request early access
-            </a>
-            <a href="#features" className="btn btn-secondary">
-              Explore features
-            </a>
-          </div>
-        </div>
-
-        <div className="hero-bench-col">
-          {/* Benchmark Card */}
-          <div className="hero-bench-card">
-            <div className="bench-card">
-              <div className="bench-card-titlebar">
-                <div className="bench-card-dots">
-                  <div className="bench-card-dot red"></div>
-                  <div className="bench-card-dot yellow"></div>
-                  <div className="bench-card-dot green"></div>
-                </div>
-                <div className="bench-card-title">benchmark</div>
-              </div>
-              <div className="bench-card-body">
-                <h4>Static site · cold deploy</h4>
-                <div className="sub">build → boot → serve (lower is better)</div>
-                <div className="bars">
-                  <div className="bar-row">
-                    <div className="lbl">
-                      <span className="name">Russel (microVM)</span>
-                      <span className="t">1.7s</span>
-                    </div>
-                    <div className="bar-track">
-                      <div className="bar-fill win" style={{ width: '17%' }}></div>
-                    </div>
-                  </div>
-                  <div className="bar-row">
-                    <div className="lbl">
-                      <span className="name">Docker / Podman (best-case)</span>
-                      <span className="t">2.7s</span>
-                    </div>
-                    <div className="bar-track">
-                      <div className="bar-fill lose" style={{ width: '27%' }}></div>
-                    </div>
-                  </div>
-                  <div className="bar-row">
-                    <div className="lbl">
-                      <span className="name">Podman (typical cold start)</span>
-                      <span className="t">10.0s</span>
-                    </div>
-                    <div className="bar-track">
-                      <div className="bar-fill lose" style={{ width: '100%' }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="hero-text-card" style={{ transform: 'translateY(-24px)' }}>
+            <h1 className="hero-title">
+              Deploy anything. Boot <span className="hero-gradient-text">FAST</span>. Stay in control.
+            </h1>
+            <p className="hero-subhead" style={{ fontSize: '15.5px', color: 'rgba(238, 248, 239, 0.85)', lineHeight: '1.7', marginBottom: '28px' }}>
+              One workflow for Wasm, containers, and microVMs. Reproducible builds.<br />
+              <span style={{ color: 'var(--text-muted)', fontSize: '13.5px', marginTop: '12px', display: 'block' }}>
+                Wasm at the edge. Containers for speed. MicroVMs for security.<br />
+                Managed or self-hosted. Zero drift.
+              </span>
+            </p>
+            <div className="cta-group">
+              <a href="#early-access" className="btn btn-primary">
+                Request early access
+              </a>
+              <a href="#early-access" className="btn btn-secondary">
+                Explore features
+              </a>
             </div>
           </div>
-        </div>
+
+          <div className="hero-bench-col" style={{ marginTop: '180px' }}>
+            <AnimatedCardStack />
+          </div>
         </div>
       </div>
 
@@ -1743,389 +2045,80 @@ export default function PierreLanding() {
         </div>
       </section>
 
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 02 // CONFIGURATION &amp; EXECUTION OUTPUT</div></div>
+      <div className="section-divider-label"><div className="section-divider-label-inner">// 02 // PRIVATE BETA ACCESS</div></div>
 
-      {/* Config File and Terminal Showcase (One button to commit layout) */}
-      <section className="config-showcase-section">
-        <div className="config-col-left">
-          {/* Config file container */}
-          <div className="showcase-card">
-            <div className="showcase-card-header">
-              <div className="showcase-card-dots">
-                <div className="showcase-dot red"></div>
-                <div className="showcase-dot yellow"></div>
-                <div className="showcase-dot green"></div>
-              </div>
-              <span className="showcase-card-title">Russelfile.toml</span>
-            </div>
-            <div className="showcase-card-body">
-              <span className="code-comment"># Russel deployment configuration</span><br />
-              <span className="code-kw">[service]</span><br />
-              name = <span className="code-str">"api-service"</span><br />
-              port = <span className="code-str">8080</span><br />
-              <span className="code-kw">runtime = "microvm"</span> <span className="code-comment"># switch to "container" anytime</span><br />
-              <br />
-              <span className="code-kw">[build]</span><br />
-              builder = <span className="code-str">"reproducible"</span><br />
-              entrypoint = <span className="code-str">"./target/release/api"</span>
-            </div>
+      {/* Centered CTA Section with Orbiting Logos */}
+      <section className="centered-cta-section" id="early-access">
+        {/* Orbit container */}
+        <div className="orbit-container">
+          <div className="orbit-ring orbit-ring-1">
+            <div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo01} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo02} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo03} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo04} alt="" /></div>
           </div>
-
-          {/* Terminal execution container */}
-          <div className="showcase-card">
-            <div className="showcase-card-header">
-              <div className="showcase-card-dots">
-                <div className="showcase-dot red"></div>
-                <div className="showcase-dot yellow"></div>
-                <div className="showcase-dot green"></div>
-              </div>
-              <span className="showcase-card-title">russel deploy</span>
-            </div>
-            <div className="showcase-card-body" style={{ color: '#eaeaea' }}>
-              <span style={{ color: '#888' }}>$</span> russel deploy --prod<br />
-              <span style={{ color: 'var(--accent)' }}>✓</span> artifact built (store/78b3f2a-api-service)<br />
-              <span style={{ color: 'var(--accent)' }}>✓</span> booting runtime: microvm (cloud-hypervisor)<br />
-              <span style={{ color: 'var(--accent)' }}>✓</span> VM started in 1.74s<br />
-              <span style={{ color: 'var(--accent)' }}>✓</span> routing traffic to <span style={{ textDecoration: 'underline' }}>http://10.0.0.42:8880</span>
-            </div>
+          <div className="orbit-ring orbit-ring-2">
+            <div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo05} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo06} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo07} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo08} alt="" /></div>
+          </div>
+          <div className="orbit-ring orbit-ring-3">
+            <div className="orbit-logo-item" style={{ top: '6.7%', left: '75%', transform: 'translate(-50%, -50%)' }}><img src={logo09} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo10} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '93.3%', left: '75%', transform: 'translate(-50%, -50%)' }}><img src={logo11} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '93.3%', left: '25%', transform: 'translate(-50%, -50%)' }}><img src={logo12} alt="" /></div>
+            <div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo13} alt="" /></div>
           </div>
         </div>
 
-        <div className="config-col-right">
-          <div className="features-subtitle">Zero orchestration overhead</div>
-          <h2 className="features-title" style={{ marginTop: '4px', marginBottom: '24px' }}>
-            One file to build, run, and isolate.
+        <div className="cta-content-wrapper">
+          <div className="cta-logo">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <rect
+                x="2"
+                y="2"
+                width="28"
+                height="28"
+                rx="7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <rect x="12" y="12" width="8" height="8" rx="1.5" className="pulse" />
+              <path
+                d="M16 2v6M16 24v6M2 16h6M24 16h6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+          
+          <span className="cta-eyebrow">Russel Private Beta</span>
+          
+          <h2 className="cta-title">
+            Deploy without the<br />runtime trade-offs.
           </h2>
-          <ul className="bullet-check-list">
-            <li className="bullet-check-item">
-              <span className="bullet-check-icon">✓</span>
-              <span className="bullet-check-text">
-                <strong>Instant runtime hot-swaps.</strong> Switch from container to microVM without changes to your application code.
-              </span>
-            </li>
-            <li className="bullet-check-item">
-              <span className="bullet-check-icon">✓</span>
-              <span className="bullet-check-text">
-                <strong>Verifiable artifact builds.</strong> Reproducible builds run in clean sandboxes to guarantee no staging-to-prod drift.
-              </span>
-            </li>
-            <li className="bullet-check-item">
-              <span className="bullet-check-icon">✓</span>
-              <span className="bullet-check-text">
-                <strong>Security promotion.</strong> Auto-detect container CVE dependencies on build and promote directly to microVM.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 03 // DETAILED CAPABILITIES BENCHMARK</div></div>
-
-      {/* Comparison table section */}
-      <section style={{ borderBottom: '1px solid var(--border-color)' }} id="comparison">
-        <div className="section-inner" style={{ padding: '64px 48px' }}>
-        <div className="features-header" style={{ marginBottom: '24px' }}>
-          <div className="features-subtitle">Comparison matrix</div>
-          <h2 className="features-title">Where Russel Sits</h2>
-        </div>
-        <p style={{ color: 'var(--text-muted)', fontSize: '13.5px', margin: '0 0 24px 0', maxWidth: '700px' }}>
-          Russel bridges the gap between simple containers and full hardware virtualization, avoiding complex orchestration frameworks while delivering content-addressed build reproducibility.
-        </p>
-
-        <div className="table-container">
-          <table className="compare-table">
-            <thead>
-              <tr>
-                <th>Capabilities</th>
-                <th className="highlight-col" style={{ color: 'var(--accent)', fontWeight: '700' }}>Russel</th>
-                <th>Docker / Podman</th>
-                <th>Kubernetes</th>
-                <th>AWS Lambda</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="row-title">Isolation Boundary</td>
-                <td className="highlight-col"><span style={{ border: '1px solid var(--accent)', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', color: 'var(--accent)' }}>Container OR microVM</span></td>
-                <td>Shared Kernel</td>
-                <td>Namespaces</td>
-                <td>Firecracker VM</td>
-              </tr>
-              <tr>
-                <td className="row-title">Deterministic builds</td>
-                <td className="highlight-col"><span className="table-check">✓</span> Nix Build Store</td>
-                <td>Layer Drift</td>
-                <td>Image Dependent</td>
-                <td>Opaque Layering</td>
-              </tr>
-              <tr>
-                <td className="row-title">Self-Hosted / Control</td>
-                <td className="highlight-col"><span className="table-check">✓</span> Yes</td>
-                <td>Yes</td>
-                <td>Complex Cluster</td>
-                <td>AWS Lock-in</td>
-              </tr>
-              <tr>
-                <td className="row-title">Cold boot time</td>
-                <td className="highlight-col">~1.7s</td>
-                <td>2.7s – 10.0s</td>
-                <td>Minutes</td>
-                <td>~1s (AWS-bound)</td>
-              </tr>
-              <tr>
-                <td className="row-title">CVE Auto-Upgrade</td>
-                <td className="highlight-col"><span className="table-check">✓</span> Yes</td>
-                <td>Manual rebuild</td>
-                <td>Manual rebuild</td>
-                <td>AWS Managed</td>
-              </tr>
-              <tr>
-                <td className="row-title">Vendor lock-in</td>
-                <td className="highlight-col">None</td>
-                <td>Low</td>
-                <td>Medium</td>
-                <td>High</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        </div>
-      </section>
-
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 04 // SYSTEM ARCHITECTURE &amp; ORCHESTRATION</div></div>
-
-      {/* System Architecture (microVM/container + Russel Orchestrator) */}
-      <section className="system-design-section" id="architecture">
-        <div className="section-inner">
-        <div className="features-header">
-          <div className="features-subtitle">System Design</div>
-          <h2 className="features-title">Dual Runtimes &amp; Orchestration Model</h2>
-        </div>
-        <p style={{ color: 'var(--text-muted)', fontSize: '13.5px', margin: '0 0 24px 0', maxWidth: '700px' }}>
-          Russel orchestrates deployment workflows by building content-addressed packages, managing node schedules, and deploying either container or KVM-isolated microVM sandboxes onto bare-metal hosts.
-        </p>
-
-        <div className="system-design-container">
-          <svg className="system-design-svg" viewBox="0 0 800 380" aria-hidden="true">
-            <defs>
-              <marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto">
-                <polygon points="0,0 5,2.5 0,5" fill="var(--accent)" />
-              </marker>
-              <marker id="arrow-muted" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto">
-                <polygon points="0,0 5,2.5 0,5" fill="var(--text-faint)" />
-              </marker>
-            </defs>
-
-            {/* Client CLI */}
-            <rect x="20" y="145" width="160" height="90" rx="8" fill="oklch(0.05 0.020 145)" stroke="var(--accent)" strokeWidth="1.5" />
-            <text x="100" y="185" textAnchor="middle" fill="var(--text-color)" fontSize="13" fontWeight="700" fontFamily="var(--font-mono)">russel CLI</text>
-            <text x="100" y="205" textAnchor="middle" fill="var(--accent)" fontSize="10.5" fontFamily="var(--font-mono)">russel deploy</text>
-
-            {/* Connector CLI -> Orchestrator */}
-            <path d="M180 190 L232 190" fill="none" stroke="var(--accent)" strokeWidth="1.5" markerEnd="url(#arrow)" />
-            <text x="206" y="180" textAnchor="middle" fill="var(--text-faint)" fontSize="9" fontFamily="var(--font-mono)">Axum API</text>
-
-            {/* Russel Orchestrator (Control Plane) */}
-            <rect x="240" y="95" width="240" height="190" rx="8" fill="oklch(0.05 0.020 145)" stroke="var(--accent)" strokeWidth="1.5" />
-            <text x="360" y="130" textAnchor="middle" fill="var(--text-color)" fontSize="13.5" fontWeight="700" fontFamily="var(--font-mono)">Russel Orchestrator</text>
-            <text x="360" y="150" textAnchor="middle" fill="var(--text-faint)" fontSize="10.5" fontFamily="var(--font-sans)">Control Plane / Scheduler</text>
-            
-            {/* Inner modules of orchestrator */}
-            <rect x="255" y="175" width="210" height="85" rx="5" fill="rgba(255,255,255,0.01)" stroke="var(--accent-muted)" strokeWidth="1" />
-            <text x="360" y="205" textAnchor="middle" fill="var(--text-muted)" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">Nix Package Builder</text>
-            <text x="360" y="230" textAnchor="middle" fill="var(--text-muted)" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)">Node Registry &amp; State</text>
-
-            {/* Connector Orchestrator -> Container Node */}
-            <path d="M480 145 L532 92.5" fill="none" stroke="var(--accent)" strokeWidth="1.5" markerEnd="url(#arrow)" />
-            <text x="502" y="110" textAnchor="middle" fill="var(--text-faint)" fontSize="9" fontFamily="var(--font-mono)">gRPC</text>
-
-            {/* Connector Orchestrator -> microVM Node */}
-            <path d="M480 235 L532 287.5" fill="none" stroke="var(--accent)" strokeWidth="1.5" markerEnd="url(#arrow)" />
-            <text x="502" y="275" textAnchor="middle" fill="var(--text-faint)" fontSize="9" fontFamily="var(--font-mono)">gRPC</text>
-
-            {/* Node Host 1 (Container Host) */}
-            <rect x="540" y="20" width="240" height="140" rx="8" fill="oklch(0.05 0.020 145)" stroke="var(--accent)" strokeWidth="1.5" />
-            <text x="660" y="48" textAnchor="middle" fill="var(--text-color)" fontSize="12" fontWeight="700" fontFamily="var(--font-mono)">Node Host A (russel-agent)</text>
-            
-            {/* Container Engine Branch */}
-            <rect x="555" y="68" width="210" height="75" rx="4" fill="rgba(255,255,255,0.01)" stroke="var(--accent-muted)" strokeWidth="1" />
-            <text x="660" y="90" textAnchor="middle" fill="var(--text-color)" fontSize="11" fontWeight="600" fontFamily="var(--font-sans)">Container Runtime</text>
-            <text x="660" y="110" textAnchor="middle" fill="var(--text-faint)" fontSize="9.5" fontFamily="var(--font-mono)">Podman Sandbox</text>
-            <text x="660" y="126" textAnchor="middle" fill="var(--text-faint)" fontSize="9" fontFamily="var(--font-mono)">Shared Host Kernel</text>
-
-            {/* Node Host 2 (microVM Host) */}
-            <rect x="540" y="210" width="240" height="145" rx="8" fill="oklch(0.05 0.020 145)" stroke="var(--accent)" strokeWidth="1.5" />
-            <text x="660" y="238" textAnchor="middle" fill="var(--text-color)" fontSize="12" fontWeight="700" fontFamily="var(--font-mono)">Node Host B (russel-agent)</text>
-
-            {/* microVM Engine Branch */}
-            <rect x="555" y="258" width="210" height="82" rx="4" fill="var(--accent-glow)" stroke="var(--accent)" strokeWidth="1" />
-            <text x="660" y="280" textAnchor="middle" fill="var(--accent-soft)" fontSize="11" fontWeight="600" fontFamily="var(--font-sans)">microVM Runtime</text>
-            <text x="660" y="300" textAnchor="middle" fill="var(--text-color)" fontSize="9.5" fontFamily="var(--font-mono)">Cloud Hypervisor + KVM</text>
-            <text x="660" y="318" textAnchor="middle" fill="var(--text-faint)" fontSize="9" fontFamily="var(--font-mono)">Isolated / virtiofsd &amp; socat</text>
-          </svg>
-        </div>
-        </div>
-      </section>
-
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 05 // PROJECT PHASES &amp; ROADMAP</div></div>
-
-      {/* Combined Roadmap and Where It's At Section */}
-      <section style={{ borderBottom: '1px solid var(--border-color)' }} id="roadmap">
-        <div className="section-inner" style={{ padding: '64px 48px' }}>
-        <div className="features-header">
-          <div className="features-subtitle">Phases &amp; future milestones</div>
-          <h2 className="features-title">Roadmap &amp; Project Status</h2>
-        </div>
-
-        <div className="roadmap-container">
-          {/* Timeline / Where it's at */}
-          <div>
-            <h3 style={{ fontSize: '13px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px', color: 'var(--text-color)' }}>
-              // Project Timeline
-            </h3>
-            <div className="phases-list">
-              <div className="phase-item">
-                <span className="phase-badge done">Done</span>
-                <div className="phase-header-row">
-                  <span className="phase-label-tag">// Phase 1</span>
-                  <span style={{ fontSize: '11px', color: 'var(--accent-alt)', fontWeight: 'bold', fontFamily: 'var(--font-mono)' }}>(Completed)</span>
-                </div>
-                <span className="phase-text">
-                  Single-node microVM deployments. End-to-end builds boot via Cloud Hypervisor on local hosts.
-                </span>
-              </div>
-              <div className="phase-item">
-                <span className="phase-badge now">Active</span>
-                <div className="phase-header-row">
-                  <span className="phase-label-tag active">// Phase 2</span>
-                  <span style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: 'bold', fontFamily: 'var(--font-mono)' }}>(Active)</span>
-                </div>
-                <span className="phase-text">
-                  Adding a Podman container runtime, runtime hot-swaps, and unified configuration.
-                </span>
-              </div>
-              <div className="phase-item">
-                <span className="phase-badge next">Planned</span>
-                <div className="phase-header-row">
-                  <span className="phase-label-tag">// Phase 3</span>
-                  <span style={{ fontSize: '11px', color: 'var(--text-faint)', fontFamily: 'var(--font-mono)' }}>(Planned)</span>
-                </div>
-                <span className="phase-text">
-                  Secrets managers, config evolving from TOML to YAML, and multi-node fleet scheduling.
-                </span>
-              </div>
-            </div>
+          
+          <p className="cta-subtitle">
+            One workflow for Wasm, containers, and microVMs. Get early access to the infrastructure built for speed, isolation, and control.
+          </p>
+          
+          <div className="cta-tags">
+            <span>Fast Boots</span>
+            <span className="divider">·</span>
+            <span>Reproducible Builds</span>
+            <span className="divider">·</span>
+            <span>KVM Isolation</span>
           </div>
 
-          {/* Roadmap Grid */}
-          <div>
-            <h3 style={{ fontSize: '13px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px', color: 'var(--text-color)' }}>
-              // Planned Features
-            </h3>
-            <div className="roadmap-grid">
-              <div className="roadmap-card">
-                <div className="roadmap-card-icon">✓</div>
-                <div>
-                  <h4>Dual runtime <span className="roadmap-state" data-status="active">// Active</span></h4>
-                  <p>Containers and microVMs managed via a single config line; zero application rebuild overhead.</p>
-                </div>
-              </div>
-
-              <div className="roadmap-card">
-                <div className="roadmap-card-icon planned">•</div>
-                <div>
-                  <h4>Sealed secrets <span className="roadmap-state">// Planned</span></h4>
-                  <p>Encrypted secret variables injection directly to microVM memory, bypassing the build store.</p>
-                </div>
-              </div>
-
-              <div className="roadmap-card">
-                <div className="roadmap-card-icon planned">•</div>
-                <div>
-                  <h4>CVE dependency pipeline <span className="roadmap-state">// Planned</span></h4>
-                  <p>Auto-check package dependencies against vulnerability catalogs and auto-promote to microVM runtime.</p>
-                </div>
-              </div>
-
-              <div className="roadmap-card">
-                <div className="roadmap-card-icon planned">•</div>
-                <div>
-                  <h4>Multi-node scheduling <span className="roadmap-state">// Planned</span></h4>
-                  <p>Orchestrator manages a cluster of nodes, dispatching instances across local servers.</p>
-                </div>
-              </div>
+          <form onSubmit={(e) => e.preventDefault()} style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 0 }}>
+            <div className="cta-input-bar">
+              <input type="email" placeholder="Enter your email address" required />
+              <button type="submit" className="cta-submit-btn">Request access</button>
             </div>
-          </div>
-        </div>
-        </div>
-      </section>
-
-      <div className="section-divider-label"><div className="section-divider-label-inner">// 06 // FREQUENTLY ASKED QUESTIONS</div></div>
-
-      {/* FAQ and Contact Section */}
-      <section style={{ borderBottom: '1px solid var(--border-color)' }}>
-        <div className="section-inner" style={{ padding: '64px 48px' }}>
-        <div className="features-header">
-          <div className="features-subtitle">Faq</div>
-          <h2 className="features-title">Questions &amp; Answers</h2>
-        </div>
-
-        <div className="faq-layout">
-          {/* FAQ Accordion */}
-          <div className="faq-list">
-            <div className="faq-item">
-              <button className="faq-q" onClick={() => toggleFaq(0)}>
-                Is Russel open-source?
-                <span className="ic">{openFaq[0] ? '−' : '+'}</span>
-              </button>
-              {openFaq[0] && (
-                <div className="faq-a">
-                  Russel is currently in private beta and is not open source yet. We are actively developing the code, hardening KVM interfaces, and expanding the dual runtime engine. We will open-source the platform under the MIT license when we reach public stability.
-                </div>
-              )}
-            </div>
-
-            <div className="faq-item">
-              <button className="faq-q" onClick={() => toggleFaq(1)}>
-                How does this differ from Docker?
-                <span className="ic">{openFaq[1] ? '−' : '+'}</span>
-              </button>
-              {openFaq[1] && (
-                <div className="faq-a">
-                  Docker shares the host OS kernel across all containers. Russel lets you choose: standard container workflows or isolated microVMs running their own KVM-isolated kernel via Cloud Hypervisor. This blocks kernel-level breakouts while booting under 2 seconds.
-                </div>
-              )}
-            </div>
-
-            <div className="faq-item">
-              <button className="faq-q" onClick={() => toggleFaq(2)}>
-                What are the host requirements?
-                <span className="ic">{openFaq[2] ? '−' : '+'}</span>
-              </button>
-              {openFaq[2] && (
-                <div className="faq-a">
-                  Any Linux machine supporting KVM virtualization. Host utilities include `cloud-hypervisor`, `virtiofsd` (for file-sharing), `socat` (for socket redirects), and `iptables` for routing. Standard Docker/Podman environments work as fallback.
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Contact / Newsletter Card */}
-          <div className="faq-cta-row">
-            <div className="faq-cta-card" id="early-access">
-              <h4>Request early access</h4>
-              <p>
-                Russel is under active private preview. Sign up to participate in early developer trials, or receive launch updates.
-              </p>
-              <a href="mailto:russel@example.com" className="btn btn-primary" style={{ width: '100%' }}>
-                Request Beta Access
-              </a>
-              <div style={{ textAlign: 'center', fontSize: '11px', color: 'var(--text-faint)', marginTop: '10px' }}>
-                russel@example.com
-              </div>
-            </div>
-          </div>
-        </div>
+          </form>
         </div>
       </section>
 
