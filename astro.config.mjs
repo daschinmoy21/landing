@@ -26,6 +26,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     resolve: {
+      alias: {
+        "@": "/src"
+      },
       dedupe: ["react", "react-dom"],
     },
   },

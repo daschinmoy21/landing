@@ -8,27 +8,32 @@ const isHome = path === '/' || path === ''
 
 <footer class="footer-section">
   <div class="footer-inner">
+    <div class="footer-brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true" class="logo-svg">
+        <rect
+          x="2"
+          y="2"
+          width="28"
+          height="28"
+          rx="7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <rect x="12" y="12" width="8" height="8" rx="1.5" class="pulse" />
+        <path
+          d="M16 2v6M16 24v6M2 16h6M24 16h6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+      <span class="brand-name">Russel</span>
+    </div>
+    <p class="footer-tagline">Self-hosted microVM &amp; container deployment platform.</p>
+    <hr class="footer-divider" />
     <div class="footer-bottom">
-      <div class="footer-left">
-        <span class="copyright">&copy; 2026 Russel contributors. MIT Private Beta.</span>
-      </div>
-      <div class="footer-nav">
-        <a href={isHome ? "#top" : "/#top"} class="footer-link">Overview</a>
-        <span class="footer-separator">|</span>
-        <a href={isHome ? "#features" : "/#features"} class="footer-link">Features</a>
-        <span class="footer-separator">|</span>
-        <a href={isHome ? "#comparison" : "/#comparison"} class="footer-link">Benchmarks</a>
-        <span class="footer-separator">|</span>
-        <a href={isHome ? "#architecture" : "/#architecture"} class="footer-link">Architecture</a>
-        <span class="footer-separator">|</span>
-        <a href={isHome ? "#roadmap" : "/#roadmap"} class="footer-link">Roadmap</a>
-        <span class="footer-separator">|</span>
-        <a href="/pricing" class="footer-link">Pricing</a>
-        <span class="footer-separator">|</span>
-        <a href="/contact" class="footer-link">Contact</a>
-        <span class="footer-separator">|</span>
-        <a href="/blog" class="footer-link">Blog</a>
-      </div>
+      <span class="copyright">&copy; 2026 Russel contributors. MIT Private Beta.</span>
     </div>
   </div>
 </footer>
@@ -37,7 +42,7 @@ const isHome = path === '/' || path === ''
   .footer-section {
     border-top: 1px solid var(--border-color, oklch(0.11 0.022 145));
     background-color: #040803;
-    padding: 32px 0;
+    padding: 36px 0;
     width: 100%;
   }
 
@@ -45,6 +50,9 @@ const isHome = path === '/' || path === ''
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   @media (max-width: 768px) {
@@ -53,46 +61,54 @@ const isHome = path === '/' || path === ''
     }
   }
 
-  .footer-bottom {
+  .footer-brand {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 11px;
-    color: var(--text-faint, oklch(0.36 0.015 145));
-  }
-
-  @media (max-width: 992px) {
-    .footer-bottom {
-      flex-direction: column;
-      gap: 16px;
-      text-align: center;
-    }
-  }
-
-  .copyright {
-    letter-spacing: 0.05em;
-  }
-
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    align-items: center;
-  }
-
-  .footer-link {
-    color: var(--text-muted, oklch(0.58 0.020 145));
+    gap: 8px;
+    color: var(--text-color, oklch(0.90 0.008 145));
     text-decoration: none;
-    transition: color 0.2s ease;
   }
 
-  .footer-link:hover {
-    color: var(--accent, oklch(0.65 0.15 145));
+  .logo-svg {
+    width: 20px;
+    height: 20px;
+    color: var(--text-color, oklch(0.90 0.008 145));
   }
 
-  .footer-separator {
-    color: var(--border-color, oklch(0.11 0.022 145));
+  .footer-brand .pulse {
+    fill: var(--accent, oklch(0.65 0.15 145));
+  }
+
+  .brand-name {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-color, oklch(0.90 0.008 145));
+  }
+
+  .footer-tagline {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 13px;
+    color: var(--text-muted, oklch(0.58 0.020 145));
+    margin: 8px 0 0;
+    text-align: center;
+  }
+
+.footer-divider {
+    border: none;
+    border-top: 1px solid var(--border-color, oklch(0.11 0.022 145));
+    width: 100%;
+    margin: 18px 0 0;
+  }
+
+  .footer-bottom {
+    margin-top: 18px;
+    text-align: center;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 10px;
+    color: var(--text-faint, oklch(0.36 0.015 145));
+    letter-spacing: 0.04em;
   }
 </style>

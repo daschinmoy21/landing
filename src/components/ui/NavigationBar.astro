@@ -1,11 +1,14 @@
 ---
 // NavigationBar.astro
-// Description: Centered logo header for Russel microVM Platform
+// Description: Left logo + right nav header for Russel microVM Platform
+
+const path = new URL(Astro.request.url).pathname
+const isHome = path === '/' || path === ''
 ---
 
 <header class="main-header">
   <div class="header-inner">
-    <!-- Centered Logo & Brand Name -->
+    <!-- Logo on the left -->
     <a href="/" class="brand">
       <svg viewBox="0 0 32 32" aria-hidden="true" class="logo-svg">
         <rect
@@ -28,6 +31,15 @@
       </svg>
       <span class="brand-name">Russel</span>
     </a>
+
+    <!-- Nav links on the right -->
+    <nav class="header-nav">
+      <a href={isHome ? "#top" : "/#top"} class="header-link">Overview</a>
+      <a href={isHome ? "#features" : "/#features"} class="header-link">Features</a>
+      <a href="/pricing" class="header-link">Pricing</a>
+      <a href="/contact" class="header-link">Contact</a>
+      <a href="/blog" class="header-link">Blog</a>
+    </nav>
   </div>
 </header>
 
@@ -45,18 +57,51 @@
   .header-inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 0 24px;
-    height: 38px;
+    padding: 0 48px;
+    height: 34px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+  }
+
+  @media (max-width: 992px) {
+    .header-inner {
+      padding: 0 24px;
+    }
   }
 
   @media (max-width: 768px) {
     .header-inner {
-      padding: 0 16px;
-      height: 34px;
+      padding: 0 24px;
+      height: 30px;
     }
+  }
+
+  /* Nav links on the right */
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-left: 120px;
+  }
+
+  @media (max-width: 768px) {
+    .header-nav {
+      display: none;
+    }
+  }
+
+  .header-link {
+    color: var(--text-muted, oklch(0.64 0.020 145));
+    text-decoration: none;
+    font-size: 11px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .header-link:hover {
+    color: var(--accent, oklch(0.65 0.15 145));
   }
 
   /* Brand / Logo (Centered) */
@@ -67,7 +112,7 @@
     text-decoration: none;
     color: #fff;
     font-weight: 800;
-    font-size: 14.5px;
+    font-size: 14px;
     letter-spacing: -0.03em;
     font-family: var(--font-sans, 'Inter', sans-serif);
     transition: opacity 0.2s ease;
@@ -78,8 +123,8 @@
   }
 
   .logo-svg {
-    width: 17px;
-    height: 17px;
+    width: 15px;
+    height: 15px;
     color: var(--text-color, oklch(0.90 0.008 145));
   }
 
