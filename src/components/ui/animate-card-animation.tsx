@@ -119,20 +119,25 @@ function CardContent({ contentType }: { contentType: 1 | 2 | 3 }) {
         <div className="bars" style={{ marginBottom: '20px' }}>
           {data.e2e.map((row, idx) => {
             const valNum = parseFloat(row.val)
-            // ensure winner looks visually different, scale width relative to maximum (with 10% minimum width)
             const percent = Math.max(10, Math.round((valNum / maxE2E) * 100))
             return (
               <div className="bar-row" key={idx} style={{ marginBottom: '14px' }}>
-                <div className="lbl" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', alignItems: 'baseline', gap: '12px', fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 600, marginBottom: '6px', minWidth: 0 }}>
-                  <span className="name" style={{ color: row.winner ? 'var(--text-color)' : 'var(--text-muted)' }}>
-                    {shortLabel(row.label)}
-                  </span>
-                  <span className="t" style={{ color: row.winner ? 'var(--accent)' : 'var(--text-color)' }}>
-                    {row.val}
-                  </span>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: row.winner ? 'var(--text-color)' : 'var(--text-muted)', marginBottom: '4px', fontWeight: 600 }}>
+                  {shortLabel(row.label)}
                 </div>
-                <div className="bar-track">
-                  <div className={`bar-fill ${row.winner ? "win" : "lose"}`} style={{ width: `${percent}%` }}></div>
+                <div className="bar-track" style={{ position: 'relative' }}>
+                  <div className={`bar-fill ${row.winner ? "win" : "lose"}`} style={{ width: `${percent}%`, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: row.winner ? '6px' : '0', minWidth: row.winner ? '50px' : '0' }}>
+                    {row.winner && (
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 700, color: '#040803', whiteSpace: 'nowrap' }}>
+                        {row.val}
+                      </span>
+                    )}
+                  </div>
+                  {!row.winner && (
+                    <span style={{ position: 'absolute', right: '-72px', top: '50%', transform: 'translateY(-50%)', fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                      {row.val}
+                    </span>
+                  )}
                 </div>
               </div>
             )

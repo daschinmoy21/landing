@@ -1,22 +1,50 @@
-import React from 'react';
-import AsciiBackground from './AsciiBackground.jsx';
-import AnimatedCardStack from './ui/animate-card-animation';
-import SpecularButton from './ui/SpecularButton.jsx';
-import './ui/SpecularButton.css';
+import React from 'react'
+import AsciiBackground from './AsciiBackground.jsx'
+import AnimatedCardStack from './ui/animate-card-animation'
+import SpecularButton from './ui/SpecularButton.jsx'
+import './ui/SpecularButton.css'
 
-const logo01 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg";
-const logo02 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg";
-const logo03 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg";
-const logo04 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg";
-const logo05 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg";
-const logo06 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg";
-const logo07 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg";
-const logo08 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg";
-const logo09 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg";
-const logo10 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wasm/wasm-original.svg";
-const logo11 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg";
-const logo12 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg";
-const logo13 = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg";
+const logo01 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg'
+const logo02 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg'
+const logo03 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg'
+const logo04 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg'
+const logo05 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg'
+const logo06 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg'
+const logo07 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg'
+const logo08 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg'
+const logo09 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg'
+const logo10 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wasm/wasm-original.svg'
+const logo11 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg'
+const logo12 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg'
+const logo13 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg'
+const logo14 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg'
+const logo15 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg'
+const logo16 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg'
+const logo17 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg'
+const logo18 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg'
+const logo19 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg'
+const logo20 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg'
+const logo21 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg'
+const logo22 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg'
+const logo23 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg'
+const logo24 =
+	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg'
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
@@ -257,7 +285,7 @@ const CSS = `
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 28px 0;
+  padding: 28px 0 28px 48px;
   text-align: left;
   max-width: 640px;
 }
@@ -270,7 +298,7 @@ const CSS = `
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateY(400px);
+  transform: translateY(520px);
 }
 
 @media (max-width: 992px) {
@@ -281,7 +309,7 @@ const CSS = `
 
 @media (min-width: 993px) and (max-width: 2000px) {
   .hero-bench-col {
-    transform: translate(-300px, 300px);
+    transform: translate(-300px, 420px);
   }
 }
 
@@ -1472,13 +1500,13 @@ p.features-desc {
 }
 
 @keyframes counter-rotate-clockwise {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 @keyframes counter-rotate-counter {
-  from { transform: rotate(-360deg); }
-  to { transform: rotate(0deg); }
+  from { transform: translate(-50%, -50%) rotate(-360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
 .faq-cta-row {
@@ -1905,311 +1933,577 @@ p.features-desc {
     stroke-dashoffset: 0;
   }
 }
-`;
+`
 
 export default function PierreLanding() {
-  const [activeRuntime, setActiveRuntime] = React.useState('container');
-  const [cliStep, setCliStep] = React.useState(0);
+	const [activeRuntime, setActiveRuntime] = React.useState('container')
+	const [cliStep, setCliStep] = React.useState(0)
 
-  React.useEffect(() => {
-    const runtimeInterval = setInterval(() => {
-      setActiveRuntime(prev => prev === 'container' ? 'microvm' : 'container');
-    }, 3000);
-    return () => clearInterval(runtimeInterval);
-  }, []);
+	React.useEffect(() => {
+		const runtimeInterval = setInterval(() => {
+			setActiveRuntime((prev) => (prev === 'container' ? 'microvm' : 'container'))
+		}, 3000)
+		return () => clearInterval(runtimeInterval)
+	}, [])
 
-  React.useEffect(() => {
-    const cliInterval = setInterval(() => {
-      setCliStep(prev => {
-        if (prev >= 4) {
-          return -3; // Wait in terminal reset state for a natural loop delay
-        }
-        return prev + 1;
-      });
-    }, 1500);
-    return () => clearInterval(cliInterval);
-  }, []);
+	React.useEffect(() => {
+		const cliInterval = setInterval(() => {
+			setCliStep((prev) => {
+				if (prev >= 4) {
+					return -3 // Wait in terminal reset state for a natural loop delay
+				}
+				return prev + 1
+			})
+		}, 1500)
+		return () => clearInterval(cliInterval)
+	}, [])
 
-  return (
-    <div className="pierre-page">
-      <style>{CSS}</style>
+	return (
+		<div className="pierre-page">
+			<style>{CSS}</style>
 
+			{/* Hero Section */}
+			<div className="hero-section-grid" id="top">
+				<AsciiBackground />
+				<div className="hero-inner">
+					<div className="hero-text-card">
+						<h1 className="hero-title">
+							Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in
+							control.
+						</h1>
+						<p
+							className="hero-subhead"
+							style={{
+								fontSize: '15.5px',
+								color: 'rgba(238, 248, 239, 0.85)',
+								lineHeight: '1.7',
+								marginBottom: '28px'
+							}}
+						>
+							One workflow for containers and microVMs. Reproducible builds.
+							<br />
+							<span
+								style={{
+									color: 'var(--text-muted)',
+									fontSize: '13.5px',
+									marginTop: '12px',
+									display: 'block'
+								}}
+							>
+								Containers for speed. MicroVMs for security.
+								<br />
+								Managed or self-hosted. Zero drift.
+							</span>
+						</p>
+						<div className="cta-group">
+							<SpecularButton>Request early access</SpecularButton>
+							<a href="#early-access" className="btn btn-secondary">
+								Explore features
+							</a>
+						</div>
+					</div>
 
+					<div className="hero-bench-col">
+						<AnimatedCardStack />
+					</div>
+				</div>
+			</div>
 
-      {/* Hero Section */}
-      <div className="hero-section-grid" id="top">
-        <AsciiBackground />
-        <div className="hero-inner">
-          <div className="hero-text-card">
-            <h1 className="hero-title">
-              Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in control.
-            </h1>
-            <p className="hero-subhead" style={{ fontSize: '15.5px', color: 'rgba(238, 248, 239, 0.85)', lineHeight: '1.7', marginBottom: '28px' }}>
-              One workflow for containers and microVMs. Reproducible builds.<br />
-              <span style={{ color: 'var(--text-muted)', fontSize: '13.5px', marginTop: '12px', display: 'block' }}>
-                Containers for speed. MicroVMs for security.<br />
-                Managed or self-hosted. Zero drift.
-              </span>
-            </p>
-            <div className="cta-group">
-              <SpecularButton>Request early access</SpecularButton>
-              <a href="#early-access" className="btn btn-secondary">
-                Explore features
-              </a>
-            </div>
-          </div>
+			{/* Features Cards Grid (Bring your own sub layout) */}
+			<section className="features-section" id="features">
+				<div className="section-inner">
+					<div className="features-header">
+						<h2 className="features-title">One Orchestrator, Any Isolation Boundary</h2>
+						<p className="features-desc">
+							Dual engine runtimes. Containers for speed. MicroVMs for hardware-enforced isolation.
+							One orchestrator manages both — switch runtimes with a single config line.
+						</p>
+					</div>
 
-          <div className="hero-bench-col">
-            <AnimatedCardStack />
-          </div>
-        </div>
-      </div>
+					<div className="unified-features-box">
+						{/* Column 1: Dual engine runtimes */}
+						<div className="feature-column">
+							<div className="feature-illustration-container">
+								<div className="runtime-compare-graphic">
+									<div
+										className={`runtime-card-sub ${activeRuntime === 'container' ? 'active container-active' : ''}`}
+										style={{ width: '110px' }}
+									>
+										<div
+											className="runtime-card-sub-title"
+											style={{
+												color:
+													activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-muted)'
+											}}
+										>
+											CONTAINER
+										</div>
+										<svg
+											style={{
+												width: '28px',
+												height: '28px',
+												color:
+													activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-muted)'
+											}}
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+										>
+											<rect x="3" y="3" width="18" height="18" rx="2" />
+											<path d="M9 3v18M15 3v18M3 9h18M3 15h18" strokeDasharray="2 2" />
+										</svg>
+										<span
+											style={{
+												fontSize: '9px',
+												fontFamily: 'var(--font-mono)',
+												color:
+													activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-faint)'
+											}}
+										>
+											Podman
+										</span>
+									</div>
+									<div style={{ color: 'var(--accent)', fontWeight: 'bold' }}>/</div>
+									<div
+										className={`runtime-card-sub ${activeRuntime === 'microvm' ? 'active microvm-active' : ''}`}
+										style={{ width: '110px' }}
+									>
+										<div
+											className="runtime-card-sub-title"
+											style={{
+												color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-muted)'
+											}}
+										>
+											MICROVM
+										</div>
+										<svg
+											style={{
+												width: '28px',
+												height: '28px',
+												color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-muted)'
+											}}
+											viewBox="0 0 32 32"
+										>
+											<rect
+												x="2"
+												y="2"
+												width="28"
+												height="28"
+												rx="7"
+												fill="none"
+												stroke="currentColor"
+												strokeWidth="2"
+											/>
+											<rect x="12" y="12" width="8" height="8" rx="1.5" fill="currentColor" />
+											<path
+												d="M16 2v6M16 24v6M2 16h6M24 16h6"
+												stroke="currentColor"
+												strokeWidth="2"
+												strokeLinecap="round"
+											/>
+										</svg>
+										<span
+											style={{
+												fontSize: '8px',
+												fontFamily: 'var(--font-mono)',
+												color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-faint)',
+												textAlign: 'center',
+												whiteSpace: 'nowrap'
+											}}
+										>
+											Cloud-Hypervisor
+										</span>
+									</div>
+								</div>
+							</div>
+							<h3 className="feature-column-title">Dual engine runtimes</h3>
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+								<div>
+									<div
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											gap: '8px',
+											marginBottom: '4px'
+										}}
+									>
+										<span
+											style={{
+												fontFamily: 'var(--font-mono)',
+												fontSize: '11px',
+												color: '#fff',
+												fontWeight: '600'
+											}}
+										>
+											Container Engine
+										</span>
+										<span
+											className="feature-card-cmd"
+											style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px' }}
+										>
+											runtime = "container"
+										</span>
+									</div>
+									<p className="feature-column-desc">
+										Lightweight sandboxing via Podman. Perfect for fast local iteration, developer
+										setups, and staging environments.
+									</p>
+								</div>
+								<div style={{ borderTop: '1px dashed rgba(255,255,255,0.06)', paddingTop: '12px' }}>
+									<div
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											gap: '8px',
+											marginBottom: '4px'
+										}}
+									>
+										<span
+											style={{
+												fontFamily: 'var(--font-mono)',
+												fontSize: '11px',
+												color: '#fff',
+												fontWeight: '600'
+											}}
+										>
+											microVM Engine
+										</span>
+										<span
+											className="feature-card-cmd"
+											style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px' }}
+										>
+											runtime = "microvm"
+										</span>
+									</div>
+									<p className="feature-column-desc">
+										Hardware-isolated virtualization via KVM and Cloud Hypervisor. Secure isolation
+										without guest OS kernel overhead.
+									</p>
+								</div>
+							</div>
+						</div>
 
-      {/* Features Cards Grid (Bring your own sub layout) */}
-      <section className="features-section" id="features">
-        <div className="section-inner">
-        <div className="features-header">
-          <h2 className="features-title">One Orchestrator, Any Isolation Boundary</h2>
-          <p className="features-desc">Dual engine runtimes. Containers for speed. MicroVMs for hardware-enforced isolation. One orchestrator manages both — switch runtimes with a single config line.</p>
-        </div>
+						{/* Column 2: Deterministic builds */}
+						<div className="feature-column">
+							<div className="feature-illustration-container">
+								<div className="hermetic-graphic">
+									<div className="hermetic-line left">
+										<svg
+											width="100%"
+											height="4"
+											viewBox="0 0 100 4"
+											fill="none"
+											preserveAspectRatio="none"
+										>
+											<line
+												x1="0"
+												y1="2"
+												x2="100"
+												y2="2"
+												className="animated-nix-line purple-flow"
+												strokeWidth="2"
+											/>
+										</svg>
+									</div>
+									<div className="hermetic-line right">
+										<svg
+											width="100%"
+											height="4"
+											viewBox="0 0 100 4"
+											fill="none"
+											preserveAspectRatio="none"
+										>
+											<line
+												x1="0"
+												y1="2"
+												x2="100"
+												y2="2"
+												className="animated-nix-line"
+												strokeWidth="2"
+											/>
+										</svg>
+									</div>
 
-        <div className="unified-features-box">
-          {/* Column 1: Dual engine runtimes */}
-          <div className="feature-column">
-            <div className="feature-illustration-container">
-              <div className="runtime-compare-graphic">
-                <div className={`runtime-card-sub ${activeRuntime === 'container' ? 'active container-active' : ''}`} style={{ width: '110px' }}>
-                  <div className="runtime-card-sub-title" style={{ color: activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-muted)' }}>CONTAINER</div>
-                  <svg style={{ width: '28px', height: '28px', color: activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-muted)' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <path d="M9 3v18M15 3v18M3 9h18M3 15h18" strokeDasharray="2 2" />
-                  </svg>
-                  <span style={{ fontSize: '9px', fontFamily: 'var(--font-mono)', color: activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-faint)' }}>Podman</span>
-                </div>
-                <div style={{ color: 'var(--accent)', fontWeight: 'bold' }}>/</div>
-                <div className={`runtime-card-sub ${activeRuntime === 'microvm' ? 'active microvm-active' : ''}`} style={{ width: '110px' }}>
-                  <div className="runtime-card-sub-title" style={{ color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-muted)' }}>MICROVM</div>
-                  <svg style={{ width: '28px', height: '28px', color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-muted)' }} viewBox="0 0 32 32">
-                    <rect x="2" y="2" width="28" height="28" rx="7" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <rect x="12" y="12" width="8" height="8" rx="1.5" fill="currentColor" />
-                    <path d="M16 2v6M16 24v6M2 16h6M24 16h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                  <span style={{ fontSize: '8px', fontFamily: 'var(--font-mono)', color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-faint)', textAlign: 'center', whiteSpace: 'nowrap' }}>Cloud-Hypervisor</span>
-                </div>
-              </div>
-            </div>
-            <h3 className="feature-column-title">Dual engine runtimes</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#fff', fontWeight: '600' }}>Container Engine</span>
-                  <span className="feature-card-cmd" style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px' }}>runtime = "container"</span>
-                </div>
-                <p className="feature-column-desc">
-                  Lightweight sandboxing via Podman. Perfect for fast local iteration, developer setups, and staging environments.
-                </p>
-              </div>
-              <div style={{ borderTop: '1px dashed rgba(255,255,255,0.06)', paddingTop: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#fff', fontWeight: '600' }}>microVM Engine</span>
-                  <span className="feature-card-cmd" style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px' }}>runtime = "microvm"</span>
-                </div>
-                <p className="feature-column-desc">
-                  Hardware-isolated virtualization via KVM and Cloud Hypervisor. Secure isolation without guest OS kernel overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+									<div className="hermetic-node">
+										<svg
+											className="hermetic-node-icon"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+											viewBox="0 0 24 24"
+										>
+											<rect x="2" y="3" width="20" height="14" rx="2" />
+											<line x1="8" y1="21" x2="16" y2="21" />
+											<line x1="12" y1="17" x2="12" y2="21" />
+										</svg>
+										<span
+											style={{
+												fontSize: '9px',
+												color: 'var(--text-faint)',
+												fontFamily: 'var(--font-mono)',
+												marginTop: '4px'
+											}}
+										>
+											Dev Box
+										</span>
+									</div>
 
-          {/* Column 2: Deterministic builds */}
-          <div className="feature-column">
-            <div className="feature-illustration-container">
-              <div className="hermetic-graphic">
-                <div className="hermetic-line left">
-                  <svg width="100%" height="4" viewBox="0 0 100 4" fill="none" preserveAspectRatio="none">
-                    <line x1="0" y1="2" x2="100" y2="2" className="animated-nix-line purple-flow" strokeWidth="2" />
-                  </svg>
-                </div>
-                <div className="hermetic-line right">
-                  <svg width="100%" height="4" viewBox="0 0 100 4" fill="none" preserveAspectRatio="none">
-                    <line x1="0" y1="2" x2="100" y2="2" className="animated-nix-line" strokeWidth="2" />
-                  </svg>
-                </div>
-                
-                <div className="hermetic-node">
-                  <svg className="hermetic-node-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <line x1="8" y1="21" x2="16" y2="21" />
-                    <line x1="12" y1="17" x2="12" y2="21" />
-                  </svg>
-                  <span style={{ fontSize: '9px', color: 'var(--text-faint)', fontFamily: 'var(--font-mono)', marginTop: '4px' }}>Dev Box</span>
-                </div>
+									<div className="hermetic-center-cube">
+										<svg
+											width="40"
+											height="40"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="var(--accent)"
+											strokeWidth="1.5"
+										>
+											<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+											<path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
+										</svg>
+										<div
+											style={{
+												position: 'absolute',
+												fontSize: '8px',
+												fontFamily: 'var(--font-mono)',
+												color: '#fff',
+												bottom: '-12px',
+												background: '#000',
+												padding: '2px 4px',
+												border: '1px solid var(--accent)',
+												borderRadius: '3px',
+												whiteSpace: 'nowrap'
+											}}
+										>
+											sha256-f83a...
+										</div>
+									</div>
 
-                <div className="hermetic-center-cube">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                    <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
-                  </svg>
-                  <div style={{ position: 'absolute', fontSize: '8px', fontFamily: 'var(--font-mono)', color: '#fff', bottom: '-12px', background: '#000', padding: '2px 4px', border: '1px solid var(--accent)', borderRadius: '3px', whiteSpace: 'nowrap' }}>
-                    sha256-f83a...
-                  </div>
-                </div>
+									<div className="hermetic-node">
+										<svg
+											className="hermetic-node-icon"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+											viewBox="0 0 24 24"
+										>
+											<rect x="2" y="4" width="20" height="8" rx="2" />
+											<rect x="2" y="12" width="20" height="8" rx="2" />
+											<circle cx="6" cy="8" r="1" fill="currentColor" />
+											<circle cx="6" cy="16" r="1" fill="currentColor" />
+										</svg>
+										<span
+											style={{
+												fontSize: '9px',
+												color: 'var(--text-faint)',
+												fontFamily: 'var(--font-mono)',
+												marginTop: '4px'
+											}}
+										>
+											Prod Node
+										</span>
+									</div>
+								</div>
+							</div>
+							<h3 className="feature-column-title">Deterministic builds</h3>
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+								<div
+									className="feature-card-cmd"
+									style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px', width: 'fit-content' }}
+								>
+									builder = "reproducible"
+								</div>
+								<p className="feature-column-desc">
+									Content-addressed zero-drift packages. Strict environment isolation guarantees
+									that the exact same bits build and run identically on your machine and production.
+								</p>
+							</div>
+						</div>
 
-                <div className="hermetic-node">
-                  <svg className="hermetic-node-icon" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <rect x="2" y="4" width="20" height="8" rx="2" />
-                    <rect x="2" y="12" width="20" height="8" rx="2" />
-                    <circle cx="6" cy="8" r="1" fill="currentColor" />
-                    <circle cx="6" cy="16" r="1" fill="currentColor" />
-                  </svg>
-                  <span style={{ fontSize: '9px', color: 'var(--text-faint)', fontFamily: 'var(--font-mono)', marginTop: '4px' }}>Prod Node</span>
-                </div>
-              </div>
-            </div>
-            <h3 className="feature-column-title">Deterministic builds</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div className="feature-card-cmd" style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px', width: 'fit-content' }}>
-                builder = "reproducible"
-              </div>
-              <p className="feature-column-desc">
-                Content-addressed zero-drift packages. Strict environment isolation guarantees that the exact same bits build and run identically on your machine and production.
-              </p>
-            </div>
-          </div>
+						{/* Column 3: Russel CLI */}
+						<div className="feature-column">
+							<div className="feature-illustration-container">
+								<div className="cli-terminal">
+									<div className="cli-header">
+										<div className="cli-dot red"></div>
+										<div className="cli-dot yellow"></div>
+										<div className="cli-dot green"></div>
+										<div className="cli-title">russel --deploy</div>
+									</div>
+									<div className="cli-body">
+										<div style={{ opacity: cliStep >= 0 ? 1 : 0, transition: 'opacity 0.15s' }}>
+											<span className="cli-prompt">$</span> russel deploy
+										</div>
+										<div
+											style={{
+												color: 'var(--text-muted)',
+												fontSize: '9.5px',
+												marginTop: '4px',
+												opacity: cliStep >= 1 ? 1 : 0,
+												transition: 'opacity 0.25s'
+											}}
+										>
+											[1/3] Building zero-drift package...
+										</div>
+										<div
+											style={{
+												color: 'var(--text-muted)',
+												fontSize: '9.5px',
+												opacity: cliStep >= 2 ? 1 : 0,
+												transition: 'opacity 0.25s'
+											}}
+										>
+											[2/3] Dispatching runtime: microvm...
+										</div>
+										<div
+											style={{
+												color: 'var(--text-muted)',
+												fontSize: '9.5px',
+												opacity: cliStep >= 3 ? 1 : 0,
+												transition: 'opacity 0.25s'
+											}}
+										>
+											[3/3] Routing port 8080 -&gt; 80
+										</div>
+										<div
+											className="cli-success"
+											style={{
+												marginTop: '8px',
+												fontSize: '10px',
+												opacity: cliStep >= 4 ? 1 : 0,
+												transition: 'opacity 0.25s'
+											}}
+										>
+											✓ SUCCESS: Deploy complete in 1.7s
+										</div>
+									</div>
+								</div>
+							</div>
+							<h3 className="feature-column-title">Russel CLI</h3>
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+								<div
+									className="feature-card-cmd"
+									style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px', width: 'fit-content' }}
+								>
+									russel deploy
+								</div>
+								<p className="feature-column-desc">
+									Single command deployment pipeline. Automates reproducible package build
+									generation, sandbox engine dispatching, and dynamic port routing with zero complex
+									manifests.
+								</p>
+							</div>
+						</div>
+					</div>
 
-          {/* Column 3: Russel CLI */}
-          <div className="feature-column">
-            <div className="feature-illustration-container">
-              <div className="cli-terminal">
-                <div className="cli-header">
-                  <div className="cli-dot red"></div>
-                  <div className="cli-dot yellow"></div>
-                  <div className="cli-dot green"></div>
-                  <div className="cli-title">russel --deploy</div>
-                </div>
-                <div className="cli-body">
-                  <div style={{ opacity: cliStep >= 0 ? 1 : 0, transition: 'opacity 0.15s' }}>
-                    <span className="cli-prompt">$</span> russel deploy
-                  </div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: '9.5px', marginTop: '4px', opacity: cliStep >= 1 ? 1 : 0, transition: 'opacity 0.25s' }}>
-                    [1/3] Building zero-drift package...
-                  </div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: '9.5px', opacity: cliStep >= 2 ? 1 : 0, transition: 'opacity 0.25s' }}>
-                    [2/3] Dispatching runtime: microvm...
-                  </div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: '9.5px', opacity: cliStep >= 3 ? 1 : 0, transition: 'opacity 0.25s' }}>
-                    [3/3] Routing port 8080 -&gt; 80
-                  </div>
-                  <div className="cli-success" style={{ marginTop: '8px', fontSize: '10px', opacity: cliStep >= 4 ? 1 : 0, transition: 'opacity 0.25s' }}>
-                    ✓ SUCCESS: Deploy complete in 1.7s
-                  </div>
-                </div>
-              </div>
-            </div>
-            <h3 className="feature-column-title">Russel CLI</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div className="feature-card-cmd" style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px', width: 'fit-content' }}>
-                russel deploy
-              </div>
-              <p className="feature-column-desc">
-                Single command deployment pipeline. Automates reproducible package build generation, sandbox engine dispatching, and dynamic port routing with zero complex manifests.
-              </p>
-            </div>
-          </div>
-        </div>
+					<div className="checkmarks-row">
+						<div className="check-item">
+							<span className="check-icon">✓</span>
+							<span>No agent daemon bloat</span>
+						</div>
+						<div className="check-item">
+							<span className="check-icon">✓</span>
+							<span>One-line switch between runtimes</span>
+						</div>
+						<div className="check-item">
+							<span className="check-icon">✓</span>
+							<span>Self-hosted on bare metal or cloud</span>
+						</div>
+					</div>
+				</div>
+			</section>
 
-        <div className="checkmarks-row">
-          <div className="check-item">
-            <span className="check-icon">✓</span>
-            <span>No agent daemon bloat</span>
-          </div>
-          <div className="check-item">
-            <span className="check-icon">✓</span>
-            <span>One-line switch between runtimes</span>
-          </div>
-          <div className="check-item">
-            <span className="check-icon">✓</span>
-            <span>Self-hosted on bare metal or cloud</span>
-          </div>
-        </div>
-        </div>
-      </section>
+			{/* Centered CTA Section with Orbiting Logos */}
+			<section className="centered-cta-section" id="early-access">
+				{/* Orbit container */}
+				<div className="orbit-container">
+					<div className="orbit-ring orbit-ring-1">
+						<div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo01} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo14} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo02} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo15} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo03} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo16} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo04} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo17} alt="" /></div>
+					</div>
+					<div className="orbit-ring orbit-ring-2">
+						<div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo18} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo05} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo19} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo06} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo20} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo07} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo21} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo08} alt="" /></div>
+					</div>
+					<div className="orbit-ring orbit-ring-3">
+						<div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo09} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo10} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo11} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo12} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo13} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo22} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo23} alt="" /></div>
+						<div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo24} alt="" /></div>
+					</div>
+				</div>
 
-      {/* Centered CTA Section with Orbiting Logos */}
-      <section className="centered-cta-section" id="early-access">
-        {/* Orbit container */}
-        <div className="orbit-container">
-          <div className="orbit-ring orbit-ring-1">
-            <div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo01} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo02} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo03} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo04} alt="" /></div>
-          </div>
-          <div className="orbit-ring orbit-ring-2">
-            <div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo05} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo06} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo07} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo08} alt="" /></div>
-          </div>
-          <div className="orbit-ring orbit-ring-3">
-            <div className="orbit-logo-item" style={{ top: '6.7%', left: '75%', transform: 'translate(-50%, -50%)' }}><img src={logo09} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo10} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '93.3%', left: '75%', transform: 'translate(-50%, -50%)' }}><img src={logo11} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '93.3%', left: '25%', transform: 'translate(-50%, -50%)' }}><img src={logo12} alt="" /></div>
-            <div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo13} alt="" /></div>
-          </div>
-        </div>
+				<div className="cta-content-wrapper">
+					<div className="cta-logo">
+						<svg viewBox="0 0 32 32" aria-hidden="true">
+							<rect
+								x="2"
+								y="2"
+								width="28"
+								height="28"
+								rx="7"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+							/>
+							<rect x="12" y="12" width="8" height="8" rx="1.5" className="pulse" />
+							<path
+								d="M16 2v6M16 24v6M2 16h6M24 16h6"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+							/>
+						</svg>
+					</div>
 
-        <div className="cta-content-wrapper">
-          <div className="cta-logo">
-            <svg viewBox="0 0 32 32" aria-hidden="true">
-              <rect
-                x="2"
-                y="2"
-                width="28"
-                height="28"
-                rx="7"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <rect x="12" y="12" width="8" height="8" rx="1.5" className="pulse" />
-              <path
-                d="M16 2v6M16 24v6M2 16h6M24 16h6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-          
-          
-          <h2 className="cta-title">
-            Deploy without the<br />runtime trade-offs.
-          </h2>
-          
-          <p className="cta-subtitle">
-            One workflow for Wasm, containers, and microVMs. Get early access to the infrastructure built for speed, isolation, and control.
-          </p>
-          
-          <div className="cta-tags">
-            <span>Fast Boots</span>
-            <span className="divider">·</span>
-            <span>Reproducible Builds</span>
-            <span className="divider">·</span>
-            <span>KVM Isolation</span>
-          </div>
+					<h2 className="cta-title">
+						Deploy without the
+						<br />
+						runtime trade-offs.
+					</h2>
 
-          <form onSubmit={(e) => e.preventDefault()} style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 0 }}>
-            <div className="cta-input-bar">
-              <input type="email" placeholder="Enter your email address" required />
-              <button type="submit" className="cta-submit-btn">Request access</button>
-            </div>
-          </form>
-        </div>
-      </section>
+					<p className="cta-subtitle">
+						One workflow for Wasm, containers, and microVMs. Get early access to the infrastructure
+						built for speed, isolation, and control.
+					</p>
 
+					<div className="cta-tags">
+						<span>Fast Boots</span>
+						<span className="divider">·</span>
+						<span>Reproducible Builds</span>
+						<span className="divider">·</span>
+						<span>KVM Isolation</span>
+					</div>
 
-    </div>
-  );
+					<form
+						onSubmit={(e) => e.preventDefault()}
+						style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 0 }}
+					>
+						<div className="cta-input-bar">
+							<input type="email" placeholder="Enter your email address" required />
+							<button type="submit" className="cta-submit-btn">
+								Request access
+							</button>
+						</div>
+					</form>
+				</div>
+			</section>
+		</div>
+	)
 }
