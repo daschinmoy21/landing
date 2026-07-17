@@ -1957,31 +1957,295 @@ p.features-desc {
 `
 
 const BOKEH_ICONS = [
-	{ logo: logo01, left: '10%', top: '15%', scale: 0.85, blur: '3px', opacity: 0.28, rotate: '-12deg', animationName: 'float-slow-1', duration: '14s', delay: '0s' },
-	{ logo: logo02, left: '22%', top: '8%', scale: 1.15, blur: '1px', opacity: 0.45, rotate: '15deg', animationName: 'float-slow-2', duration: '18s', delay: '-3s' },
-	{ logo: logo03, left: '32%', top: '22%', scale: 0.65, blur: '5px', opacity: 0.18, rotate: '-5deg', animationName: 'float-slow-3', duration: '22s', delay: '-7s' },
-	{ logo: logo04, left: '15%', top: '35%', scale: 0.95, blur: '2px', opacity: 0.38, rotate: '20deg', animationName: 'float-slow-1', duration: '16s', delay: '-11s' },
-	{ logo: logo05, left: '50%', top: '8%', scale: 0.9, blur: '3px', opacity: 0.32, rotate: '-8deg', animationName: 'float-slow-2', duration: '15s', delay: '-2s' },
-	{ logo: logo06, left: '68%', top: '18%', scale: 1.2, blur: '0.8px', opacity: 0.55, rotate: '8deg', animationName: 'float-slow-3', duration: '17s', delay: '-5s' },
-	{ logo: logo07, left: '85%', top: '12%', scale: 1.0, blur: '2px', opacity: 0.42, rotate: '12deg', animationName: 'float-slow-1', duration: '19s', delay: '-9s' },
-	{ logo: logo08, left: '76%', top: '5%', scale: 0.7, blur: '4px', opacity: 0.22, rotate: '-18deg', animationName: 'float-slow-2', duration: '21s', delay: '-13s' },
-	{ logo: logo09, left: '92%', top: '28%', scale: 0.8, blur: '3px', opacity: 0.32, rotate: '-10deg', animationName: 'float-slow-3', duration: '13s', delay: '-1s' },
-	{ logo: logo10, left: '6%', top: '48%', scale: 1.25, blur: '0.5px', opacity: 0.52, rotate: '-15deg', animationName: 'float-slow-1', duration: '20s', delay: '-6s' },
-	{ logo: logo11, left: '18%', top: '52%', scale: 0.6, blur: '4.5px', opacity: 0.2, rotate: '25deg', animationName: 'float-slow-2', duration: '24s', delay: '-10s' },
-	{ logo: logo12, left: '82%', top: '48%', scale: 0.75, blur: '4px', opacity: 0.25, rotate: '-20deg', animationName: 'float-slow-3', duration: '23s', delay: '-4s' },
-	{ logo: logo13, left: '94%', top: '55%', scale: 1.05, blur: '1.5px', opacity: 0.48, rotate: '14deg', animationName: 'float-slow-1', duration: '15s', delay: '-8s' },
-	{ logo: logo14, left: '12%', top: '72%', scale: 0.75, blur: '3px', opacity: 0.28, rotate: '15deg', animationName: 'float-slow-2', duration: '18s', delay: '-12s' },
-	{ logo: logo15, left: '25%', top: '82%', scale: 1.15, blur: '1px', opacity: 0.52, rotate: '-8deg', animationName: 'float-slow-3', duration: '16s', delay: '-2s' },
-	{ logo: logo16, left: '35%', top: '70%', scale: 0.65, blur: '5px', opacity: 0.18, rotate: '18deg', animationName: 'float-slow-1', duration: '21s', delay: '-7s' },
-	{ logo: logo17, left: '8%', top: '90%', scale: 0.95, blur: '2px', opacity: 0.38, rotate: '-25deg', animationName: 'float-slow-2', duration: '19s', delay: '-11s' },
-	{ logo: logo18, left: '46%', top: '92%', scale: 1.0, blur: '2.5px', opacity: 0.35, rotate: '12deg', animationName: 'float-slow-3', duration: '17s', delay: '-5s' },
-	{ logo: logo19, left: '56%', top: '88%', scale: 0.7, blur: '4px', opacity: 0.22, rotate: '-15deg', animationName: 'float-slow-1', duration: '15s', delay: '-9s' },
-	{ logo: logo20, left: '68%', top: '72%', scale: 0.6, blur: '4.5px', opacity: 0.2, rotate: '-5deg', animationName: 'float-slow-2', duration: '22s', delay: '-1s' },
-	{ logo: logo21, left: '76%', top: '85%', scale: 1.2, blur: '0.8px', opacity: 0.58, rotate: '20deg', animationName: 'float-slow-3', duration: '18s', delay: '-6s' },
-	{ logo: logo22, left: '88%', top: '74%', scale: 0.85, blur: '3px', opacity: 0.32, rotate: '-12deg', animationName: 'float-slow-1', duration: '16s', delay: '-10s' },
-	{ logo: logo23, left: '84%', top: '92%', scale: 0.9, blur: '2px', opacity: 0.42, rotate: '15deg', animationName: 'float-slow-2', duration: '14s', delay: '-3s' },
-	{ logo: logo24, left: '28%', top: '6%', scale: 0.75, blur: '4px', opacity: 0.24, rotate: '-10deg', animationName: 'float-slow-3', duration: '20s', delay: '-12s' }
-];
+	{
+		logo: logo01,
+		left: '10%',
+		top: '15%',
+		scale: 0.85,
+		blur: '3px',
+		opacity: 0.28,
+		rotate: '-12deg',
+		animationName: 'float-slow-1',
+		duration: '14s',
+		delay: '0s'
+	},
+	{
+		logo: logo02,
+		left: '22%',
+		top: '8%',
+		scale: 1.15,
+		blur: '1px',
+		opacity: 0.45,
+		rotate: '15deg',
+		animationName: 'float-slow-2',
+		duration: '18s',
+		delay: '-3s'
+	},
+	{
+		logo: logo03,
+		left: '32%',
+		top: '22%',
+		scale: 0.65,
+		blur: '5px',
+		opacity: 0.18,
+		rotate: '-5deg',
+		animationName: 'float-slow-3',
+		duration: '22s',
+		delay: '-7s'
+	},
+	{
+		logo: logo04,
+		left: '15%',
+		top: '35%',
+		scale: 0.95,
+		blur: '2px',
+		opacity: 0.38,
+		rotate: '20deg',
+		animationName: 'float-slow-1',
+		duration: '16s',
+		delay: '-11s'
+	},
+	{
+		logo: logo05,
+		left: '50%',
+		top: '8%',
+		scale: 0.9,
+		blur: '3px',
+		opacity: 0.32,
+		rotate: '-8deg',
+		animationName: 'float-slow-2',
+		duration: '15s',
+		delay: '-2s'
+	},
+	{
+		logo: logo06,
+		left: '68%',
+		top: '18%',
+		scale: 1.2,
+		blur: '0.8px',
+		opacity: 0.55,
+		rotate: '8deg',
+		animationName: 'float-slow-3',
+		duration: '17s',
+		delay: '-5s'
+	},
+	{
+		logo: logo07,
+		left: '85%',
+		top: '12%',
+		scale: 1.0,
+		blur: '2px',
+		opacity: 0.42,
+		rotate: '12deg',
+		animationName: 'float-slow-1',
+		duration: '19s',
+		delay: '-9s'
+	},
+	{
+		logo: logo08,
+		left: '76%',
+		top: '5%',
+		scale: 0.7,
+		blur: '4px',
+		opacity: 0.22,
+		rotate: '-18deg',
+		animationName: 'float-slow-2',
+		duration: '21s',
+		delay: '-13s'
+	},
+	{
+		logo: logo09,
+		left: '92%',
+		top: '28%',
+		scale: 0.8,
+		blur: '3px',
+		opacity: 0.32,
+		rotate: '-10deg',
+		animationName: 'float-slow-3',
+		duration: '13s',
+		delay: '-1s'
+	},
+	{
+		logo: logo10,
+		left: '6%',
+		top: '48%',
+		scale: 1.25,
+		blur: '0.5px',
+		opacity: 0.52,
+		rotate: '-15deg',
+		animationName: 'float-slow-1',
+		duration: '20s',
+		delay: '-6s'
+	},
+	{
+		logo: logo11,
+		left: '18%',
+		top: '52%',
+		scale: 0.6,
+		blur: '4.5px',
+		opacity: 0.2,
+		rotate: '25deg',
+		animationName: 'float-slow-2',
+		duration: '24s',
+		delay: '-10s'
+	},
+	{
+		logo: logo12,
+		left: '82%',
+		top: '48%',
+		scale: 0.75,
+		blur: '4px',
+		opacity: 0.25,
+		rotate: '-20deg',
+		animationName: 'float-slow-3',
+		duration: '23s',
+		delay: '-4s'
+	},
+	{
+		logo: logo13,
+		left: '94%',
+		top: '55%',
+		scale: 1.05,
+		blur: '1.5px',
+		opacity: 0.48,
+		rotate: '14deg',
+		animationName: 'float-slow-1',
+		duration: '15s',
+		delay: '-8s'
+	},
+	{
+		logo: logo14,
+		left: '12%',
+		top: '72%',
+		scale: 0.75,
+		blur: '3px',
+		opacity: 0.28,
+		rotate: '15deg',
+		animationName: 'float-slow-2',
+		duration: '18s',
+		delay: '-12s'
+	},
+	{
+		logo: logo15,
+		left: '25%',
+		top: '82%',
+		scale: 1.15,
+		blur: '1px',
+		opacity: 0.52,
+		rotate: '-8deg',
+		animationName: 'float-slow-3',
+		duration: '16s',
+		delay: '-2s'
+	},
+	{
+		logo: logo16,
+		left: '35%',
+		top: '70%',
+		scale: 0.65,
+		blur: '5px',
+		opacity: 0.18,
+		rotate: '18deg',
+		animationName: 'float-slow-1',
+		duration: '21s',
+		delay: '-7s'
+	},
+	{
+		logo: logo17,
+		left: '8%',
+		top: '90%',
+		scale: 0.95,
+		blur: '2px',
+		opacity: 0.38,
+		rotate: '-25deg',
+		animationName: 'float-slow-2',
+		duration: '19s',
+		delay: '-11s'
+	},
+	{
+		logo: logo18,
+		left: '46%',
+		top: '92%',
+		scale: 1.0,
+		blur: '2.5px',
+		opacity: 0.35,
+		rotate: '12deg',
+		animationName: 'float-slow-3',
+		duration: '17s',
+		delay: '-5s'
+	},
+	{
+		logo: logo19,
+		left: '56%',
+		top: '88%',
+		scale: 0.7,
+		blur: '4px',
+		opacity: 0.22,
+		rotate: '-15deg',
+		animationName: 'float-slow-1',
+		duration: '15s',
+		delay: '-9s'
+	},
+	{
+		logo: logo20,
+		left: '68%',
+		top: '72%',
+		scale: 0.6,
+		blur: '4.5px',
+		opacity: 0.2,
+		rotate: '-5deg',
+		animationName: 'float-slow-2',
+		duration: '22s',
+		delay: '-1s'
+	},
+	{
+		logo: logo21,
+		left: '76%',
+		top: '85%',
+		scale: 1.2,
+		blur: '0.8px',
+		opacity: 0.58,
+		rotate: '20deg',
+		animationName: 'float-slow-3',
+		duration: '18s',
+		delay: '-6s'
+	},
+	{
+		logo: logo22,
+		left: '88%',
+		top: '74%',
+		scale: 0.85,
+		blur: '3px',
+		opacity: 0.32,
+		rotate: '-12deg',
+		animationName: 'float-slow-1',
+		duration: '16s',
+		delay: '-10s'
+	},
+	{
+		logo: logo23,
+		left: '84%',
+		top: '92%',
+		scale: 0.9,
+		blur: '2px',
+		opacity: 0.42,
+		rotate: '15deg',
+		animationName: 'float-slow-2',
+		duration: '14s',
+		delay: '-3s'
+	},
+	{
+		logo: logo24,
+		left: '28%',
+		top: '6%',
+		scale: 0.75,
+		blur: '4px',
+		opacity: 0.24,
+		rotate: '-10deg',
+		animationName: 'float-slow-3',
+		duration: '20s',
+		delay: '-12s'
+	}
+]
 
 export default function PierreLanding() {
 	const [activeRuntime, setActiveRuntime] = React.useState('container')
@@ -2460,14 +2724,14 @@ export default function PierreLanding() {
 				<div className="bench-text-col">
 					<h2>Measurably faster. Radically simpler.</h2>
 					<p>
-						Russel outperforms vanilla Podman by up to <strong style={{ color: 'var(--accent)' }}>12×</strong> on
-						end-to-end deploy times, while adding hardware-enforced microVM isolation and
-						reproducible Nix builds — with zero additional configuration overhead.
+						Russel outperforms vanilla Podman by up to{' '}
+						<strong style={{ color: 'var(--accent)' }}>12×</strong> on end-to-end deploy times,
+						while adding hardware-enforced microVM isolation and reproducible Nix builds — with zero
+						additional configuration overhead.
 					</p>
 					<p>
-						Benchmarks run against identical workloads: HTTP server, static site, and
-						filebrowser. Container engine versus microVM engine versus stock Podman —
-						cold start, same hardware.
+						Benchmarks run against identical workloads: HTTP server, static site, and filebrowser.
+						Container engine versus microVM engine versus stock Podman — cold start, same hardware.
 					</p>
 				</div>
 				<div className="bench-visual-col">
