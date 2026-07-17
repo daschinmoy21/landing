@@ -99,10 +99,28 @@ export default function AsciiBackground() {
       if (isImageLoadedRef.current && imageRef.current) {
         const image = imageRef.current;
         const imgRatio = image.width / image.height;
-        const scale = 1.15;
-        const dHeight = gridHeight * scale;
-        const dWidth = gridHeight * scale * imgRatio;
-        const dx = (gridWidth - dWidth) * 0.45 + (gridWidth * 0.12);
+        const containerRatio = gridWidth / gridHeight;
+
+        let dWidth = 0;
+        let dHeight = 0;
+        let scale = 1.0;
+
+        if (containerRatio > imgRatio) {
+          // Screen is wider than image aspect ratio -> scale relative to height
+          scale = 1.15;
+          dHeight = gridHeight * scale;
+          dWidth = dHeight * imgRatio;
+        } else {
+          // Screen is narrower than image aspect ratio (e.g. mobile) -> scale relative to width
+          scale = 0.9;
+          dWidth = gridWidth * scale;
+          dHeight = dWidth / imgRatio;
+        }
+
+        const isMobile = gridWidth < 992;
+        const dx = isMobile
+          ? (gridWidth - dWidth) * 0.5
+          : (gridWidth - dWidth) * 0.45 + (gridWidth * 0.12);
         const dy = (gridHeight - dHeight) * 0.5;
 
         offscreenCtx.drawImage(image, dx, dy, dWidth, dHeight);

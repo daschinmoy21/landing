@@ -24,8 +24,7 @@ const logo11 =
 const logo12 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg'
 const logo13 =
 	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg'
-const logo14 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg'
+const logo14 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg'
 const logo15 =
 	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg'
 const logo16 =
@@ -41,10 +40,8 @@ const logo21 =
 	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg'
 const logo22 =
 	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg'
-const logo23 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg'
-const logo24 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg'
+const logo23 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg'
+const logo24 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg'
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
@@ -1261,10 +1258,10 @@ p.features-desc {
 /* Centered CTA Section (Image 1) */
 .centered-cta-section {
   position: relative;
-  padding: 120px 24px;
+  padding: 140px 24px;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  background: radial-gradient(circle at 50% 50%, rgba(10, 20, 5, 0.4) 0%, #040803 100%);
+  background: radial-gradient(circle at 50% 50%, rgba(10, 20, 15, 0.5) 0%, #000 100%);
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -1288,51 +1285,50 @@ p.features-desc {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  border: 1.5px solid var(--accent);
-  border-radius: 14px;
-  color: var(--accent);
-  margin-bottom: 20px;
-  box-shadow: 0 0 25px var(--accent-glow);
-  background-color: rgba(4, 8, 3, 0.85);
+  width: 68px;
+  height: 68px;
+  background: linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  color: #111827;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.8);
 }
 
 .cta-logo svg {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
 }
 
 .cta-logo .pulse {
-  fill: var(--accent);
+  fill: #111827;
+  animation: logo-pulse 2s infinite ease-in-out;
 }
 
-.cta-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  color: var(--accent);
-  margin-bottom: 24px;
-  font-weight: 700;
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
 }
 
 .cta-title {
-  font-family: var(--font-heading);
-  font-size: clamp(32px, 5.5vw, 64px);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.05em;
+  font-family: var(--font-mono);
+  font-size: clamp(32px, 5.5vw, 56px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: #fff;
-  margin: 0 0 24px;
+  margin: 0 0 16px;
   text-shadow: 0 0 30px rgba(255,255,255,0.1);
 }
 
 .cta-subtitle {
-  font-size: 15px;
-  line-height: 1.65;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--text-muted);
-  max-width: 56ch;
+  max-width: 54ch;
   margin-bottom: 32px;
+  letter-spacing: -0.01em;
 }
 
 .cta-tags {
@@ -1355,22 +1351,24 @@ p.features-desc {
 
 .cta-input-bar {
   width: 100%;
-  max-width: 520px;
-  background: rgba(4, 8, 3, 0.85);
-  border: 1px solid var(--border-color);
-  padding: 6px 6px 6px 24px;
+  max-width: 480px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0 6px 0 20px;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.5);
   transition: all 0.25s ease;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  box-sizing: border-box;
 }
 
 .cta-input-bar:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 15px 45px rgba(99, 254, 19, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 15px 45px rgba(255, 255, 255, 0.05);
 }
 
 .cta-input-bar input {
@@ -1378,32 +1376,43 @@ p.features-desc {
   background: transparent;
   border: none;
   color: #fff;
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 14px;
   outline: none;
-  padding: 8px 0;
+  padding: 0;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  box-sizing: border-box;
 }
 
 .cta-input-bar input::placeholder {
-  color: var(--text-faint);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .cta-submit-btn {
-  background: var(--accent);
-  color: #040803;
+  background: #0077ff;
+  color: #fff;
   border: none;
   border-radius: 9999px;
-  font-family: var(--font-sans);
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-weight: 500;
   font-size: 13.5px;
-  padding: 12px 32px;
+  height: 40px;
+  padding: 0 28px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .cta-submit-btn:hover {
-  background-color: var(--accent-soft);
+  background-color: #268fff;
   transform: translateY(-1px);
 }
 
@@ -1411,102 +1420,53 @@ p.features-desc {
   transform: translateY(0);
 }
 
-/* Orbiting background */
-.orbit-container {
+/* Scattered Bokeh/Blurred Background */
+.scattered-bg-container {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 900px;
-  height: 900px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
+  overflow: hidden;
 }
 
-.orbit-ring {
+.scattered-icon {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  border: 1px dashed rgba(99, 254, 19, 0.18);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.orbit-ring-1 {
-  width: 380px;
-  height: 380px;
-  animation: rotate-clockwise 35s linear infinite;
-}
-
-.orbit-ring-2 {
-  width: 600px;
-  height: 600px;
-  animation: rotate-counter 55s linear infinite;
-}
-
-.orbit-ring-3 {
-  width: 820px;
-  height: 820px;
-  animation: rotate-clockwise 80s linear infinite;
-}
-
-/* Logos on the rings */
-.orbit-logo-item {
-  position: absolute;
-  width: 42px;
-  height: 42px;
-  padding: 8px;
-  background-color: #040803;
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 10px;
+  width: 52px;
+  height: 52px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%) scale(var(--base-scale, 1)) rotate(var(--base-rotation, 0deg));
+  pointer-events: none;
 }
 
-.orbit-logo-item img {
+.scattered-icon img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0.85;
-  transition: all 0.25s ease;
 }
 
-.orbit-logo-item:hover img {
-  opacity: 1;
-  transform: scale(1.1);
+/* Animations for floating icons with translate(-50%, -50%) preserved */
+@keyframes float-slow-1 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
+  50% { transform: translate(-50%, -50%) translateY(-12px) rotate(calc(var(--base-rotation) + 3deg)) scale(var(--base-scale)); }
 }
 
-.orbit-ring-1 .orbit-logo-item {
-  animation: counter-rotate-clockwise 35s linear infinite;
+@keyframes float-slow-2 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
+  50% { transform: translate(-50%, -50%) translateY(10px) rotate(calc(var(--base-rotation) - 4deg)) scale(var(--base-scale)); }
 }
 
-.orbit-ring-2 .orbit-logo-item {
-  animation: counter-rotate-counter 55s linear infinite;
-}
-
-.orbit-ring-3 .orbit-logo-item {
-  animation: counter-rotate-clockwise 80s linear infinite;
-}
-
-@keyframes rotate-clockwise {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes rotate-counter {
-  from { transform: translate(-50%, -50%) rotate(360deg); }
-  to { transform: translate(-50%, -50%) rotate(0deg); }
-}
-
-@keyframes counter-rotate-clockwise {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(-360deg); }
-}
-
-@keyframes counter-rotate-counter {
-  from { transform: translate(-50%, -50%) rotate(-360deg); }
-  to { transform: translate(-50%, -50%) rotate(0deg); }
+@keyframes float-slow-3 {
+  0%, 100% { transform: translate(-50%, -50%) translateX(0) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
+  50% { transform: translate(-50%, -50%) translateX(-6px) translateY(-8px) rotate(calc(var(--base-rotation) + 2deg)) scale(var(--base-scale)); }
 }
 
 .faq-cta-row {
@@ -1934,6 +1894,33 @@ p.features-desc {
   }
 }
 `
+
+const BOKEH_ICONS = [
+	{ logo: logo01, left: '10%', top: '15%', scale: 0.85, blur: '3px', opacity: 0.28, rotate: '-12deg', animationName: 'float-slow-1', duration: '14s', delay: '0s' },
+	{ logo: logo02, left: '22%', top: '8%', scale: 1.15, blur: '1px', opacity: 0.45, rotate: '15deg', animationName: 'float-slow-2', duration: '18s', delay: '-3s' },
+	{ logo: logo03, left: '32%', top: '22%', scale: 0.65, blur: '5px', opacity: 0.18, rotate: '-5deg', animationName: 'float-slow-3', duration: '22s', delay: '-7s' },
+	{ logo: logo04, left: '15%', top: '35%', scale: 0.95, blur: '2px', opacity: 0.38, rotate: '20deg', animationName: 'float-slow-1', duration: '16s', delay: '-11s' },
+	{ logo: logo05, left: '50%', top: '8%', scale: 0.9, blur: '3px', opacity: 0.32, rotate: '-8deg', animationName: 'float-slow-2', duration: '15s', delay: '-2s' },
+	{ logo: logo06, left: '68%', top: '18%', scale: 1.2, blur: '0.8px', opacity: 0.55, rotate: '8deg', animationName: 'float-slow-3', duration: '17s', delay: '-5s' },
+	{ logo: logo07, left: '85%', top: '12%', scale: 1.0, blur: '2px', opacity: 0.42, rotate: '12deg', animationName: 'float-slow-1', duration: '19s', delay: '-9s' },
+	{ logo: logo08, left: '76%', top: '5%', scale: 0.7, blur: '4px', opacity: 0.22, rotate: '-18deg', animationName: 'float-slow-2', duration: '21s', delay: '-13s' },
+	{ logo: logo09, left: '92%', top: '28%', scale: 0.8, blur: '3px', opacity: 0.32, rotate: '-10deg', animationName: 'float-slow-3', duration: '13s', delay: '-1s' },
+	{ logo: logo10, left: '6%', top: '48%', scale: 1.25, blur: '0.5px', opacity: 0.52, rotate: '-15deg', animationName: 'float-slow-1', duration: '20s', delay: '-6s' },
+	{ logo: logo11, left: '18%', top: '52%', scale: 0.6, blur: '4.5px', opacity: 0.2, rotate: '25deg', animationName: 'float-slow-2', duration: '24s', delay: '-10s' },
+	{ logo: logo12, left: '82%', top: '48%', scale: 0.75, blur: '4px', opacity: 0.25, rotate: '-20deg', animationName: 'float-slow-3', duration: '23s', delay: '-4s' },
+	{ logo: logo13, left: '94%', top: '55%', scale: 1.05, blur: '1.5px', opacity: 0.48, rotate: '14deg', animationName: 'float-slow-1', duration: '15s', delay: '-8s' },
+	{ logo: logo14, left: '12%', top: '72%', scale: 0.75, blur: '3px', opacity: 0.28, rotate: '15deg', animationName: 'float-slow-2', duration: '18s', delay: '-12s' },
+	{ logo: logo15, left: '25%', top: '82%', scale: 1.15, blur: '1px', opacity: 0.52, rotate: '-8deg', animationName: 'float-slow-3', duration: '16s', delay: '-2s' },
+	{ logo: logo16, left: '35%', top: '70%', scale: 0.65, blur: '5px', opacity: 0.18, rotate: '18deg', animationName: 'float-slow-1', duration: '21s', delay: '-7s' },
+	{ logo: logo17, left: '8%', top: '90%', scale: 0.95, blur: '2px', opacity: 0.38, rotate: '-25deg', animationName: 'float-slow-2', duration: '19s', delay: '-11s' },
+	{ logo: logo18, left: '46%', top: '92%', scale: 1.0, blur: '2.5px', opacity: 0.35, rotate: '12deg', animationName: 'float-slow-3', duration: '17s', delay: '-5s' },
+	{ logo: logo19, left: '56%', top: '88%', scale: 0.7, blur: '4px', opacity: 0.22, rotate: '-15deg', animationName: 'float-slow-1', duration: '15s', delay: '-9s' },
+	{ logo: logo20, left: '68%', top: '72%', scale: 0.6, blur: '4.5px', opacity: 0.2, rotate: '-5deg', animationName: 'float-slow-2', duration: '22s', delay: '-1s' },
+	{ logo: logo21, left: '76%', top: '85%', scale: 1.2, blur: '0.8px', opacity: 0.58, rotate: '20deg', animationName: 'float-slow-3', duration: '18s', delay: '-6s' },
+	{ logo: logo22, left: '88%', top: '74%', scale: 0.85, blur: '3px', opacity: 0.32, rotate: '-12deg', animationName: 'float-slow-1', duration: '16s', delay: '-10s' },
+	{ logo: logo23, left: '84%', top: '92%', scale: 0.9, blur: '2px', opacity: 0.42, rotate: '15deg', animationName: 'float-slow-2', duration: '14s', delay: '-3s' },
+	{ logo: logo24, left: '28%', top: '6%', scale: 0.75, blur: '4px', opacity: 0.24, rotate: '-10deg', animationName: 'float-slow-3', duration: '20s', delay: '-12s' }
+];
 
 export default function PierreLanding() {
 	const [activeRuntime, setActiveRuntime] = React.useState('container')
@@ -2415,38 +2402,29 @@ export default function PierreLanding() {
 
 			{/* Centered CTA Section with Orbiting Logos */}
 			<section className="centered-cta-section" id="early-access">
-				{/* Orbit container */}
-				<div className="orbit-container">
-					<div className="orbit-ring orbit-ring-1">
-						<div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo01} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo14} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo02} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo15} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo03} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo16} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo04} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo17} alt="" /></div>
-					</div>
-					<div className="orbit-ring orbit-ring-2">
-						<div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo18} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo05} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo19} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo06} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo20} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo07} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo21} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo08} alt="" /></div>
-					</div>
-					<div className="orbit-ring orbit-ring-3">
-						<div className="orbit-logo-item" style={{ top: '0', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo09} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '14.6%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo10} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '50%', left: '100%', transform: 'translate(-50%, -50%)' }}><img src={logo11} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '85.4%', left: '85.4%', transform: 'translate(-50%, -50%)' }}><img src={logo12} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }}><img src={logo13} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '85.4%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo22} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '50%', left: '0', transform: 'translate(-50%, -50%)' }}><img src={logo23} alt="" /></div>
-						<div className="orbit-logo-item" style={{ top: '14.6%', left: '14.6%', transform: 'translate(-50%, -50%)' }}><img src={logo24} alt="" /></div>
-					</div>
+				{/* Scattered bokeh background */}
+				<div className="scattered-bg-container">
+					{BOKEH_ICONS.map((icon, idx) => (
+						<div
+							key={idx}
+							className="scattered-icon"
+							style={{
+								left: icon.left,
+								top: icon.top,
+								opacity: icon.opacity,
+								filter: `blur(${icon.blur})`,
+								animationName: icon.animationName,
+								animationDuration: icon.duration,
+								animationDelay: icon.delay,
+								animationTimingFunction: 'ease-in-out',
+								animationIterationCount: 'infinite',
+								'--base-scale': icon.scale,
+								'--base-rotation': icon.rotate
+							}}
+						>
+							<img src={icon.logo} alt="" />
+						</div>
+					))}
 				</div>
 
 				<div className="cta-content-wrapper">
@@ -2496,9 +2474,9 @@ export default function PierreLanding() {
 						style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 0 }}
 					>
 						<div className="cta-input-bar">
-							<input type="email" placeholder="Enter your email address" required />
+							<input type="email" placeholder="name@email.com" required />
 							<button type="submit" className="cta-submit-btn">
-								Request access
+								Join waitlist
 							</button>
 						</div>
 					</form>
