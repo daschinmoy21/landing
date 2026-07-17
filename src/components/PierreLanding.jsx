@@ -1,10 +1,114 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // ==========================================
-// 1. Dynamic Graphic Components (Canvas)
+// 1. Hero Dot-Matrix Cloud/Leaf Graphic
 // ==========================================
 
-// Card 1: ASCII Motion Study
+function DotMatrixCloud() {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let width = 0, height = 0;
+    
+    const resize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width;
+      canvas.height = height;
+    };
+    
+    resize();
+    window.addEventListener('resize', resize);
+    
+    const render = (time) => {
+      if (!ctx) return;
+      ctx.fillStyle = '#040803';
+      ctx.fillRect(0, 0, width, height);
+      
+      const cellSize = 10;
+      const cols = Math.ceil(width / cellSize);
+      const rows = Math.ceil(height / cellSize);
+      
+      // 3 major static center clusters forming the main leaf/cloud shape
+      const b1 = { x: width * 0.72, y: height * 0.28, r: Math.max(80, width * 0.16) };
+      const b2 = { x: width * 0.60, y: height * 0.58, r: Math.max(90, width * 0.18) };
+      const b3 = { x: width * 0.44, y: height * 0.82, r: Math.max(70, width * 0.14) };
+      
+      // Moving dynamic nodes
+      const t = time * 0.0008;
+      const b4 = { x: b1.x + Math.sin(t) * 35, y: b1.y + Math.cos(t) * 25, r: Math.max(40, width * 0.08) };
+      const b5 = { x: b2.x + Math.cos(t * 1.4) * 45, y: b2.y + Math.sin(t * 1.4) * 35, r: Math.max(50, width * 0.09) };
+      
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const px = c * cellSize + cellSize / 2;
+          const py = r * cellSize + cellSize / 2;
+          
+          // Field calculations
+          const d1 = (px - b1.x)**2 + (py - b1.y)**2;
+          const d2 = (px - b2.x)**2 + (py - b2.y)**2;
+          const d3 = (px - b3.x)**2 + (py - b3.y)**2;
+          const d4 = (px - b4.x)**2 + (py - b4.y)**2;
+          const d5 = (px - b5.x)**2 + (py - b5.y)**2;
+          
+          const f1 = (b1.r * b1.r) / (d1 + 1);
+          const f2 = (b2.r * b2.r) / (d2 + 1);
+          const f3 = (b3.r * b3.r) / (d3 + 1);
+          const f4 = (b4.r * b4.r) / (d4 + 1);
+          const f5 = (b5.r * b5.r) / (d5 + 1);
+          
+          const sum = f1 + f2 + f3 + f4 + f5;
+          const noise = Math.sin(px * 0.04 + py * 0.04 + time * 0.002) * 0.18;
+          const finalStrength = sum + noise;
+          
+          // Fade factor towards left to preserve text readability
+          const fadeFactor = Math.min(1, Math.max(0, (px - width * 0.22) / (width * 0.45)));
+          
+          if (finalStrength * fadeFactor > 0.95 && finalStrength * fadeFactor < 1.4) {
+            ctx.fillStyle = 'rgba(99, 254, 19, 0.45)';
+            ctx.beginPath();
+            ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (finalStrength * fadeFactor >= 1.4) {
+            ctx.fillStyle = '#63fe13';
+            const scale = 0.85 + Math.sin(px * 0.08 + py * 0.08 + time * 0.004) * 0.15;
+            ctx.beginPath();
+            ctx.arc(px, py, 2.8 * scale, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (finalStrength * fadeFactor > 0.65) {
+            if (Math.random() < 0.06) {
+              ctx.fillStyle = 'rgba(99, 254, 19, 0.2)';
+              ctx.beginPath();
+              ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+      }
+      
+      animationFrameId = requestAnimationFrame(render);
+    };
+    
+    animationFrameId = requestAnimationFrame(render);
+    
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+  
+  return <canvas ref={canvasRef} className="w-full h-full block" />;
+}
+
+// ==========================================
+// 2. Bento Graphic Components (Canvas)
+// ==========================================
+
+// Card 1: ASCII Motion Study (Dark Green Theme)
 function AsciiMotionStudy() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -31,10 +135,10 @@ function AsciiMotionStudy() {
     
     const render = (time) => {
       if (!ctx) return;
-      ctx.fillStyle = '#7EC4FC';
+      ctx.fillStyle = '#090F06';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#0A1E3F';
+      ctx.fillStyle = '#63fe13';
       ctx.font = "12px 'JetBrains Mono', monospace";
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -44,7 +148,7 @@ function AsciiMotionStudy() {
       
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          const val = Math.sin(c * 0.2 + r * 0.2 + time * 0.0035);
+          const val = Math.sin(c * 0.2 + r * 0.2 + time * 0.003);
           const charIndex = Math.floor(((val + 1) / 2) * chars.length) % chars.length;
           const char = chars[charIndex];
           const x = c * cellSizeX + cellSizeX / 2;
@@ -67,7 +171,7 @@ function AsciiMotionStudy() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 2: Density Roll (Dithered shadow waves)
+// Card 2: Density Roll (Dark Green Theme)
 function DensityRoll() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -91,10 +195,10 @@ function DensityRoll() {
     
     const render = (time) => {
       if (!ctx) return;
-      ctx.fillStyle = '#0A1E3F';
+      ctx.fillStyle = '#0F180C';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#7EC4FC';
+      ctx.fillStyle = '#63fe13';
       
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
@@ -134,7 +238,7 @@ function DensityRoll() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 3: Hand-Drawn Glyph
+// Card 3: Hand-Drawn Glyph (Dark Blue Theme)
 function HandDrawnGlyph() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -158,10 +262,10 @@ function HandDrawnGlyph() {
     
     const render = (time) => {
       if (!ctx) return;
-      ctx.fillStyle = '#7EC4FC';
+      ctx.fillStyle = '#050F1A';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#0B0B0B';
+      ctx.fillStyle = '#7EC4FC';
       
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
@@ -180,7 +284,6 @@ function HandDrawnGlyph() {
           const arrowX = -3.5;
           const thickness = 1.6;
           
-          // Arrowshape ">"
           if (xVal >= arrowX && xVal < 5) {
             const yDist = Math.abs(yVal);
             const expectedX = yDist * 1.25 - 2;
@@ -189,7 +292,6 @@ function HandDrawnGlyph() {
             }
           }
           
-          // Underscore cursor "_"
           if (yVal > 3.8 && yVal < 5.4 && xVal > 0.5 && xVal < 5.5) {
             drawDot = true;
           }
@@ -219,7 +321,7 @@ function HandDrawnGlyph() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 4: Seeded Glyph (Organic metaball cells)
+// Card 4: Seeded Glyph (Dark Green Theme)
 function SeededGlyph() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -243,10 +345,10 @@ function SeededGlyph() {
     
     const render = (time) => {
       if (!ctx) return;
-      ctx.fillStyle = '#7EC4FC';
+      ctx.fillStyle = '#090F06';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#0B0B0B';
+      ctx.fillStyle = '#63fe13';
       
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
@@ -293,7 +395,7 @@ function SeededGlyph() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 5: Throughput Column Grid
+// Card 5: Throughput Column Grid (Dark Navy Theme)
 function ThroughputGrid() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -317,7 +419,7 @@ function ThroughputGrid() {
     
     const render = (time) => {
       if (!ctx) return;
-      ctx.fillStyle = '#061630'; 
+      ctx.fillStyle = '#050B14'; 
       ctx.fillRect(0, 0, width, height);
       
       const cols = Math.ceil(width / cellSize);
@@ -364,7 +466,7 @@ function ThroughputGrid() {
 }
 
 // ==========================================
-// 2. Interactive Widget Components
+// 3. Interactive Widget Components
 // ==========================================
 
 // Card 6: microVM Boot Simulator
@@ -401,13 +503,12 @@ function BootSimulator() {
     setLogs([]);
     
     let currentLogIndex = 0;
-    const intervalTime = 130; // Ms per log line
+    const intervalTime = 130; 
     
     timerRef.current = setInterval(() => {
       setBootTime(prev => {
         const nextTime = Math.min(1.74, prev + 0.13);
         
-        // Push log lines based on time progress
         if (currentLogIndex < BOOT_LOGS.length) {
           setLogs(prevLogs => [...prevLogs, BOOT_LOGS[currentLogIndex]]);
           currentLogIndex++;
@@ -437,29 +538,29 @@ function BootSimulator() {
   const progressPercent = (bootTime / 1.74) * 100;
 
   return (
-    <div className="flex flex-col h-full justify-between p-8 text-black">
+    <div className="flex flex-col h-full justify-between p-8 text-[#eaeaea]">
       <div>
         <div className="flex justify-between items-center mb-1">
-          <span className="font-mono text-[11px] uppercase tracking-wider text-[#0066FF] font-semibold">
+          <span className="font-mono text-[11px] uppercase tracking-wider text-[#63fe13] font-semibold">
             russel boot --microvm
           </span>
-          <span className="font-mono text-[10px] text-zinc-400">kvm console</span>
+          <span className="font-mono text-[10px] text-zinc-500">kvm console</span>
         </div>
         
-        <div className="text-[52px] font-black tracking-tight leading-none my-2 font-sans tabular-nums">
+        <div className="text-[52px] font-black tracking-tight leading-none my-2 font-mono text-white">
           {bootTime.toFixed(2)}s
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full h-4 bg-zinc-100 rounded-md overflow-hidden relative border border-zinc-200 mb-4">
+        <div className="w-full h-4 bg-zinc-900 rounded-md overflow-hidden relative border border-zinc-800 mb-4">
           <div 
-            className="h-full bg-[#0066FF] transition-all duration-100" 
+            className="h-full bg-[#63fe13] transition-all duration-100" 
             style={{ width: `${progressPercent}%` }}
           />
         </div>
 
         {/* Log Viewer */}
-        <div className="bg-zinc-950 text-[#86efac] font-mono text-[9.5px] p-3 rounded-lg h-[110px] overflow-y-auto leading-relaxed border border-zinc-800">
+        <div className="bg-[#040803] text-[#86efac] font-mono text-[9.5px] p-3 rounded-lg h-[110px] overflow-y-auto leading-relaxed border border-zinc-800">
           {logs.length === 0 ? (
             <span className="text-zinc-500">// Press Boot to simulate microVM cold start</span>
           ) : (
@@ -473,19 +574,19 @@ function BootSimulator() {
         <button 
           onClick={handleStart}
           disabled={bootTime >= 1.74 && !isActive}
-          className="flex-1 py-2 rounded-md font-mono text-xs font-bold text-white bg-zinc-900 hover:bg-zinc-800 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 py-2 rounded-md font-mono text-xs font-bold text-black bg-[#63fe13] hover:bg-[#52d210] transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {bootTime > 0 && bootTime < 1.74 ? 'Resume' : 'Boot'}
         </button>
         <button 
           onClick={handlePause}
-          className="flex-1 py-2 rounded-md font-mono text-xs font-bold text-zinc-700 bg-zinc-100 border border-zinc-300 hover:bg-zinc-200 transition active:scale-[0.98]"
+          className="flex-1 py-2 rounded-md font-mono text-xs font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 transition active:scale-[0.98]"
         >
           Pause
         </button>
         <button 
           onClick={handleReset}
-          className="flex-1 py-2 rounded-md font-mono text-xs font-bold text-zinc-700 bg-zinc-100 border border-zinc-300 hover:bg-zinc-200 transition active:scale-[0.98]"
+          className="flex-1 py-2 rounded-md font-mono text-xs font-bold text-zinc-300 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 transition active:scale-[0.98]"
         >
           Reset
         </button>
@@ -496,7 +597,7 @@ function BootSimulator() {
 
 // Card 8: Live Agent Node Monitor (Ticking uptime)
 function UptimeNodeMonitor() {
-  const [uptimeSecs, setUptimeSecs] = useState(1234954); // Base uptime
+  const [uptimeSecs, setUptimeSecs] = useState(1234954); 
   
   useEffect(() => {
     const timer = setInterval(() => {
@@ -521,7 +622,7 @@ function UptimeNodeMonitor() {
         <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
           Node: us-east-1a (Active)
         </span>
-        <div className="text-[34px] font-black tracking-tight leading-none my-2 font-mono text-[#7EC4FC]">
+        <div className="text-[32px] font-black tracking-tight leading-none my-2 font-mono text-[#63fe13]">
           {formatUptime(uptimeSecs)}
         </div>
       </div>
@@ -545,12 +646,12 @@ function UptimeNodeMonitor() {
 }
 
 // ==========================================
-// 3. Waitlist & Confetti Form Component
+// 4. Waitlist & Confetti Form Component
 // ==========================================
 
 function WaitlistForm() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | loading | success
+  const [status, setStatus] = useState('idle'); 
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -571,7 +672,7 @@ function WaitlistForm() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const particles = [];
-    const colors = ['#7EC4FC', '#0A1E3F', '#FFFFFF', '#63fe13'];
+    const colors = ['#63fe13', '#7EC4FC', '#FFFFFF', '#14532d'];
     
     canvas.width = containerRef.current.clientWidth;
     canvas.height = containerRef.current.clientHeight;
@@ -600,7 +701,7 @@ function WaitlistForm() {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.35; // gravity
+        p.vy += 0.35; 
         p.life -= 1.8;
         
         ctx.fillStyle = p.color;
@@ -637,7 +738,7 @@ function WaitlistForm() {
 
       <div className="mt-4 relative z-20">
         {status === 'success' ? (
-          <div className="bg-[#7EC4FC]/10 border border-[#7EC4FC]/30 text-[#7EC4FC] rounded-lg p-3 text-xs font-mono flex items-center gap-2 animate-pulse">
+          <div className="bg-[#63fe13]/10 border border-[#63fe13]/30 text-[#63fe13] rounded-lg p-3 text-xs font-mono flex items-center gap-2 animate-pulse">
             <span>✓</span> You have been added to the developer waiting list.
           </div>
         ) : (
@@ -649,12 +750,12 @@ function WaitlistForm() {
               placeholder="Enter your developer email..."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:border-[#7EC4FC] text-white"
+              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs font-mono focus:outline-none focus:border-[#63fe13] text-white"
             />
             <button 
               type="submit"
               disabled={status === 'loading'}
-              className="bg-white text-zinc-950 text-xs font-bold font-mono px-4 py-2 rounded-lg hover:bg-zinc-100 transition active:scale-[0.98] disabled:opacity-50"
+              className="bg-[#63fe13] text-black text-xs font-bold font-mono px-4 py-2 rounded-lg hover:bg-[#52d210] transition active:scale-[0.98]"
             >
               {status === 'loading' ? 'Joining...' : 'Request'}
             </button>
@@ -666,18 +767,248 @@ function WaitlistForm() {
 }
 
 // ==========================================
-// 4. Main Page Component
+// 5. Floating Benchmark Widget Component
+// ==========================================
+
+function BenchmarkConsole() {
+  return (
+    <div className="bench-console w-full max-w-[420px] bg-black border border-white/10 rounded-xl overflow-hidden shadow-2xl relative z-10 font-mono text-[11px] leading-relaxed">
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-4 py-2 bg-zinc-950 border-b border-white/5">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+        </div>
+        <span className="text-zinc-500 text-[10px] ml-1">benchmark</span>
+      </div>
+      
+      {/* Console Body */}
+      <div className="p-5 text-white">
+        <div className="font-bold text-[#63fe13] tracking-wide mb-1 text-xs">
+          STATIC SITE • COLD DEPLOY
+        </div>
+        <div className="text-zinc-500 text-[10px] mb-4">
+          build &rarr; boot &rarr; serve (lower is better)
+        </div>
+        
+        {/* Row 1 */}
+        <div className="mb-4">
+          <div className="flex justify-between mb-1.5">
+            <span className="text-zinc-100">Russel (microVM)</span>
+            <span className="text-[#63fe13] font-bold">1.7s</span>
+          </div>
+          <div className="w-full h-2 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
+            <div className="h-full bg-[#63fe13] rounded-full shadow-[0_0_8px_rgba(99,254,19,0.5)]" style={{ width: '17%' }} />
+          </div>
+        </div>
+
+        {/* Row 2 */}
+        <div className="mb-4">
+          <div className="flex justify-between mb-1.5">
+            <span className="text-zinc-400">Docker / Podman (best-case)</span>
+            <span className="text-zinc-300 font-bold">2.7s</span>
+          </div>
+          <div className="w-full h-2 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
+            <div className="h-full bg-zinc-600 rounded-full" style={{ width: '27%' }} />
+          </div>
+        </div>
+
+        {/* Row 3 */}
+        <div>
+          <div className="flex justify-between mb-1.5">
+            <span className="text-zinc-400">Podman (typical cold start)</span>
+            <span className="text-zinc-300 font-bold">10.0s</span>
+          </div>
+          <div className="w-full h-2 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
+            <div className="h-full bg-zinc-700 rounded-full" style={{ width: '100%' }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 6. Main Page Component & Styles
 // ==========================================
 
 const CSS = `
 .pierre-page {
-  background-color: #EDEDF0;
-  color: #0B0B0B;
+  background-color: #040803;
+  color: #eaeaea;
   min-height: 100vh;
-  padding: 64px 24px;
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   Hero Section Styles
+   ========================================== */
+
+.hero-section {
   position: relative;
+  min-height: min(780px, 95vh);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(99, 254, 19, 0.08);
+}
+
+.hero-graphic-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
   z-index: 1;
+  pointer-events: none;
+}
+
+.hero-content-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 48px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-left {
+  width: 53%;
+}
+
+.hero-right {
+  width: 42%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Typography & Content */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #63fe13;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #63fe13;
+  box-shadow: 0 0 8px #63fe13;
+}
+
+.hero-title {
+  font-size: clamp(34px, 4.8vw, 58px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  margin: 0 0 20px;
+}
+
+.hero-fast {
+  font-style: italic;
+  font-weight: 900;
+  background: linear-gradient(90deg, #B15CFF 0%, #63FE13 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-right: 0.1em;
+}
+
+.hero-subtitle {
+  font-size: 15px;
+  color: #a0aec0;
+  line-height: 1.5;
+  margin: 0 0 28px;
+  max-width: 48ch;
+}
+
+/* Buttons */
+.hero-cta-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.btn-green {
+  background-color: #63fe13;
+  color: #040803;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(99, 254, 19, 0.15);
+}
+
+.btn-green:hover {
+  background-color: #52d210;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(99, 254, 19, 0.25);
+}
+
+.btn-outline {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  border-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Inline stats row */
+.hero-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #718096;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 24px;
+}
+
+.hero-stat-bullet {
+  color: #63fe13;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.hero-stat-text strong {
+  color: #FFFFFF;
+}
+
+/* ==========================================
+   Bento Section Styles
+   ========================================== */
+
+.bento-section {
+  padding: 64px 24px 80px;
 }
 
 .bento-container {
@@ -685,37 +1016,16 @@ const CSS = `
   margin: 0 auto;
 }
 
-.bento-header {
-  margin-bottom: 48px;
-  text-align: left;
-}
-
-.bento-tag {
+.section-divider-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  text-transform: uppercase;
-  color: #0066FF;
   letter-spacing: 0.15em;
+  color: rgba(99, 254, 19, 0.4);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(99, 254, 19, 0.08);
+  margin-bottom: 48px;
   font-weight: 700;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.bento-title {
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-  color: #0B0B0B;
-  margin: 0;
-}
-
-.bento-subtitle {
-  font-size: 15px;
-  color: #555558;
-  margin-top: 14px;
-  max-width: 60ch;
-  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 .bento-grid {
@@ -725,62 +1035,36 @@ const CSS = `
 }
 
 .bento-card {
-  border-radius: 24px;
+  border-radius: 20px;
   display: flex;
   flex-direction: row;
   align-items: stretch;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 280px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .bento-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
+  border-color: rgba(99, 254, 19, 0.15);
 }
 
-.card-black {
-  background-color: #0B0B0B;
-  color: #FFFFFF;
-}
+/* Dark Bento Theme colors */
+.card-size-large-left { grid-column: span 7; }
+.card-size-medium-right { grid-column: span 5; }
+.card-size-equal { grid-column: span 6; }
+.card-size-2-3 { grid-column: span 8; }
+.card-size-1-3 { grid-column: span 4; }
 
-.card-white {
-  background-color: #FFFFFF;
-  color: #0B0B0B;
-  border: 1px solid rgba(0, 0, 0, 0.07);
-}
-
-.card-blue {
-  background-color: #7EC4FC;
-  color: #0B0B0B;
-}
-
-.card-navy {
-  background-color: #0A1E3F;
-  color: #FFFFFF;
-}
-
-/* Bento Card Grid Positioning */
-.card-size-large-left {
-  grid-column: span 7;
-}
-
-.card-size-medium-right {
-  grid-column: span 5;
-}
-
-.card-size-equal {
-  grid-column: span 6;
-}
-
-.card-size-2-3 {
-  grid-column: span 8;
-}
-
-.card-size-1-3 {
-  grid-column: span 4;
-}
+.card-bg-green-dark { background-color: #090F06; }
+.card-bg-green-mid { background-color: #0F180C; }
+.card-bg-blue-dark { background-color: #050F1A; }
+.card-bg-black { background-color: #0B0B0B; }
+.card-bg-navy { background-color: #050B14; }
+.card-bg-accent { background-color: #081406; }
 
 .card-content {
   flex: 1;
@@ -795,25 +1079,16 @@ const CSS = `
   width: 42%;
   position: relative;
   overflow: hidden;
-}
-
-.card-black .card-graphic,
-.card-navy .card-graphic {
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.card-white .card-graphic,
-.card-blue .card-graphic {
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .card-title {
-  font-size: clamp(24px, 3.5vw, 38px);
+  font-size: clamp(24px, 3.2vw, 36px);
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -0.04em;
   margin: 0 0 16px;
-  white-space: pre-line;
+  color: #FFFFFF;
 }
 
 .card-tagline {
@@ -821,12 +1096,12 @@ const CSS = `
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .card-desc {
   font-size: 13px;
-  opacity: 0.8;
+  color: #a0aec0;
   line-height: 1.5;
   margin: 0;
 }
@@ -843,20 +1118,38 @@ const CSS = `
 
 .stat-val {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   display: block;
 }
 
 .stat-label {
   font-size: 9px;
-  opacity: 0.5;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Mobile responsive adjustments */
+/* Responsive configurations */
 @media (max-width: 992px) {
+  .hero-content-container {
+    flex-direction: column;
+    padding: 48px 24px;
+    align-items: flex-start;
+  }
+  .hero-left {
+    width: 100%;
+  }
+  .hero-right {
+    width: 100%;
+    margin-top: 48px;
+    justify-content: center;
+  }
+  .hero-graphic-container {
+    width: 100%;
+    opacity: 0.25; 
+  }
+  
   .bento-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -876,16 +1169,7 @@ const CSS = `
     width: 100%;
     height: 180px;
     border-left: none !important;
-  }
-  
-  .card-black .card-graphic,
-  .card-navy .card-graphic {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .card-white .card-graphic,
-  .card-blue .card-graphic {
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 }
 `;
@@ -895,129 +1179,176 @@ export default function PierreLanding() {
     <div className="pierre-page">
       <style>{CSS}</style>
       
-      <div className="bento-container">
+      {/* ==========================================
+         Hero Section
+         ========================================== */}
+      <section className="hero-section">
+        {/* Dynamic Canvas Graphic (Dot Matrix cloud/leaf) */}
+        <div className="hero-graphic-container">
+          <DotMatrixCloud />
+        </div>
         
-        {/* Header Block */}
-        <header className="bento-header">
-          <span className="bento-tag">// 01 // PLATFORM ENGINE</span>
-          <h1 className="bento-title">
-            One Control Plane.<br />Any Runtime.
-          </h1>
-          <p className="bento-subtitle">
-            Russel is a next-generation local cloud orchestrator. Compile sandboxed, content-addressed Nix builds and run them in hardware-isolated KVM microVMs booting in under 2 seconds.
-          </p>
-        </header>
-
-        {/* Bento Grid */}
-        <main className="bento-grid">
+        <div className="hero-content-container">
+          {/* Left Column (Copy content) */}
+          <div className="hero-left">
+            <span className="hero-eyebrow">ONE CONTROL PLANE • ANY RUNTIME</span>
+            <h1 className="hero-title">
+              Deploy anything.<br />
+              Boot <span className="hero-fast">FAST.</span><br />
+              Stay in control.
+            </h1>
+            <p className="hero-subtitle">
+              One unified local cloud orchestrator for WASM, container modules, and secure virtual microVM instances. Reproducible content-addressed Nix compilations.
+            </p>
+            
+            <div className="hero-cta-group">
+              <a href="#early-access" className="btn-green">Request early access</a>
+              <a href="#features" className="btn-outline">Explore features</a>
+            </div>
+            
+            <div className="hero-stats-row">
+              <div className="hero-stat-item">
+                <span className="hero-stat-bullet">&lt;</span>
+                <span className="hero-stat-text"><strong>2s</strong> cold boot</span>
+              </div>
+              <div className="hero-stat-item">
+                <span className="hero-stat-bullet">Nix</span>
+                <span className="hero-stat-text">reproducible builds</span>
+              </div>
+              <div className="hero-stat-item">
+                <span className="hero-stat-bullet">0</span>
+                <span className="hero-stat-text">downtime swaps</span>
+              </div>
+            </div>
+          </div>
           
-          {/* Card 1: From Build To Boot (Black Panel) */}
-          <section className="bento-card card-black card-size-large-left">
-            <div className="card-content">
-              <span className="card-tagline">RUSSEL — ASCII Motion Study</span>
-              <h2 className="card-title">From Build<br />To Boot.</h2>
-              <p className="card-desc">
-                Compile reproducible source packages in deterministic Nix sandboxes. Boot zero-drift infrastructure byte-for-byte matching local setups.
-              </p>
-            </div>
-            <div className="card-graphic">
-              <AsciiMotionStudy />
-            </div>
-          </section>
+          {/* Right Column (Floating Benchmark Card) */}
+          <div className="hero-right">
+            <BenchmarkConsole />
+          </div>
+        </div>
+      </section>
 
-          {/* Card 2: MicroVM Isolation (White Panel) */}
-          <section className="bento-card card-white card-size-medium-right">
-            <div className="card-content">
-              <span className="card-tagline">RUSSEL — Density Roll</span>
-              <h2 className="card-title">MicroVM<br />Isolation.</h2>
-              <p className="card-desc">
-                Leverage Cloud Hypervisor and KVM virtual machine sandboxing. Block host-level kernel escapes with dedicated vCPU lanes.
-              </p>
-            </div>
-            <div className="card-graphic">
-              <DensityRoll />
-            </div>
-          </section>
+      {/* ==========================================
+         Bento Grid Features Section
+         ========================================== */}
+      <section className="bento-section" id="features">
+        <div className="bento-container">
+          
+          <div className="section-divider-label">
+            // 02 // PLATFORM FEATURES
+          </div>
 
-          {/* Card 3: Born To Deploy (Light Blue Panel) */}
-          <section className="bento-card card-blue card-size-large-left">
-            <div className="card-content">
-              <span className="card-tagline">RUSSEL — Hand-Drawn Glyph</span>
-              <h2 className="card-title">Born To<br />Deploy.</h2>
-              <p className="card-desc">
-                Unified schema control plane. Switch runtimes between edge WebAssembly, standard container tasks, and secure microVMs with one configuration parameter.
-              </p>
-            </div>
-            <div className="card-graphic">
-              <HandDrawnGlyph />
-            </div>
-          </section>
+          <div className="bento-grid">
+            
+            {/* Card 1: From Build To Boot (Dark Green Panel) */}
+            <article className="bento-card card-bg-green-dark card-size-large-left">
+              <div className="card-content">
+                <span className="card-tagline">RUSSEL — ASCII Motion Study</span>
+                <h2 className="card-title">From Build<br />To Boot.</h2>
+                <p className="card-desc">
+                  Compile reproducible source packages in deterministic Nix sandboxes. Boot zero-drift infrastructure byte-for-byte matching local setups.
+                </p>
+              </div>
+              <div className="card-graphic">
+                <AsciiMotionStudy />
+              </div>
+            </article>
 
-          {/* Card 4: Zero-Downtime Swap (Black Panel) */}
-          <section className="bento-card card-black card-size-medium-right">
-            <div className="card-content">
-              <span className="card-tagline">RUSSEL — Seeded Glyph</span>
-              <h2 className="card-title">Zero-Downtime<br />Swap.</h2>
-              <p className="card-desc">
-                Intelligent local routing tables swap underlying guest kernels and route networking ports dynamically to guarantee continuous active serving.
-              </p>
-            </div>
-            <div className="card-graphic">
-              <SeededGlyph />
-            </div>
-          </section>
+            {/* Card 2: MicroVM Isolation (Dark Green-mid Panel) */}
+            <article className="bento-card card-bg-green-mid card-size-medium-right">
+              <div className="card-content">
+                <span className="card-tagline">RUSSEL — Density Roll</span>
+                <h2 className="card-title">MicroVM<br />Isolation.</h2>
+                <p className="card-desc">
+                  Leverage Cloud Hypervisor and KVM virtual machine sandboxing. Block host-level kernel escapes with dedicated vCPU lanes.
+                </p>
+              </div>
+              <div className="card-graphic">
+                <DensityRoll />
+              </div>
+            </article>
 
-          {/* Card 5: Throughput (Navy Panel) */}
-          <section className="bento-card card-navy card-size-large-left">
-            <div className="card-content">
-              <span className="card-tagline">RUSSEL — Throughput Study</span>
-              <div>
-                <h2 className="card-title">Throughput.</h2>
-                <div className="stats-row">
-                  <div className="stat-col">
-                    <span className="stat-label">Current</span>
-                    <span className="stat-val text-[#7EC4FC]">2,528 req/s</span>
-                  </div>
-                  <div className="stat-col">
-                    <span className="stat-label">Peak</span>
-                    <span className="stat-val text-white">4,118 req/s</span>
-                  </div>
-                  <div className="stat-col">
-                    <span className="stat-label">Average</span>
-                    <span className="stat-val text-zinc-300">2,936 req/s</span>
+            {/* Card 3: Born To Deploy (Dark Blue Panel) */}
+            <article className="bento-card card-bg-blue-dark card-size-large-left">
+              <div className="card-content">
+                <span className="card-tagline">RUSSEL — Hand-Drawn Glyph</span>
+                <h2 className="card-title">Born To<br />Deploy.</h2>
+                <p className="card-desc">
+                  Unified schema control plane. Switch runtimes between edge WebAssembly, standard container tasks, and secure microVMs with one configuration parameter.
+                </p>
+              </div>
+              <div className="card-graphic">
+                <HandDrawnGlyph />
+              </div>
+            </article>
+
+            {/* Card 4: Zero-Downtime Swap (Dark Green Panel) */}
+            <article className="bento-card card-bg-green-dark card-size-medium-right">
+              <div className="card-content">
+                <span className="card-tagline">RUSSEL — Seeded Glyph</span>
+                <h2 className="card-title">Zero-Downtime<br />Swap.</h2>
+                <p className="card-desc">
+                  Intelligent local routing tables swap underlying guest kernels and route networking ports dynamically to guarantee continuous active serving.
+                </p>
+              </div>
+              <div className="card-graphic">
+                <SeededGlyph />
+              </div>
+            </article>
+
+            {/* Card 5: Throughput (Dark Navy Panel) */}
+            <article className="bento-card card-bg-navy card-size-large-left">
+              <div className="card-content">
+                <span className="card-tagline">RUSSEL — Throughput Study</span>
+                <div>
+                  <h2 className="card-title">Throughput.</h2>
+                  <div className="stats-row">
+                    <div className="stat-col">
+                      <span className="stat-label">Current</span>
+                      <span className="stat-val text-[#7EC4FC]">2,528 req/s</span>
+                    </div>
+                    <div className="stat-col">
+                      <span className="stat-label">Peak</span>
+                      <span className="stat-val text-white">4,118 req/s</span>
+                    </div>
+                    <div className="stat-col">
+                      <span className="stat-label">Average</span>
+                      <span className="stat-val text-zinc-300">2,936 req/s</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="card-graphic">
-              <ThroughputGrid />
-            </div>
-          </section>
+              <div className="card-graphic">
+                <ThroughputGrid />
+              </div>
+            </article>
 
-          {/* Card 6: microVM Boot Simulator (White Panel) */}
-          <section className="bento-card card-white card-size-medium-right">
-            <div className="w-full">
-              <BootSimulator />
-            </div>
-          </section>
+            {/* Card 6: microVM Boot Simulator (Black Panel) */}
+            <article className="bento-card card-bg-black card-size-medium-right">
+              <div className="w-full">
+                <BootSimulator />
+              </div>
+            </article>
 
-          {/* Card 7: Waitlist Request Form (Navy Panel) */}
-          <section className="bento-card card-navy card-size-2-3">
-            <div className="w-full">
-              <WaitlistForm />
-            </div>
-          </section>
+            {/* Card 7: Request Early Access / Waitlist (Dark Green Accent Panel) */}
+            <article className="bento-card card-bg-accent card-size-2-3" id="early-access">
+              <div className="w-full">
+                <WaitlistForm />
+              </div>
+            </article>
 
-          {/* Card 8: Live Agent Node Monitor (Black Panel) */}
-          <section className="bento-card card-black card-size-1-3">
-            <div className="w-full">
-              <UptimeNodeMonitor />
-            </div>
-          </section>
+            {/* Card 8: Live Agent Node Monitor (Black Panel) */}
+            <article className="bento-card card-bg-black card-size-1-3">
+              <div className="w-full">
+                <UptimeNodeMonitor />
+              </div>
+            </article>
 
-        </main>
+          </div>
+        </div>
+      </section>
 
-      </div>
     </div>
   );
 }
