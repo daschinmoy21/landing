@@ -288,6 +288,35 @@ const CSS = `
   max-width: 680px;
 }
 
+.hero-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--accent);
+  margin-bottom: 24px;
+  background: rgba(10, 20, 5, 0.6);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.hero-logo svg {
+  width: 26px;
+  height: 26px;
+}
+
+.hero-logo .pulse {
+  fill: var(--accent);
+  animation: logo-pulse 2s infinite ease-in-out;
+}
+
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
 .hero-bench-col {
   z-index: 2;
   width: 100%;
@@ -2299,6 +2328,13 @@ export default function PierreLanding() {
 				<AsciiBackground />
 				<div className="hero-inner">
 					<div className="hero-text-card">
+						<div className="hero-logo">
+							<svg viewBox="0 0 32 32" aria-hidden="true">
+								<rect x="2" y="2" width="28" height="28" rx="7" fill="none" stroke="currentColor" strokeWidth="2" />
+								<rect x="12" y="12" width="8" height="8" rx="1.5" className="pulse" />
+								<path d="M16 2v6M16 24v6M2 16h6M24 16h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+							</svg>
+						</div>
 						<h1 className="hero-title">
 							Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in
 							control.
