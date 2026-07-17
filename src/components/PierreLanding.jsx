@@ -1,8 +1,9 @@
 import React from 'react'
 import AsciiBackground from './AsciiBackground.jsx'
 import AnimatedCardStack from './ui/animate-card-animation'
-import SpecularButton from './ui/SpecularButton.jsx'
+import CurvedInput from './ui/CurvedInput.jsx'
 import './ui/SpecularButton.css'
+import './ui/CurvedInput.css'
 
 const logo01 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg'
 const logo02 =
@@ -248,28 +249,28 @@ const CSS = `
 }
 
 .hero-inner {
-  max-width: 1500px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 88px 48px 80px;
+  padding: 120px 48px 80px;
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
-  gap: 80px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   min-height: min(760px, calc(100vh - 64px));
+  justify-content: center;
 }
 
 @media (min-width: 993px) {
   .hero-inner {
-    padding-bottom: 360px;
+    padding-top: 140px;
+    padding-bottom: 80px;
   }
 }
 
 @media (max-width: 992px) {
   .hero-inner {
-    grid-template-columns: 1fr;
-    gap: 56px;
     padding: 72px 24px 64px;
     min-height: auto;
   }
@@ -280,11 +281,11 @@ const CSS = `
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 28px 0 28px 48px;
-  text-align: left;
-  max-width: 640px;
+  padding: 0;
+  text-align: center;
+  max-width: 680px;
 }
 
 .hero-bench-col {
@@ -1255,6 +1256,49 @@ p.features-desc {
   line-height: 1.55;
 }
 
+/* Benchmarks Section */
+.bench-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 64px;
+  align-items: center;
+  padding: 72px 48px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 992px) {
+  .bench-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 48px 24px;
+  }
+}
+
+.bench-text-col h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.bench-text-col p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0 0 24px 0;
+  max-width: 48ch;
+}
+
+.bench-visual-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 430px;
+}
+
 /* Centered CTA Section (Image 1) */
 .centered-cta-section {
   position: relative;
@@ -1429,6 +1473,9 @@ p.features-desc {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+  transform-origin: center;
+  animation: cta-orbit 80s linear infinite;
+  will-change: transform;
 }
 
 .scattered-icon {
@@ -1467,6 +1514,20 @@ p.features-desc {
 @keyframes float-slow-3 {
   0%, 100% { transform: translate(-50%, -50%) translateX(0) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
   50% { transform: translate(-50%, -50%) translateX(-6px) translateY(-8px) rotate(calc(var(--base-rotation) + 2deg)) scale(var(--base-scale)); }
+}
+
+/* Let the full backdrop slowly orbit around the CTA while each icon keeps its own drift. */
+@keyframes cta-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scattered-bg-container,
+  .scattered-icon,
+  .cta-logo .pulse {
+    animation: none !important;
+  }
 }
 
 .faq-cta-row {
@@ -1961,37 +2022,31 @@ export default function PierreLanding() {
 						<p
 							className="hero-subhead"
 							style={{
-								fontSize: '15.5px',
+								fontSize: '16px',
 								color: 'rgba(238, 248, 239, 0.85)',
 								lineHeight: '1.7',
-								marginBottom: '28px'
+								marginBottom: '32px',
+								maxWidth: '520px'
 							}}
 						>
 							One workflow for containers and microVMs. Reproducible builds.
 							<br />
-							<span
-								style={{
-									color: 'var(--text-muted)',
-									fontSize: '13.5px',
-									marginTop: '12px',
-									display: 'block'
-								}}
-							>
-								Containers for speed. MicroVMs for security.
-								<br />
-								Managed or self-hosted. Zero drift.
-							</span>
+							Containers for speed. MicroVMs for security. Managed or self-hosted. Zero drift.
 						</p>
-						<div className="cta-group">
-							<SpecularButton>Request early access</SpecularButton>
-							<a href="#early-access" className="btn btn-secondary">
-								Explore features
-							</a>
+						<div style={{ marginBottom: '20px', width: '100%', maxWidth: '480px' }}>
+							<CurvedInput
+								placeholder="you@domain.com"
+								buttonText="Join waitlist"
+								theme="dark"
+								bend={-28}
+								height={60}
+								width="100%"
+								onSubmit={(email) => console.log('Waitlist signup:', email)}
+							/>
 						</div>
-					</div>
-
-					<div className="hero-bench-col">
-						<AnimatedCardStack />
+						<a href="#features" className="btn btn-secondary" style={{ fontSize: '14px' }}>
+							Explore features
+						</a>
 					</div>
 				</div>
 			</div>
@@ -2397,6 +2452,26 @@ export default function PierreLanding() {
 							<span>Self-hosted on bare metal or cloud</span>
 						</div>
 					</div>
+				</div>
+			</section>
+
+			{/* Benchmarks Section */}
+			<section className="bench-section" id="benchmarks">
+				<div className="bench-text-col">
+					<h2>Measurably faster. Radically simpler.</h2>
+					<p>
+						Russel outperforms vanilla Podman by up to <strong style={{ color: 'var(--accent)' }}>12×</strong> on
+						end-to-end deploy times, while adding hardware-enforced microVM isolation and
+						reproducible Nix builds — with zero additional configuration overhead.
+					</p>
+					<p>
+						Benchmarks run against identical workloads: HTTP server, static site, and
+						filebrowser. Container engine versus microVM engine versus stock Podman —
+						cold start, same hardware.
+					</p>
+				</div>
+				<div className="bench-visual-col">
+					<AnimatedCardStack />
 				</div>
 			</section>
 
