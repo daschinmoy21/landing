@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // ==========================================
-// 1. Hero Dot-Matrix Cloud/Leaf Graphic
+// 1. Hero Dot-Matrix Cloud Graphic
 // ==========================================
 
 function DotMatrixCloud() {
@@ -33,55 +33,49 @@ function DotMatrixCloud() {
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
       
-      // 3 major static center clusters forming the main leaf/cloud shape
-      const b1 = { x: width * 0.72, y: height * 0.28, r: Math.max(80, width * 0.16) };
-      const b2 = { x: width * 0.60, y: height * 0.58, r: Math.max(90, width * 0.18) };
-      const b3 = { x: width * 0.44, y: height * 0.82, r: Math.max(70, width * 0.14) };
+      // Center of cloud graphic
+      const cx = width * 0.62;
+      const cy = height * 0.5;
       
-      // Moving dynamic nodes
-      const t = time * 0.0008;
-      const b4 = { x: b1.x + Math.sin(t) * 35, y: b1.y + Math.cos(t) * 25, r: Math.max(40, width * 0.08) };
-      const b5 = { x: b2.x + Math.cos(t * 1.4) * 45, y: b2.y + Math.sin(t * 1.4) * 35, r: Math.max(50, width * 0.09) };
+      // Gentle breathing scaling (stable, no morphing)
+      const scale = 1.0 + Math.sin(time * 0.0015) * 0.02;
       
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const px = c * cellSize + cellSize / 2;
           const py = r * cellSize + cellSize / 2;
           
-          // Field calculations
-          const d1 = (px - b1.x)**2 + (py - b1.y)**2;
-          const d2 = (px - b2.x)**2 + (py - b2.y)**2;
-          const d3 = (px - b3.x)**2 + (py - b3.y)**2;
-          const d4 = (px - b4.x)**2 + (py - b4.y)**2;
-          const d5 = (px - b5.x)**2 + (py - b5.y)**2;
+          const rx = (px - cx) / scale;
+          const ry = (py - cy) / scale;
           
-          const f1 = (b1.r * b1.r) / (d1 + 1);
-          const f2 = (b2.r * b2.r) / (d2 + 1);
-          const f3 = (b3.r * b3.r) / (d3 + 1);
-          const f4 = (b4.r * b4.r) / (d4 + 1);
-          const f5 = (b5.r * b5.r) / (d5 + 1);
+          let inCloud = false;
           
-          const sum = f1 + f2 + f3 + f4 + f5;
-          const noise = Math.sin(px * 0.04 + py * 0.04 + time * 0.002) * 0.18;
-          const finalStrength = sum + noise;
+          // Overlapping circles representing a stable cloud shape
+          const dLeft = (rx + 70)**2 + (ry - 20)**2;
+          const dCenter = rx**2 + (ry + 20)**2;
+          const dRight = (rx - 80)**2 + (ry - 10)**2;
+          const dBottomLeft = (rx + 30)**2 + (ry - 40)**2;
+          const dBottomRight = (rx - 30)**2 + (ry - 40)**2;
           
-          // Fade factor towards left to preserve text readability
-          const fadeFactor = Math.min(1, Math.max(0, (px - width * 0.22) / (width * 0.45)));
+          if (dLeft < 60*60 || dCenter < 90*90 || dRight < 70*70 || dBottomLeft < 55*55 || dBottomRight < 55*55) {
+            inCloud = true;
+          }
           
-          if (finalStrength * fadeFactor > 0.95 && finalStrength * fadeFactor < 1.4) {
-            ctx.fillStyle = 'rgba(99, 254, 19, 0.45)';
+          // Left to right transparency fade
+          const fadeFactor = Math.min(1, Math.max(0, (px - width * 0.2) / (width * 0.5)));
+          
+          if (inCloud && fadeFactor > 0.01) {
+            const wave = Math.sin(px * 0.08 + py * 0.08 + time * 0.003) * 0.4;
+            const radius = (2.6 + wave) * fadeFactor;
+            
+            ctx.fillStyle = `rgba(99, 254, 19, ${0.4 + fadeFactor * 0.6})`;
             ctx.beginPath();
-            ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+            ctx.arc(px, py, radius, 0, Math.PI * 2);
             ctx.fill();
-          } else if (finalStrength * fadeFactor >= 1.4) {
-            ctx.fillStyle = '#63fe13';
-            const scale = 0.85 + Math.sin(px * 0.08 + py * 0.08 + time * 0.004) * 0.15;
-            ctx.beginPath();
-            ctx.arc(px, py, 2.8 * scale, 0, Math.PI * 2);
-            ctx.fill();
-          } else if (finalStrength * fadeFactor > 0.65) {
-            if (Math.random() < 0.06) {
-              ctx.fillStyle = 'rgba(99, 254, 19, 0.2)';
+          } else {
+            // Scattered ambient cloud particles
+            if (Math.random() < 0.001 * fadeFactor) {
+              ctx.fillStyle = 'rgba(99, 254, 19, 0.25)';
               ctx.beginPath();
               ctx.arc(px, py, 1.2, 0, Math.PI * 2);
               ctx.fill();
@@ -108,8 +102,8 @@ function DotMatrixCloud() {
 // 2. Bento Graphic Components (Canvas)
 // ==========================================
 
-// Card 1: ASCII Motion Study (Dark Green Theme)
-function AsciiMotionStudy() {
+// Card 1: Hex Package Compilation Stream (Nix Immutability representation)
+function NixCompileGraphic() {
   const canvasRef = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -117,10 +111,9 @@ function AsciiMotionStudy() {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let width = 0, height = 0;
-    
-    const chars = ['~', '/', '+', '|', '-', '\\', '{', '}', '(', ')', '<', '>', '!'];
-    const cellSizeX = 13;
-    const cellSizeY = 15;
+    const fontHeight = 14;
+    const charWidth = 9;
+    const hexChars = '0123456789abcdef';
     
     const resize = () => {
       if (!canvas.parentElement) return;
@@ -138,22 +131,37 @@ function AsciiMotionStudy() {
       ctx.fillStyle = '#090F06';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#63fe13';
-      ctx.font = "12px 'JetBrains Mono', monospace";
+      ctx.font = "10px 'JetBrains Mono', monospace";
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
       
-      const cols = Math.ceil(width / cellSizeX);
-      const rows = Math.ceil(height / cellSizeY);
+      const cols = Math.ceil(width / charWidth);
+      const rows = Math.ceil(height / fontHeight);
       
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const val = Math.sin(c * 0.2 + r * 0.2 + time * 0.003);
-          const charIndex = Math.floor(((val + 1) / 2) * chars.length) % chars.length;
-          const char = chars[charIndex];
-          const x = c * cellSizeX + cellSizeX / 2;
-          const y = r * cellSizeY + cellSizeY / 2;
-          ctx.fillText(char, x, y);
+      for (let c = 0; c < cols; c++) {
+        const speed = 0.035 + (c % 4) * 0.02;
+        const headY = Math.floor((time * speed) % (rows + 15));
+        
+        for (let r = 0; r < rows; r++) {
+          const x = c * charWidth + charWidth / 2;
+          const y = r * fontHeight + fontHeight / 2;
+          
+          if (r < headY - 8) {
+            // Immutable Nix store hash locked green state
+            ctx.fillStyle = 'rgba(99, 254, 19, 0.85)';
+            const charIdx = (c + r) % hexChars.length;
+            ctx.fillText(hexChars[charIdx], x, y);
+          } else if (r <= headY) {
+            // Processing / building stream
+            ctx.fillStyle = '#FFFFFF';
+            const randChar = hexChars[Math.floor(Math.random() * hexChars.length)];
+            ctx.fillText(randChar, x, y);
+          } else {
+            // Empty grid nodes
+            ctx.fillStyle = 'rgba(99, 254, 19, 0.07)';
+            ctx.beginPath();
+            ctx.arc(x, y, 1.0, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
       }
       
@@ -171,8 +179,8 @@ function AsciiMotionStudy() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 2: Density Roll (Dark Green Theme)
-function DensityRoll() {
+// Card 2: MicroVM Isolation Squares (Hypervisor barrier visualization)
+function IsolationSquares() {
   const canvasRef = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -180,7 +188,7 @@ function DensityRoll() {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let width = 0, height = 0;
-    const cellSize = 5;
+    const cellSize = 6;
     
     const resize = () => {
       if (!canvas.parentElement) return;
@@ -198,112 +206,44 @@ function DensityRoll() {
       ctx.fillStyle = '#0F180C';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#63fe13';
-      
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
       
+      const zoneWidth = cols / 3;
+      
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          const wave1 = Math.sin(c * 0.12 + time * 0.002);
-          const wave2 = Math.cos(r * 0.12 - time * 0.003);
-          const wave3 = Math.sin((c + r) * 0.08 + time * 0.001);
-          const val = (wave1 * wave2 + wave3 + 2) / 4; 
+          const zoneIndex = Math.floor(c / zoneWidth);
+          const localC = c % Math.floor(zoneWidth);
+          
+          const isBarrier = localC === 0 || localC === Math.floor(zoneWidth) - 1 || r === 0 || r === rows - 1;
           
           const x = c * cellSize + cellSize / 2;
           const y = r * cellSize + cellSize / 2;
           
-          const maxRadius = cellSize * 0.42;
-          const radius = maxRadius * val;
-          
-          if (radius > 0.4) {
+          if (isBarrier) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
             ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.arc(x, y, 0.9, 0, Math.PI * 2);
             ctx.fill();
-          }
-        }
-      }
-      
-      animationFrameId = requestAnimationFrame(render);
-    };
-    
-    animationFrameId = requestAnimationFrame(render);
-    
-    return () => {
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-  
-  return <canvas ref={canvasRef} className="w-full h-full block" />;
-}
-
-// Card 3: Hand-Drawn Glyph (Dark Blue Theme)
-function HandDrawnGlyph() {
-  const canvasRef = useRef(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animationFrameId;
-    let width = 0, height = 0;
-    const cellSize = 9;
-    
-    const resize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.parentElement.clientWidth;
-      height = canvas.parentElement.clientHeight;
-      canvas.width = width;
-      canvas.height = height;
-    };
-    
-    resize();
-    window.addEventListener('resize', resize);
-    
-    const render = (time) => {
-      if (!ctx) return;
-      ctx.fillStyle = '#050F1A';
-      ctx.fillRect(0, 0, width, height);
-      
-      ctx.fillStyle = '#7EC4FC';
-      
-      const cols = Math.ceil(width / cellSize);
-      const rows = Math.ceil(height / cellSize);
-      
-      const pulse = 0.82 + Math.sin(time * 0.004) * 0.18;
-      
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const cx = cols / 2;
-          const cy = rows / 2;
-          const xVal = (c - cx) * 0.85;
-          const yVal = (r - cy) * 0.85;
-          
-          let drawDot = false;
-          
-          const arrowX = -3.5;
-          const thickness = 1.6;
-          
-          if (xVal >= arrowX && xVal < 5) {
-            const yDist = Math.abs(yVal);
-            const expectedX = yDist * 1.25 - 2;
-            if (xVal >= expectedX - thickness && xVal <= expectedX + thickness) {
-              drawDot = true;
+          } else {
+            const centerC = zoneWidth / 2;
+            const centerR = rows / 2;
+            const dist = Math.sqrt((localC - centerC)**2 + (r - centerR)**2);
+            const pulse = 1.0 + Math.sin(time * 0.0035 + zoneIndex * 1.6) * 0.4;
+            
+            if (dist < 4 * pulse) {
+              ctx.fillStyle = '#63fe13';
+              ctx.beginPath();
+              ctx.arc(x, y, cellSize * 0.32 * (1.1 - dist / (4 * pulse)), 0, Math.PI * 2);
+              ctx.fill();
+            } else {
+              ctx.fillStyle = 'rgba(99, 254, 19, 0.04)';
+              ctx.beginPath();
+              ctx.arc(x, y, 0.8, 0, Math.PI * 2);
+              ctx.fill();
             }
           }
-          
-          if (yVal > 3.8 && yVal < 5.4 && xVal > 0.5 && xVal < 5.5) {
-            drawDot = true;
-          }
-          
-          if (drawDot) {
-            const x = c * cellSize + cellSize / 2;
-            const y = r * cellSize + cellSize / 2;
-            const radius = (cellSize * 0.35) * pulse;
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fill();
-          }
         }
       }
       
@@ -321,8 +261,8 @@ function HandDrawnGlyph() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 4: Seeded Glyph (Dark Green Theme)
-function SeededGlyph() {
+// Card 3: Shape-Shifting Runtimes (WebAssembly circle -> Container square -> MicroVM hexagon)
+function RuntimeMorph() {
   const canvasRef = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -345,37 +285,56 @@ function SeededGlyph() {
     
     const render = (time) => {
       if (!ctx) return;
-      ctx.fillStyle = '#090F06';
+      ctx.fillStyle = '#050F1A';
       ctx.fillRect(0, 0, width, height);
       
-      ctx.fillStyle = '#63fe13';
+      ctx.fillStyle = '#7EC4FC';
       
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
+      const cx = cols / 2;
+      const cy = rows / 2;
       
-      const t1 = time * 0.0018, t2 = time * 0.0014, t3 = time * 0.0025;
-      const b1 = { x: cols / 2 + Math.sin(t1) * (cols * 0.22), y: rows / 2 + Math.cos(t1 * 1.4) * (rows * 0.22), r: 42 };
-      const b2 = { x: cols / 2 + Math.cos(t2) * (cols * 0.24), y: rows / 2 + Math.sin(t2 * 1.3) * (rows * 0.18), r: 38 };
-      const b3 = { x: cols / 2 + Math.sin(t3 * 0.7) * (cols * 0.2), y: rows / 2 + Math.sin(t3) * (rows * 0.24), r: 32 };
+      const cycle = (time * 0.0005) % 3;
+      const state = Math.floor(cycle);
+      const morphFactor = cycle - state; 
+      
+      const getShapeDistance = (xVal, yVal, shapeType) => {
+        if (shapeType === 0) {
+          return Math.sqrt(xVal*xVal + yVal*yVal) - 4.5;
+        } else if (shapeType === 1) {
+          return Math.max(Math.abs(xVal), Math.abs(yVal)) - 4.5;
+        } else {
+          const px = Math.abs(xVal);
+          const py = Math.abs(yVal);
+          return Math.max(px * 0.866 + py * 0.5, py) - 5.0;
+        }
+      };
+      
+      const nextState = (state + 1) % 3;
       
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          const d1 = (c - b1.x) * (c - b1.x) + (r - b1.y) * (r - b1.y);
-          const d2 = (c - b2.x) * (c - b2.x) + (r - b2.y) * (r - b2.y);
-          const d3 = (c - b3.x) * (c - b3.x) + (r - b3.y) * (r - b3.y);
+          const xVal = c - cx;
+          const yVal = r - cy;
           
-          const f1 = b1.r / (d1 + 0.1);
-          const f2 = b2.r / (d2 + 0.1);
-          const f3 = b3.r / (d3 + 0.1);
+          const distCurrent = getShapeDistance(xVal, yVal, state);
+          const distNext = getShapeDistance(xVal, yVal, nextState);
           
-          const sum = f1 + f2 + f3;
+          const dist = distCurrent * (1 - morphFactor) + distNext * morphFactor;
           
-          if (sum > 0.042) {
+          if (Math.abs(dist) < 0.8) {
             const x = c * cellSize + cellSize / 2;
             const y = r * cellSize + cellSize / 2;
-            const radius = cellSize * 0.38 * Math.min(1.2, sum * 11);
+            const pulse = 1.0 + Math.sin(time * 0.005) * 0.12;
             ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.arc(x, y, cellSize * 0.35 * pulse, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (Math.abs(dist) > 0.8 && Math.abs(dist) < 2.0 && Math.random() < 0.04) {
+            const x = c * cellSize + cellSize / 2;
+            const y = r * cellSize + cellSize / 2;
+            ctx.beginPath();
+            ctx.arc(x, y, 1.2, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -395,7 +354,125 @@ function SeededGlyph() {
   return <canvas ref={canvasRef} className="w-full h-full block" />;
 }
 
-// Card 5: Throughput Column Grid (Dark Navy Theme)
+// Card 4: Zero-Downtime Traffic Redirection (Swap path visualizer)
+function TrafficSwap() {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let width = 0, height = 0;
+    let particles = [];
+    
+    const resize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width;
+      canvas.height = height;
+    };
+    
+    resize();
+    window.addEventListener('resize', resize);
+    
+    for (let i = 0; i < 22; i++) {
+      particles.push({
+        progress: Math.random(),
+        speed: 0.0045 + Math.random() * 0.003,
+        size: Math.random() * 1.5 + 1.2
+      });
+    }
+    
+    const render = (time) => {
+      if (!ctx) return;
+      ctx.fillStyle = '#090F06';
+      ctx.fillRect(0, 0, width, height);
+      
+      const startX = width * 0.15;
+      const startY = height * 0.5;
+      const endX = width * 0.85;
+      const endY = height * 0.5;
+      
+      const nodeAX = width * 0.5;
+      const nodeAY = height * 0.28;
+      
+      const nodeBX = width * 0.5;
+      const nodeBY = height * 0.72;
+      
+      const cycle = (time * 0.0003) % 2;
+      const activePath = cycle < 1 ? 'A' : 'B';
+      
+      ctx.fillStyle = activePath === 'A' ? 'rgba(99, 254, 19, 0.8)' : 'rgba(99, 254, 19, 0.2)';
+      ctx.beginPath();
+      ctx.arc(nodeAX, nodeAY, 7, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.fillStyle = activePath === 'B' ? 'rgba(99, 254, 19, 0.8)' : 'rgba(99, 254, 19, 0.2)';
+      ctx.beginPath();
+      ctx.arc(nodeBX, nodeBY, 7, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      ctx.beginPath();
+      ctx.arc(startX, startY, 4, 0, Math.PI * 2);
+      ctx.arc(endX, endY, 4, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.strokeStyle = 'rgba(99, 254, 19, 0.08)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(nodeAX, nodeAY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(nodeBX, nodeBY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      
+      ctx.fillStyle = '#63fe13';
+      particles.forEach(p => {
+        p.progress += p.speed;
+        if (p.progress > 1) p.progress = 0;
+        
+        let px, py;
+        if (p.progress < 0.5) {
+          const t = p.progress * 2;
+          const targetX = activePath === 'A' ? nodeAX : nodeBX;
+          const targetY = activePath === 'A' ? nodeAY : nodeBY;
+          px = startX * (1 - t) + targetX * t;
+          py = startY * (1 - t) + targetY * t;
+        } else {
+          const t = (p.progress - 0.5) * 2;
+          const sourceX = activePath === 'A' ? nodeAX : nodeBX;
+          const sourceY = activePath === 'A' ? nodeAY : nodeBY;
+          px = sourceX * (1 - t) + endX * t;
+          py = sourceY * (1 - t) + endY * t;
+        }
+        
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
+      animationFrameId = requestAnimationFrame(render);
+    };
+    
+    animationFrameId = requestAnimationFrame(render);
+    
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+  
+  return <canvas ref={canvasRef} className="w-full h-full block" />;
+}
+
+// Card 5: Stable Throughput Column Grid (Minimized fluctuations)
 function ThroughputGrid() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -425,11 +502,14 @@ function ThroughputGrid() {
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
       
+      // High stable base throughput level
+      const baseHeight = rows * 0.72; 
+      
       for (let c = 0; c < cols; c++) {
-        const wave1 = Math.sin(c * 0.28 + time * 0.005) * 0.38;
-        const wave2 = Math.cos(c * 0.14 - time * 0.0028) * 0.22;
-        const colHeightVal = (wave1 + wave2 + 0.55) * rows; 
-        const currentHeight = Math.max(2, Math.min(rows - 1, Math.floor(colHeightVal)));
+        // Minor steady jitter fluctuations only
+        const jitter = Math.sin(c * 0.6 + time * 0.0035) * 1.5 + (Math.random() - 0.5) * 0.6;
+        const colHeightVal = baseHeight + jitter; 
+        const currentHeight = Math.max(3, Math.min(rows - 1, Math.floor(colHeightVal)));
         
         for (let r = 0; r < rows; r++) {
           const gridY = rows - 1 - r; 
@@ -445,7 +525,7 @@ function ThroughputGrid() {
             }
             
             ctx.beginPath();
-            ctx.arc(x, y, cellSize * 0.32, 0, Math.PI * 2);
+            ctx.arc(x, y, cellSize * 0.3, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -595,56 +675,6 @@ function BootSimulator() {
   );
 }
 
-// Card 8: Live Agent Node Monitor (Ticking uptime)
-function UptimeNodeMonitor() {
-  const [uptimeSecs, setUptimeSecs] = useState(1234954); 
-  
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setUptimeSecs(prev => prev + 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatUptime = (totalSecs) => {
-    const d = Math.floor(totalSecs / (3600 * 24));
-    const h = Math.floor((totalSecs % (3600 * 24)) / 3600);
-    const m = Math.floor((totalSecs % 3600) / 60);
-    const s = totalSecs % 60;
-    
-    const pad = (num) => String(num).padStart(2, '0');
-    return `${d}d ${pad(h)}:${pad(m)}:${pad(s)}`;
-  };
-
-  return (
-    <div className="flex flex-col h-full justify-between p-8 text-white">
-      <div>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
-          Node: us-east-1a (Active)
-        </span>
-        <div className="text-[32px] font-black tracking-tight leading-none my-2 font-mono text-[#63fe13]">
-          {formatUptime(uptimeSecs)}
-        </div>
-      </div>
-      
-      <div className="border-t border-zinc-800 pt-3 mt-4">
-        <div className="flex justify-between items-center text-xs font-mono text-zinc-400 mb-1">
-          <span>Active microVMs</span>
-          <span className="text-white font-bold">24 / 32</span>
-        </div>
-        <div className="flex justify-between items-center text-xs font-mono text-zinc-400 mb-1">
-          <span>Memory Allocation</span>
-          <span className="text-white font-bold">8.4 GB / 16 GB</span>
-        </div>
-        <div className="flex justify-between items-center text-xs font-mono text-zinc-400">
-          <span>Node Agent version</span>
-          <span className="text-zinc-500">v0.8.2</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ==========================================
 // 4. Waitlist & Confetti Form Component
 // ==========================================
@@ -725,13 +755,13 @@ function WaitlistForm() {
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-50 w-full h-full" />
       
       <div>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-[#63fe13] block mb-1">
           Private Developer Preview
         </span>
         <h3 className="text-[28px] font-black tracking-tight leading-none mt-1 mb-2">
           Request Early Access
         </h3>
-        <p className="text-xs text-zinc-300 max-w-md leading-relaxed">
+        <p className="text-xs text-zinc-300 max-w-xl leading-relaxed">
           Russel is in private preview. Sign up to participate in early developer trials, test KVM isolation, and receive release updates.
         </p>
       </div>
@@ -888,30 +918,6 @@ const CSS = `
   align-items: center;
 }
 
-/* Typography & Content */
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: #63fe13;
-  letter-spacing: 0.15em;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 24px;
-}
-
-.hero-eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #63fe13;
-  box-shadow: 0 0 8px #63fe13;
-}
-
 .hero-title {
   font-size: clamp(34px, 4.8vw, 58px);
   font-weight: 900;
@@ -1058,6 +1064,7 @@ const CSS = `
 .card-size-equal { grid-column: span 6; }
 .card-size-2-3 { grid-column: span 8; }
 .card-size-1-3 { grid-column: span 4; }
+.card-size-full { grid-column: span 12; }
 
 .card-bg-green-dark { background-color: #090F06; }
 .card-bg-green-mid { background-color: #0F180C; }
@@ -1123,6 +1130,10 @@ const CSS = `
   display: block;
 }
 
+.stat-col text-white {
+  color: #FFFFFF;
+}
+
 .stat-label {
   font-size: 9px;
   color: rgba(255, 255, 255, 0.4);
@@ -1158,7 +1169,8 @@ const CSS = `
   .card-size-medium-right,
   .card-size-equal,
   .card-size-2-3,
-  .card-size-1-3 {
+  .card-size-1-3,
+  .card-size-full {
     grid-column: span 1;
   }
   .bento-card {
@@ -1183,7 +1195,7 @@ export default function PierreLanding() {
          Hero Section
          ========================================== */}
       <section className="hero-section">
-        {/* Dynamic Canvas Graphic (Dot Matrix cloud/leaf) */}
+        {/* Dynamic Canvas Graphic (Dot Matrix cloud shape) */}
         <div className="hero-graphic-container">
           <DotMatrixCloud />
         </div>
@@ -1191,7 +1203,6 @@ export default function PierreLanding() {
         <div className="hero-content-container">
           {/* Left Column (Copy content) */}
           <div className="hero-left">
-            <span className="hero-eyebrow">ONE CONTROL PLANE • ANY RUNTIME</span>
             <h1 className="hero-title">
               Deploy anything.<br />
               Boot <span className="hero-fast">FAST.</span><br />
@@ -1241,66 +1252,66 @@ export default function PierreLanding() {
 
           <div className="bento-grid">
             
-            {/* Card 1: From Build To Boot (Dark Green Panel) */}
+            {/* Card 1: From Build To Boot (Hex compilation stream) */}
             <article className="bento-card card-bg-green-dark card-size-large-left">
               <div className="card-content">
-                <span className="card-tagline">RUSSEL — ASCII Motion Study</span>
+                <span className="card-tagline">RUSSEL — Immutable Compiles</span>
                 <h2 className="card-title">From Build<br />To Boot.</h2>
                 <p className="card-desc">
                   Compile reproducible source packages in deterministic Nix sandboxes. Boot zero-drift infrastructure byte-for-byte matching local setups.
                 </p>
               </div>
               <div className="card-graphic">
-                <AsciiMotionStudy />
+                <NixCompileGraphic />
               </div>
             </article>
 
-            {/* Card 2: MicroVM Isolation (Dark Green-mid Panel) */}
+            {/* Card 2: MicroVM Isolation (Insulated isolation squares) */}
             <article className="bento-card card-bg-green-mid card-size-medium-right">
               <div className="card-content">
-                <span className="card-tagline">RUSSEL — Density Roll</span>
+                <span className="card-tagline">RUSSEL — KVM Isolation</span>
                 <h2 className="card-title">MicroVM<br />Isolation.</h2>
                 <p className="card-desc">
                   Leverage Cloud Hypervisor and KVM virtual machine sandboxing. Block host-level kernel escapes with dedicated vCPU lanes.
                 </p>
               </div>
               <div className="card-graphic">
-                <DensityRoll />
+                <IsolationSquares />
               </div>
             </article>
 
-            {/* Card 3: Born To Deploy (Dark Blue Panel) */}
+            {/* Card 3: Born To Deploy (Shape-shifting runtimes) */}
             <article className="bento-card card-bg-blue-dark card-size-large-left">
               <div className="card-content">
-                <span className="card-tagline">RUSSEL — Hand-Drawn Glyph</span>
+                <span className="card-tagline">RUSSEL — Shifting Runtimes</span>
                 <h2 className="card-title">Born To<br />Deploy.</h2>
                 <p className="card-desc">
                   Unified schema control plane. Switch runtimes between edge WebAssembly, standard container tasks, and secure microVMs with one configuration parameter.
                 </p>
               </div>
               <div className="card-graphic">
-                <HandDrawnGlyph />
+                <RuntimeMorph />
               </div>
             </article>
 
-            {/* Card 4: Zero-Downtime Swap (Dark Green Panel) */}
+            {/* Card 4: Zero-Downtime Swap (Zero-downtime routing swap) */}
             <article className="bento-card card-bg-green-dark card-size-medium-right">
               <div className="card-content">
-                <span className="card-tagline">RUSSEL — Seeded Glyph</span>
+                <span className="card-tagline">RUSSEL — Routing Swap</span>
                 <h2 className="card-title">Zero-Downtime<br />Swap.</h2>
                 <p className="card-desc">
                   Intelligent local routing tables swap underlying guest kernels and route networking ports dynamically to guarantee continuous active serving.
                 </p>
               </div>
               <div className="card-graphic">
-                <SeededGlyph />
+                <TrafficSwap />
               </div>
             </article>
 
-            {/* Card 5: Throughput (Dark Navy Panel) */}
+            {/* Card 5: Throughput (Stable Throughput Columns) */}
             <article className="bento-card card-bg-navy card-size-large-left">
               <div className="card-content">
-                <span className="card-tagline">RUSSEL — Throughput Study</span>
+                <span className="card-tagline">RUSSEL — High Performance Flow</span>
                 <div>
                   <h2 className="card-title">Throughput.</h2>
                   <div className="stats-row">
@@ -1331,17 +1342,10 @@ export default function PierreLanding() {
               </div>
             </article>
 
-            {/* Card 7: Request Early Access / Waitlist (Dark Green Accent Panel) */}
-            <article className="bento-card card-bg-accent card-size-2-3" id="early-access">
+            {/* Card 7: Request Early Access / Waitlist (Full Width) */}
+            <article className="bento-card card-bg-accent card-size-full" id="early-access">
               <div className="w-full">
                 <WaitlistForm />
-              </div>
-            </article>
-
-            {/* Card 8: Live Agent Node Monitor (Black Panel) */}
-            <article className="bento-card card-bg-black card-size-1-3">
-              <div className="w-full">
-                <UptimeNodeMonitor />
               </div>
             </article>
 
