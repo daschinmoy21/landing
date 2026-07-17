@@ -2330,10 +2330,21 @@ export default function PierreLanding() {
 						</div>
 						<button
 							className="scroll-down-btn"
-							onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+							onClick={() =>
+								document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+							}
 							aria-label="Scroll to features"
 						>
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<svg
+								width="20"
+								height="20"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
 								<path d="M12 5v14M5 12l7 7 7-7" />
 							</svg>
 						</button>

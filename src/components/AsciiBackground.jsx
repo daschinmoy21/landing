@@ -118,7 +118,7 @@ export default function AsciiBackground() {
 				}
 
 				const isMobile = gridWidth < 992
-				const dx = isMobile ? (gridWidth - dWidth) * 0.5 : -(dWidth * 0.35)
+				const dx = isMobile ? (gridWidth - dWidth) * 0.5 : -dWidth + gridWidth * 0.35
 				const dy = (gridHeight - dHeight) * 0.5
 
 				offscreenCtx.drawImage(image, dx, dy, dWidth, dHeight)
