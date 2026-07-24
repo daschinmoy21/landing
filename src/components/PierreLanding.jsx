@@ -2,75 +2,67 @@ import React from 'react'
 import AsciiBackground from './AsciiBackground.jsx'
 import AnimatedCardStack from './ui/animate-card-animation'
 import CurvedInput from './ui/CurvedInput.jsx'
+import { CircuitBoard } from './ui/circuit-board'
+import { Box, Cpu, Server, Terminal, PackageCheck, Globe, Shield } from 'lucide-react'
 import './ui/SpecularButton.css'
 import './ui/CurvedInput.css'
 
-const logo01 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg'
-const logo02 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg'
-const logo03 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg'
-const logo04 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg'
-const logo05 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg'
-const logo06 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg'
-const logo07 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg'
-const logo08 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg'
-const logo09 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg'
-const logo10 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wasm/wasm-original.svg'
-const logo11 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg'
-const logo12 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg'
-const logo13 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg'
-const logo14 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg'
-const logo15 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg'
-const logo16 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg'
-const logo17 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg'
-const logo18 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg'
-const logo19 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg'
-const logo20 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg'
-const logo21 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg'
-const logo22 =
-	'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg'
-const logo23 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg'
-const logo24 = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg'
+const LOGO = (name) =>
+	`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}/${name}-original.svg`
+const LOGO_PLAIN = (name) =>
+	`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}/${name}-plain.svg`
+
+const logoDocker = LOGO('docker')
+const logoRust = LOGO('rust')
+const logoGo = LOGO('go')
+const logoLinux = LOGO('linux')
+const logoNixos = LOGO('nixos')
+const logoK8s = LOGO_PLAIN('kubernetes')
+const logoPostgres = LOGO('postgresql')
+const logoGit = LOGO('git')
+const logoReact = LOGO('react')
+const logoNode = LOGO('nodejs')
+const logoPython = LOGO('python')
+const logoTs = LOGO('typescript')
+const logoRedis = LOGO('redis')
+const logoNginx = LOGO('nginx')
+const logoWasm = LOGO('wasm')
+const logoTerraform = LOGO('terraform')
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
 :root {
   --bg-color: #040803;
-  --bg-alt: #040803;
-  --text-color: oklch(0.90 0.008 145);
-  --text-muted: oklch(0.58 0.020 145);
-  --text-faint: oklch(0.36 0.015 145);
-  --border-color: oklch(0.11 0.022 145);
-  --border-subtle: oklch(0.08 0.015 145);
-  --card-bg: #0a1405;
-  --card-hover: oklch(0.13 0.030 145);
-  --accent: oklch(0.65 0.15 145);
-  --accent-soft: oklch(0.72 0.11 145);
-  --accent-muted: oklch(0.38 0.06 145);
-  --accent-glow: oklch(0.65 0.15 145 / 0.08);
-  --accent-alt: oklch(0.60 0.18 310);
-  --accent-alt-soft: oklch(0.70 0.12 310);
-  --accent-alt-muted: oklch(0.38 0.08 310);
-  --accent-alt-glow: oklch(0.60 0.18 310 / 0.08);
-  --success: oklch(0.65 0.15 145);
-  --error: oklch(0.50 0.14 25);
+  --bg-alt: #050a04;
+  --text-color: oklch(0.93 0.008 145);
+  --text-muted: oklch(0.72 0.018 145);
+  --text-faint: oklch(0.62 0.016 145);
+  --border-color: oklch(0.18 0.028 145);
+  --border-subtle: oklch(0.13 0.020 145);
+  --card-bg: oklch(0.12 0.028 145 / 0.72);
+  --card-hover: oklch(0.15 0.032 145);
+  --accent: oklch(0.72 0.17 145);
+  --accent-soft: oklch(0.78 0.12 145);
+  --accent-muted: oklch(0.42 0.07 145);
+  --accent-glow: oklch(0.72 0.17 145 / 0.12);
+  --accent-alt: oklch(0.68 0.16 310);
+  --accent-alt-soft: oklch(0.74 0.12 310);
+  --accent-alt-muted: oklch(0.42 0.08 310);
+  --accent-alt-glow: oklch(0.68 0.16 310 / 0.12);
+  --success: oklch(0.72 0.17 145);
+  --error: oklch(0.62 0.16 25);
+  --ink-on-accent: #041004;
   --focus-ring: var(--accent);
-  --selection-bg: oklch(0.68 0.16 145 / 0.2);
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Inter', sans-serif;
+  --selection-bg: oklch(0.72 0.17 145 / 0.22);
+  --shadow-soft: 0 18px 48px -20px rgba(0, 0, 0, 0.65);
+  --shadow-lift: 0 24px 56px -24px rgba(0, 0, 0, 0.72), 0 0 0 1px oklch(0.72 0.17 145 / 0.06);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Clash-Display', var(--font-sans);
 }
 
@@ -80,16 +72,17 @@ const CSS = `
 .pierre-page h4 {
   font-family: var(--font-heading);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .pierre-page {
   box-sizing: border-box;
-  background-color: #040803;
+  background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.65;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -97,6 +90,18 @@ const CSS = `
   scroll-behavior: smooth;
   position: relative;
   z-index: 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.pierre-page ::selection {
+  background: var(--selection-bg);
+  color: var(--text-color);
+}
+
+.pierre-page :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }
 
 /* Global terminal background */
@@ -114,14 +119,11 @@ const CSS = `
   height: 100%;
 }
 
-/* Ensure all page content sections layer on top of the fixed background */
+/* Ensure page content sections layer above fixed ascii field */
 .hero-section-grid,
-.main-header,
-.section-grid,
 .features-section,
-.config-showcase-section,
-.system-design-section,
-.footer-section {
+.bench-section,
+.centered-cta-section {
   position: relative;
   z-index: 2;
 }
@@ -130,112 +132,9 @@ const CSS = `
   box-sizing: border-box;
 }
 
-/* Banner / Ticker */
-.ticker-banner {
-  border-bottom: 1px solid var(--border-color);
-  padding: 10px 48px;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text-muted);
-  background-color: var(--bg-alt);
-  text-align: center;
-}
-
-.ticker-link {
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-/* Header */
-.main-header {
-  position: sticky;
-  top: 0;
-  background-color: #040803;
-  backdrop-filter: blur(8px);
-  z-index: 100;
-  border-bottom: 1px solid var(--border-color);
-  padding: 16px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .main-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 16px 24px;
-  }
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 700;
-}
-
-.header-logo-text {
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-mono);
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-@media (max-width: 768px) {
-  .header-right {
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-}
-
-.header-link {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  transition: color 0.2s ease;
-}
-
-.header-link:hover {
-  color: var(--accent);
-}
-
-/* Content width containment */
 .section-inner {
   max-width: 1280px;
   margin: 0 auto;
-}
-
-/* Sections layout */
-.section-divider-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  color: var(--text-faint);
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--bg-alt);
-  font-weight: 600;
-}
-
-.section-divider-label-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 48px;
 }
 
 /* Hero Custom Layout */
@@ -245,34 +144,66 @@ const CSS = `
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(circle at 50% 50%, rgba(10, 20, 5, 0.6) 0%, #040803 100%);
+  background:
+    radial-gradient(ellipse 70% 55% at 72% 42%, oklch(0.24 0.07 145 / 0.22) 0%, transparent 58%),
+    radial-gradient(circle at 50% 100%, oklch(0.14 0.04 145 / 0.35) 0%, var(--bg-color) 70%);
+}
+
+.hero-section-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Protect the text column; keep the right open for the cropped figure */
+  background:
+    linear-gradient(
+      to right,
+      oklch(0.04 0.015 145 / 0.75) 0%,
+      oklch(0.04 0.015 145 / 0.8) 38%,
+      oklch(0.04 0.015 145 / 0.35) 60%,
+      transparent 80%
+    ),
+    linear-gradient(
+      to bottom,
+      oklch(0.04 0.015 145 / 0.35) 0%,
+      transparent 22%,
+      transparent 68%,
+      var(--bg-color) 100%
+    );
 }
 
 .hero-inner {
-  max-width: 800px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 120px 48px 80px;
+  padding: 132px 48px 96px;
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  min-height: min(760px, calc(100vh - 64px));
+  min-height: min(780px, calc(100vh - 48px));
   justify-content: center;
 }
 
 @media (min-width: 993px) {
   .hero-inner {
-    padding-top: 140px;
-    padding-bottom: 80px;
+    padding-top: 152px;
+    padding-bottom: 104px;
   }
 }
 
 @media (max-width: 992px) {
   .hero-inner {
-    padding: 72px 24px 64px;
+    padding: 80px 24px 72px;
     min-height: auto;
+  }
+
+  .hero-section-grid::after {
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 40%, oklch(0.04 0.015 145 / 0.78) 0%, oklch(0.04 0.015 145 / 0.35) 55%, transparent 78%),
+      linear-gradient(to bottom, transparent 60%, var(--bg-color) 100%);
   }
 }
 
@@ -283,9 +214,90 @@ const CSS = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 28px 32px 24px;
   text-align: center;
-  max-width: 680px;
+  max-width: 720px;
+  width: 100%;
+  border-radius: 28px;
+  background: radial-gradient(
+    ellipse 70% 65% at 50% 42%,
+    oklch(0.05 0.02 145 / 0.72) 0%,
+    oklch(0.04 0.015 145 / 0.35) 55%,
+    transparent 78%
+  );
+}
+
+.hero-waitlist {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 8px;
+}
+
+.hero-waitlist-note {
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  min-height: 1.2em;
+}
+
+.hero-waitlist-note[data-state="success"] {
+  color: var(--accent-soft);
+}
+
+.hero-waitlist-note[data-state="error"] {
+  color: var(--error);
+}
+
+.hero-secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.hero-why-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--ink-on-accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.14) inset,
+    0 10px 28px -10px var(--accent-glow);
+  transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.hero-why-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-soft);
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.16) inset,
+    0 14px 32px -10px oklch(0.72 0.17 145 / 0.35);
+}
+
+.hero-why-btn .arr {
+  transition: transform 0.2s var(--ease-out);
+  color: inherit;
+  font-weight: 700;
+}
+
+.hero-why-btn:hover .arr {
+  transform: translateX(3px);
 }
 
 .hero-bench-col {
@@ -311,63 +323,6 @@ const CSS = `
   }
 }
 
-.bench-stack {
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
-  grid-template-rows: 430px auto;
-  align-items: center;
-  gap: 16px;
-  width: min(800px, calc(100vw - 96px));
-}
-
-.bench-stack-stage {
-  min-width: 0;
-  width: min(680px, calc(100vw - 224px));
-  max-width: none;
-  overflow: visible;
-  grid-column: 1 / -1;
-  grid-row: 1;
-}
-
-.bench-stack-controls {
-  display: flex;
-  justify-content: flex-start;
-  position: relative;
-  z-index: 20;
-  grid-column: 2;
-  grid-row: 2;
-  margin-top: -6px;
-  transform: none;
-  align-items: flex-start;
-}
-
-@media (max-width: 992px) {
-  .bench-stack {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 20px;
-    width: 100%;
-  }
-
-  .bench-stack-stage {
-    grid-row: 1;
-    grid-column: 1;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .bench-stack-stage > .absolute {
-    width: calc(100% - 16px) !important;
-  }
-
-  .bench-stack-controls {
-    grid-row: 2;
-    grid-column: 1;
-    justify-content: center;
-    transform: none;
-  }
-}
-
 @media (max-width: 600px) {
   .hero-inner {
     gap: 36px;
@@ -390,52 +345,6 @@ const CSS = `
   }
 }
 
-.section-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  border-bottom: 1px solid var(--border-color);
-}
-
-@media (max-width: 992px) {
-  .section-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.col-left {
-  padding: 64px 48px;
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-@media (max-width: 992px) {
-  .col-left {
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    padding: 48px 24px;
-  }
-}
-
-.col-right {
-  padding: 64px 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.01);
-}
-
-@media (max-width: 992px) {
-  .col-right {
-    padding: 48px 24px;
-  }
-}
-
 /* Hero elements */
 .hero-eyebrow {
   font-family: var(--font-mono);
@@ -447,33 +356,39 @@ const CSS = `
 }
 
 h1.hero-title {
-  font-family: var(--font-sans);
-  font-size: clamp(34px, 4vw, 56px);
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5.2vw, 64px);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
-  margin: 0 0 28px;
-  color: var(--text-color);
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  line-height: 1.05;
+  letter-spacing: -0.038em;
+  margin: 0 0 22px;
+  color: #f4faf4;
+  max-width: 13em;
+  text-shadow:
+    0 1px 0 oklch(0.04 0.02 145 / 0.55),
+    0 0 28px oklch(0.04 0.02 145 / 0.75),
+    0 12px 40px oklch(0.04 0.02 145 / 0.55);
 }
 
 .hero-gradient-text {
   font-style: italic;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--accent) 30%, var(--accent-alt) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  display: inline-block;
-  text-shadow: 0 0 30px rgba(99, 254, 19, 0.15);
+  font-weight: 700;
+  color: var(--accent);
+  display: inline;
+  text-shadow:
+    0 0 28px oklch(0.72 0.17 145 / 0.35),
+    0 1px 0 oklch(0.04 0.02 145 / 0.45);
 }
 
 .hero-subhead {
-  font-size: 16px;
-  line-height: 1.55;
-  color: rgba(238, 248, 239, 0.85);
-  margin-bottom: 26px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.65;
+  color: oklch(0.86 0.02 145);
+  margin: 0 auto 32px;
   font-family: var(--font-sans);
+  max-width: 42ch;
+  font-weight: 400;
+  text-shadow: 0 0 24px oklch(0.04 0.02 145 / 0.85);
 }
 
 .hero-divider-line {
@@ -501,19 +416,21 @@ h1.hero-title {
   height: 44px;
   border-radius: 50%;
   border: 1px solid var(--border-color);
-  background: transparent;
+  background: oklch(0.10 0.02 145 / 0.5);
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  margin-top: 12px;
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out), background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  margin-top: 20px;
 }
 
 .scroll-down-btn:hover {
-  border-color: var(--accent);
+  border-color: var(--accent-muted);
   color: var(--accent);
+  background: oklch(0.72 0.17 145 / 0.06);
+  transform: translateY(2px);
 }
 
 @media (max-width: 480px) {
@@ -690,6 +607,12 @@ h1.hero-title {
 .bar-fill {
   height: 100%;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8px;
+  min-width: 70px;
+  transition: width 1s var(--ease-out);
 }
 
 .bar-fill.win {
@@ -719,124 +642,66 @@ h1.hero-title {
 
 /* Features Grid */
 .features-section {
-  padding: 72px 48px;
+  padding: 104px 48px 96px;
   border-bottom: 1px solid var(--border-color);
-  background-color: transparent;
+  background:
+    linear-gradient(180deg, oklch(0.08 0.02 145 / 0.35) 0%, transparent 28%),
+    transparent;
 }
 
 @media (max-width: 768px) {
   .features-section {
-    padding: 48px 24px;
+    padding: 64px 24px 56px;
   }
 }
 
 .features-header {
-  max-width: 650px;
-  margin-bottom: 48px;
+  max-width: 720px;
+  margin: 0 auto 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .features-desc {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 56ch;
+  line-height: 1.65;
+  max-width: 52ch;
 }
 
 .features-title {
-  font-size: 32px;
+  font-size: clamp(28px, 3.6vw, 40px);
   font-weight: 700;
-  margin: 0;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  max-width: 24ch;
+  margin: 0 0 16px;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  max-width: 18ch;
+  color: var(--text-color);
+  text-wrap: balance;
 }
 
 p.features-desc {
   color: var(--text-muted);
-  font-size: 14px;
-  margin: 0 0 24px 0;
-  max-width: 62ch;
+  font-size: 15.5px;
+  margin: 0;
+  max-width: 48ch;
   line-height: 1.65;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  width: 100%;
-}
-
-@media (max-width: 1200px) {
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 576px) {
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.feature-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 28px 24px 24px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  min-height: 200px;
-}
-
-.feature-card:nth-child(1) { border-left: 2px solid var(--accent); }
-.feature-card:nth-child(3) { border-left: 2px solid var(--accent-muted); }
-
-.feature-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
-}
-
-.feature-card-icon {
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.feature-card-icon-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent);
-}
-
-.feature-card:nth-child(3) .feature-card-icon-dot,
-.feature-card:nth-child(4) .feature-card-icon-dot {
-  background-color: var(--accent-muted);
-}
-
-.feature-card-title {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--text-color);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 12px;
+  text-align: center;
 }
 
 .feature-card-cmd {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--accent);
-  background: rgba(255, 255, 255, 0.02);
-  padding: 6px 10px;
-  border-radius: 4px;
-  border: 1px solid var(--border-subtle);
+  color: var(--accent-soft);
+  background: oklch(0.72 0.17 145 / 0.06);
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid oklch(0.72 0.17 145 / 0.14);
   margin-bottom: 16px;
   width: fit-content;
+  letter-spacing: -0.01em;
 }
 
 .feature-card-desc {
@@ -847,202 +712,52 @@ p.features-desc {
   max-width: 50ch;
 }
 
+/* Quiet capability strip under the feature panel */
 .checkmarks-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
-  margin-top: 36px;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 4px;
+  margin: 28px auto 0;
+  padding: 0;
+  list-style: none;
+  max-width: 52rem;
 }
 
 .check-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+  letter-spacing: 0.01em;
+  padding: 0 12px;
+  min-height: auto;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+
+.check-item:not(:first-child)::before {
+  content: '·';
+  color: var(--border-color);
+  margin-right: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
 }
 
 .check-icon {
   color: var(--accent);
-  font-weight: bold;
-}
-
-/* Config & Terminal Showcase */
-.config-showcase-section {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  border-bottom: 1px solid var(--border-color);
-}
-
-@media (max-width: 992px) {
-  .config-showcase-section {
-    grid-template-columns: 1fr;
-  }
-}
-
-.config-col-left {
-  padding: 64px 48px;
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: center;
-  background-color: transparent;
-}
-
-@media (max-width: 992px) {
-  .config-col-left {
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    padding: 48px 24px;
-  }
-}
-
-.config-col-right {
-  padding: 64px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: transparent;
-}
-
-@media (max-width: 992px) {
-  .config-col-right {
-    padding: 48px 24px;
-  }
-}
-
-.showcase-card {
-  border: 1px solid var(--border-color);
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  text-align: left;
-}
-
-.showcase-card-header {
-  background-color: oklch(0.05 0.020 145);
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.showcase-card-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.showcase-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-.showcase-dot.red { background-color: #ff5f56; }
-.showcase-dot.yellow { background-color: #ffbd2e; }
-.showcase-dot.green { background-color: #27c93f; }
-
-.showcase-card-title {
-  color: var(--text-faint);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-}
-
-.showcase-card-body {
-  padding: 18px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: #a5a5a5;
-  line-height: 1.65;
-}
-
-.bullet-check-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.bullet-check-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.bullet-check-icon {
-  margin-top: 2px;
-  color: var(--accent);
-  flex-shrink: 0;
-}
-
-.bullet-check-text {
-  font-size: 13.5px;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.bullet-check-text strong {
-  color: var(--text-color);
-  font-weight: 600;
-}
-
-/* Comparison Table Styling */
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background-color: oklch(0.07 0.025 145);
-  margin: 24px 0 0 0;
-}
-
-.compare-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px;
-  text-align: left;
-  min-width: 600px;
-}
-
-.compare-table th, .compare-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.compare-table th {
-  color: var(--text-faint);
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: 0.08em;
   font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
 }
 
-.compare-table td.row-title {
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.compare-table td.highlight-col, .compare-table th.highlight-col {
-  background-color: oklch(0.76 0.15 145 / 0.12);
-  border-left: 1px solid var(--accent-muted);
-  border-right: 1px solid var(--accent-muted);
-  border-bottom: 1px solid var(--accent-muted);
-}
-
-.compare-table td.highlight-col .table-check {
-  color: var(--accent);
-}
-
-.compare-table tr:last-child td {
+/*.compare-table tr:last-child td {
   border-bottom: none;
 }
 
@@ -1051,281 +766,182 @@ p.features-desc {
   color: var(--accent);
 }
 
-/* System Design Visual */
-.system-design-section {
-  padding: 64px 48px;
-  border-bottom: 1px solid var(--border-color);
-  background-color: transparent;
-}
-
-@media (max-width: 768px) {
-  .system-design-section {
-    padding: 48px 24px;
-  }
-}
-
-.system-design-container {
-  width: 100%;
-  border: 1px solid var(--border-color);
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  padding: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.system-design-svg {
-  width: 100%;
-  height: auto;
-  max-width: 800px;
-}
-
-/* Roadmap Grid & Timeline Layout */
-.roadmap-container {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 64px;
-  margin-top: 32px;
-}
-
-@media (max-width: 992px) {
-  .roadmap-container {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
-
-.phases-list {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  position: relative;
-  padding-left: 24px;
-}
-
-/* Vertical dashed timeline axis line */
-.phases-list::before {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 8px;
-  bottom: 8px;
-  width: 1px;
-  background: repeating-linear-gradient(180deg, var(--border-color), var(--border-color) 4px, transparent 4px, transparent 8px);
-}
-
-.phase-item {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.phase-badge {
-  position: absolute;
-  left: -24px;
-  top: 4px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background-color: var(--bg-color);
-  border: 2px solid var(--border-color);
-  font-size: 0;
-  padding: 0;
-  display: inline-block;
-}
-
-.phase-badge.done {
-  background-color: var(--accent-alt);
-  border-color: var(--accent-alt);
-  box-shadow: 0 0 8px var(--accent-alt-glow);
-}
-
-.phase-badge.now {
-  background-color: var(--bg-color);
-  border-color: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
-}
-
-.phase-badge.next {
-  background-color: var(--bg-color);
-  border-color: var(--border-color);
-}
-
-.phase-text {
-  font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-.phase-header-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.phase-label-tag {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-faint);
-}
-
-.phase-label-tag.active {
-  color: var(--accent);
-}
-
-.roadmap-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-@media (max-width: 640px) {
-  .roadmap-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.roadmap-card {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 20px;
-  transition: all 0.25s ease;
-}
-
-.roadmap-card:hover {
-  border-color: var(--text-faint);
-  transform: translateY(-1px);
-}
-
-.roadmap-card-icon {
-  font-size: 14px;
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.roadmap-card-icon.planned {
-  color: var(--text-faint);
-}
-
-.roadmap-card h4 {
-  font-size: 14.5px;
-  font-weight: 700;
-  margin: 0 0 6px 0;
-  text-transform: uppercase;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.roadmap-card.featured {
-  grid-column: span 2;
-  border-color: var(--accent);
-  background: rgba(99, 254, 19, 0.03);
-  box-shadow: 0 0 15px var(--accent-glow);
-}
-
-.roadmap-card.featured:hover {
-  border-color: var(--accent-soft);
-  box-shadow: 0 0 20px rgba(99, 254, 19, 0.15);
-}
-
-.roadmap-card.highlight {
-  border-color: var(--accent-alt-muted);
-  background: rgba(255, 59, 238, 0.02);
-}
-
-.roadmap-card.highlight:hover {
-  border-color: var(--accent-alt-soft);
-}
-
-@media (max-width: 640px) {
-  .roadmap-card.featured {
-    grid-column: span 1;
-  }
-}
-
-.roadmap-state {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.05em;
-  color: var(--text-faint);
-}
-
-.roadmap-state[data-status="active"] {
-  color: var(--accent);
-}
-
-.roadmap-card p {
-  font-size: 13.5px;
-  color: var(--text-muted);
-  margin: 0;
-  line-height: 1.55;
-}
-
-/* Benchmarks Section */
+/*/* Benchmarks Section */
 .bench-section {
   max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 64px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 72px 48px;
+  gap: 48px;
+  padding: 104px 48px;
   border-bottom: 1px solid var(--border-color);
+  text-align: center;
 }
 
 @media (max-width: 992px) {
   .bench-section {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 48px 24px;
+    gap: 36px;
+    padding: 64px 24px;
   }
 }
 
+.bench-text-col {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .bench-text-col h2 {
-  font-size: 32px;
+  font-size: clamp(22px, 3.2vw, 40px);
   font-weight: 700;
-  margin: 0 0 16px 0;
-  letter-spacing: -0.02em;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.03em;
   line-height: 1.15;
+  max-width: none;
+  white-space: nowrap;
 }
 
 .bench-text-col p {
-  font-size: 14px;
+  font-size: 15.5px;
   color: var(--text-muted);
   line-height: 1.65;
-  margin: 0 0 24px 0;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.bench-footnote {
+  margin: 8px auto 0;
   max-width: 48ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-faint);
+  text-align: center;
 }
 
 .bench-visual-col {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 430px;
+  width: 100%;
+  min-height: 460px;
 }
 
-/* Centered CTA Section (Image 1) */
+/* Benchmark card stack (AnimatedCardStack) */
+.bench-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(640px, 100%);
+}
+
+.bench-stack-stage {
+  position: relative;
+  width: 100%;
+  height: 430px;
+}
+
+.bench-stack-card {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(640px, calc(100% - 16px));
+  height: 360px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: #000000;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  will-change: transform;
+}
+
+.bench-stack-card--static {
+  position: relative;
+  left: auto;
+  transform: none;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.bench-card--stack {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  border-radius: 0;
+}
+
+.bench-card-heading {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-color);
+  text-transform: uppercase;
+  margin: 0 0 6px 0;
+}
+
+.bench-card-sub {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.bar-row-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.bar-row-label.is-winner {
+  color: var(--text-color);
+}
+
+.bar-track--tall {
+  position: relative;
+  height: 22px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar-fill-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-on-accent, #041004);
+  white-space: nowrap;
+}
+
+.bar-fill.lose .bar-fill-val {
+  color: var(--text-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-fill {
+    transition: none;
+  }
+}
+
+/* Centered CTA — full-bleed cinematic field, green scheme */
 .centered-cta-section {
   position: relative;
-  padding: 140px 24px;
+  padding: 140px 24px 132px;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  background: radial-gradient(circle at 50% 50%, rgba(10, 20, 15, 0.5) 0%, #000 100%);
+  background:
+    radial-gradient(circle at 50% 45%, oklch(0.22 0.07 145 / 0.35) 0%, transparent 55%),
+    radial-gradient(circle at 50% 50%, oklch(0.12 0.04 145 / 0.45) 0%, #020402 72%);
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -1340,6 +956,7 @@ p.features-desc {
   position: relative;
   z-index: 5;
   max-width: 680px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1351,12 +968,15 @@ p.features-desc {
   justify-content: center;
   width: 68px;
   height: 68px;
-  background: linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%);
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: linear-gradient(145deg, oklch(0.95 0.01 145) 0%, oklch(0.82 0.03 145) 100%);
+  border: 1px solid oklch(0.72 0.17 145 / 0.25);
   border-radius: 16px;
-  color: #111827;
+  color: #0a1405;
   margin-bottom: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.45),
+    0 0 28px oklch(0.72 0.17 145 / 0.18),
+    inset 0 2px 2px rgba(255, 255, 255, 0.75);
 }
 
 .cta-logo svg {
@@ -1365,33 +985,33 @@ p.features-desc {
 }
 
 .cta-logo .pulse {
-  fill: #111827;
+  fill: #0a1405;
   animation: logo-pulse 2s infinite ease-in-out;
 }
 
 @keyframes logo-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+  50% { transform: scale(1.12); opacity: 0.78; }
 }
 
 .cta-title {
   font-family: var(--font-mono);
   font-size: clamp(32px, 5.5vw, 56px);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   color: #fff;
   margin: 0 0 16px;
-  text-shadow: 0 0 30px rgba(255,255,255,0.1);
+  text-shadow: 0 0 32px oklch(0.72 0.17 145 / 0.22);
 }
 
 .cta-subtitle {
   font-family: var(--font-mono);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--text-muted);
   max-width: 54ch;
-  margin-bottom: 32px;
+  margin: 0 0 32px;
   letter-spacing: -0.01em;
 }
 
@@ -1413,30 +1033,40 @@ p.features-desc {
   color: var(--border-color);
 }
 
+.cta-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
 .cta-input-bar {
   width: 100%;
   max-width: 480px;
   height: 52px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0 6px 0 20px;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.5);
-  transition: all 0.25s ease;
+  gap: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  transition: border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
   backdrop-filter: blur(16px);
   box-sizing: border-box;
 }
 
 .cta-input-bar:focus-within {
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 15px 45px rgba(255, 255, 255, 0.05);
+  border-color: oklch(0.72 0.17 145 / 0.55);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55), 0 0 0 3px var(--accent-glow);
 }
 
 .cta-input-bar input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   color: #fff;
@@ -1451,51 +1081,118 @@ p.features-desc {
 }
 
 .cta-input-bar input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .cta-submit-btn {
-  background: #0077ff;
-  color: #fff;
+  background: var(--accent);
+  color: var(--ink-on-accent);
   border: none;
   border-radius: 9999px;
   font-family: var(--font-mono);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 13.5px;
   height: 40px;
-  padding: 0 28px;
+  padding: 0 26px;
   margin: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
   white-space: nowrap;
   box-sizing: border-box;
+  box-shadow: 0 1px 0 oklch(1 0 0 / 0.14) inset;
 }
 
 .cta-submit-btn:hover {
-  background-color: #268fff;
+  background-color: var(--accent-soft);
   transform: translateY(-1px);
+  box-shadow: 0 10px 28px -10px oklch(0.72 0.17 145 / 0.45);
 }
 
 .cta-submit-btn:active {
   transform: translateY(0);
 }
 
-/* Scattered Bokeh/Blurred Background */
+.cta-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+.cta-form-note {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  min-height: 1.2em;
+}
+
+.cta-form-note[data-state="success"] {
+  color: var(--accent-soft);
+}
+
+.cta-form-note[data-state="error"] {
+  color: var(--error);
+}
+
+@media (max-width: 520px) {
+  .cta-input-bar {
+    height: auto;
+    min-height: 52px;
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .cta-input-bar input {
+    padding: 0 10px;
+    height: 40px;
+  }
+
+  .cta-submit-btn {
+    width: 100%;
+    height: 44px;
+  }
+}
+
+/* Orbiting tech field — dual counter-rotating rings */
 .scattered-bg-container {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: -12%;
+  width: 124%;
+  height: 124%;
+  left: -12%;
+  top: -12%;
   pointer-events: none;
   z-index: 1;
-  overflow: hidden;
-  transform-origin: center;
-  animation: cta-orbit 80s linear infinite;
+  overflow: visible;
+  transform-origin: 50% 50%;
+  animation: cta-orbit 70s linear infinite;
+  animation-play-state: paused;
   will-change: transform;
+}
+
+.scattered-bg-container.is-active {
+  animation-play-state: running;
+}
+
+.scattered-bg-ring {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+
+.scattered-bg-ring--inner {
+  animation: cta-orbit-reverse 95s linear infinite;
+  animation-play-state: paused;
+}
+
+.scattered-bg-container.is-active .scattered-bg-ring--inner {
+  animation-play-state: running;
 }
 
 .scattered-icon {
@@ -1503,253 +1200,119 @@ p.features-desc {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
   padding: 10px;
-  width: 52px;
-  height: 52px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  width: 54px;
+  height: 54px;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.45),
+    0 0 18px oklch(0.72 0.17 145 / 0.08);
   transform: translate(-50%, -50%) scale(var(--base-scale, 1)) rotate(var(--base-rotation, 0deg));
   pointer-events: none;
+  animation-play-state: paused;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.scattered-bg-container.is-active .scattered-icon {
+  animation-play-state: running;
 }
 
 .scattered-icon img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  opacity: 0.92;
 }
 
-/* Animations for floating icons with translate(-50%, -50%) preserved */
+/* Stronger individual float so spin field feels alive */
 @keyframes float-slow-1 {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
-  50% { transform: translate(-50%, -50%) translateY(-12px) rotate(calc(var(--base-rotation) + 3deg)) scale(var(--base-scale)); }
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale));
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-22px) rotate(calc(var(--base-rotation) + 8deg)) scale(calc(var(--base-scale) * 1.05));
+  }
 }
 
 @keyframes float-slow-2 {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
-  50% { transform: translate(-50%, -50%) translateY(10px) rotate(calc(var(--base-rotation) - 4deg)) scale(var(--base-scale)); }
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale));
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(18px) rotate(calc(var(--base-rotation) - 10deg)) scale(calc(var(--base-scale) * 0.96));
+  }
 }
 
 @keyframes float-slow-3 {
-  0%, 100% { transform: translate(-50%, -50%) translateX(0) translateY(0) rotate(var(--base-rotation)) scale(var(--base-scale)); }
-  50% { transform: translate(-50%, -50%) translateX(-6px) translateY(-8px) rotate(calc(var(--base-rotation) + 2deg)) scale(var(--base-scale)); }
+  0%, 100% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(var(--base-rotation)) scale(var(--base-scale));
+  }
+  33% {
+    transform: translate(-50%, -50%) translate(-12px, -14px) rotate(calc(var(--base-rotation) + 6deg)) scale(var(--base-scale));
+  }
+  66% {
+    transform: translate(-50%, -50%) translate(10px, -8px) rotate(calc(var(--base-rotation) - 5deg)) scale(calc(var(--base-scale) * 1.04));
+  }
 }
 
-/* Let the full backdrop slowly orbit around the CTA while each icon keeps its own drift. */
 @keyframes cta-orbit {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
+@keyframes cta-orbit-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scattered-bg-container,
+  .scattered-bg-ring--inner,
   .scattered-icon,
-  .cta-logo .pulse {
+  .cta-logo .pulse,
+  .hermetic-center-cube,
+  .animated-nix-line,
+  .animated-nix-line.purple-flow {
     animation: none !important;
   }
-}
 
-.faq-cta-row {
-  display: flex;
-  gap: 20px;
-  margin-top: 12px;
-}
+  .pierre-page {
+    scroll-behavior: auto;
+  }
 
-@media (max-width: 768px) {
-  .faq-cta-row {
-    flex-direction: column;
+  .feature-column,
+  .scroll-down-btn,
+  .cta-submit-btn,
+  .runtime-card-sub {
+    transition: none !important;
   }
 }
 
-.faq-cta-card {
-  border: 1px solid var(--accent-muted);
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  padding: 24px;
-  flex: 1;
-}
-
-.faq-cta-card h4 {
-  font-size: 14px;
-  font-weight: 700;
-  margin: 0 0 10px 0;
-  text-transform: uppercase;
-  color: var(--text-color);
-}
-
-.faq-cta-card p {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin: 0 0 16px 0;
-}
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 32px;
-}
-
-.faq-item {
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background-color: var(--card-bg);
-  overflow: hidden;
-}
-
-.faq-q {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 16px 20px;
-  text-align: left;
-  color: var(--text-color);
-  font-weight: 600;
-  font-size: 13.5px;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.faq-q:hover {
-  color: var(--accent);
-}
-
-.faq-q .ic {
-  font-family: var(--font-mono);
-  font-size: 16px;
-  color: var(--text-faint);
-}
-
-.faq-a {
-  padding: 0 20px 16px 20px;
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-/* Footer Section */
-.footer-section {
-  padding: 64px 48px 32px 48px;
-  border-top: 1px solid var(--border-color);
-}
-
-@media (max-width: 768px) {
-  .footer-section {
-    padding: 48px 24px 24px 24px;
-  }
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 48px;
-  align-items: start;
-}
-
-@media (max-width: 768px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-}
-
-.footer-card {
-  border: 1px solid var(--border-color);
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  padding: 28px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.footer-card h4 {
-  font-size: 15px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-  text-transform: uppercase;
-  color: var(--text-color);
-}
-
-.footer-card p {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin: 0 0 20px 0;
-}
-
-.footer-divider {
-  border: none;
-  border-top: 1px solid var(--border-color);
-  margin: 0 0 24px 0;
-}
-
-.footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  margin-bottom: 16px;
-}
-
-.footer-link {
-  color: var(--text-faint);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footer-link:hover {
-  color: var(--accent);
-}
-
-.footer-separator {
-  color: var(--border-color);
-}
-
-.footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-faint);
-}
-
-@media (max-width: 480px) {
-  .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-}
-
-/* Custom code highlight classes */
-.code-kw { color: #f87171; }
-.code-str { color: var(--accent); }
-.code-comment { color: var(--text-faint); }
-.code-title { color: #60a5fa; }
-
-/* Unified Features Box Redesign */
+/*/* Unified Features Box Redesign */
 .unified-features-box {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
-  background-color: rgba(4, 8, 3, 0.45);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, oklch(0.12 0.03 145 / 0.55) 0%, oklch(0.07 0.02 145 / 0.72) 100%);
   overflow: hidden;
-  margin-top: 32px;
+  margin-top: 8px;
   width: 100%;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(8px);
 }
 
 .feature-column {
-  padding: 40px 32px;
+  padding: 36px 28px 40px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-color);
-  transition: all 0.25s ease;
+  transition: background-color 0.28s var(--ease-out);
+  min-width: 0;
 }
 
 .feature-column:last-child {
@@ -1757,34 +1320,52 @@ p.features-desc {
 }
 
 .feature-column:hover {
-  background-color: rgba(99, 254, 19, 0.02);
+  background-color: oklch(0.72 0.17 145 / 0.03);
 }
 
 .feature-illustration-container {
-  height: 220px;
+  height: 210px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.45);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background:
+    radial-gradient(circle at 50% 30%, oklch(0.22 0.05 145 / 0.18) 0%, transparent 60%),
+    oklch(0.05 0.015 145 / 0.9);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 28px;
+  margin-bottom: 26px;
   overflow: hidden;
   position: relative;
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.03);
+  padding: 8px;
+}
+
+.feature-illustration-container--circuit {
+  padding: 4px;
+}
+
+.feature-illustration-container--circuit > * {
+  max-width: 100%;
+}
+
+.runtime-lucide {
+  width: 28px;
+  height: 28px;
 }
 
 .feature-column-title {
-  font-family: var(--font-sans);
+  font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 18px;
-  color: #ffffff;
-  margin: 0 0 16px 0;
-  letter-spacing: -0.02em;
+  font-size: 20px;
+  color: var(--text-color);
+  margin: 0 0 14px 0;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
 .feature-column-desc {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1.6;
   margin: 0;
@@ -1797,70 +1378,168 @@ p.features-desc {
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding: 0 8px;
 }
 
 .runtime-card-sub {
-  background: rgba(255, 255, 255, 0.02);
+  background: oklch(1 0 0 / 0.02);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px 12px;
+  border-radius: var(--radius-sm);
+  padding: 14px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 105px;
-  transition: all 0.3s ease;
+  flex: 0 1 120px;
+  min-width: 0;
+  color: var(--text-muted);
+  transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+.runtime-card-sub svg {
+  width: 28px;
+  height: 28px;
 }
 
 .runtime-card-sub.active.container-active {
   border-color: var(--accent-alt);
   background: var(--accent-alt-glow);
+  color: var(--accent-alt);
+  box-shadow: 0 0 0 1px var(--accent-alt-muted), 0 8px 24px -12px var(--accent-alt-glow);
 }
 
 .runtime-card-sub.active.microvm-active {
   border-color: var(--accent);
   background: var(--accent-glow);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-muted), 0 8px 24px -12px var(--accent-glow);
 }
 
 .runtime-card-sub-title {
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: 0.05em;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
 }
 
-/* Hermetic zero-drift graphic styles */
+.runtime-card-sub-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.runtime-card-sub.active .runtime-card-sub-label {
+  color: inherit;
+}
+
+.feature-engine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.feature-engine-block.is-split {
+  border-top: 1px dashed oklch(1 0 0 / 0.08);
+  padding-top: 12px;
+}
+
+.feature-engine-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.feature-engine-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.feature-card-cmd {
+  font-size: 11px;
+  margin: 0;
+}
+
+/* Hermetic zero-drift graphic — flex row, no absolute overflow */
 .hermetic-graphic {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 80%;
-  position: relative;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 320px;
+  padding: 8px;
 }
 
 .hermetic-node {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  z-index: 1;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-width: 64px;
 }
 
 .hermetic-node-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   color: var(--text-muted);
+}
+
+.hermetic-node-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-align: center;
+  line-height: 1.25;
+}
+
+.hermetic-flow {
+  flex: 1 1 28px;
+  min-width: 20px;
+  max-width: 48px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.hermetic-flow svg {
+  width: 100%;
+  height: 8px;
+  overflow: visible;
+}
+
+.hermetic-flow line {
+  stroke-width: 2;
 }
 
 .hermetic-center-cube {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  min-height: 64px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   animation: float-cube 3s ease-in-out infinite;
-  z-index: 2;
+  flex: 0 0 auto;
+}
+
+.hermetic-hash {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-color);
+  background: var(--bg-color);
+  padding: 2px 6px;
+  border: 1px solid var(--accent-muted);
+  border-radius: 4px;
+  white-space: nowrap;
 }
 
 @keyframes float-cube {
@@ -1868,32 +1547,15 @@ p.features-desc {
   50% { transform: translateY(-6px); }
 }
 
-.hermetic-line {
-  position: absolute;
-  top: 36%;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, var(--border-color), var(--border-color) 4px, transparent 4px, transparent 8px);
-  width: 40%;
-  z-index: 0;
-}
-
-.hermetic-line.left {
-  left: 10%;
-}
-
-.hermetic-line.right {
-  right: 10%;
-}
-
 /* CLI terminal emulator styles */
 .cli-terminal {
-  width: 88%;
-  height: 160px;
-  background-color: #000000;
-  border-radius: 8px;
+  width: 90%;
+  height: 168px;
+  background-color: #010301;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.65);
   font-family: var(--font-mono);
 }
 
@@ -1926,10 +1588,25 @@ p.features-desc {
 }
 
 .cli-body {
-  padding: 12px;
-  font-size: 10.5px;
-  line-height: 1.5;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.55;
   color: var(--text-color);
+}
+
+.cli-line {
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-out);
+}
+
+.cli-line.is-on {
+  opacity: 1;
+}
+
+.cli-muted {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  margin-top: 2px;
 }
 
 .cli-prompt {
@@ -1939,9 +1616,11 @@ p.features-desc {
 .cli-success {
   color: var(--accent);
   font-weight: 600;
+  margin-top: 8px;
+  font-size: 12px;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
   .unified-features-box {
     grid-template-columns: 1fr;
   }
@@ -1951,6 +1630,12 @@ p.features-desc {
   }
   .feature-column:last-child {
     border-bottom: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .unified-features-box {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1976,302 +1661,38 @@ p.features-desc {
 }
 `
 
-const BOKEH_ICONS = [
-	{
-		logo: logo01,
-		left: '10%',
-		top: '15%',
-		scale: 0.85,
-		blur: '3px',
-		opacity: 0.28,
-		rotate: '-12deg',
-		animationName: 'float-slow-1',
-		duration: '14s',
-		delay: '0s'
-	},
-	{
-		logo: logo02,
-		left: '22%',
-		top: '8%',
-		scale: 1.15,
-		blur: '1px',
-		opacity: 0.45,
-		rotate: '15deg',
-		animationName: 'float-slow-2',
-		duration: '18s',
-		delay: '-3s'
-	},
-	{
-		logo: logo03,
-		left: '32%',
-		top: '22%',
-		scale: 0.65,
-		blur: '5px',
-		opacity: 0.18,
-		rotate: '-5deg',
-		animationName: 'float-slow-3',
-		duration: '22s',
-		delay: '-7s'
-	},
-	{
-		logo: logo04,
-		left: '15%',
-		top: '35%',
-		scale: 0.95,
-		blur: '2px',
-		opacity: 0.38,
-		rotate: '20deg',
-		animationName: 'float-slow-1',
-		duration: '16s',
-		delay: '-11s'
-	},
-	{
-		logo: logo05,
-		left: '50%',
-		top: '8%',
-		scale: 0.9,
-		blur: '3px',
-		opacity: 0.32,
-		rotate: '-8deg',
-		animationName: 'float-slow-2',
-		duration: '15s',
-		delay: '-2s'
-	},
-	{
-		logo: logo06,
-		left: '68%',
-		top: '18%',
-		scale: 1.2,
-		blur: '0.8px',
-		opacity: 0.55,
-		rotate: '8deg',
-		animationName: 'float-slow-3',
-		duration: '17s',
-		delay: '-5s'
-	},
-	{
-		logo: logo07,
-		left: '85%',
-		top: '12%',
-		scale: 1.0,
-		blur: '2px',
-		opacity: 0.42,
-		rotate: '12deg',
-		animationName: 'float-slow-1',
-		duration: '19s',
-		delay: '-9s'
-	},
-	{
-		logo: logo08,
-		left: '76%',
-		top: '5%',
-		scale: 0.7,
-		blur: '4px',
-		opacity: 0.22,
-		rotate: '-18deg',
-		animationName: 'float-slow-2',
-		duration: '21s',
-		delay: '-13s'
-	},
-	{
-		logo: logo09,
-		left: '92%',
-		top: '28%',
-		scale: 0.8,
-		blur: '3px',
-		opacity: 0.32,
-		rotate: '-10deg',
-		animationName: 'float-slow-3',
-		duration: '13s',
-		delay: '-1s'
-	},
-	{
-		logo: logo10,
-		left: '6%',
-		top: '48%',
-		scale: 1.25,
-		blur: '0.5px',
-		opacity: 0.52,
-		rotate: '-15deg',
-		animationName: 'float-slow-1',
-		duration: '20s',
-		delay: '-6s'
-	},
-	{
-		logo: logo11,
-		left: '18%',
-		top: '52%',
-		scale: 0.6,
-		blur: '4.5px',
-		opacity: 0.2,
-		rotate: '25deg',
-		animationName: 'float-slow-2',
-		duration: '24s',
-		delay: '-10s'
-	},
-	{
-		logo: logo12,
-		left: '82%',
-		top: '48%',
-		scale: 0.75,
-		blur: '4px',
-		opacity: 0.25,
-		rotate: '-20deg',
-		animationName: 'float-slow-3',
-		duration: '23s',
-		delay: '-4s'
-	},
-	{
-		logo: logo13,
-		left: '94%',
-		top: '55%',
-		scale: 1.05,
-		blur: '1.5px',
-		opacity: 0.48,
-		rotate: '14deg',
-		animationName: 'float-slow-1',
-		duration: '15s',
-		delay: '-8s'
-	},
-	{
-		logo: logo14,
-		left: '12%',
-		top: '72%',
-		scale: 0.75,
-		blur: '3px',
-		opacity: 0.28,
-		rotate: '15deg',
-		animationName: 'float-slow-2',
-		duration: '18s',
-		delay: '-12s'
-	},
-	{
-		logo: logo15,
-		left: '25%',
-		top: '82%',
-		scale: 1.15,
-		blur: '1px',
-		opacity: 0.52,
-		rotate: '-8deg',
-		animationName: 'float-slow-3',
-		duration: '16s',
-		delay: '-2s'
-	},
-	{
-		logo: logo16,
-		left: '35%',
-		top: '70%',
-		scale: 0.65,
-		blur: '5px',
-		opacity: 0.18,
-		rotate: '18deg',
-		animationName: 'float-slow-1',
-		duration: '21s',
-		delay: '-7s'
-	},
-	{
-		logo: logo17,
-		left: '8%',
-		top: '90%',
-		scale: 0.95,
-		blur: '2px',
-		opacity: 0.38,
-		rotate: '-25deg',
-		animationName: 'float-slow-2',
-		duration: '19s',
-		delay: '-11s'
-	},
-	{
-		logo: logo18,
-		left: '46%',
-		top: '92%',
-		scale: 1.0,
-		blur: '2.5px',
-		opacity: 0.35,
-		rotate: '12deg',
-		animationName: 'float-slow-3',
-		duration: '17s',
-		delay: '-5s'
-	},
-	{
-		logo: logo19,
-		left: '56%',
-		top: '88%',
-		scale: 0.7,
-		blur: '4px',
-		opacity: 0.22,
-		rotate: '-15deg',
-		animationName: 'float-slow-1',
-		duration: '15s',
-		delay: '-9s'
-	},
-	{
-		logo: logo20,
-		left: '68%',
-		top: '72%',
-		scale: 0.6,
-		blur: '4.5px',
-		opacity: 0.2,
-		rotate: '-5deg',
-		animationName: 'float-slow-2',
-		duration: '22s',
-		delay: '-1s'
-	},
-	{
-		logo: logo21,
-		left: '76%',
-		top: '85%',
-		scale: 1.2,
-		blur: '0.8px',
-		opacity: 0.58,
-		rotate: '20deg',
-		animationName: 'float-slow-3',
-		duration: '18s',
-		delay: '-6s'
-	},
-	{
-		logo: logo22,
-		left: '88%',
-		top: '74%',
-		scale: 0.85,
-		blur: '3px',
-		opacity: 0.32,
-		rotate: '-12deg',
-		animationName: 'float-slow-1',
-		duration: '16s',
-		delay: '-10s'
-	},
-	{
-		logo: logo23,
-		left: '84%',
-		top: '92%',
-		scale: 0.9,
-		blur: '2px',
-		opacity: 0.42,
-		rotate: '15deg',
-		animationName: 'float-slow-2',
-		duration: '14s',
-		delay: '-3s'
-	},
-	{
-		logo: logo24,
-		left: '28%',
-		top: '6%',
-		scale: 0.75,
-		blur: '4px',
-		opacity: 0.24,
-		rotate: '-10deg',
-		animationName: 'float-slow-3',
-		duration: '20s',
-		delay: '-12s'
-	}
+const BOKEH_OUTER = [
+	{ logo: logoDocker, left: '10%', top: '18%', scale: 0.95, opacity: 0.38, blur: '1.5px', rotate: '-12deg', animationName: 'float-slow-1', duration: '14s', delay: '0s' },
+	{ logo: logoRust, left: '22%', top: '72%', scale: 1.1, opacity: 0.42, blur: '0.5px', rotate: '14deg', animationName: 'float-slow-2', duration: '16s', delay: '-3s' },
+	{ logo: logoGo, left: '80%', top: '16%', scale: 1.0, opacity: 0.4, blur: '1px', rotate: '-16deg', animationName: 'float-slow-3', duration: '15s', delay: '-2s' },
+	{ logo: logoLinux, left: '88%', top: '70%', scale: 0.92, opacity: 0.36, blur: '1.5px', rotate: '10deg', animationName: 'float-slow-1', duration: '18s', delay: '-7s' },
+	{ logo: logoK8s, left: '6%', top: '48%', scale: 0.85, opacity: 0.32, blur: '2px', rotate: '8deg', animationName: 'float-slow-2', duration: '17s', delay: '-5s' },
+	{ logo: logoReact, left: '94%', top: '40%', scale: 0.9, opacity: 0.34, blur: '1px', rotate: '-8deg', animationName: 'float-slow-3', duration: '13s', delay: '-4s' },
+	{ logo: logoPython, left: '18%', top: '8%', scale: 0.78, opacity: 0.28, blur: '2.5px', rotate: '18deg', animationName: 'float-slow-1', duration: '19s', delay: '-9s' },
+	{ logo: logoNginx, left: '70%', top: '86%', scale: 0.82, opacity: 0.3, blur: '2px', rotate: '-6deg', animationName: 'float-slow-2', duration: '15s', delay: '-1s' }
+]
+
+const BOKEH_INNER = [
+	{ logo: logoNixos, left: '38%', top: '22%', scale: 0.75, opacity: 0.26, blur: '2px', rotate: '-10deg', animationName: 'float-slow-3', duration: '12s', delay: '-2s' },
+	{ logo: logoPostgres, left: '62%', top: '28%', scale: 0.7, opacity: 0.24, blur: '2.5px', rotate: '12deg', animationName: 'float-slow-1', duration: '14s', delay: '-6s' },
+	{ logo: logoGit, left: '48%', top: '78%', scale: 0.8, opacity: 0.28, blur: '1.5px', rotate: '-4deg', animationName: 'float-slow-2', duration: '13s', delay: '-3s' },
+	{ logo: logoNode, left: '28%', top: '58%', scale: 0.72, opacity: 0.22, blur: '3px', rotate: '20deg', animationName: 'float-slow-3', duration: '16s', delay: '-8s' },
+	{ logo: logoTs, left: '72%', top: '55%', scale: 0.68, opacity: 0.24, blur: '2px', rotate: '-14deg', animationName: 'float-slow-1', duration: '11s', delay: '-1s' },
+	{ logo: logoRedis, left: '55%', top: '12%', scale: 0.65, opacity: 0.2, blur: '3px', rotate: '6deg', animationName: 'float-slow-2', duration: '15s', delay: '-5s' },
+	{ logo: logoWasm, left: '35%', top: '40%', scale: 0.6, opacity: 0.18, blur: '3.5px', rotate: '-18deg', animationName: 'float-slow-3', duration: '17s', delay: '-10s' },
+	{ logo: logoTerraform, left: '65%', top: '68%', scale: 0.7, opacity: 0.22, blur: '2.5px', rotate: '8deg', animationName: 'float-slow-1', duration: '14s', delay: '-4s' }
 ]
 
 export default function PierreLanding() {
 	const [activeRuntime, setActiveRuntime] = React.useState('container')
-	const [cliStep, setCliStep] = React.useState(0)
+	const [heroWaitlist, setHeroWaitlist] = React.useState({ state: 'idle', message: '' })
+	const [ctaWaitlist, setCtaWaitlist] = React.useState({ state: 'idle', message: '', email: '' })
+	const [ctaInView, setCtaInView] = React.useState(false)
+	const ctaSectionRef = React.useRef(null)
 
 	React.useEffect(() => {
+		const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+		if (media.matches) return
 		const runtimeInterval = setInterval(() => {
 			setActiveRuntime((prev) => (prev === 'container' ? 'microvm' : 'container'))
 		}, 3000)
@@ -2279,16 +1700,30 @@ export default function PierreLanding() {
 	}, [])
 
 	React.useEffect(() => {
-		const cliInterval = setInterval(() => {
-			setCliStep((prev) => {
-				if (prev >= 4) {
-					return -3 // Wait in terminal reset state for a natural loop delay
-				}
-				return prev + 1
-			})
-		}, 1500)
-		return () => clearInterval(cliInterval)
+		const el = ctaSectionRef.current
+		if (!el || typeof IntersectionObserver === 'undefined') return
+		const io = new IntersectionObserver(
+			([entry]) => setCtaInView(entry.isIntersecting),
+			{ rootMargin: '80px', threshold: 0.08 }
+		)
+		io.observe(el)
+		return () => io.disconnect()
 	}, [])
+
+	const submitWaitlist = (email, setState) => {
+		const value = String(email || '').trim()
+		if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+			setState({ state: 'error', message: 'Enter a valid email to join the waitlist.', email: value })
+			return
+		}
+		// Shell only until a real waitlist endpoint is wired.
+		console.log('Waitlist signup:', value)
+		setState({
+			state: 'success',
+			message: "You're on the list. We'll be in touch.",
+			email: value
+		})
+	}
 
 	return (
 		<div className="pierre-page">
@@ -2303,35 +1738,45 @@ export default function PierreLanding() {
 							Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in
 							control.
 						</h1>
-						<p
-							className="hero-subhead"
-							style={{
-								fontSize: '16px',
-								color: 'rgba(238, 248, 239, 0.85)',
-								lineHeight: '1.7',
-								marginBottom: '32px',
-								maxWidth: '520px'
-							}}
-						>
-							One workflow for containers and microVMs. Reproducible builds.
-							<br />
-							Containers for speed. MicroVMs for security. Managed or self-hosted. Zero drift.
+						<p className="hero-subhead">
+							One workflow for containers and microVMs. Reproducible builds. Containers for speed.
+							MicroVMs for security. Managed or self-hosted. Zero drift.
 						</p>
-						<div style={{ marginBottom: '20px', width: '100%', maxWidth: '480px' }}>
+						<div className="hero-waitlist">
 							<CurvedInput
 								placeholder="you@domain.com"
-								buttonText="Join waitlist"
+								buttonText={heroWaitlist.state === 'success' ? 'Joined' : 'Join waitlist'}
 								theme="dark"
 								bend={-28}
 								height={60}
 								width="100%"
-								onSubmit={(email) => console.log('Waitlist signup:', email)}
+								onSubmit={(email) => submitWaitlist(email, setHeroWaitlist)}
 							/>
+							<p
+								className="hero-waitlist-note"
+								data-state={heroWaitlist.state}
+								role={heroWaitlist.state === 'error' ? 'alert' : 'status'}
+								aria-live="polite"
+							>
+								{heroWaitlist.message || 'Early access for engineers and teams.'}
+							</p>
+						</div>
+						<div className="hero-secondary-actions">
+							<a className="hero-why-btn" href="/why">
+								Why Russel?
+								<span className="arr" aria-hidden="true">
+									→
+								</span>
+							</a>
 						</div>
 						<button
 							className="scroll-down-btn"
 							onClick={() =>
-								document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+								document.getElementById('features')?.scrollIntoView({
+									behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+										? 'auto'
+										: 'smooth'
+								})
 							}
 							aria-label="Scroll to features"
 						>
@@ -2344,6 +1789,7 @@ export default function PierreLanding() {
 								strokeWidth="2"
 								strokeLinecap="round"
 								strokeLinejoin="round"
+								aria-hidden="true"
 							>
 								<path d="M12 5v14M5 12l7 7 7-7" />
 							</svg>
@@ -2366,162 +1812,47 @@ export default function PierreLanding() {
 					<div className="unified-features-box">
 						{/* Column 1: Dual engine runtimes */}
 						<div className="feature-column">
-							<div className="feature-illustration-container">
+							<div
+								className="feature-illustration-container feature-illustration-container--runtime"
+								aria-hidden="true"
+							>
 								<div className="runtime-compare-graphic">
 									<div
 										className={`runtime-card-sub ${activeRuntime === 'container' ? 'active container-active' : ''}`}
-										style={{ width: '110px' }}
 									>
-										<div
-											className="runtime-card-sub-title"
-											style={{
-												color:
-													activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-muted)'
-											}}
-										>
-											CONTAINER
-										</div>
-										<svg
-											style={{
-												width: '28px',
-												height: '28px',
-												color:
-													activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-muted)'
-											}}
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-										>
-											<rect x="3" y="3" width="18" height="18" rx="2" />
-											<path d="M9 3v18M15 3v18M3 9h18M3 15h18" strokeDasharray="2 2" />
-										</svg>
-										<span
-											style={{
-												fontSize: '9px',
-												fontFamily: 'var(--font-mono)',
-												color:
-													activeRuntime === 'container' ? 'var(--accent-alt)' : 'var(--text-faint)'
-											}}
-										>
-											Podman
-										</span>
+										<div className="runtime-card-sub-title">CONTAINER</div>
+										<Box className="runtime-lucide" strokeWidth={1.75} />
+										<span className="runtime-card-sub-label">Podman</span>
 									</div>
-									<div style={{ color: 'var(--accent)', fontWeight: 'bold' }}>/</div>
 									<div
 										className={`runtime-card-sub ${activeRuntime === 'microvm' ? 'active microvm-active' : ''}`}
-										style={{ width: '110px' }}
 									>
-										<div
-											className="runtime-card-sub-title"
-											style={{
-												color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-muted)'
-											}}
-										>
-											MICROVM
-										</div>
-										<svg
-											style={{
-												width: '28px',
-												height: '28px',
-												color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-muted)'
-											}}
-											viewBox="0 0 32 32"
-										>
-											<rect
-												x="2"
-												y="2"
-												width="28"
-												height="28"
-												rx="7"
-												fill="none"
-												stroke="currentColor"
-												strokeWidth="2"
-											/>
-											<rect x="12" y="12" width="8" height="8" rx="1.5" fill="currentColor" />
-											<path
-												d="M16 2v6M16 24v6M2 16h6M24 16h6"
-												stroke="currentColor"
-												strokeWidth="2"
-												strokeLinecap="round"
-											/>
-										</svg>
-										<span
-											style={{
-												fontSize: '8px',
-												fontFamily: 'var(--font-mono)',
-												color: activeRuntime === 'microvm' ? 'var(--accent)' : 'var(--text-faint)',
-												textAlign: 'center',
-												whiteSpace: 'nowrap'
-											}}
-										>
-											Cloud-Hypervisor
-										</span>
+										<div className="runtime-card-sub-title">MICROVM</div>
+										<Cpu className="runtime-lucide" strokeWidth={1.75} />
+										<span className="runtime-card-sub-label">KVM Engine</span>
 									</div>
 								</div>
 							</div>
 							<h3 className="feature-column-title">Dual engine runtimes</h3>
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-								<div>
-									<div
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											gap: '8px',
-											marginBottom: '4px'
-										}}
-									>
-										<span
-											style={{
-												fontFamily: 'var(--font-mono)',
-												fontSize: '11px',
-												color: '#fff',
-												fontWeight: '600'
-											}}
-										>
-											Container Engine
-										</span>
-										<span
-											className="feature-card-cmd"
-											style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px' }}
-										>
-											runtime = "container"
-										</span>
+							<div className="feature-engine-list">
+								<div className="feature-engine-block">
+									<div className="feature-engine-head">
+										<span className="feature-engine-name">Container Engine</span>
+										<code className="feature-card-cmd">runtime = &quot;container&quot;</code>
 									</div>
 									<p className="feature-column-desc">
 										Lightweight sandboxing via Podman. Perfect for fast local iteration, developer
 										setups, and staging environments.
 									</p>
 								</div>
-								<div style={{ borderTop: '1px dashed rgba(255,255,255,0.06)', paddingTop: '12px' }}>
-									<div
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											gap: '8px',
-											marginBottom: '4px'
-										}}
-									>
-										<span
-											style={{
-												fontFamily: 'var(--font-mono)',
-												fontSize: '11px',
-												color: '#fff',
-												fontWeight: '600'
-											}}
-										>
-											microVM Engine
-										</span>
-										<span
-											className="feature-card-cmd"
-											style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px' }}
-										>
-											runtime = "microvm"
-										</span>
+								<div className="feature-engine-block is-split">
+									<div className="feature-engine-head">
+										<span className="feature-engine-name">microVM Engine</span>
+										<code className="feature-card-cmd">runtime = &quot;microvm&quot;</code>
 									</div>
 									<p className="feature-column-desc">
-										Hardware-isolated virtualization via KVM and Cloud Hypervisor. Secure isolation
-										without guest OS kernel overhead.
+										Hardware-isolated virtualization via KVM microVMs. Secure isolation without
+										guest OS kernel overhead.
 									</p>
 								</div>
 							</div>
@@ -2529,133 +1860,53 @@ export default function PierreLanding() {
 
 						{/* Column 2: Deterministic builds */}
 						<div className="feature-column">
-							<div className="feature-illustration-container">
-								<div className="hermetic-graphic">
-									<div className="hermetic-line left">
-										<svg
-											width="100%"
-											height="4"
-											viewBox="0 0 100 4"
-											fill="none"
-											preserveAspectRatio="none"
-										>
-											<line
-												x1="0"
-												y1="2"
-												x2="100"
-												y2="2"
-												className="animated-nix-line purple-flow"
-												strokeWidth="2"
-											/>
-										</svg>
-									</div>
-									<div className="hermetic-line right">
-										<svg
-											width="100%"
-											height="4"
-											viewBox="0 0 100 4"
-											fill="none"
-											preserveAspectRatio="none"
-										>
-											<line
-												x1="0"
-												y1="2"
-												x2="100"
-												y2="2"
-												className="animated-nix-line"
-												strokeWidth="2"
-											/>
-										</svg>
-									</div>
-
-									<div className="hermetic-node">
-										<svg
-											className="hermetic-node-icon"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-											viewBox="0 0 24 24"
-										>
-											<rect x="2" y="3" width="20" height="14" rx="2" />
-											<line x1="8" y1="21" x2="16" y2="21" />
-											<line x1="12" y1="17" x2="12" y2="21" />
-										</svg>
-										<span
-											style={{
-												fontSize: '9px',
-												color: 'var(--text-faint)',
-												fontFamily: 'var(--font-mono)',
-												marginTop: '4px'
-											}}
-										>
-											Dev Box
-										</span>
-									</div>
-
-									<div className="hermetic-center-cube">
-										<svg
-											width="40"
-											height="40"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="var(--accent)"
-											strokeWidth="1.5"
-										>
-											<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-											<path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" />
-										</svg>
-										<div
-											style={{
-												position: 'absolute',
-												fontSize: '8px',
-												fontFamily: 'var(--font-mono)',
-												color: '#fff',
-												bottom: '-12px',
-												background: '#000',
-												padding: '2px 4px',
-												border: '1px solid var(--accent)',
-												borderRadius: '3px',
-												whiteSpace: 'nowrap'
-											}}
-										>
-											sha256-f83a...
-										</div>
-									</div>
-
-									<div className="hermetic-node">
-										<svg
-											className="hermetic-node-icon"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-											viewBox="0 0 24 24"
-										>
-											<rect x="2" y="4" width="20" height="8" rx="2" />
-											<rect x="2" y="12" width="20" height="8" rx="2" />
-											<circle cx="6" cy="8" r="1" fill="currentColor" />
-											<circle cx="6" cy="16" r="1" fill="currentColor" />
-										</svg>
-										<span
-											style={{
-												fontSize: '9px',
-												color: 'var(--text-faint)',
-												fontFamily: 'var(--font-mono)',
-												marginTop: '4px'
-											}}
-										>
-											Prod Node
-										</span>
-									</div>
-								</div>
+							<div
+								className="feature-illustration-container feature-illustration-container--circuit"
+								aria-hidden="true"
+							>
+								<CircuitBoard
+									variant="dark"
+									nodes={[
+										{
+											id: 'dev',
+											x: 45,
+											y: 80,
+											label: 'Dev Box',
+											icon: <Terminal className="w-4 h-4 text-neutral-300" />,
+											status: 'active',
+											size: 'sm'
+										},
+										{
+											id: 'nix',
+											x: 150,
+											y: 80,
+											label: 'sha256-f83a…',
+											icon: <PackageCheck className="w-4 h-4 text-emerald-400" />,
+											status: 'processing',
+											size: 'md'
+										},
+										{
+											id: 'prod',
+											x: 255,
+											y: 80,
+											label: 'Prod Node',
+											icon: <Server className="w-4 h-4 text-neutral-300" />,
+											status: 'active',
+											size: 'sm'
+										}
+									]}
+									connections={[
+										{ from: 'dev', to: 'nix', animated: true, pulseColor: '#a855f7' },
+										{ from: 'nix', to: 'prod', animated: true, pulseColor: '#10b981' }
+									]}
+									width={300}
+									height={160}
+									pulseSpeed={2}
+								/>
 							</div>
 							<h3 className="feature-column-title">Deterministic builds</h3>
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-								<div
-									className="feature-card-cmd"
-									style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px', width: 'fit-content' }}
-								>
-									builder = "reproducible"
-								</div>
+							<div className="feature-engine-list">
+								<code className="feature-card-cmd">builder = &quot;reproducible&quot;</code>
 								<p className="feature-column-desc">
 									Content-addressed zero-drift packages. Strict environment isolation guarantees
 									that the exact same bits build and run identically on your machine and production.
@@ -2663,144 +1914,182 @@ export default function PierreLanding() {
 							</div>
 						</div>
 
-						{/* Column 3: Russel CLI */}
+						{/* Column 3: Zero-downtime hot swaps */}
 						<div className="feature-column">
-							<div className="feature-illustration-container">
-								<div className="cli-terminal">
-									<div className="cli-header">
-										<div className="cli-dot red"></div>
-										<div className="cli-dot yellow"></div>
-										<div className="cli-dot green"></div>
-										<div className="cli-title">russel --deploy</div>
-									</div>
-									<div className="cli-body">
-										<div style={{ opacity: cliStep >= 0 ? 1 : 0, transition: 'opacity 0.15s' }}>
-											<span className="cli-prompt">$</span> russel deploy
-										</div>
-										<div
-											style={{
-												color: 'var(--text-muted)',
-												fontSize: '9.5px',
-												marginTop: '4px',
-												opacity: cliStep >= 1 ? 1 : 0,
-												transition: 'opacity 0.25s'
-											}}
-										>
-											[1/3] Building zero-drift package...
-										</div>
-										<div
-											style={{
-												color: 'var(--text-muted)',
-												fontSize: '9.5px',
-												opacity: cliStep >= 2 ? 1 : 0,
-												transition: 'opacity 0.25s'
-											}}
-										>
-											[2/3] Dispatching runtime: microvm...
-										</div>
-										<div
-											style={{
-												color: 'var(--text-muted)',
-												fontSize: '9.5px',
-												opacity: cliStep >= 3 ? 1 : 0,
-												transition: 'opacity 0.25s'
-											}}
-										>
-											[3/3] Routing port 8080 -&gt; 80
-										</div>
-										<div
-											className="cli-success"
-											style={{
-												marginTop: '8px',
-												fontSize: '10px',
-												opacity: cliStep >= 4 ? 1 : 0,
-												transition: 'opacity 0.25s'
-											}}
-										>
-											✓ SUCCESS: Deploy complete in 1.7s
-										</div>
-									</div>
-								</div>
+							<div
+								className="feature-illustration-container feature-illustration-container--circuit"
+								aria-hidden="true"
+							>
+								<CircuitBoard
+									variant="dark"
+									nodes={[
+										{
+											id: 'ingress',
+											x: 45,
+											y: 80,
+											label: 'Ingress Router',
+											icon: <Globe className="w-4 h-4 text-emerald-400" />,
+											status: 'active',
+											size: 'sm'
+										},
+										{
+											id: 'v1_container',
+											x: 150,
+											y: 35,
+											label: 'v1 (Container)',
+											icon: <Box className="w-4 h-4 text-neutral-500" />,
+											status: 'inactive',
+											size: 'sm'
+										},
+										{
+											id: 'v2_microvm',
+											x: 150,
+											y: 125,
+											label: 'v2 (MicroVM)',
+											icon: <Cpu className="w-4 h-4 text-emerald-400" />,
+											status: 'active',
+											size: 'md'
+										},
+										{
+											id: 'live_traffic',
+											x: 255,
+											y: 80,
+											label: 'Live Traffic',
+											icon: <Shield className="w-4 h-4 text-emerald-400" />,
+											status: 'active',
+											size: 'sm'
+										}
+									]}
+									connections={[
+										{
+											from: 'ingress',
+											to: 'v1_container',
+											animated: false,
+											color: 'rgba(163,163,163,0.15)'
+										},
+										{
+											from: 'ingress',
+											to: 'v2_microvm',
+											animated: true,
+											pulseColor: '#10b981'
+										},
+										{
+											from: 'v2_microvm',
+											to: 'live_traffic',
+											animated: true,
+											pulseColor: '#10b981'
+										}
+									]}
+									width={300}
+									height={160}
+									pulseSpeed={2}
+								/>
 							</div>
-							<h3 className="feature-column-title">Russel CLI</h3>
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-								<div
-									className="feature-card-cmd"
-									style={{ margin: 0, padding: '2px 6px', fontSize: '9.5px', width: 'fit-content' }}
-								>
-									russel deploy
-								</div>
+							<h3 className="feature-column-title">Zero-downtime hot swaps</h3>
+							<div className="feature-engine-list">
+								<code className="feature-card-cmd">zero_downtime = true</code>
 								<p className="feature-column-desc">
-									Single command deployment pipeline. Automates reproducible package build
-									generation, sandbox engine dispatching, and dynamic port routing with zero complex
-									manifests.
+									Seamlessly pivot live workloads from container to microVM (or deploy v2 updates)
+									with zero dropped connections and instant background port re-routing.
 								</p>
 							</div>
 						</div>
 					</div>
 
-					<div className="checkmarks-row">
-						<div className="check-item">
-							<span className="check-icon">✓</span>
+					<ul className="checkmarks-row">
+						<li className="check-item">
+							<span className="check-icon" aria-hidden="true">
+								✓
+							</span>
 							<span>No agent daemon bloat</span>
-						</div>
-						<div className="check-item">
-							<span className="check-icon">✓</span>
+						</li>
+						<li className="check-item">
+							<span className="check-icon" aria-hidden="true">
+								✓
+							</span>
 							<span>One-line switch between runtimes</span>
-						</div>
-						<div className="check-item">
-							<span className="check-icon">✓</span>
+						</li>
+						<li className="check-item">
+							<span className="check-icon" aria-hidden="true">
+								✓
+							</span>
 							<span>Self-hosted on bare metal or cloud</span>
-						</div>
-					</div>
+						</li>
+					</ul>
 				</div>
 			</section>
 
 			{/* Benchmarks Section */}
 			<section className="bench-section" id="benchmarks">
 				<div className="bench-text-col">
-					<h2>Measurably faster. Radically simpler.</h2>
+					<h2>Measurably faster. Radically simpler</h2>
 					<p>
 						Russel outperforms vanilla Podman by up to{' '}
 						<strong style={{ color: 'var(--accent)' }}>12×</strong> on end-to-end deploy times,
 						while adding hardware-enforced microVM isolation and reproducible Nix builds — with zero
 						additional configuration overhead.
 					</p>
-					<p>
-						Benchmarks run against identical workloads: HTTP server, static site, and filebrowser.
-						Container engine versus microVM engine versus stock Podman — cold start, same hardware.
-					</p>
 				</div>
 				<div className="bench-visual-col">
 					<AnimatedCardStack />
 				</div>
+				<p className="bench-footnote">
+					Benchmarks run against identical workloads: HTTP server, static site, and filebrowser.
+					Container engine versus microVM engine versus stock Podman — cold start, same hardware.
+				</p>
 			</section>
 
 			{/* Centered CTA Section with Orbiting Logos */}
-			<section className="centered-cta-section" id="early-access">
-				{/* Scattered bokeh background */}
-				<div className="scattered-bg-container">
-					{BOKEH_ICONS.map((icon, idx) => (
-						<div
-							key={idx}
-							className="scattered-icon"
-							style={{
-								left: icon.left,
-								top: icon.top,
-								opacity: icon.opacity,
-								filter: `blur(${icon.blur})`,
-								animationName: icon.animationName,
-								animationDuration: icon.duration,
-								animationDelay: icon.delay,
-								animationTimingFunction: 'ease-in-out',
-								animationIterationCount: 'infinite',
-								'--base-scale': icon.scale,
-								'--base-rotation': icon.rotate
-							}}
-						>
-							<img src={icon.logo} alt="" />
-						</div>
-					))}
+			<section className="centered-cta-section" id="early-access" ref={ctaSectionRef}>
+				{/* Dual counter-rotating tech fields — animate while in view */}
+				<div
+					className={`scattered-bg-container${ctaInView ? ' is-active' : ''}`}
+					aria-hidden="true"
+				>
+					<div className="scattered-bg-ring">
+						{BOKEH_OUTER.map((icon, idx) => (
+							<div
+								key={`o-${idx}`}
+								className="scattered-icon"
+								style={{
+									left: icon.left,
+									top: icon.top,
+									opacity: icon.opacity,
+									filter: `blur(${icon.blur})`,
+									animationName: icon.animationName,
+									animationDuration: icon.duration,
+									animationDelay: icon.delay,
+									animationPlayState: ctaInView ? 'running' : 'paused',
+									'--base-scale': icon.scale,
+									'--base-rotation': icon.rotate
+								}}
+							>
+								<img src={icon.logo} alt="" loading="lazy" decoding="async" width="36" height="36" />
+							</div>
+						))}
+					</div>
+					<div className="scattered-bg-ring scattered-bg-ring--inner">
+						{BOKEH_INNER.map((icon, idx) => (
+							<div
+								key={`i-${idx}`}
+								className="scattered-icon"
+								style={{
+									left: icon.left,
+									top: icon.top,
+									opacity: icon.opacity,
+									filter: `blur(${icon.blur})`,
+									animationName: icon.animationName,
+									animationDuration: icon.duration,
+									animationDelay: icon.delay,
+									animationPlayState: ctaInView ? 'running' : 'paused',
+									'--base-scale': icon.scale,
+									'--base-rotation': icon.rotate
+								}}
+							>
+								<img src={icon.logo} alt="" loading="lazy" decoding="async" width="32" height="32" />
+							</div>
+						))}
+					</div>
 				</div>
 
 				<div className="cta-content-wrapper">
@@ -2846,15 +2135,49 @@ export default function PierreLanding() {
 					</div>
 
 					<form
-						onSubmit={(e) => e.preventDefault()}
-						style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 0 }}
+						className="cta-form"
+						onSubmit={(e) => {
+							e.preventDefault()
+							const data = new FormData(e.currentTarget)
+							submitWaitlist(data.get('email'), setCtaWaitlist)
+						}}
+						noValidate
 					>
 						<div className="cta-input-bar">
-							<input type="email" placeholder="name@email.com" required />
-							<button type="submit" className="cta-submit-btn">
-								Join waitlist
+							<input
+								type="email"
+								name="email"
+								placeholder="you@domain.com"
+								autoComplete="email"
+								aria-label="Email for waitlist"
+								value={ctaWaitlist.email}
+								onChange={(e) =>
+									setCtaWaitlist((prev) => ({
+										...prev,
+										email: e.target.value,
+										state: prev.state === 'success' ? 'idle' : prev.state,
+										message: prev.state === 'success' ? '' : prev.message
+									}))
+								}
+								disabled={ctaWaitlist.state === 'success'}
+								required
+							/>
+							<button
+								type="submit"
+								className="cta-submit-btn"
+								disabled={ctaWaitlist.state === 'success'}
+							>
+								{ctaWaitlist.state === 'success' ? 'Joined' : 'Join waitlist'}
 							</button>
 						</div>
+						<p
+							className="cta-form-note"
+							data-state={ctaWaitlist.state}
+							role={ctaWaitlist.state === 'error' ? 'alert' : 'status'}
+							aria-live="polite"
+						>
+							{ctaWaitlist.message || 'No spam. Product updates only.'}
+						</p>
 					</form>
 				</div>
 			</section>

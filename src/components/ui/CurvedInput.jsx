@@ -21,12 +21,12 @@ const SHADOWS = { sm: [5, 12, 0.3], md: [10, 24, 0.4], lg: [16, 40, 0.52] }
 
 const THEMES = {
 	dark: {
-		backgroundColor: '#0a1405',
-		textColor: '#f5f5f5',
-		placeholderColor: 'oklch(0.58 0.020 145)',
-		borderColor: 'oklch(0.11 0.022 145)',
-		buttonColor: 'oklch(0.65 0.15 145)',
-		buttonTextColor: '#040803',
+		backgroundColor: '#0b1606',
+		textColor: '#f4faf4',
+		placeholderColor: 'oklch(0.58 0.018 145)',
+		borderColor: 'oklch(0.22 0.03 145)',
+		buttonColor: 'oklch(0.72 0.17 145)',
+		buttonTextColor: '#041004',
 		shadowColor: '#000000'
 	}
 }

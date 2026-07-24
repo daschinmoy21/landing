@@ -17,24 +17,24 @@ const CONFIG = {
 	edgeEmphasis: 40,
 	density: 0,
 	tint: '#00ff66', // High-end tech green tint
-	tintOpacity: 35,
+	tintOpacity: 26,
 	overlayBlend: 'overlay',
-	saturation: 100,
+	saturation: 92,
 	grayscale: 0,
 	blurType: 'off',
 	blurAmount: 35,
 	pfx: {
-		vignette: { enabled: true, intensity: 45 },
-		scanLines: { enabled: true, intensity: 15 },
-		chromatic: { enabled: true, intensity: 8 },
-		bloom: { enabled: true, intensity: 85 },
-		filmGrain: { enabled: true, intensity: 10 },
+		vignette: { enabled: true, intensity: 55 },
+		scanLines: { enabled: true, intensity: 10 },
+		chromatic: { enabled: true, intensity: 5 },
+		bloom: { enabled: true, intensity: 58 },
+		filmGrain: { enabled: true, intensity: 8 },
 		glitch: { enabled: false, intensity: 0 }
 	},
 	animated: true,
 	animStyle: 'shimmer',
-	animSpeed: { enabled: true, intensity: 100 },
-	animIntensity: { enabled: true, intensity: 60 }
+	animSpeed: { enabled: true, intensity: 70 },
+	animIntensity: { enabled: true, intensity: 42 }
 }
 
 export default function AsciiBackground() {
@@ -106,20 +106,23 @@ export default function AsciiBackground() {
 				let scale = 1.0
 
 				if (containerRatio > imgRatio) {
-					// Screen is wider than image aspect ratio -> scale relative to height
-					scale = 1.15
+					// Desktop: slightly taller than viewport so right crop feels intentional
+					scale = 1.12
 					dHeight = gridHeight * scale
 					dWidth = dHeight * imgRatio
 				} else {
-					// Screen is narrower than image aspect ratio (e.g. mobile) -> scale relative to width
-					scale = 0.9
+					// Mobile / tall screens: keep figure from dominating the text column
+					scale = 0.82
 					dWidth = gridWidth * scale
 					dHeight = dWidth / imgRatio
 				}
 
 				const isMobile = gridWidth < 992
-				const dx = isMobile ? (gridWidth - dWidth) * 0.5 : -dWidth + gridWidth * 0.35
-				const dy = (gridHeight - dHeight) * 0.5
+				// Push further right so ~25–35% of the figure sits off-viewport
+				const dx = isMobile
+					? gridWidth - dWidth * 0.68
+					: gridWidth - dWidth * 0.7
+				const dy = (gridHeight - dHeight) * (isMobile ? 0.4 : 0.46)
 
 				offscreenCtx.drawImage(image, dx, dy, dWidth, dHeight)
 			} else {

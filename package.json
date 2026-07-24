@@ -26,8 +26,10 @@
     "astro-icon": "^1.1.5",
     "astro-integration-lottie": "^0.3.2",
     "astro-swiper": "^1.3.0",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.42.2",
     "lottie-web": "^5.13.0",
+    "lucide-react": "^1.26.0",
     "ogl": "^1.0.11",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
@@ -35,6 +37,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "sharp": "^0.34.5",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.1.18",
     "three": "^0.185.1",
     "typescript": "^5.9.3"

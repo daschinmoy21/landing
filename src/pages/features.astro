@@ -1,6 +1,7 @@
 ---
 // src/pages/features.astro
 import Layout from '../layouts/Layout.astro'
+import PipelineCircuitBoard from '../components/ui/PipelineCircuitBoard.jsx'
 
 const SEO = {
 	title: 'Russel — Features & Capabilities',
@@ -36,60 +37,7 @@ const SEO = {
 						<span class="showcase-card-title">deployment_pipeline.svg</span>
 					</div>
 					<div class="diagram-body">
-						<svg viewBox="0 0 800 260" class="pipeline-svg" aria-hidden="true">
-							<defs>
-								<marker id="arrow" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto">
-									<polygon points="0,0 5,2.5 0,5" fill="var(--accent)" />
-								</marker>
-							</defs>
-							
-							<!-- Local Code -->
-							<rect x="15" y="100" width="110" height="60" rx="4" fill="rgba(255,255,255,0.02)" stroke="var(--border-color)" />
-							<text x="70" y="130" text-anchor="middle" fill="var(--text-color)" font-family="var(--font-mono)" font-size="11" font-weight="bold">Local Workspace</text>
-							<text x="70" y="145" text-anchor="middle" fill="var(--text-faint)" font-size="9">source files</text>
-							
-							<!-- Arrow 1 -->
-							<path d="M125 130 L167 130" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrow)" />
-							<text x="146" y="120" text-anchor="middle" fill="var(--accent)" font-family="var(--font-mono)" font-size="8">russel deploy</text>
-							
-							<!-- Reproducible Builder -->
-							<rect x="175" y="70" width="140" height="120" rx="4" fill="rgba(255,255,255,0.02)" stroke="var(--border-color)" />
-							<text x="245" y="95" text-anchor="middle" fill="var(--text-color)" font-family="var(--font-mono)" font-size="11" font-weight="bold">Reproducible Builder</text>
-							<text x="245" y="112" text-anchor="middle" fill="var(--text-faint)" font-size="9">Nix Build Engine</text>
-							<rect x="190" y="130" width="110" height="42" rx="3" fill="oklch(0.05 0.02 145)" stroke="var(--border-subtle)" />
-							<text x="245" y="146" text-anchor="middle" fill="var(--accent)" font-family="var(--font-mono)" font-size="9">zero-drift packages</text>
-							<text x="245" y="160" text-anchor="middle" fill="var(--text-muted)" font-size="8">content-addressed</text>
-							
-							<!-- Arrow 2 -->
-							<path d="M315 130 L357 130" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrow)" />
-							
-							<!-- Control Plane -->
-							<rect x="365" y="70" width="160" height="120" rx="4" fill="rgba(255,255,255,0.02)" stroke="var(--border-color)" />
-							<text x="445" y="95" text-anchor="middle" fill="var(--text-color)" font-family="var(--font-mono)" font-size="11" font-weight="bold">Control Plane</text>
-							<text x="445" y="112" text-anchor="middle" fill="var(--text-faint)" font-size="9">Orchestrator &amp; State</text>
-							<rect x="380" y="130" width="130" height="42" rx="3" fill="oklch(0.05 0.02 145)" stroke="var(--border-subtle)" />
-							<text x="445" y="146" text-anchor="middle" fill="var(--accent-soft)" font-family="var(--font-mono)" font-size="9">CVE Scanner</text>
-							<text x="445" y="160" text-anchor="middle" fill="var(--text-muted)" font-size="8">vuln verification</text>
-							
-							<!-- Arrow 3 -->
-							<path d="M525 130 L567 130" fill="none" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrow)" />
-							<text x="546" y="120" text-anchor="middle" fill="var(--text-faint)" font-family="var(--font-mono)" font-size="8">gRPC</text>
-							
-							<!-- Target Node Host -->
-							<rect x="575" y="40" width="210" height="180" rx="6" fill="oklch(0.05 0.020 145)" stroke="var(--accent-muted)" stroke-width="1.5" />
-							<text x="680" y="65" text-anchor="middle" fill="var(--text-color)" font-family="var(--font-mono)" font-size="11" font-weight="bold">Target Node (russel-agent)</text>
-							
-							<!-- Container Branch -->
-							<rect x="590" y="85" width="180" height="50" rx="3" fill="rgba(255,255,255,0.01)" stroke="var(--border-color)" />
-							<text x="680" y="105" text-anchor="middle" fill="var(--text-color)" font-size="9.5" font-weight="bold">Container Engine (Podman)</text>
-							<text x="680" y="122" text-anchor="middle" fill="var(--text-faint)" font-family="var(--font-mono)" font-size="8">runtime = "container"</text>
-							
-							<!-- microVM Branch -->
-							<rect x="590" y="145" width="180" height="60" rx="3" fill="var(--accent-glow)" stroke="var(--accent)" />
-							<text x="680" y="165" text-anchor="middle" fill="var(--accent-soft)" font-size="9.5" font-weight="bold">microVM Engine (KVM)</text>
-							<text x="680" y="180" text-anchor="middle" fill="var(--text-color)" font-family="var(--font-mono)" font-size="8">runtime = "microvm"</text>
-							<text x="680" y="192" text-anchor="middle" fill="var(--text-faint)" font-size="7.5">Isolated kernel / Under 2s boot</text>
-						</svg>
+						<PipelineCircuitBoard client:only="react" />
 					</div>
 				</div>
 			</div>
@@ -123,7 +71,7 @@ const SEO = {
 						<div class="card-icon">03</div>
 						<h3 class="card-title">Sub-2 Second Boot Times</h3>
 						<p class="card-desc">
-							Using custom-tailored Linux kernels (2MB initramfs), KVM, and Cloud Hypervisor virtualization, Russel spins up fully virtualized hardware-isolated sandboxes in less than two seconds.
+							Using custom-tailored Linux kernels (2MB initramfs) and KVM virtualization, Russel spins up fully virtualized hardware-isolated sandboxes in less than two seconds.
 						</p>
 					</div>
 

@@ -28,6 +28,12 @@ export default defineConfig({
     resolve: {
       dedupe: ["react", "react-dom"],
     },
+    // Live mode writes session journals under .impeccable/ — do not HMR-reload on those.
+    server: {
+      watch: {
+        ignored: ["**/.impeccable/**"],
+      },
+    },
   },
   adapter: netlify(),
 });
