@@ -111,18 +111,20 @@ export default function AsciiBackground() {
 					dHeight = gridHeight * scale
 					dWidth = dHeight * imgRatio
 				} else {
-					// Mobile / tall screens: keep figure from dominating the text column
-					scale = 0.82
+					// Mobile / tall screens: scale so ASCII figure covers hero backdrop
+					scale = 1.25
 					dWidth = gridWidth * scale
 					dHeight = dWidth / imgRatio
 				}
 
-				const isMobile = gridWidth < 992
-				// Push further right so ~25–35% of the figure sits off-viewport
+				const isMobile = width < 768 || gridWidth < 110
+				// On mobile: center figure so green ASCII art is clearly visible on mobile viewport
 				const dx = isMobile
-					? gridWidth - dWidth * 0.68
+					? (gridWidth - dWidth) * 0.5
 					: gridWidth - dWidth * 0.7
-				const dy = (gridHeight - dHeight) * (isMobile ? 0.4 : 0.46)
+				const dy = isMobile
+					? (gridHeight - dHeight) * 0.15
+					: (gridHeight - dHeight) * 0.46
 
 				offscreenCtx.drawImage(image, dx, dy, dWidth, dHeight)
 			} else {

@@ -73,16 +73,22 @@ const isHome = path === '/' || path === ''
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    color: #fff;
+    color: var(--text-color, oklch(0.90 0.008 145));
     font-weight: 800;
     font-size: 16px;
     letter-spacing: -0.03em;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, color 0.2s ease;
   }
 
-  .brand:hover {
+  .brand:hover,
+  .brand:focus-visible {
+    color: var(--text-color, oklch(0.90 0.008 145));
     opacity: 0.85;
+  }
+
+  .brand-name {
+    color: inherit;
   }
 
   .logo-svg {

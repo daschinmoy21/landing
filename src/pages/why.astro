@@ -1,414 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import WhyPage from '../components/ui/WhyPage.jsx'
+import DotGrid from '../components/ui/DotGrid.jsx'
 
 const SEO = {
-	title: 'Why Russel? — Comparison vs Fly.io, Lambda, Coolify, MicroVM.nix',
+	title: 'Why Russel? — Self-Hosted Deploy Plane vs Containers & Serverless',
 	description:
-		'How Russel compares to Fly.io, AWS Lambda, Coolify/Dokku, MicroVM.nix, and Docker/Podman on isolation, Nix builds, cold boot, and self-hosted control.'
+		"Modern deployment forces a tradeoff you shouldn't have to make. How Russel compares on isolation, reproducibility, sovereignty, and speed."
 }
 ---
 
 <Layout title={SEO.title} description={SEO.description} navigation="none" footer="none">
 	<div class="why-page">
+		<DotGrid
+			client:only="react"
+			dotSize={4}
+			gap={32}
+			baseColor="#0c200a"
+			activeColor="#1a6b14"
+			proximity={130}
+			shockRadius={200}
+			shockStrength={2.5}
+			returnDuration={1.8}
+		/>
 		<header class="why-top">
 			<a class="why-brand" href="/">
 				<svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
-					<rect
-						x="2"
-						y="2"
-						width="28"
-						height="28"
-						rx="7"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"></rect>
+					<rect x="2" y="2" width="28" height="28" rx="7" fill="none" stroke="currentColor" stroke-width="2"></rect>
 					<rect x="12" y="12" width="8" height="8" rx="1.5" fill="currentColor"></rect>
-					<path
-						d="M16 2v6M16 24v6M2 16h6M24 16h6"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						fill="none"></path>
+					<path d="M16 2v6M16 24v6M2 16h6M24 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"></path>
 				</svg>
 				<span>Russel</span>
 			</a>
 			<nav class="why-nav" aria-label="Page">
-				<a href="#positioning">Positioning</a>
-				<a href="#matrix">Matrix</a>
-				<a href="#deep">Deep dive</a>
-				<a href="#lifecycle">Lifecycle</a>
+				<a href="#compare">Compare</a>
+				<a href="#gap">Gap</a>
+				<a href="#practice">Practice</a>
+				<a href="#decision">Decision</a>
 				<a href="/#early-access" class="why-nav-cta">Join waitlist</a>
 			</nav>
 		</header>
 
-		<main class="why-main">
-			<section class="why-hero">
-				<p class="why-kicker">Why Russel?</p>
-				<h1>Russel vs modern cloud &amp; deployment platforms</h1>
-				<p class="why-lede">
-					Self-hosted Nix-built microVMs and rootless containers — compared against cloud PaaS,
-					Firecracker platforms, Docker-based Heroku clones, and full-guest microVM stacks.
-				</p>
-			</section>
-
-			<section class="why-section" id="positioning">
-				<h2>Executive summary &amp; positioning</h2>
-				<div class="table-scroll">
-					<table class="why-table">
-						<thead>
-							<tr>
-								<th>Platform</th>
-								<th>Core isolation</th>
-								<th>Build infrastructure</th>
-								<th>Primary audience</th>
-								<th>Self-hosted</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="is-russel">
-								<td><strong>Russel</strong></td>
-								<td>Cloud Hypervisor microVMs <em>or</em> rootless Podman <code>--rootfs</code></td>
-								<td>Nix Flakes (auto-generated or custom)</td>
-								<td
-									>Engineers seeking self-hosted, reproducible, microVM-isolated deploys with
-									sub-second boots</td
-								>
-								<td><span class="pill pill-yes">Native / first-class</span></td>
-							</tr>
-							<tr>
-								<td><strong>Fly.io</strong></td>
-								<td>Firecracker microVMs</td>
-								<td>Dockerfile / OCI registry</td>
-								<td>Global edge distribution with microVM security</td>
-								<td><span class="pill pill-no">Managed only</span></td>
-							</tr>
-							<tr>
-								<td><strong>AWS Lambda</strong></td>
-								<td>Firecracker microVMs</td>
-								<td>Zip / OCI images</td>
-								<td>Event-driven serverless functions</td>
-								<td><span class="pill pill-no">AWS only</span></td>
-							</tr>
-							<tr>
-								<td><strong>Coolify / Dokku</strong></td>
-								<td>Docker containers</td>
-								<td>Dockerfile / Nixpacks / Buildpacks</td>
-								<td>Self-hosted Heroku alternative on Docker</td>
-								<td><span class="pill pill-yes">Native / first-class</span></td>
-							</tr>
-							<tr>
-								<td><strong>MicroVM.nix</strong></td>
-								<td>QEMU / Cloud Hypervisor</td>
-								<td>NixOS flakes (full guest closure)</td>
-								<td>NixOS power users, multi-node microVM clusters</td>
-								<td><span class="pill pill-yes">Native / first-class</span></td>
-							</tr>
-							<tr>
-								<td><strong>Docker / Podman</strong></td>
-								<td>Namespaces / cgroups</td>
-								<td>Dockerfile</td>
-								<td>General-purpose container execution</td>
-								<td><span class="pill pill-yes">Native / first-class</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-
-			<section class="why-section" id="matrix">
-				<h2>Feature comparison matrix</h2>
-				<div class="table-scroll">
-					<table class="why-table why-table-features">
-						<thead>
-							<tr>
-								<th>Feature</th>
-								<th class="col-russel">Russel</th>
-								<th>Fly.io</th>
-								<th>Firecracker / Lambda</th>
-								<th>Coolify / Dokku</th>
-								<th>MicroVM.nix</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Isolation tier</td>
-								<td class="col-russel"
-									><strong>Hardware KVM microVM</strong> (or rootless <code>--rootfs</code>)</td
-								>
-								<td>Hardware KVM microVM</td>
-								<td>Hardware KVM microVM</td>
-								<td>Shared-kernel container</td>
-								<td>Hardware KVM microVM</td>
-							</tr>
-							<tr>
-								<td>Host store sharing</td>
-								<td class="col-russel"
-									><strong>virtiofsd</strong> — <code>/nix/store</code> mounted into guest</td
-								>
-								<td>None (OCI → ext4 image)</td>
-								<td>None (block device / snapshot)</td>
-								<td>None (overlayfs)</td>
-								<td>None / 9p / virtiofs (full guest OS)</td>
-							</tr>
-							<tr>
-								<td>Cold boot</td>
-								<td class="col-russel"
-									><strong>~700ms–1.4s</strong> (optimizable to <strong>&lt;150ms</strong>)</td
-								>
-								<td>~300ms–1s</td>
-								<td>~200ms–500ms</td>
-								<td>~1s–5s</td>
-								<td>~10s–40s (full systemd)</td>
-							</tr>
-							<tr>
-								<td>Guest footprint</td>
-								<td class="col-russel"
-									><strong>~2MB initramfs</strong> — no systemd, direct binary init</td
-								>
-								<td>Minimal init + snapshot</td>
-								<td>Minimal guest init</td>
-								<td>Full container image</td>
-								<td>Full NixOS closure</td>
-							</tr>
-							<tr>
-								<td>Build reproducibility</td>
-								<td class="col-russel"><strong>Bit-for-bit</strong> (Nix store paths)</td>
-								<td>Imperfect (Dockerfile layers)</td>
-								<td>Imperfect (container layers)</td>
-								<td>Imperfect (Dockerfile / buildpacks)</td>
-								<td>Bit-for-bit (Nix)</td>
-							</tr>
-							<tr>
-								<td>Zero-downtime rollback</td>
-								<td class="col-russel"
-									><strong>Transactional</strong> dual-live gen + <code>Ingress::swap</code></td
-								>
-								<td>Blue/green or rolling</td>
-								<td>Traffic shifting</td>
-								<td>Rolling / recreate</td>
-								<td>Manual flake switch</td>
-							</tr>
-							<tr>
-								<td>Ingress</td>
-								<td class="col-russel">Traefik dynamic file ingress</td>
-								<td>Custom Rust proxy + WireGuard</td>
-								<td>ALB / API Gateway</td>
-								<td>Traefik / Caddy / Nginx</td>
-								<td>Manual NixOS networking</td>
-							</tr>
-							<tr>
-								<td>Rootless execution</td>
-								<td class="col-russel"
-									><strong>Yes</strong> — rootless Podman; minimal KVM privileges for microVMs</td
-								>
-								<td>N/A (managed)</td>
-								<td>N/A (managed)</td>
-								<td>Mostly root Docker</td>
-								<td>Requires root</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-
-			<section class="why-section" id="spectrum">
-				<h2>Where Russel sits</h2>
-				<p class="why-prose">
-					Between heavy full-guest microVMs and shared-kernel container PaaS — hardware isolation
-					without the full NixOS guest tax.
-				</p>
-				<div class="spectrum" role="list">
-					<article class="spectrum-card" role="listitem">
-						<h3>High isolation / high cost</h3>
-						<ul>
-							<li>MicroVM.nix (full guest)</li>
-							<li>Heavy RAM (512MB+)</li>
-							<li>Slow boot (10s–40s)</li>
-							<li>Systemd overhead</li>
-						</ul>
-					</article>
-					<article class="spectrum-card spectrum-card-focus" role="listitem">
-						<h3>Russel architecture</h3>
-						<ul>
-							<li>Cloud Hypervisor microVM</li>
-							<li>Direct virtiofs <code>/nix/store</code></li>
-							<li>Sub-second boot</li>
-							<li>Bit-for-bit Nix builds</li>
-						</ul>
-					</article>
-					<article class="spectrum-card" role="listitem">
-						<h3>Low isolation / low cost</h3>
-						<ul>
-							<li>Coolify / Dokku</li>
-							<li>Shared-kernel containers</li>
-							<li>Docker OverlayFS</li>
-							<li>Non-reproducible builds</li>
-						</ul>
-					</article>
-				</div>
-			</section>
-
-			<section class="why-section" id="deep">
-				<h2>In-depth technical comparison</h2>
-
-				<article class="why-deep">
-					<h3>Russel vs Fly.io &amp; AWS Lambda (Firecracker)</h3>
-					<ul class="why-bullets">
-						<li>
-							<strong>Isolation engine:</strong> Fly.io and Lambda use <strong>Firecracker</strong>
-							(AWS). Russel uses <strong>Cloud Hypervisor</strong> (Intel / Linux Foundation) with
-							modern PCI transport, ACPI hotplug paths, and multi-queue <code>virtiofsd</code>.
-						</li>
-						<li>
-							<strong>Root filesystem:</strong> Fly/Firecracker convert OCI layers into ext4 or
-							device-mapper images. Russel mounts host <code>/nix/store</code> via
-							<code>virtiofsd</code> (readonly) into a ~2MB initramfs guest — binaries run from the
-							host store without unpacking a rootfs image.
-						</li>
-						<li>
-							<strong>Sovereignty:</strong> Fly and Lambda are closed managed platforms. Russel is
-							self-hosted on any Linux host with Nix and KVM.
-						</li>
-					</ul>
-				</article>
-
-				<article class="why-deep">
-					<h3>Russel vs Coolify &amp; Dokku (standard PaaS)</h3>
-					<ul class="why-bullets">
-						<li>
-							<strong>Isolation:</strong> Coolify/Dokku run Docker containers on a shared host kernel.
-							A kernel exploit in a container can take the host. Russel microVMs use a separate guest
-							kernel inside a KVM boundary.
-						</li>
-						<li>
-							<strong>Rootless containers:</strong> For
-							<code>service.type = "container"</code>, Russel uses rootless Podman
-							<code>--rootfs</code> with read-only defaults. Coolify/Dokku typically rely on rootful
-							Docker.
-						</li>
-						<li>
-							<strong>Builds:</strong> Dockerfiles and Nixpacks/Buildpacks leave non-deterministic
-							layer caches. Russel uses <strong>Nix Flakes</strong> for hash-verified, bit-for-bit
-							reproducibility.
-						</li>
-					</ul>
-				</article>
-
-				<article class="why-deep">
-					<h3>Russel vs MicroVM.nix</h3>
-					<ul class="why-bullets">
-						<li>
-							<strong>Guest architecture:</strong> MicroVM.nix boots full NixOS guests (systemd,
-							journald) — longer boots (10s–40s) and higher baseline RAM. Russel uses
-							<strong>direct app execution</strong>: minimal BusyBox initramfs, Cloud Hypervisor +
-							custom kernel, <code>/init</code> mounts the store, configures net, and
-							<code>exec</code>s the app binary.
-						</li>
-						<li>
-							<strong>Workflow:</strong> MicroVM.nix centers on per-node NixOS flake config. Russel
-							adds CLI deploy, dynamic ports, <code>secret://</code> secrets, and automatic Traefik
-							registration.
-						</li>
-					</ul>
-				</article>
-			</section>
-
-			<section class="why-section" id="lifecycle">
-				<h2>Deployment &amp; lifecycle</h2>
-				<h3 class="why-subhead">Transactional zero-downtime deploys</h3>
-				<p class="why-prose">
-					Dual-generation cutover keeps traffic on the live service until the candidate is healthy.
-				</p>
-				<ol class="why-steps">
-					<li>
-						<strong>Candidate generation</strong>
-						(<code>{'{service_id}_g{gen}'}</code>) boots beside the live service on a separate host
-						port and TAP.
-					</li>
-					<li>
-						<strong>Readiness probe</strong> waits for TCP health on the candidate backend.
-					</li>
-					<li>
-						<strong>Ingress swap</strong> — Traefik dynamic JSON under
-						<code>/var/lib/russel/traefik/dynamic/</code> is rewritten atomically to the new backend.
-					</li>
-					<li>
-						<strong>Graceful teardown</strong> drains and stops the previous generation. Failed
-						readiness rolls back to the prior generation.
-					</li>
-				</ol>
-				<div class="flow-card" aria-hidden="true">
-					<div class="flow-row">
-						<span class="flow-node">Active g1</span>
-						<span class="flow-arrow">→</span>
-						<span class="flow-node muted">Traefik</span>
-						<span class="flow-arrow">→</span>
-						<span class="flow-node">Traffic</span>
-					</div>
-					<div class="flow-row">
-						<span class="flow-node candidate">Candidate g2</span>
-						<span class="flow-arrow">→</span>
-						<span class="flow-node muted">Health check</span>
-						<span class="flow-arrow">→</span>
-						<span class="flow-node accent">Swap</span>
-					</div>
-					<div class="flow-row">
-						<span class="flow-node">Active g2</span>
-						<span class="flow-arrow">→</span>
-						<span class="flow-node muted">Drain g1</span>
-						<span class="flow-arrow">→</span>
-						<span class="flow-node">Done</span>
-					</div>
-				</div>
-			</section>
-
-			<section class="why-section" id="summary">
-				<div class="summary-grid">
-					<div class="summary-card">
-						<h2>Why choose Russel?</h2>
-						<ol>
-							<li>
-								<strong>Cold boot speed</strong> — microVM isolation with ~700ms cold boots
-								(optimizable &lt;150ms).
-							</li>
-							<li>
-								<strong>Nix reproducibility</strong> — shared host store, zero-duplication
-								dependencies.
-							</li>
-							<li>
-								<strong>Hardened isolation</strong> — KVM or rootless read-only container rootfs,
-								plus control-plane auth and secret masking.
-							</li>
-							<li>
-								<strong>No vendor lock-in</strong> — self-hosted on standard Linux + KVM.
-							</li>
-						</ol>
-					</div>
-					<div class="summary-card summary-card-muted">
-						<h2>Current limitations</h2>
-						<ul>
-							<li>
-								<strong>Linux host required</strong> for the control plane (KVM, TAP, rootless
-								Podman, Cloud Hypervisor).
-							</li>
-							<li>
-								<strong>Subnet scale</strong> — current FNV-1a 16-bit space is tuned for single-host
-								deployments (~50–100 services per node).
-							</li>
-						</ul>
-					</div>
-				</div>
-			</section>
-
-			<section class="why-cta">
-				<h2>Deploy without the runtime trade-offs</h2>
-				<p>Get early access — one workflow for containers and microVMs.</p>
-				<div class="why-cta-actions">
-					<a class="btn-fill" href="/#early-access">Join waitlist</a>
-					<a class="btn-ghost" href="/">Back to home</a>
-				</div>
-			</section>
-		</main>
+		<WhyPage client:only="react" />
 
 		<footer class="why-foot">
 			<a href="/">← Russel</a>
@@ -420,28 +53,68 @@ const SEO = {
 <style is:global>
 	.why-page {
 		--bg: #040803;
-		--bg-elev: #0a1405;
 		--text: oklch(0.93 0.008 145);
 		--muted: oklch(0.72 0.018 145);
 		--faint: oklch(0.62 0.016 145);
 		--border: oklch(0.18 0.028 145);
 		--accent: oklch(0.72 0.17 145);
-		--accent-soft: oklch(0.78 0.12 145);
-		--ink: #041004;
-		--font: 'Inter', system-ui, -apple-system, sans-serif;
-		--display: 'Clash-Display', var(--font);
-		--mono: 'JetBrains Mono', ui-monospace, monospace;
 		min-height: 100vh;
 		background: var(--bg);
 		color: var(--text);
-		font-family: var(--font);
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 		font-size: 15px;
 		line-height: 1.65;
 		-webkit-font-smoothing: antialiased;
+		position: relative;
+	}
+
+	/* DotGrid background layer — sits behind everything, below the sticky header */
+	.why-page .dot-grid {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+
+	.why-page .dot-grid__wrap {
+		width: 100%;
+		height: 100%;
+		position: relative;
+	}
+
+	.why-page .dot-grid__canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: auto;
+	}
+
+	/* All content above DotGrid */
+	.why-page .why-page-root,
+	.why-page .why-top,
+	.why-page .why-foot {
+		position: relative;
+		z-index: 1;
 	}
 
 	.why-page * {
 		box-sizing: border-box;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.why-page *,
+		.why-page *::before,
+		.why-page *::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+		}
 	}
 
 	.why-page a {
@@ -449,12 +122,11 @@ const SEO = {
 		text-decoration: none;
 	}
 
-	.why-page code {
-		font-family: var(--mono);
-		font-size: 0.86em;
-		color: var(--accent-soft);
-		background: oklch(0.72 0.17 145 / 0.08);
-		padding: 0.1em 0.35em;
+	.why-page a:focus-visible,
+	.why-page button:focus-visible,
+	.why-page [tabindex]:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
 		border-radius: 4px;
 	}
 
@@ -477,7 +149,7 @@ const SEO = {
 		align-items: center;
 		gap: 8px;
 		font-weight: 700;
-		font-family: var(--display);
+		font-family: 'Clash-Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 		letter-spacing: -0.03em;
 		color: var(--accent);
 	}
@@ -499,390 +171,8 @@ const SEO = {
 		padding: 8px 14px;
 		border-radius: 999px;
 		background: var(--accent);
-		color: var(--ink) !important;
+		color: #041004 !important;
 		font-weight: 600;
-	}
-
-	.why-main {
-		max-width: 1100px;
-		margin: 0 auto;
-		padding: 56px 28px 80px;
-	}
-
-	.why-hero {
-		margin-bottom: 64px;
-		max-width: 46rem;
-	}
-
-	.why-kicker {
-		font-family: var(--mono);
-		font-size: 12px;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--accent);
-		font-weight: 600;
-		margin: 0 0 14px;
-	}
-
-	.why-hero h1 {
-		font-family: var(--display);
-		font-size: clamp(2rem, 4.5vw, 2.85rem);
-		font-weight: 700;
-		letter-spacing: -0.035em;
-		line-height: 1.1;
-		margin: 0 0 18px;
-		text-wrap: balance;
-	}
-
-	.why-lede {
-		margin: 0;
-		font-size: 1.05rem;
-		color: var(--muted);
-		max-width: 48ch;
-	}
-
-	.why-section {
-		margin-bottom: 64px;
-		scroll-margin-top: 72px;
-	}
-
-	.why-section h2 {
-		font-family: var(--display);
-		font-size: clamp(1.45rem, 2.5vw, 1.85rem);
-		letter-spacing: -0.03em;
-		margin: 0 0 20px;
-	}
-
-	.why-subhead {
-		font-family: var(--display);
-		font-size: 1.15rem;
-		margin: 0 0 10px;
-		letter-spacing: -0.02em;
-	}
-
-	.why-prose {
-		color: var(--muted);
-		margin: 0 0 20px;
-		max-width: 62ch;
-	}
-
-	.table-scroll {
-		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
-		border: 1px solid var(--border);
-		border-radius: 14px;
-		background: linear-gradient(180deg, oklch(0.12 0.03 145 / 0.55), oklch(0.07 0.02 145 / 0.8));
-	}
-
-	.why-table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 13.5px;
-		min-width: 720px;
-	}
-
-	.why-table th,
-	.why-table td {
-		padding: 14px 16px;
-		text-align: left;
-		vertical-align: top;
-		border-bottom: 1px solid var(--border);
-	}
-
-	.why-table th {
-		font-family: var(--mono);
-		font-size: 11px;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--faint);
-		font-weight: 600;
-		background: oklch(0.06 0.02 145 / 0.6);
-	}
-
-	.why-table tbody tr:last-child td {
-		border-bottom: none;
-	}
-
-	.why-table tr.is-russel td,
-	.why-table td.col-russel,
-	.why-table th.col-russel {
-		background: oklch(0.72 0.17 145 / 0.06);
-	}
-
-	.why-table td.col-russel {
-		border-left: 1px solid oklch(0.72 0.17 145 / 0.2);
-		border-right: 1px solid oklch(0.72 0.17 145 / 0.2);
-	}
-
-	.why-table em {
-		font-style: normal;
-		color: var(--faint);
-	}
-
-	.pill {
-		display: inline-block;
-		font-family: var(--mono);
-		font-size: 11px;
-		font-weight: 600;
-		padding: 4px 8px;
-		border-radius: 999px;
-		white-space: nowrap;
-	}
-
-	.pill-yes {
-		color: var(--accent-soft);
-		background: oklch(0.72 0.17 145 / 0.1);
-		border: 1px solid oklch(0.72 0.17 145 / 0.22);
-	}
-
-	.pill-no {
-		color: var(--faint);
-		background: oklch(1 0 0 / 0.04);
-		border: 1px solid var(--border);
-	}
-
-	.spectrum {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 14px;
-	}
-
-	@media (max-width: 900px) {
-		.spectrum {
-			grid-template-columns: 1fr;
-		}
-
-		.why-nav a:not(.why-nav-cta) {
-			display: none;
-		}
-	}
-
-	.spectrum-card {
-		border: 1px solid var(--border);
-		border-radius: 14px;
-		padding: 20px 18px;
-		background: var(--bg-elev);
-	}
-
-	.spectrum-card h3 {
-		font-family: var(--display);
-		font-size: 1rem;
-		margin: 0 0 12px;
-		letter-spacing: -0.02em;
-	}
-
-	.spectrum-card ul {
-		margin: 0;
-		padding-left: 1.1rem;
-		color: var(--muted);
-		font-size: 13.5px;
-	}
-
-	.spectrum-card li + li {
-		margin-top: 6px;
-	}
-
-	.spectrum-card-focus {
-		border-color: oklch(0.72 0.17 145 / 0.45);
-		background: oklch(0.72 0.17 145 / 0.07);
-		box-shadow: 0 0 0 1px oklch(0.72 0.17 145 / 0.08);
-	}
-
-	.spectrum-card-focus h3 {
-		color: var(--accent-soft);
-	}
-
-	.why-deep {
-		margin-bottom: 28px;
-		padding: 22px 22px 8px;
-		border: 1px solid var(--border);
-		border-radius: 14px;
-		background: oklch(0.08 0.02 145 / 0.5);
-	}
-
-	.why-deep h3 {
-		font-family: var(--display);
-		font-size: 1.15rem;
-		margin: 0 0 12px;
-		letter-spacing: -0.02em;
-	}
-
-	.why-bullets {
-		margin: 0 0 14px;
-		padding-left: 1.15rem;
-		color: var(--muted);
-	}
-
-	.why-bullets li + li {
-		margin-top: 10px;
-	}
-
-	.why-bullets strong {
-		color: var(--text);
-	}
-
-	.why-steps {
-		margin: 0 0 24px;
-		padding-left: 1.2rem;
-		color: var(--muted);
-		max-width: 62ch;
-	}
-
-	.why-steps li + li {
-		margin-top: 10px;
-	}
-
-	.why-steps strong {
-		color: var(--text);
-	}
-
-	.flow-card {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		padding: 20px;
-		border-radius: 14px;
-		border: 1px solid var(--border);
-		background: #010301;
-		font-family: var(--mono);
-		font-size: 12px;
-	}
-
-	.flow-row {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.flow-node {
-		padding: 8px 12px;
-		border-radius: 8px;
-		border: 1px solid var(--border);
-		background: oklch(0.12 0.03 145 / 0.6);
-		color: var(--text);
-	}
-
-	.flow-node.muted {
-		color: var(--faint);
-	}
-
-	.flow-node.candidate {
-		border-color: oklch(0.68 0.16 310 / 0.4);
-		color: oklch(0.78 0.12 310);
-	}
-
-	.flow-node.accent {
-		border-color: oklch(0.72 0.17 145 / 0.45);
-		color: var(--accent-soft);
-		background: oklch(0.72 0.17 145 / 0.1);
-	}
-
-	.flow-arrow {
-		color: var(--faint);
-	}
-
-	.summary-grid {
-		display: grid;
-		grid-template-columns: 1.1fr 0.9fr;
-		gap: 16px;
-	}
-
-	@media (max-width: 800px) {
-		.summary-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.summary-card {
-		border: 1px solid var(--border);
-		border-radius: 14px;
-		padding: 24px;
-		background: oklch(0.72 0.17 145 / 0.05);
-	}
-
-	.summary-card-muted {
-		background: oklch(0.08 0.02 145 / 0.55);
-	}
-
-	.summary-card h2 {
-		font-size: 1.25rem;
-		margin-bottom: 14px;
-	}
-
-	.summary-card ol,
-	.summary-card ul {
-		margin: 0;
-		padding-left: 1.15rem;
-		color: var(--muted);
-	}
-
-	.summary-card li + li {
-		margin-top: 10px;
-	}
-
-	.summary-card strong {
-		color: var(--text);
-	}
-
-	.why-cta {
-		text-align: center;
-		padding: 48px 24px;
-		border: 1px solid var(--border);
-		border-radius: 18px;
-		background:
-			radial-gradient(ellipse 70% 80% at 50% 0%, oklch(0.72 0.17 145 / 0.12), transparent 60%),
-			oklch(0.07 0.02 145 / 0.8);
-	}
-
-	.why-cta h2 {
-		font-family: var(--display);
-		font-size: clamp(1.5rem, 3vw, 2rem);
-		letter-spacing: -0.03em;
-		margin: 0 0 10px;
-	}
-
-	.why-cta p {
-		margin: 0 0 22px;
-		color: var(--muted);
-	}
-
-	.why-cta-actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 12px;
-		justify-content: center;
-	}
-
-	.btn-fill,
-	.btn-ghost {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 44px;
-		padding: 0 20px;
-		border-radius: 999px;
-		font-weight: 600;
-		font-size: 14px;
-	}
-
-	.btn-fill {
-		background: var(--accent);
-		color: var(--ink);
-	}
-
-	.btn-fill:hover {
-		background: var(--accent-soft);
-	}
-
-	.btn-ghost {
-		border: 1px solid var(--border);
-		color: var(--text);
-	}
-
-	.btn-ghost:hover {
-		border-color: var(--accent);
-		color: var(--accent);
 	}
 
 	.why-foot {
@@ -900,5 +190,11 @@ const SEO = {
 
 	.why-foot a:hover {
 		color: var(--accent);
+	}
+
+	@media (max-width: 900px) {
+		.why-nav a:not(.why-nav-cta) {
+			display: none;
+		}
 	}
 </style>

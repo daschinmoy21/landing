@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npx astro check 2 >& 1)",
+      "Shell(npx astro build --logLevel error 2 >& 1)",
+      "Shell(npx esbuild --bundle src/components/ui/WhyPage.jsx --format=esm --platform=browser --loader:.js=jsx --external:react --external:lucide-react 2 >& 1)",
+      "Shell(npm:*)",
+      "Shell(cd /home/crimxnhaze/landing && ls node_modules/@astrojs/partytown 2>&1; npx astro build --logLevel warn 2>&1 | head -5)",
+      "Shell(ls:*)",
+      "Shell(ls /home/crimxnhaze/landing/node_modules/@astrojs/partytown/index.js 2>&1; cat /home/crimxnhaze/landing/astro.config.mjs 2>&1 | head -10)",
+      "Shell(nix:*)",
+      "Shell(npx esbuild --bundle src/components/ui/WhyPage.jsx --format=esm --platform=browser --loader:.js=jsx --external:react --external:lucide-react --external:gsap 2 >& 1)",
+      "Shell(cd /home/crimxnhaze/landing && NODE_PATH=$(nix develop -c bash -c 'echo $NODE_PATH') && nix develop -c bash -c \"npm install @tailwindcss/typography 2>&1 | tail -3 && ls node_modules/@tailwindcss/typography/src/index.js 2>&1\")",
+      "Shell(cd /home/crimxnhaze/landing && rm -rf node_modules/@tailwindcss/typography 2>/dev/null; npm install @tailwindcss/typography@0.5.15 2>&1 | tail -5 && ls node_modules/@tailwindcss/typography/src/index.js 2>&1)",
+      "Shell(npx esbuild --bundle src/components/ui/DotGrid.jsx --format=esm --platform=browser --loader:.js=jsx --external:react --external:gsap --external:gsap/InertiaPlugin 2 >& 1)",
+      "Shell(cd /home/crimxnhaze/landing && ls node_modules/.package-lock.json 2>/dev/null; npm ls --depth=0 2>&1 | head -30)",
+      "Shell(npx esbuild --bundle src/components/PierreLanding.jsx --format=esm --platform=browser --loader:.js=jsx --external:react --external:framer-motion --external:lucide-react --external:react-dom --external:ogl 2 >& 1)",
+      "Shell(npx astro build 2 >& 1)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

@@ -3,7 +3,8 @@ import AsciiBackground from './AsciiBackground.jsx'
 import AnimatedCardStack from './ui/animate-card-animation'
 import CurvedInput from './ui/CurvedInput.jsx'
 import { CircuitBoard } from './ui/circuit-board'
-import { Box, Cpu, Server, Terminal, PackageCheck, Globe, Shield } from 'lucide-react'
+import ZeroDowntimeSwapDiagram from './ui/ZeroDowntimeSwapDiagram.jsx'
+import { Box, Cpu, Server, Terminal, PackageCheck } from 'lucide-react'
 import './ui/SpecularButton.css'
 import './ui/CurvedInput.css'
 
@@ -36,8 +37,8 @@ const CSS = `
   --bg-color: #040803;
   --bg-alt: #050a04;
   --text-color: oklch(0.93 0.008 145);
-  --text-muted: oklch(0.72 0.018 145);
-  --text-faint: oklch(0.62 0.016 145);
+  --text-muted: oklch(0.82 0.015 145);
+  --text-faint: oklch(0.74 0.015 145);
   --border-color: oklch(0.18 0.028 145);
   --border-subtle: oklch(0.13 0.020 145);
   --card-bg: oklch(0.12 0.028 145 / 0.72);
@@ -81,8 +82,9 @@ const CSS = `
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -196,14 +198,23 @@ const CSS = `
 
 @media (max-width: 992px) {
   .hero-inner {
-    padding: 80px 24px 72px;
+    padding: 72px 20px 64px;
     min-height: auto;
   }
 
   .hero-section-grid::after {
     background:
-      radial-gradient(ellipse 90% 70% at 50% 40%, oklch(0.04 0.015 145 / 0.78) 0%, oklch(0.04 0.015 145 / 0.35) 55%, transparent 78%),
+      radial-gradient(ellipse 90% 70% at 50% 40%, oklch(0.04 0.015 145 / 0.25) 0%, oklch(0.04 0.015 145 / 0.15) 55%, transparent 85%),
       linear-gradient(to bottom, transparent 60%, var(--bg-color) 100%);
+  }
+
+  .hero-text-card {
+    background: radial-gradient(
+      ellipse 80% 75% at 50% 42%,
+      oklch(0.05 0.02 145 / 0.4) 0%,
+      oklch(0.04 0.015 145 / 0.2) 65%,
+      transparent 85%
+    );
   }
 }
 
@@ -235,7 +246,7 @@ const CSS = `
 
 .hero-waitlist-note {
   margin-top: 14px;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--text-faint);
   font-family: var(--font-mono);
   letter-spacing: 0.02em;
@@ -278,16 +289,18 @@ const CSS = `
   box-shadow:
     0 1px 0 oklch(1 0 0 / 0.14) inset,
     0 10px 28px -10px var(--accent-glow);
-  transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  transition: filter 0.2s var(--ease-out), transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
 }
 
-.hero-why-btn:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent-soft);
+.hero-why-btn:hover,
+.hero-why-btn:focus-visible {
+  /* Keep ink-on-accent — global main a:hover otherwise forces a light color */
+  color: var(--ink-on-accent);
+  filter: brightness(1.12);
   transform: translateY(-1px);
   box-shadow:
-    0 1px 0 oklch(1 0 0 / 0.16) inset,
-    0 14px 32px -10px oklch(0.72 0.17 145 / 0.35);
+    0 1px 0 oklch(1 0 0 / 0.18) inset,
+    0 14px 32px -10px var(--accent-glow);
 }
 
 .hero-why-btn .arr {
@@ -348,7 +361,7 @@ const CSS = `
 /* Hero elements */
 .hero-eyebrow {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.05em;
   color: var(--accent);
   margin-bottom: 16px;
@@ -381,13 +394,13 @@ h1.hero-title {
 }
 
 .hero-subhead {
-  font-size: clamp(15px, 1.5vw, 17px);
+  font-size: clamp(16px, 1.5vw, 18px);
   line-height: 1.65;
-  color: oklch(0.86 0.02 145);
+  color: oklch(0.88 0.015 145);
   margin: 0 auto 32px;
   font-family: var(--font-sans);
   max-width: 42ch;
-  font-weight: 400;
+  font-weight: 500;
   text-shadow: 0 0 24px oklch(0.04 0.02 145 / 0.85);
 }
 
@@ -444,9 +457,9 @@ h1.hero-title {
 .btn {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 13.5px;
+  font-size: 15px;
   padding: 12px 28px;
-  border-radius: 8px; /* Tasteful rounded corners */
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -490,7 +503,7 @@ h1.hero-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .microstat-item .mono-symbol {
@@ -539,7 +552,7 @@ h1.hero-title {
 
 .bench-card-title {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-faint);
   letter-spacing: 0.05em;
   margin-left: 4px;
@@ -551,8 +564,8 @@ h1.hero-title {
 
 .bench-card h4 {
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
   margin: 0 0 6px 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -561,7 +574,7 @@ h1.hero-title {
 
 .bench-card .sub {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-faint);
   margin-bottom: 20px;
 }
@@ -576,7 +589,7 @@ h1.hero-title {
   align-items: baseline;
   gap: 12px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 6px;
 }
 
@@ -615,20 +628,31 @@ h1.hero-title {
   transition: width 1s var(--ease-out);
 }
 
-.bar-fill.win {
+.bar-fill.win,
+.bar-fill.rank-1 {
   background-color: var(--accent);
   box-shadow: 0 0 10px var(--accent-glow);
+  color: var(--ink-on-accent);
 }
 
-.bar-fill.lose {
-  background-color: var(--text-faint);
+.bar-fill.mid,
+.bar-fill.rank-2 {
+  background-color: oklch(0.54 0.14 145);
+  box-shadow: 0 0 8px oklch(0.54 0.14 145 / 0.25);
+  color: #ecfdf5;
+}
+
+.bar-fill.lose,
+.bar-fill.rank-3 {
+  background-color: oklch(0.34 0.07 145);
+  color: #a7f3d0;
 }
 
 .hero-bench-card h4 {
   margin: 0 0 8px;
   color: var(--text-color);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -637,7 +661,7 @@ h1.hero-title {
   margin-bottom: 24px;
   color: rgba(238, 248, 239, 0.55);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Features Grid */
@@ -665,7 +689,8 @@ h1.hero-title {
 }
 
 .features-desc {
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 500;
   color: var(--text-muted);
   line-height: 1.65;
   max-width: 52ch;
@@ -684,7 +709,8 @@ h1.hero-title {
 
 p.features-desc {
   color: var(--text-muted);
-  font-size: 15.5px;
+  font-size: 17px;
+  font-weight: 500;
   margin: 0;
   max-width: 48ch;
   line-height: 1.65;
@@ -693,7 +719,7 @@ p.features-desc {
 
 .feature-card-cmd {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--accent-soft);
   background: oklch(0.72 0.17 145 / 0.06);
   padding: 5px 10px;
@@ -705,57 +731,15 @@ p.features-desc {
 }
 
 .feature-card-desc {
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 500;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
   max-width: 50ch;
 }
 
-/* Quiet capability strip under the feature panel */
-.checkmarks-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px 4px;
-  margin: 28px auto 0;
-  padding: 0;
-  list-style: none;
-  max-width: 52rem;
-}
-
-.check-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12.5px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  letter-spacing: 0.01em;
-  padding: 0 12px;
-  min-height: auto;
-  background: none;
-  border: none;
-  border-radius: 0;
-}
-
-.check-item:not(:first-child)::before {
-  content: '·';
-  color: var(--border-color);
-  margin-right: 12px;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1;
-}
-
-.check-icon {
-  color: var(--accent);
-  font-weight: 700;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1;
-}
+/* Checkmarks row — removed */
 
 /*.compare-table tr:last-child td {
   border-bottom: none;
@@ -798,19 +782,31 @@ p.features-desc {
 .bench-text-col h2 {
   font-size: clamp(22px, 3.2vw, 40px);
   font-weight: 700;
-  margin: 0 0 18px 0;
+  margin: 0;
   letter-spacing: -0.03em;
   line-height: 1.15;
-  max-width: none;
-  white-space: nowrap;
+  max-width: 22ch;
+  text-wrap: balance;
+  text-align: center;
 }
 
 .bench-text-col p {
-  font-size: 15.5px;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
   max-width: 52ch;
+  text-align: center;
+}
+
+.bench-text-col--above-rps {
+  margin-bottom: 56px;
+}
+
+.bench-text-col--below-rps {
+  margin-top: 72px;
+  margin-bottom: 28px;
 }
 
 .bench-footnote {
@@ -820,6 +816,142 @@ p.features-desc {
   line-height: 1.6;
   color: var(--text-faint);
   text-align: center;
+}
+
+/* Empirical proof benchmark table */
+.bench-empirical-card {
+  width: min(960px, 100%);
+  border: 1px solid var(--border-color);
+  background: #000000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  margin: 0 auto;
+}
+
+.bench-empirical-titlebar {
+  background: #000000;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bench-empirical-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.bench-empirical-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.bench-empirical-dot.red { background: #ff5f56; }
+.bench-empirical-dot.yellow { background: #ffbd2e; }
+.bench-empirical-dot.green { background: #27c93f; }
+
+.bench-empirical-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-faint);
+  letter-spacing: 0.05em;
+  margin-left: 4px;
+}
+
+.bench-empirical-body {
+  padding: 20px 24px 24px;
+  text-align: left;
+}
+
+.bench-empirical-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+.bench-empirical-card h4 {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  letter-spacing: 0.01em;
+  color: var(--text-color);
+  text-transform: none;
+}
+
+.bench-empirical-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+
+.bench-empirical-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bench-empirical-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.bench-empirical-table th,
+.bench-empirical-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.bench-empirical-table thead th {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  background: oklch(0.06 0.02 145 / 0.5);
+}
+
+.bench-empirical-table tbody td:first-child {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.bench-empirical-table tbody td {
+  color: var(--text-color);
+}
+
+/* Neutral columns — no brand-colored win bias; data speaks for itself */
+.bench-empirical-table thead th.col-metric {
+  color: var(--text-muted);
+}
+
+.bench-empirical-table tbody td.col-metric {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .bench-empirical-body {
+    padding: 16px 14px 18px;
+  }
+  .bench-empirical-table {
+    font-size: 11px;
+  }
+  .bench-empirical-table th,
+  .bench-empirical-table td {
+    padding: 8px 10px;
+  }
 }
 
 .bench-visual-col {
@@ -927,6 +1059,8 @@ p.features-desc {
   color: var(--text-color);
 }
 
+
+
 @media (prefers-reduced-motion: reduce) {
   .bar-fill {
     transition: none;
@@ -982,16 +1116,6 @@ p.features-desc {
 .cta-logo svg {
   width: 32px;
   height: 32px;
-}
-
-.cta-logo .pulse {
-  fill: #0a1405;
-  animation: logo-pulse 2s infinite ease-in-out;
-}
-
-@keyframes logo-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.12); opacity: 0.78; }
 }
 
 .cta-title {
@@ -1272,7 +1396,6 @@ p.features-desc {
   .scattered-bg-container,
   .scattered-bg-ring--inner,
   .scattered-icon,
-  .cta-logo .pulse,
   .hermetic-center-cube,
   .animated-nix-line,
   .animated-nix-line.purple-flow {
@@ -1662,25 +1785,201 @@ p.features-desc {
 `
 
 const BOKEH_OUTER = [
-	{ logo: logoDocker, left: '10%', top: '18%', scale: 0.95, opacity: 0.38, blur: '1.5px', rotate: '-12deg', animationName: 'float-slow-1', duration: '14s', delay: '0s' },
-	{ logo: logoRust, left: '22%', top: '72%', scale: 1.1, opacity: 0.42, blur: '0.5px', rotate: '14deg', animationName: 'float-slow-2', duration: '16s', delay: '-3s' },
-	{ logo: logoGo, left: '80%', top: '16%', scale: 1.0, opacity: 0.4, blur: '1px', rotate: '-16deg', animationName: 'float-slow-3', duration: '15s', delay: '-2s' },
-	{ logo: logoLinux, left: '88%', top: '70%', scale: 0.92, opacity: 0.36, blur: '1.5px', rotate: '10deg', animationName: 'float-slow-1', duration: '18s', delay: '-7s' },
-	{ logo: logoK8s, left: '6%', top: '48%', scale: 0.85, opacity: 0.32, blur: '2px', rotate: '8deg', animationName: 'float-slow-2', duration: '17s', delay: '-5s' },
-	{ logo: logoReact, left: '94%', top: '40%', scale: 0.9, opacity: 0.34, blur: '1px', rotate: '-8deg', animationName: 'float-slow-3', duration: '13s', delay: '-4s' },
-	{ logo: logoPython, left: '18%', top: '8%', scale: 0.78, opacity: 0.28, blur: '2.5px', rotate: '18deg', animationName: 'float-slow-1', duration: '19s', delay: '-9s' },
-	{ logo: logoNginx, left: '70%', top: '86%', scale: 0.82, opacity: 0.3, blur: '2px', rotate: '-6deg', animationName: 'float-slow-2', duration: '15s', delay: '-1s' }
+	{
+		logo: logoDocker,
+		left: '10%',
+		top: '18%',
+		scale: 0.95,
+		opacity: 0.38,
+		blur: '1.5px',
+		rotate: '-12deg',
+		animationName: 'float-slow-1',
+		duration: '14s',
+		delay: '0s'
+	},
+	{
+		logo: logoRust,
+		left: '22%',
+		top: '72%',
+		scale: 1.1,
+		opacity: 0.42,
+		blur: '0.5px',
+		rotate: '14deg',
+		animationName: 'float-slow-2',
+		duration: '16s',
+		delay: '-3s'
+	},
+	{
+		logo: logoGo,
+		left: '80%',
+		top: '16%',
+		scale: 1.0,
+		opacity: 0.4,
+		blur: '1px',
+		rotate: '-16deg',
+		animationName: 'float-slow-3',
+		duration: '15s',
+		delay: '-2s'
+	},
+	{
+		logo: logoLinux,
+		left: '88%',
+		top: '70%',
+		scale: 0.92,
+		opacity: 0.36,
+		blur: '1.5px',
+		rotate: '10deg',
+		animationName: 'float-slow-1',
+		duration: '18s',
+		delay: '-7s'
+	},
+	{
+		logo: logoK8s,
+		left: '6%',
+		top: '48%',
+		scale: 0.85,
+		opacity: 0.32,
+		blur: '2px',
+		rotate: '8deg',
+		animationName: 'float-slow-2',
+		duration: '17s',
+		delay: '-5s'
+	},
+	{
+		logo: logoReact,
+		left: '94%',
+		top: '40%',
+		scale: 0.9,
+		opacity: 0.34,
+		blur: '1px',
+		rotate: '-8deg',
+		animationName: 'float-slow-3',
+		duration: '13s',
+		delay: '-4s'
+	},
+	{
+		logo: logoPython,
+		left: '18%',
+		top: '8%',
+		scale: 0.78,
+		opacity: 0.28,
+		blur: '2.5px',
+		rotate: '18deg',
+		animationName: 'float-slow-1',
+		duration: '19s',
+		delay: '-9s'
+	},
+	{
+		logo: logoNginx,
+		left: '70%',
+		top: '86%',
+		scale: 0.82,
+		opacity: 0.3,
+		blur: '2px',
+		rotate: '-6deg',
+		animationName: 'float-slow-2',
+		duration: '15s',
+		delay: '-1s'
+	}
 ]
 
 const BOKEH_INNER = [
-	{ logo: logoNixos, left: '38%', top: '22%', scale: 0.75, opacity: 0.26, blur: '2px', rotate: '-10deg', animationName: 'float-slow-3', duration: '12s', delay: '-2s' },
-	{ logo: logoPostgres, left: '62%', top: '28%', scale: 0.7, opacity: 0.24, blur: '2.5px', rotate: '12deg', animationName: 'float-slow-1', duration: '14s', delay: '-6s' },
-	{ logo: logoGit, left: '48%', top: '78%', scale: 0.8, opacity: 0.28, blur: '1.5px', rotate: '-4deg', animationName: 'float-slow-2', duration: '13s', delay: '-3s' },
-	{ logo: logoNode, left: '28%', top: '58%', scale: 0.72, opacity: 0.22, blur: '3px', rotate: '20deg', animationName: 'float-slow-3', duration: '16s', delay: '-8s' },
-	{ logo: logoTs, left: '72%', top: '55%', scale: 0.68, opacity: 0.24, blur: '2px', rotate: '-14deg', animationName: 'float-slow-1', duration: '11s', delay: '-1s' },
-	{ logo: logoRedis, left: '55%', top: '12%', scale: 0.65, opacity: 0.2, blur: '3px', rotate: '6deg', animationName: 'float-slow-2', duration: '15s', delay: '-5s' },
-	{ logo: logoWasm, left: '35%', top: '40%', scale: 0.6, opacity: 0.18, blur: '3.5px', rotate: '-18deg', animationName: 'float-slow-3', duration: '17s', delay: '-10s' },
-	{ logo: logoTerraform, left: '65%', top: '68%', scale: 0.7, opacity: 0.22, blur: '2.5px', rotate: '8deg', animationName: 'float-slow-1', duration: '14s', delay: '-4s' }
+	{
+		logo: logoNixos,
+		left: '38%',
+		top: '22%',
+		scale: 0.75,
+		opacity: 0.26,
+		blur: '2px',
+		rotate: '-10deg',
+		animationName: 'float-slow-3',
+		duration: '12s',
+		delay: '-2s'
+	},
+	{
+		logo: logoPostgres,
+		left: '62%',
+		top: '28%',
+		scale: 0.7,
+		opacity: 0.24,
+		blur: '2.5px',
+		rotate: '12deg',
+		animationName: 'float-slow-1',
+		duration: '14s',
+		delay: '-6s'
+	},
+	{
+		logo: logoGit,
+		left: '48%',
+		top: '78%',
+		scale: 0.8,
+		opacity: 0.28,
+		blur: '1.5px',
+		rotate: '-4deg',
+		animationName: 'float-slow-2',
+		duration: '13s',
+		delay: '-3s'
+	},
+	{
+		logo: logoNode,
+		left: '28%',
+		top: '58%',
+		scale: 0.72,
+		opacity: 0.22,
+		blur: '3px',
+		rotate: '20deg',
+		animationName: 'float-slow-3',
+		duration: '16s',
+		delay: '-8s'
+	},
+	{
+		logo: logoTs,
+		left: '72%',
+		top: '55%',
+		scale: 0.68,
+		opacity: 0.24,
+		blur: '2px',
+		rotate: '-14deg',
+		animationName: 'float-slow-1',
+		duration: '11s',
+		delay: '-1s'
+	},
+	{
+		logo: logoRedis,
+		left: '55%',
+		top: '12%',
+		scale: 0.65,
+		opacity: 0.2,
+		blur: '3px',
+		rotate: '6deg',
+		animationName: 'float-slow-2',
+		duration: '15s',
+		delay: '-5s'
+	},
+	{
+		logo: logoWasm,
+		left: '35%',
+		top: '40%',
+		scale: 0.6,
+		opacity: 0.18,
+		blur: '3.5px',
+		rotate: '-18deg',
+		animationName: 'float-slow-3',
+		duration: '17s',
+		delay: '-10s'
+	},
+	{
+		logo: logoTerraform,
+		left: '65%',
+		top: '68%',
+		scale: 0.7,
+		opacity: 0.22,
+		blur: '2.5px',
+		rotate: '8deg',
+		animationName: 'float-slow-1',
+		duration: '14s',
+		delay: '-4s'
+	}
 ]
 
 export default function PierreLanding() {
@@ -1702,10 +2001,10 @@ export default function PierreLanding() {
 	React.useEffect(() => {
 		const el = ctaSectionRef.current
 		if (!el || typeof IntersectionObserver === 'undefined') return
-		const io = new IntersectionObserver(
-			([entry]) => setCtaInView(entry.isIntersecting),
-			{ rootMargin: '80px', threshold: 0.08 }
-		)
+		const io = new IntersectionObserver(([entry]) => setCtaInView(entry.isIntersecting), {
+			rootMargin: '80px',
+			threshold: 0.08
+		})
 		io.observe(el)
 		return () => io.disconnect()
 	}, [])
@@ -1713,7 +2012,11 @@ export default function PierreLanding() {
 	const submitWaitlist = (email, setState) => {
 		const value = String(email || '').trim()
 		if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-			setState({ state: 'error', message: 'Enter a valid email to join the waitlist.', email: value })
+			setState({
+				state: 'error',
+				message: 'Enter a valid email to join the waitlist.',
+				email: value
+			})
 			return
 		}
 		// Shell only until a real waitlist endpoint is wired.
@@ -1872,7 +2175,7 @@ export default function PierreLanding() {
 											x: 45,
 											y: 80,
 											label: 'Dev Box',
-											icon: <Terminal className="w-4 h-4 text-neutral-300" />,
+											icon: <Terminal className="h-4 w-4 text-neutral-300" />,
 											status: 'active',
 											size: 'sm'
 										},
@@ -1881,7 +2184,7 @@ export default function PierreLanding() {
 											x: 150,
 											y: 80,
 											label: 'sha256-f83a…',
-											icon: <PackageCheck className="w-4 h-4 text-emerald-400" />,
+											icon: <PackageCheck className="h-4 w-4 text-emerald-400" />,
 											status: 'processing',
 											size: 'md'
 										},
@@ -1890,7 +2193,7 @@ export default function PierreLanding() {
 											x: 255,
 											y: 80,
 											label: 'Prod Node',
-											icon: <Server className="w-4 h-4 text-neutral-300" />,
+											icon: <Server className="h-4 w-4 text-neutral-300" />,
 											status: 'active',
 											size: 'sm'
 										}
@@ -1906,7 +2209,6 @@ export default function PierreLanding() {
 							</div>
 							<h3 className="feature-column-title">Deterministic builds</h3>
 							<div className="feature-engine-list">
-								<code className="feature-card-cmd">builder = &quot;reproducible&quot;</code>
 								<p className="feature-column-desc">
 									Content-addressed zero-drift packages. Strict environment isolation guarantees
 									that the exact same bits build and run identically on your machine and production.
@@ -1920,74 +2222,10 @@ export default function PierreLanding() {
 								className="feature-illustration-container feature-illustration-container--circuit"
 								aria-hidden="true"
 							>
-								<CircuitBoard
-									variant="dark"
-									nodes={[
-										{
-											id: 'ingress',
-											x: 45,
-											y: 80,
-											label: 'Ingress Router',
-											icon: <Globe className="w-4 h-4 text-emerald-400" />,
-											status: 'active',
-											size: 'sm'
-										},
-										{
-											id: 'v1_container',
-											x: 150,
-											y: 35,
-											label: 'v1 (Container)',
-											icon: <Box className="w-4 h-4 text-neutral-500" />,
-											status: 'inactive',
-											size: 'sm'
-										},
-										{
-											id: 'v2_microvm',
-											x: 150,
-											y: 125,
-											label: 'v2 (MicroVM)',
-											icon: <Cpu className="w-4 h-4 text-emerald-400" />,
-											status: 'active',
-											size: 'md'
-										},
-										{
-											id: 'live_traffic',
-											x: 255,
-											y: 80,
-											label: 'Live Traffic',
-											icon: <Shield className="w-4 h-4 text-emerald-400" />,
-											status: 'active',
-											size: 'sm'
-										}
-									]}
-									connections={[
-										{
-											from: 'ingress',
-											to: 'v1_container',
-											animated: false,
-											color: 'rgba(163,163,163,0.15)'
-										},
-										{
-											from: 'ingress',
-											to: 'v2_microvm',
-											animated: true,
-											pulseColor: '#10b981'
-										},
-										{
-											from: 'v2_microvm',
-											to: 'live_traffic',
-											animated: true,
-											pulseColor: '#10b981'
-										}
-									]}
-									width={300}
-									height={160}
-									pulseSpeed={2}
-								/>
+								<ZeroDowntimeSwapDiagram />
 							</div>
 							<h3 className="feature-column-title">Zero-downtime hot swaps</h3>
 							<div className="feature-engine-list">
-								<code className="feature-card-cmd">zero_downtime = true</code>
 								<p className="feature-column-desc">
 									Seamlessly pivot live workloads from container to microVM (or deploy v2 updates)
 									with zero dropped connections and instant background port re-routing.
@@ -1996,46 +2234,80 @@ export default function PierreLanding() {
 						</div>
 					</div>
 
-					<ul className="checkmarks-row">
-						<li className="check-item">
-							<span className="check-icon" aria-hidden="true">
-								✓
-							</span>
-							<span>No agent daemon bloat</span>
-						</li>
-						<li className="check-item">
-							<span className="check-icon" aria-hidden="true">
-								✓
-							</span>
-							<span>One-line switch between runtimes</span>
-						</li>
-						<li className="check-item">
-							<span className="check-icon" aria-hidden="true">
-								✓
-							</span>
-							<span>Self-hosted on bare metal or cloud</span>
-						</li>
-					</ul>
 				</div>
 			</section>
 
 			{/* Benchmarks Section */}
 			<section className="bench-section" id="benchmarks">
-				<div className="bench-text-col">
+				<div className="bench-text-col bench-text-col--above-rps">
+					<h2>Same performance. Simpler stack</h2>
+				</div>
+				<div className="bench-empirical-card">
+					<div className="bench-empirical-titlebar">
+						<div className="bench-empirical-dots">
+							<span className="bench-empirical-dot red" />
+							<span className="bench-empirical-dot yellow" />
+							<span className="bench-empirical-dot green" />
+						</div>
+						<span className="bench-empirical-title">benchmarks/rps-tradeoffs.md</span>
+					</div>
+					<div className="bench-empirical-body">
+						<p className="bench-empirical-kicker">Runtime throughput</p>
+						<h4>Measured tradeoffs (Go basic-http, 30s @ 50 concurrent)</h4>
+						<p className="bench-empirical-sub">
+							NixOS host, same workload. Container path tracks stock Podman; microVM trades some
+							throughput and memory for a hardware isolation wall.
+						</p>
+						<div className="bench-empirical-table-wrap">
+							<table className="bench-empirical-table">
+								<thead>
+									<tr>
+										<th>Scenario</th>
+										<th className="col-metric">Russel microVM</th>
+										<th className="col-metric">Russel container</th>
+										<th className="col-metric">Raw Podman</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1 host CPU capped</td>
+										<td className="col-metric">~15–35k RPS</td>
+										<td className="col-metric">~8k RPS</td>
+										<td className="col-metric">~8k RPS</td>
+									</tr>
+									<tr>
+										<td>Uncapped, 1 guest vCPU</td>
+										<td className="col-metric">~32k RPS</td>
+										<td className="col-metric">~36k RPS</td>
+										<td className="col-metric">~37k RPS</td>
+									</tr>
+									<tr>
+										<td>Uncapped, 2 guest vCPUs</td>
+										<td className="col-metric">~40k RPS (p99 ~4.5ms)</td>
+										<td className="col-metric">~37k RPS (p99 ~2.8ms)</td>
+										<td className="col-metric">~39k RPS (p99 ~2.8ms)</td>
+									</tr>
+									<tr>
+										<td>Host memory overhead</td>
+										<td className="col-metric">~190 MiB</td>
+										<td className="col-metric">~16 MiB</td>
+										<td className="col-metric">~15 MiB</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div className="bench-text-col bench-text-col--below-rps">
 					<h2>Measurably faster. Radically simpler</h2>
-					<p>
-						Russel outperforms vanilla Podman by up to{' '}
-						<strong style={{ color: 'var(--accent)' }}>12×</strong> on end-to-end deploy times,
-						while adding hardware-enforced microVM isolation and reproducible Nix builds — with zero
-						additional configuration overhead.
-					</p>
 				</div>
 				<div className="bench-visual-col">
 					<AnimatedCardStack />
 				</div>
 				<p className="bench-footnote">
-					Benchmarks run against identical workloads: HTTP server, static site, and filebrowser.
-					Container engine versus microVM engine versus stock Podman — cold start, same hardware.
+					Warm run benchmarks across 7 test workloads (HTTP server, env-config, hello-rust,
+					shortlink, static site, filebrowser). Russel container vs Russel microVM vs Podman
+					baseline.
 				</p>
 			</section>
 
@@ -2064,7 +2336,14 @@ export default function PierreLanding() {
 									'--base-rotation': icon.rotate
 								}}
 							>
-								<img src={icon.logo} alt="" loading="lazy" decoding="async" width="36" height="36" />
+								<img
+									src={icon.logo}
+									alt=""
+									loading="lazy"
+									decoding="async"
+									width="36"
+									height="36"
+								/>
 							</div>
 						))}
 					</div>
@@ -2086,7 +2365,14 @@ export default function PierreLanding() {
 									'--base-rotation': icon.rotate
 								}}
 							>
-								<img src={icon.logo} alt="" loading="lazy" decoding="async" width="32" height="32" />
+								<img
+									src={icon.logo}
+									alt=""
+									loading="lazy"
+									decoding="async"
+									width="32"
+									height="32"
+								/>
 							</div>
 						))}
 					</div>
@@ -2105,7 +2391,7 @@ export default function PierreLanding() {
 								stroke="currentColor"
 								strokeWidth="2"
 							/>
-							<rect x="12" y="12" width="8" height="8" rx="1.5" className="pulse" />
+							<rect x="12" y="12" width="8" height="8" rx="1.5" fill="currentColor" />
 							<path
 								d="M16 2v6M16 24v6M2 16h6M24 16h6"
 								stroke="currentColor"

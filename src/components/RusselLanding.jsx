@@ -1056,25 +1056,26 @@ export default function RusselLanding() {
 					<Reveal>
 						<div className="bench">
 							<div className="bench-card">
-								<h4>Static site · cold deploy</h4>
-								<div className="sub">full path: nix build → boot → serve</div>
+								<h4>Static site (static-test)</h4>
+								<div className="sub">full path: build → deploy → first HTTP</div>
 								<div className="bars">
-									<Bar label="Russel" time="1.7s" pct="19" type="win" />
-									<Bar label="Docker / Podman (best)" time="2.7s" pct="30" type="lose" />
-									<Bar label="Podman (typical)" time="~10s" pct="100" type="lose" />
+									<Bar label="Russel container" time="1.27s" pct="48" type="win" />
+									<Bar label="Russel microVM" time="1.99s" pct="76" type="win" />
+									<Bar label="Podman baseline" time="2.60s" pct="100" type="lose" />
 								</div>
 							</div>
 							<div className="bench-card">
-								<h4>Go HTTP app · end-to-end</h4>
-								<div className="sub">including Nix build of a compiling service</div>
+								<h4>Env Config app (env-config)</h4>
+								<div className="sub">full path: build → deploy → first HTTP</div>
 								<div className="bars">
-									<Bar label="Russel" time="3.9s" pct="45" type="win" />
-									<Bar label="Docker / Podman" time="8.6s" pct="100" type="lose" />
+									<Bar label="Russel container" time="0.95s" pct="9" type="win" />
+									<Bar label="Russel microVM" time="1.26s" pct="12" type="win" />
+									<Bar label="Podman baseline" time="10.23s" pct="100" type="lose" />
 								</div>
 							</div>
 							<div className="bench-note">
-								Bars scaled to the slowest measured value in each group. Reproduce on your host with{' '}
-								<code>russel bench</code>.
+								Warm run benchmark results (2026-07-24) on NixOS with Podman 5.8.2 and Cloud Hypervisor. Reproduce with{' '}
+								<code>./bench.sh --warm</code>.
 							</div>
 						</div>
 					</Reveal>

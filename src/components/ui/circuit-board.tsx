@@ -21,6 +21,8 @@ export interface CircuitConnection {
   bidirectional?: boolean
   color?: string
   pulseColor?: string
+  opacity?: number
+  pulseOpacity?: number
 }
 
 export interface CircuitBoardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -235,7 +237,11 @@ function CircuitBoard({
           const pathLength = 500 // Approximate path length for animation
 
           return (
-            <g key={`connection-${i}`}>
+            <motion.g
+              key={`connection-${conn.from}-${conn.to}`}
+              animate={{ opacity: conn.opacity !== undefined ? conn.opacity : 1 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
               {/* Base trace */}
               <motion.path
                 d={path}
@@ -260,13 +266,25 @@ function CircuitBoard({
                   strokeLinejoin="round"
                   filter="url(#glow)"
                   strokeDasharray={`${pathLength * 0.1} ${pathLength * 0.9}`}
-                  initial={{ strokeDashoffset: pathLength }}
-                  animate={{ strokeDashoffset: -pathLength }}
+                  initial={{
+                    strokeDashoffset: pathLength,
+                    opacity: conn.pulseOpacity !== undefined ? conn.pulseOpacity : (conn.opacity !== undefined ? conn.opacity : 1)
+                  }}
+                  animate={{
+                    strokeDashoffset: -pathLength,
+                    opacity: conn.pulseOpacity !== undefined ? conn.pulseOpacity : (conn.opacity !== undefined ? conn.opacity : 1)
+                  }}
                   transition={{
-                    duration: pulseSpeed,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: i * 0.3,
+                    strokeDashoffset: {
+                      duration: pulseSpeed,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: i * 0.3,
+                    },
+                    opacity: {
+                      duration: 0.5,
+                      ease: "easeInOut"
+                    }
                   }}
                 />
               )}
@@ -292,7 +310,7 @@ function CircuitBoard({
                   }}
                 />
               )}
-            </g>
+            </motion.g>
           )
         })}
       </svg>
