@@ -16,8 +16,8 @@ const SEO = {
 			client:only="react"
 			dotSize={4}
 			gap={32}
-			baseColor="#0c200a"
-			activeColor="#1a6b14"
+			baseColor="#001d36"
+			activeColor="#38bdf8"
 			proximity={130}
 			shockRadius={200}
 			shockStrength={2.5}
@@ -25,40 +25,42 @@ const SEO = {
 			style={{}}
 		/>
 		<header class="why-top">
-			<a class="why-brand" href="/">
+			<a class="why-brand" href="/" style="font-family: 'Instrument Serif', serif; color: #ffffff;">
 				<svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
 					<rect x="2" y="2" width="28" height="28" rx="7" fill="none" stroke="currentColor" stroke-width="2"></rect>
 					<rect x="12" y="12" width="8" height="8" rx="1.5" fill="currentColor"></rect>
 					<path d="M16 2v6M16 24v6M2 16h6M24 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"></path>
 				</svg>
-				<span>Russel</span>
+				<span>Russel<sup>®</sup></span>
 			</a>
 			<nav class="why-nav" aria-label="Page">
 				<a href="#compare">Compare</a>
 				<a href="#gap">Gap</a>
 				<a href="#practice">Practice</a>
 				<a href="#decision">Decision</a>
-				<a href="/#early-access" class="why-nav-cta">Join waitlist</a>
+				<a href="/#early-access" class="why-nav-cta">Begin Journey</a>
 			</nav>
 		</header>
 
 		<WhyPage client:only="react" />
 
 		<footer class="why-foot">
-			<a href="/">← Russel</a>
-			<span>Self-hosted microVM &amp; container platform</span>
+			<div>&copy; 2026 Russel contributors. MIT Private Beta.</div>
+			<div>
+				<a href="/">Overview</a> &middot; <a href="/#features">Features</a> &middot; <a href="/#benchmarks">Benchmarks</a>
+			</div>
 		</footer>
 	</div>
 </Layout>
 
 <style is:global>
 	.why-page {
-		--bg: #040803;
-		--text: oklch(0.93 0.008 145);
-		--muted: oklch(0.72 0.018 145);
-		--faint: oklch(0.62 0.016 145);
-		--border: oklch(0.18 0.028 145);
-		--accent: oklch(0.72 0.17 145);
+		--bg: hsl(201 100% 13%);
+		--text: #ffffff;
+		--muted: hsl(240 4% 66%);
+		--faint: hsl(240 4% 50%);
+		--border: rgba(255, 255, 255, 0.12);
+		--accent: #38bdf8;
 		min-height: 100vh;
 		background: var(--bg);
 		color: var(--text);

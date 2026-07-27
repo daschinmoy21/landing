@@ -207,13 +207,14 @@ export default function WhyPage() {
           max-width: 1100px;
           margin: 0 auto;
           padding: 56px 28px 80px;
-          color: oklch(0.93 0.008 145);
+          color: #ffffff;
         }
 
         .why-page-root h1,
         .why-page-root h2,
         .why-page-root h3 {
-          font-family: 'Clash-Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-family: 'Instrument Serif', serif;
+          font-weight: 400;
         }
 
         /* Hero */
@@ -225,15 +226,15 @@ export default function WhyPage() {
           font-size: 12px;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: oklch(0.72 0.17 145);
+          color: #38bdf8;
           font-weight: 600;
           margin: 0 0 14px;
         }
         .why-hero h1 {
-          font-size: clamp(2rem, 4.5vw, 2.85rem);
-          font-weight: 700;
-          letter-spacing: -0.035em;
-          line-height: 1.1;
+          font-size: clamp(2.2rem, 5vw, 3.5rem);
+          font-weight: 400;
+          letter-spacing: -0.02em;
+          line-height: 1.05;
           max-width: 22ch;
           margin: 0;
         }
@@ -244,9 +245,9 @@ export default function WhyPage() {
           scroll-margin-top: 80px;
         }
         .why-section h2 {
-          font-size: clamp(1.5rem, 2.5vw, 1.9rem);
-          font-weight: 800;
-          letter-spacing: -0.035em;
+          font-size: clamp(1.8rem, 3vw, 2.5rem);
+          font-weight: 400;
+          letter-spacing: -0.02em;
           margin: 0 0 36px;
         }
 
@@ -254,45 +255,46 @@ export default function WhyPage() {
         .why-table-wrap {
           overflow-x: auto;
           border-radius: 14px;
-          border: 1px solid oklch(0.18 0.028 145);
-          background: oklch(0.72 0.17 145 / 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(0, 24, 44, 0.75);
+          backdrop-filter: blur(12px);
         }
         .why-table-wrap table {
           width: 100%;
           min-width: 760px;
           border-collapse: collapse;
           font-size: 15px;
-          font-weight: 500;
+          font-weight: 400;
           line-height: 1.55;
         }
         .why-table-wrap th {
           padding: 14px 16px;
           font-family: 'JetBrains Mono', ui-monospace, monospace;
           font-size: 12px;
-          font-weight: 800;
+          font-weight: 700;
           letter-spacing: 0.04em;
           text-transform: uppercase;
           text-align: left;
-          border-bottom: 1px solid oklch(0.18 0.028 145);
-          background: oklch(0.08 0.02 145 / 0.5);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.04);
         }
         .why-table-wrap th:first-child { width: 140px; }
         .col-containers {
-          color: oklch(0.78 0.015 145);
-          font-weight: 500;
+          color: hsl(240 4% 66%);
+          font-weight: 400;
         }
         .col-serverless {
-          color: oklch(0.78 0.015 145);
-          font-weight: 500;
+          color: hsl(240 4% 66%);
+          font-weight: 400;
         }
         .col-russel {
-          color: oklch(0.75 0.17 145);
-          background: oklch(0.72 0.17 145 / 0.06);
-          font-weight: 600;
+          color: #38bdf8;
+          background: rgba(56, 189, 248, 0.08);
+          font-weight: 500;
         }
         .why-table-wrap td {
           padding: 14px 16px;
-          border-bottom: 1px solid oklch(0.18 0.028 145 / 0.6);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .why-table-wrap tr:last-child td {
           border-bottom: none;
@@ -312,29 +314,30 @@ export default function WhyPage() {
           .gap-grid { grid-template-columns: 1fr; }
         }
         .gap-col {
-          border: 1px solid oklch(0.18 0.028 145);
+          border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 14px;
           padding: 28px 24px;
-          background: oklch(0.08 0.02 145 / 0.4);
+          background: rgba(0, 24, 44, 0.65);
+          backdrop-filter: blur(8px);
         }
         .gap-col h3 {
-          font-size: 1.15rem;
-          font-weight: 800;
+          font-size: 1.25rem;
+          font-weight: 400;
           margin: 0 0 10px;
         }
         .gap-col p {
           margin: 0;
-          color: oklch(0.85 0.012 145);
-          font-size: 17px;
-          font-weight: 500;
+          color: hsl(240 4% 75%);
+          font-size: 16px;
+          font-weight: 400;
           line-height: 1.65;
         }
         .gap-col-russel {
-          border-color: oklch(0.72 0.17 145 / 0.25);
-          background: oklch(0.72 0.17 145 / 0.06);
+          border-color: rgba(56, 189, 248, 0.3);
+          background: rgba(56, 189, 248, 0.08);
         }
         .gap-col-russel h3 {
-          color: oklch(0.72 0.17 145);
+          color: #38bdf8;
         }
 
         /* Practice — bento grid */
@@ -347,10 +350,11 @@ export default function WhyPage() {
           .practice-bento { grid-template-columns: 1fr; }
         }
         .bento-card {
-          border: 1px solid oklch(0.18 0.028 145);
+          border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 14px;
           padding: 28px 24px 24px;
-          background: oklch(0.08 0.02 145 / 0.45);
+          background: rgba(0, 24, 44, 0.65);
+          backdrop-filter: blur(8px);
           display: flex;
           flex-direction: column;
           gap: 12px;
@@ -360,14 +364,14 @@ export default function WhyPage() {
           flex-direction: row;
           align-items: flex-start;
           gap: 24px;
-          border-color: oklch(0.72 0.17 145 / 0.18);
-          background: oklch(0.72 0.17 145 / 0.05);
+          border-color: rgba(56, 189, 248, 0.25);
+          background: rgba(56, 189, 248, 0.06);
         }
         @media (max-width: 640px) {
           .bento-span-2 { flex-direction: column; }
         }
         .bento-span-2 h3 {
-          font-size: 1.2rem;
+          font-size: 1.3rem;
         }
         .bento-span-2 p {
           max-width: 80ch;
@@ -380,30 +384,31 @@ export default function WhyPage() {
           align-items: center;
           justify-content: center;
           border-radius: 8px;
-          border: 1px solid oklch(0.72 0.17 145 / 0.15);
-          background: oklch(0.72 0.17 145 / 0.08);
-          color: oklch(0.72 0.17 145);
+          border: 1px solid rgba(56, 189, 248, 0.25);
+          background: rgba(56, 189, 248, 0.1);
+          color: #38bdf8;
         }
         .bento-card h3 {
-          font-size: 1.1rem;
-          font-weight: 800;
+          font-size: 1.2rem;
+          font-weight: 400;
           margin: 0;
         }
         .bento-card p {
           margin: 0;
-          color: oklch(0.85 0.012 145);
-          font-size: 17px;
-          font-weight: 500;
+          color: hsl(240 4% 75%);
+          font-size: 16px;
+          font-weight: 400;
           line-height: 1.7;
           max-width: 68ch;
         }
 
         /* Decision */
         .decision-grid {
-          border: 1px solid oklch(0.18 0.028 145);
+          border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 14px;
           padding: 32px 28px 24px;
-          background: oklch(0.08 0.02 145 / 0.4);
+          background: rgba(0, 24, 44, 0.65);
+          backdrop-filter: blur(8px);
         }
         .decision-col ul {
           margin: 0;
@@ -413,58 +418,67 @@ export default function WhyPage() {
           gap: 14px;
         }
         .decision-col li {
-          color: oklch(0.82 0.015 145);
+          color: hsl(240 4% 75%);
           font-size: 16px;
-          font-weight: 500;
+          font-weight: 400;
           line-height: 1.65;
         }
         .decision-col-out {
-          border-color: oklch(0.22 0.025 10);
-          background: oklch(0.08 0.02 10 / 0.4);
+          border-color: rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.02);
         }
         .decision-col-out li {
-          color: oklch(0.68 0.02 10);
+          color: hsl(240 4% 60%);
         }
 
         /* CTA */
         .why-cta {
           text-align: center;
-          padding: 48px 24px;
-          border: 1px solid oklch(0.18 0.028 145);
+          padding: 56px 24px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
           border-radius: 18px;
           background:
-            radial-gradient(ellipse 70% 80% at 50% 0%, oklch(0.72 0.17 145 / 0.10), transparent 60%),
-            oklch(0.08 0.02 145 / 0.6);
+            radial-gradient(ellipse 70% 80% at 50% 0%, rgba(56, 189, 248, 0.12), transparent 60%),
+            rgba(0, 20, 38, 0.85);
+          backdrop-filter: blur(12px);
         }
         .why-cta h2 {
-          font-size: clamp(1.5rem, 3vw, 2rem);
-          letter-spacing: -0.03em;
+          font-family: 'Instrument Serif', serif;
+          font-size: clamp(2rem, 4vw, 2.8rem);
+          font-weight: 400;
+          letter-spacing: -0.02em;
           margin: 0 0 10px;
         }
         .why-cta p {
-          margin: 0 0 22px;
-          color: oklch(0.78 0.015 145);
+          margin: 0 0 24px;
+          color: hsl(240 4% 75%);
           font-size: 16px;
         }
         .btn-fill {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 44px;
-          padding: 0 24px;
+          min-height: 48px;
+          padding: 0 32px;
           border-radius: 999px;
-          font-weight: 600;
-          font-size: 14px;
-          background: oklch(0.72 0.17 145);
-          color: #041004;
+          font-weight: 500;
+          font-size: 15px;
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          color: #ffffff;
           text-decoration: none;
-          transition: background 0.2s ease;
+          transition: transform 0.2s ease, background 0.2s ease;
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
         }
         .btn-fill:hover {
-          background: oklch(0.78 0.12 145);
+          transform: scale(1.03);
+          background: rgba(255, 255, 255, 0.08);
+          color: #ffffff;
         }
         .btn-fill:focus-visible {
-          outline: 2px solid oklch(0.72 0.17 145);
+          outline: 2px solid #38bdf8;
           outline-offset: 2px;
         }
       `}</style>

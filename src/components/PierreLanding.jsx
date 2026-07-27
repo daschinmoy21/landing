@@ -2036,10 +2036,10 @@ export default function PierreLanding() {
 				<nav className="relative z-10 flex flex-row items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
 					<a
 						href="#top"
-						className="text-3xl tracking-tight text-foreground flex items-center transition-opacity hover:opacity-90"
-						style={{ fontFamily: "'Instrument Serif', serif" }}
+						className="text-3xl tracking-tight text-white flex items-center transition-opacity hover:opacity-90"
+						style={{ fontFamily: "'Instrument Serif', serif", color: '#ffffff' }}
 					>
-						Russel<sup className="text-xs ml-0.5">®</sup>
+						Russel<sup className="text-xs ml-0.5" style={{ color: '#ffffff' }}>®</sup>
 					</a>
 
 					<div className="hidden md:flex items-center gap-8 text-sm">

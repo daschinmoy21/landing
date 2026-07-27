@@ -87,36 +87,33 @@
 }
 
 @theme {
-	/* Container */
-
-	/* Colors */
-	/* Primary - Green Matrix Theme */
-	--color-primary-50: oklch(98% 0.015 145);
-	--color-primary-100: oklch(95% 0.03 145);
-	--color-primary-200: oklch(90% 0.06 145);
-	--color-primary-300: oklch(83% 0.10 145);
-	--color-primary-400: oklch(75% 0.13 145);
-	--color-primary-500: oklch(68% 0.15 145);
-	--color-primary-600: oklch(60% 0.14 145);
-	--color-primary-700: oklch(50% 0.12 145);
-	--color-primary-800: oklch(40% 0.10 145);
-	--color-primary-900: oklch(30% 0.08 145);
-	--color-primary-950: oklch(20% 0.05 145);
-	/* Neutral - Green-tinted darks */
-	--color-neutral-50: oklch(98% 0.005 145);
-	--color-neutral-100: oklch(95% 0.005 145);
-	--color-neutral-200: oklch(88% 0.008 145);
-	--color-neutral-300: oklch(78% 0.01 145);
-	--color-neutral-400: oklch(65% 0.012 145);
-	--color-neutral-500: oklch(55% 0.012 145);
-	--color-neutral-600: oklch(45% 0.01 145);
-	--color-neutral-700: oklch(35% 0.01 145);
-	--color-neutral-800: oklch(20% 0.015 145);
-	--color-neutral-900: oklch(10% 0.02 145);
-	--color-neutral-950: #040803;
+	/* Colors — Deep Navy & Sky Accent */
+	--color-primary-50: #f0f9ff;
+	--color-primary-100: #e0f2fe;
+	--color-primary-200: #bae6fd;
+	--color-primary-300: #7dd3fc;
+	--color-primary-400: #38bdf8;
+	--color-primary-500: #0284c7;
+	--color-primary-600: #0369a1;
+	--color-primary-700: #075985;
+	--color-primary-800: #0c4a6e;
+	--color-primary-900: #082f49;
+	--color-primary-950: #031e36;
+	/* Neutral - Deep Navy darks */
+	--color-neutral-50: #f8fafc;
+	--color-neutral-100: #f1f5f9;
+	--color-neutral-200: #e2e8f0;
+	--color-neutral-300: #cbd5e1;
+	--color-neutral-400: #94a3b8;
+	--color-neutral-500: #64748b;
+	--color-neutral-600: #475569;
+	--color-neutral-700: #334155;
+	--color-neutral-800: #1e293b;
+	--color-neutral-900: #0f172a;
+	--color-neutral-950: hsl(201 100% 13%);
 
 	/* Fonts */
-	--font-headings: 'JetBrains Mono', monospace;
+	--font-headings: 'Instrument Serif', serif;
 	--font-body: 'Inter', sans-serif;
 
 	/* Spacing */
@@ -224,15 +221,15 @@ html {
 	@apply scroll-smooth antialiased;
 }
 body {
-	@apply font-body bg-[#040803] text-base leading-7 text-[oklch(0.85_0.01_145)] selection:bg-[oklch(0.68_0.16_145_/_0.2)] selection:text-white has-[.header\_\_menu--open]:overflow-hidden lg:has-[.header\_\_menu--open]:overflow-auto;
+	@apply font-body bg-[hsl(201_100%_13%)] text-base leading-7 text-white selection:bg-[rgba(56,189,248,0.2)] selection:text-white has-[.header\_\_menu--open]:overflow-hidden lg:has-[.header\_\_menu--open]:overflow-auto;
 }
 
 /* Main typography */
 p {
-	@apply mb-6 last:mb-0 text-[oklch(0.72_0.01_145)];
+	@apply mb-6 last:mb-0 text-[hsl(240_4%_66%)];
 }
 .text-lead {
-	@apply text-[21px] leading-9 font-light text-[oklch(0.80_0.01_145)];
+	@apply text-[21px] leading-9 font-light text-[hsl(240_4%_80%)];
 }
 h1,
 .h1,
