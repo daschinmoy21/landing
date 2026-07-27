@@ -18,31 +18,35 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --font-display: 'Instrument Serif', serif;
-  --font-body: 'Inter', sans-serif;
-
-  --background: 201 100% 13%;
+  --background: 0 0% 0%;
   --foreground: 0 0% 100%;
-  --muted-foreground: 240 4% 66%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
   --primary: 0 0% 100%;
-  --primary-foreground: 0 0% 4%;
-  --secondary: 0 0% 10%;
-  --muted: 0 0% 10%;
-  --accent: 0 0% 10%;
-  --border: 0 0% 18%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 85%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 170 15% 45%;
+  --accent-foreground: 0 0% 100%;
+  --border: 0 0% 20%;
   --input: 0 0% 18%;
+  --ring: 0 0% 40%;
+  --hero-subtitle: 210 17% 95%;
 
-  --bg-color: hsl(201 100% 13%);
-  --bg-alt: hsl(201 100% 11%);
-  --text-color: hsl(0 0% 100%);
-  --text-muted: hsl(240 4% 66%);
-  --text-faint: hsl(240 4% 45%);
-  --border-color: hsl(0 0% 18%);
-  --border-subtle: hsl(0 0% 14%);
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-hover: rgba(255, 255, 255, 0.06);
+  --bg-color: #000000;
+  --bg-alt: #050505;
+  --text-color: #ffffff;
+  --text-muted: hsl(0 0% 65%);
+  --text-faint: hsl(0 0% 45%);
+  --border-color: hsl(0 0% 20%);
+  --border-subtle: hsl(0 0% 15%);
+  --card-bg: hsl(0 0% 5%);
+  --card-hover: hsl(0 0% 8%);
   --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: var(--font-body);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Instrument Serif', serif;
 }
 
 .liquid-glass {
@@ -221,7 +225,7 @@ html {
 	@apply scroll-smooth antialiased;
 }
 body {
-	@apply font-body bg-[hsl(201_100%_13%)] text-base leading-7 text-white selection:bg-[rgba(56,189,248,0.2)] selection:text-white has-[.header\_\_menu--open]:overflow-hidden lg:has-[.header\_\_menu--open]:overflow-auto;
+	@apply font-sans bg-black text-base leading-7 text-white selection:bg-white/20 selection:text-white has-[.header\_\_menu--open]:overflow-hidden lg:has-[.header\_\_menu--open]:overflow-auto;
 }
 
 /* Main typography */
