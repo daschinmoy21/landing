@@ -1,7 +1,5 @@
 import React from 'react'
-import AsciiBackground from './AsciiBackground.jsx'
 import AnimatedCardStack from './ui/animate-card-animation'
-import CurvedInput from './ui/CurvedInput.jsx'
 import { CircuitBoard } from './ui/circuit-board'
 import ZeroDowntimeSwapDiagram from './ui/ZeroDowntimeSwapDiagram.jsx'
 import { Box, Cpu, Server, Terminal, PackageCheck } from 'lucide-react'
@@ -31,40 +29,32 @@ const logoWasm = LOGO('wasm')
 const logoTerraform = LOGO('terraform')
 
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
 :root {
-  --bg-color: #040803;
-  --bg-alt: #050a04;
-  --text-color: oklch(0.93 0.008 145);
-  --text-muted: oklch(0.82 0.015 145);
-  --text-faint: oklch(0.74 0.015 145);
-  --border-color: oklch(0.18 0.028 145);
-  --border-subtle: oklch(0.13 0.020 145);
-  --card-bg: oklch(0.12 0.028 145 / 0.72);
-  --card-hover: oklch(0.15 0.032 145);
-  --accent: oklch(0.72 0.17 145);
-  --accent-soft: oklch(0.78 0.12 145);
-  --accent-muted: oklch(0.42 0.07 145);
-  --accent-glow: oklch(0.72 0.17 145 / 0.12);
-  --accent-alt: oklch(0.68 0.16 310);
-  --accent-alt-soft: oklch(0.74 0.12 310);
-  --accent-alt-muted: oklch(0.42 0.08 310);
-  --accent-alt-glow: oklch(0.68 0.16 310 / 0.12);
-  --success: oklch(0.72 0.17 145);
-  --error: oklch(0.62 0.16 25);
-  --ink-on-accent: #041004;
-  --focus-ring: var(--accent);
-  --selection-bg: oklch(0.72 0.17 145 / 0.22);
-  --shadow-soft: 0 18px 48px -20px rgba(0, 0, 0, 0.65);
-  --shadow-lift: 0 24px 56px -24px rgba(0, 0, 0, 0.72), 0 0 0 1px oklch(0.72 0.17 145 / 0.06);
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --background: 201 100% 13%;
+  --foreground: 0 0% 100%;
+  --muted-foreground: 240 4% 66%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 10%;
+  --muted: 0 0% 10%;
+  --accent: 0 0% 10%;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
+
+  --bg-color: hsl(201 100% 13%);
+  --bg-alt: hsl(201 100% 11%);
+  --text-color: hsl(0 0% 100%);
+  --text-muted: hsl(240 4% 66%);
+  --text-faint: hsl(240 4% 45%);
+  --border-color: hsl(0 0% 18%);
+  --border-subtle: hsl(0 0% 14%);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-hover: rgba(255, 255, 255, 0.06);
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Clash-Display', var(--font-sans);
+  --font-heading: 'Instrument Serif', serif;
 }
 
 .pierre-page h1,
@@ -72,8 +62,8 @@ const CSS = `
 .pierre-page h3,
 .pierre-page h4 {
   font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
@@ -83,7 +73,7 @@ const CSS = `
   color: var(--text-color);
   font-family: var(--font-sans);
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.7;
   min-height: 100vh;
   margin: 0;
@@ -1984,7 +1974,6 @@ const BOKEH_INNER = [
 
 export default function PierreLanding() {
 	const [activeRuntime, setActiveRuntime] = React.useState('container')
-	const [heroWaitlist, setHeroWaitlist] = React.useState({ state: 'idle', message: '' })
 	const [ctaWaitlist, setCtaWaitlist] = React.useState({ state: 'idle', message: '', email: '' })
 	const [ctaInView, setCtaInView] = React.useState(false)
 	const ctaSectionRef = React.useRef(null)
@@ -2032,72 +2021,78 @@ export default function PierreLanding() {
 		<div className="pierre-page">
 			<style>{CSS}</style>
 
-			{/* Hero Section */}
-			<div className="hero-section-grid" id="top">
-				<AsciiBackground />
-				<div className="hero-inner">
-					<div className="hero-text-card">
-						<h1 className="hero-title">
-							Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in
-							control.
-						</h1>
-						<p className="hero-subhead">
-							One workflow for containers and microVMs. Reproducible builds. Containers for speed.
-							MicroVMs for security. Managed or self-hosted. Zero drift.
-						</p>
-						<div className="hero-waitlist">
-							<CurvedInput
-								placeholder="you@domain.com"
-								buttonText={heroWaitlist.state === 'success' ? 'Joined' : 'Join waitlist'}
-								theme="dark"
-								bend={-28}
-								height={60}
-								width="100%"
-								onSubmit={(email) => submitWaitlist(email, setHeroWaitlist)}
-							/>
-							<p
-								className="hero-waitlist-note"
-								data-state={heroWaitlist.state}
-								role={heroWaitlist.state === 'error' ? 'alert' : 'status'}
-								aria-live="polite"
-							>
-								{heroWaitlist.message || 'Early access for engineers and teams.'}
-							</p>
-						</div>
-						<div className="hero-secondary-actions">
-							<a className="hero-why-btn" href="/why">
-								Why Russel?
-								<span className="arr" aria-hidden="true">
-									→
-								</span>
-							</a>
-						</div>
-						<button
-							className="scroll-down-btn"
-							onClick={() =>
-								document.getElementById('features')?.scrollIntoView({
-									behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-										? 'auto'
-										: 'smooth'
-								})
-							}
-							aria-label="Scroll to features"
-						>
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								aria-hidden="true"
-							>
-								<path d="M12 5v14M5 12l7 7 7-7" />
-							</svg>
-						</button>
+			{/* Single-Page Hero Section with Fullscreen Video Background */}
+			<div className="relative min-h-screen w-full overflow-hidden bg-[hsl(201_100%_13%)] flex flex-col justify-between" id="top">
+				{/* Video Background */}
+				<video
+					autoPlay
+					loop
+					muted
+					playsInline
+					className="absolute inset-0 w-full h-full object-cover z-0"
+					src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
+				/>
+
+				{/* Glassmorphic Navigation Bar */}
+				<nav className="relative z-10 flex flex-row items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
+					<a
+						href="#top"
+						className="text-3xl tracking-tight text-foreground flex items-center transition-opacity hover:opacity-90"
+						style={{ fontFamily: "'Instrument Serif', serif" }}
+					>
+						Russel<sup className="text-xs ml-0.5">®</sup>
+					</a>
+
+					<div className="hidden md:flex items-center gap-8 text-sm">
+						<a href="#top" className="text-foreground font-medium transition-colors">
+							Home
+						</a>
+						<a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+							Studio
+						</a>
+						<a href="#benchmarks" className="text-muted-foreground hover:text-foreground transition-colors">
+							About
+						</a>
+						<a href="/why" className="text-muted-foreground hover:text-foreground transition-colors">
+							Journal
+						</a>
+						<a href="#early-access" className="text-muted-foreground hover:text-foreground transition-colors">
+							Reach Us
+						</a>
 					</div>
+
+					<button
+						onClick={() =>
+							document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })
+						}
+						className="liquid-glass rounded-full px-6 py-2.5 text-sm text-foreground hover:scale-[1.03] transition-transform cursor-pointer"
+					>
+						Begin Journey
+					</button>
+				</nav>
+
+				{/* Hero Content */}
+				<div className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-32 pb-40 py-[90px] my-auto max-w-7xl mx-auto">
+					<h1
+						className="text-5xl sm:text-7xl md:text-8xl leading-[0.95] tracking-[-2.46px] max-w-7xl font-normal text-foreground animate-fade-rise"
+						style={{ fontFamily: "'Instrument Serif', serif" }}
+					>
+						Where <em className="not-italic text-muted-foreground">dreams</em> rise{' '}
+						<em className="not-italic text-muted-foreground">through the silence.</em>
+					</h1>
+
+					<p className="text-muted-foreground text-base sm:text-lg max-w-2xl mt-8 leading-relaxed animate-fade-rise-delay">
+						We&apos;re designing tools for deep thinkers, bold creators, and quiet rebels. Amid the chaos, we build digital spaces for sharp focus and inspired work.
+					</p>
+
+					<button
+						onClick={() =>
+							document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })
+						}
+						className="liquid-glass rounded-full px-14 py-5 text-base text-foreground mt-12 hover:scale-[1.03] cursor-pointer animate-fade-rise-delay-2"
+					>
+						Begin Journey
+					</button>
 				</div>
 			</div>
 
