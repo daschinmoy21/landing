@@ -35,17 +35,17 @@ const isHome = path === '/' || path === ''
 
 <style>
   .footer-section {
-    border-top: 1px solid var(--border-color, oklch(0.11 0.022 145));
-    background-color: #040803;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: hsl(201 100% 9%);
     padding: 32px 0;
     width: 100%;
   }
 
-.footer-inner {
+  .footer-inner {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 48px;
-}
+  }
 
   @media (max-width: 768px) {
     .footer-inner {
@@ -59,7 +59,7 @@ const isHome = path === '/' || path === ''
     align-items: center;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
     font-size: 11px;
-    color: var(--text-faint, oklch(0.36 0.015 145));
+    color: hsl(240 4% 66%);
   }
 
   @media (max-width: 992px) {
@@ -83,16 +83,16 @@ const isHome = path === '/' || path === ''
   }
 
   .footer-link {
-    color: var(--text-muted, oklch(0.58 0.020 145));
+    color: hsl(240 4% 66%);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
   .footer-link:hover {
-    color: var(--accent, oklch(0.65 0.15 145));
+    color: #ffffff;
   }
 
   .footer-separator {
-    color: var(--border-color, oklch(0.11 0.022 145));
+    color: rgba(255, 255, 255, 0.15);
   }
 </style>

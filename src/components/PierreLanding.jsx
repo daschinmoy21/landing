@@ -658,9 +658,7 @@ h1.hero-title {
 .features-section {
   padding: 104px 48px 96px;
   border-bottom: 1px solid var(--border-color);
-  background:
-    linear-gradient(180deg, oklch(0.08 0.02 145 / 0.35) 0%, transparent 28%),
-    transparent;
+  background: hsl(201 100% 12%);
 }
 
 @media (max-width: 768px) {
@@ -680,19 +678,20 @@ h1.hero-title {
 
 .features-desc {
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-muted);
   line-height: 1.65;
   max-width: 52ch;
 }
 
 .features-title {
-  font-size: clamp(28px, 3.6vw, 40px);
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4.2vw, 48px);
+  font-weight: 400;
   margin: 0 0 16px;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
-  max-width: 18ch;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  max-width: 22ch;
   color: var(--text-color);
   text-wrap: balance;
 }
@@ -700,7 +699,7 @@ h1.hero-title {
 p.features-desc {
   color: var(--text-muted);
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
   max-width: 48ch;
   line-height: 1.65;
@@ -710,11 +709,11 @@ p.features-desc {
 .feature-card-cmd {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: var(--accent-soft);
-  background: oklch(0.72 0.17 145 / 0.06);
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
   padding: 5px 10px;
   border-radius: 6px;
-  border: 1px solid oklch(0.72 0.17 145 / 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   margin-bottom: 16px;
   width: fit-content;
   letter-spacing: -0.01em;
@@ -722,25 +721,14 @@ p.features-desc {
 
 .feature-card-desc {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
   max-width: 50ch;
 }
 
-/* Checkmarks row — removed */
-
-/*.compare-table tr:last-child td {
-  border-bottom: none;
-}
-
-.table-check {
-  font-weight: bold;
-  color: var(--accent);
-}
-
-/*/* Benchmarks Section */
+/* Benchmarks Section */
 .bench-section {
   max-width: 1280px;
   margin: 0 auto;
@@ -751,6 +739,7 @@ p.features-desc {
   padding: 104px 48px;
   border-bottom: 1px solid var(--border-color);
   text-align: center;
+  background: hsl(201 100% 11%);
 }
 
 @media (max-width: 992px) {
@@ -770,19 +759,20 @@ p.features-desc {
 }
 
 .bench-text-col h2 {
-  font-size: clamp(22px, 3.2vw, 40px);
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
   margin: 0;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  max-width: 22ch;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  max-width: 24ch;
   text-wrap: balance;
   text-align: center;
 }
 
 .bench-text-col p {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
@@ -811,18 +801,19 @@ p.features-desc {
 /* Empirical proof benchmark table */
 .bench-empirical-card {
   width: min(960px, 100%);
-  border: 1px solid var(--border-color);
-  background: #000000;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 28, 50, 0.65);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   margin: 0 auto;
 }
 
 .bench-empirical-titlebar {
-  background: #000000;
-  border-bottom: 1px solid var(--border-color);
-  padding: 8px 14px;
+  background: rgba(0, 20, 36, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -844,43 +835,42 @@ p.features-desc {
 
 .bench-empirical-title {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10px;
   color: var(--text-faint);
   letter-spacing: 0.05em;
   margin-left: 4px;
 }
 
 .bench-empirical-body {
-  padding: 20px 24px 24px;
+  padding: 24px 28px;
   text-align: left;
 }
 
 .bench-empirical-kicker {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--accent);
+  color: #38bdf8;
   text-transform: uppercase;
   margin: 0 0 6px;
 }
 
 .bench-empirical-card h4 {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 400;
   margin: 0 0 4px;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   color: var(--text-color);
-  text-transform: none;
 }
 
 .bench-empirical-sub {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-faint);
-  margin: 0 0 18px;
-  line-height: 1.5;
+  margin: 0 0 20px;
+  line-height: 1.55;
 }
 
 .bench-empirical-table-wrap {
@@ -898,7 +888,7 @@ p.features-desc {
 
 .bench-empirical-table th,
 .bench-empirical-table td {
-  padding: 10px 14px;
+  padding: 12px 16px;
   text-align: left;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -909,7 +899,7 @@ p.features-desc {
   letter-spacing: 0.04em;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border-color);
-  background: oklch(0.06 0.02 145 / 0.5);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .bench-empirical-table tbody td:first-child {
@@ -921,7 +911,6 @@ p.features-desc {
   color: var(--text-color);
 }
 
-/* Neutral columns — no brand-colored win bias; data speaks for itself */
 .bench-empirical-table thead th.col-metric {
   color: var(--text-muted);
 }
@@ -975,8 +964,8 @@ p.features-desc {
   width: min(640px, calc(100% - 16px));
   height: 360px;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 24, 44, 0.95);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65);
   overflow: hidden;
   will-change: transform;
@@ -1002,12 +991,11 @@ p.features-desc {
 }
 
 .bench-card-heading {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   color: var(--text-color);
-  text-transform: uppercase;
   margin: 0 0 6px 0;
 }
 
@@ -1041,7 +1029,7 @@ p.features-desc {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: var(--ink-on-accent, #041004);
+  color: #ffffff;
   white-space: nowrap;
 }
 
@@ -1049,23 +1037,21 @@ p.features-desc {
   color: var(--text-color);
 }
 
-
-
 @media (prefers-reduced-motion: reduce) {
   .bar-fill {
     transition: none;
   }
 }
 
-/* Centered CTA — full-bleed cinematic field, green scheme */
+/* Centered CTA — full-bleed deep navy glassmorphism */
 .centered-cta-section {
   position: relative;
   padding: 140px 24px 132px;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   background:
-    radial-gradient(circle at 50% 45%, oklch(0.22 0.07 145 / 0.35) 0%, transparent 55%),
-    radial-gradient(circle at 50% 50%, oklch(0.12 0.04 145 / 0.45) 0%, #020402 72%);
+    radial-gradient(circle at 50% 45%, rgba(0, 110, 200, 0.18) 0%, transparent 60%),
+    hsl(201 100% 9%);
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -1092,15 +1078,16 @@ p.features-desc {
   justify-content: center;
   width: 68px;
   height: 68px;
-  background: linear-gradient(145deg, oklch(0.95 0.01 145) 0%, oklch(0.82 0.03 145) 100%);
-  border: 1px solid oklch(0.72 0.17 145 / 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-  color: #0a1405;
+  color: #ffffff;
   margin-bottom: 24px;
+  backdrop-filter: blur(12px);
   box-shadow:
     0 12px 36px rgba(0, 0, 0, 0.45),
-    0 0 28px oklch(0.72 0.17 145 / 0.18),
-    inset 0 2px 2px rgba(255, 255, 255, 0.75);
+    0 0 28px rgba(56, 189, 248, 0.18),
+    inset 0 2px 2px rgba(255, 255, 255, 0.4);
 }
 
 .cta-logo svg {
@@ -1109,24 +1096,22 @@ p.features-desc {
 }
 
 .cta-title {
-  font-family: var(--font-mono);
-  font-size: clamp(32px, 5.5vw, 56px);
-  font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5.8vw, 64px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: #fff;
   margin: 0 0 16px;
-  text-shadow: 0 0 32px oklch(0.72 0.17 145 / 0.22);
 }
 
 .cta-subtitle {
-  font-family: var(--font-mono);
-  font-size: 14px;
+  font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.65;
   color: var(--text-muted);
   max-width: 54ch;
   margin: 0 0 32px;
-  letter-spacing: -0.01em;
 }
 
 .cta-tags {
@@ -1972,10 +1957,24 @@ const BOKEH_INNER = [
 	}
 ]
 
+const VIDEO_SOURCES = [
+	{
+		id: 'cloud-night',
+		name: 'Starlit Sky',
+		url: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4'
+	},
+	{
+		id: 'navy-ether',
+		name: 'Cosmic Ether',
+		url: '/videos/hero-alternate.mp4'
+	}
+]
+
 export default function PierreLanding() {
 	const [activeRuntime, setActiveRuntime] = React.useState('container')
 	const [ctaWaitlist, setCtaWaitlist] = React.useState({ state: 'idle', message: '', email: '' })
 	const [ctaInView, setCtaInView] = React.useState(false)
+	const [videoIndex, setVideoIndex] = React.useState(0)
 	const ctaSectionRef = React.useRef(null)
 
 	React.useEffect(() => {
@@ -2008,7 +2007,6 @@ export default function PierreLanding() {
 			})
 			return
 		}
-		// Shell only until a real waitlist endpoint is wired.
 		console.log('Waitlist signup:', value)
 		setState({
 			state: 'success',
@@ -2025,12 +2023,13 @@ export default function PierreLanding() {
 			<div className="relative min-h-screen w-full overflow-hidden bg-[hsl(201_100%_13%)] flex flex-col justify-between" id="top">
 				{/* Video Background */}
 				<video
+					key={VIDEO_SOURCES[videoIndex].id}
 					autoPlay
 					loop
 					muted
 					playsInline
 					className="absolute inset-0 w-full h-full object-cover z-0"
-					src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
+					src={VIDEO_SOURCES[videoIndex].url}
 				/>
 
 				{/* Glassmorphic Navigation Bar */}
@@ -2061,14 +2060,24 @@ export default function PierreLanding() {
 						</a>
 					</div>
 
-					<button
-						onClick={() =>
-							document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })
-						}
-						className="liquid-glass rounded-full px-6 py-2.5 text-sm text-foreground hover:scale-[1.03] transition-transform cursor-pointer"
-					>
-						Begin Journey
-					</button>
+					<div className="flex items-center gap-3">
+						<button
+							onClick={() => setVideoIndex((prev) => (prev + 1) % VIDEO_SOURCES.length)}
+							className="liquid-glass rounded-full px-3.5 py-2 text-xs text-foreground/90 hover:text-foreground hover:scale-[1.03] transition-transform cursor-pointer flex items-center gap-1.5"
+							title="Switch hero background video"
+						>
+							<span className="text-sky-400">✦</span> Atmosphere: {VIDEO_SOURCES[videoIndex].name}
+						</button>
+
+						<button
+							onClick={() =>
+								document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })
+							}
+							className="liquid-glass rounded-full px-6 py-2.5 text-sm text-foreground hover:scale-[1.03] transition-transform cursor-pointer"
+						>
+							Begin Journey
+						</button>
+					</div>
 				</nav>
 
 				{/* Hero Content */}
