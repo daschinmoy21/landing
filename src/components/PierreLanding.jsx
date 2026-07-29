@@ -538,6 +538,33 @@ const CSS = `
 }
 
 /* Hero elements */
+.sticky-mode-toggle {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.85), 0 0 0 1px oklch(0.24 0.04 145 / 0.8);
+  border-radius: 999px;
+  backdrop-filter: blur(16px);
+  background: oklch(0.06 0.02 145 / 0.92);
+}
+
+.badge-chip {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  background: var(--accent);
+  color: var(--ink-on-accent);
+  margin-right: 4px;
+}
+
+.badge-chip.microvm {
+  background: oklch(0.72 0.17 145);
+}
+
 .hero-eyebrow {
   font-family: var(--font-mono);
   font-size: 13px;
@@ -2616,6 +2643,18 @@ export default function PierreLanding() {
 					</div>
 				</div>
 			</section>
+
+			{/* Sticky Floating Mode Toggle (InsForge design) */}
+			<div className="sticky-mode-toggle" aria-label="Runtime view mode">
+				<button
+					className="runtime-toggle-pill"
+					onClick={() => setActiveRuntime((prev) => (prev === 'container' ? 'microvm' : 'container'))}
+					title="Toggle Mode"
+				>
+					<span className={`toggle-tab ${activeRuntime === 'container' ? 'active' : ''}`}>HUMAN</span>
+					<span className={`toggle-tab ${activeRuntime === 'microvm' ? 'active' : ''}`}>AGENT</span>
+				</button>
+			</div>
 		</div>
 	)
 }
