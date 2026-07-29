@@ -445,6 +445,10 @@ const CSS = `
   transition: all 0.2s var(--ease-out);
 }
 
+.hero-bottom-logos img.logo-invert {
+  filter: brightness(0) invert(1);
+}
+
 .hero-bottom-logos img:hover {
   opacity: 1;
   transform: scale(1.1);
@@ -2255,11 +2259,10 @@ export default function PierreLanding() {
 						</div>
 						<div className="hero-bottom-logos">
 							<img src={logoDocker} alt="Docker" title="Docker" />
-							<img src={logoRust} alt="Rust" title="Rust" />
+							<img src={logoRust} className="logo-invert" alt="Rust" title="Rust" />
 							<img src={logoGo} alt="Go" title="Go" />
 							<img src={logoLinux} alt="Linux" title="Linux" />
 							<img src={logoNixos} alt="NixOS" title="NixOS" />
-							<img src={logoK8s} alt="Kubernetes" title="Kubernetes" />
 							<img src={logoWasm} alt="Wasm" title="Wasm" />
 							<img src={logoRedis} alt="Redis" title="Redis" />
 						</div>
