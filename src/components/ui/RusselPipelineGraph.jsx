@@ -33,8 +33,8 @@ export default function RusselPipelineGraph() {
 
       {/* Main SVG Graph Container */}
       <div className="relative z-10 w-full overflow-x-auto">
-        <div className="min-w-[760px] max-w-[860px] mx-auto relative h-[620px]">
-          <svg className="w-full h-full" viewBox="0 0 800 620">
+        <div className="min-w-[780px] max-w-[880px] mx-auto relative h-[650px]">
+          <svg className="w-full h-full" viewBox="0 0 800 650">
             <defs>
               <filter id="glow-emerald" x="-30%" y="-30%" width="160%" height="160%">
                 <feGaussianBlur stdDeviation="4" result="blur" />
@@ -43,34 +43,53 @@ export default function RusselPipelineGraph() {
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
+              <filter id="glow-amber" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              {/* Arrowhead Markers */}
+              <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+              </marker>
+              <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+              </marker>
+              <marker id="arrow-grey" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#71717a" />
+              </marker>
             </defs>
 
             {/* Center Timeline Vertical Line */}
-            <line x1="400" y1="65" x2="400" y2="580" stroke="#27272a" strokeWidth="2" />
+            <line x1="400" y1="65" x2="400" y2="600" stroke="#27272a" strokeWidth="2" />
 
             {/* Timeline Dots along Center Line */}
-            {[140, 180, 260, 300, 340, 380, 420, 460, 500].map((y) => (
-              <circle key={y} cx="400" cy={y} r="3" fill="#3f3f46" />
+            {[140, 180, 260, 300, 340, 380, 420, 460, 500, 540, 580].map((y) => (
+              <circle key={y} cx="400" cy={y} r="2.5" fill="#3f3f46" />
             ))}
 
+            {/* Timestamps (placed to the left of the main line to prevent text overlaps) */}
             {/* 09:45 Timestamp Dot */}
             <circle cx="400" cy="100" r="5" fill="#10b981" />
             <circle cx="400" cy="100" r="9" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
-            <text x="400" y="88" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+            <text x="382" y="104" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="end">
               09:45
             </text>
 
             {/* 11:45 Timestamp Dot */}
             <circle cx="400" cy="220" r="5" fill="#10b981" />
             <circle cx="400" cy="220" r="9" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
-            <text x="400" y="210" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+            <text x="382" y="224" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="end">
               11:45
             </text>
 
             {/* 14:45 Timestamp Dot */}
             <circle cx="400" cy="540" r="5" fill="#10b981" />
             <circle cx="400" cy="540" r="9" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
-            <text x="400" y="530" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+            <text x="382" y="544" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="end">
               14:45
             </text>
 
@@ -78,28 +97,30 @@ export default function RusselPipelineGraph() {
             <g>
               {/* Branch curve out from 09:45 */}
               <path
-                d="M 400 100 C 530 100, 570 130, 570 170"
+                d="M 400 100 C 510 100, 570 120, 570 160"
                 fill="none"
                 stroke="#52525b"
                 strokeWidth="2"
                 strokeDasharray="4 4"
+                markerEnd="url(#arrow-grey)"
               />
-              {/* Vertical line down right side */}
-              <line x1="570" y1="170" x2="570" y2="480" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+
+              {/* Downward Flow Arrow along Right Line */}
+              <line x1="570" y1="170" x2="570" y2="460" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
               
-              {/* Rejoin curve back to 14:45 */}
+              {/* Rejoin curve with Arrowhead merging into 14:45 */}
               <path
-                d="M 570 480 C 570 540, 480 540, 400 540"
+                d="M 570 460 C 570 540, 470 540, 412 540"
                 fill="none"
                 stroke="#10b981"
                 strokeWidth="2.5"
                 filter="url(#glow-emerald)"
+                markerEnd="url(#arrow-green)"
               />
 
               {/* Right Node 1: Deploy v1.1.0 Release Pill */}
               <g transform="translate(570, 160)">
                 <rect x="-95" y="-18" width="190" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
-                {/* Rocket Icon Chip */}
                 <rect x="-87" y="-12" width="24" height="24" rx="6" fill="#10b981" />
                 <text x="-75" y="4" fill="#09090b" fontSize="11" fontWeight="bold" textAnchor="middle">🚀</text>
                 <text x="-52" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Deploy</text>
@@ -137,19 +158,31 @@ export default function RusselPipelineGraph() {
             <g>
               {/* Branch curve out from 11:45 */}
               <path
-                d="M 400 220 C 270 220, 230 250, 230 290"
+                d="M 400 220 C 290 220, 230 240, 230 280"
                 fill="none"
                 stroke="#52525b"
                 strokeWidth="2"
                 strokeDasharray="4 4"
+                markerEnd="url(#arrow-grey)"
               />
-              {/* Vertical line down left side */}
-              <line x1="230" y1="290" x2="230" y2="540" stroke="#ef4444" strokeWidth="2" />
+
+              {/* Downward Line */}
+              <line x1="230" y1="285" x2="230" y2="520" stroke="#ef4444" strokeWidth="2" />
+
+              {/* Rollback Redirect Curve back towards safety */}
+              <path
+                d="M 230 538 C 230 585, 330 585, 388 548"
+                fill="none"
+                stroke="#f59e0b"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+                filter="url(#glow-amber)"
+                markerEnd="url(#arrow-amber)"
+              />
 
               {/* Left Node 1: Deploy Bad Build Pill */}
               <g transform="translate(230, 285)">
                 <rect x="-105" y="-18" width="210" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
-                {/* Warning Icon Chip Left */}
                 <rect x="-97" y="-12" width="24" height="24" rx="6" fill="#ef4444" />
                 <text x="-85" y="4" fill="white" fontSize="11" fontWeight="bold" textAnchor="middle">⚠️</text>
                 <text x="-60" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Deploy</text>
@@ -175,8 +208,7 @@ export default function RusselPipelineGraph() {
 
               {/* Left Node 4: Instant Rollback Circle */}
               <g transform="translate(230, 520)">
-                <circle cx="0" cy="0" r="18" fill="#451a03" stroke="#f59e0b" strokeWidth="2" />
-                {/* Rollback ↺ icon */}
+                <circle cx="0" cy="0" r="18" fill="#451a03" stroke="#f59e0b" strokeWidth="2" filter="url(#glow-amber)" />
                 <path d="M -4 -4 A 6 6 0 1 1 -5 3 M -5 -7 L -5 -3 L -1 -3" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <text x="32" y="5" fill="#fef08a" fontSize="13" fontFamily="sans-serif" fontWeight="bold" textAnchor="start">
                   Instant Rollback to v1.1
