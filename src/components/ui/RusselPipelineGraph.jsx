@@ -45,7 +45,7 @@ export default function RusselPipelineGraph() {
                 </feMerge>
               </filter>
 
-              {/* Precise Markers for Arrowheads (Clean Gap Alignment) */}
+              {/* Precise Arrowhead Markers */}
               <marker id="arrow-grey-precise" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                 <path d="M 1 1 L 9 5 L 1 9 z" fill="#71717a" />
               </marker>
@@ -60,17 +60,17 @@ export default function RusselPipelineGraph() {
             {/* CONNECTING LINES WITH CLEAN GAPS */}
 
             {/* Line 1: Top Production Card -> Deploy Candidate */}
-            <line x1="400" y1="67" x2="400" y2="114" stroke="#52525b" strokeWidth="1.5" markerEnd="url(#arrow-grey-precise)" />
+            <line x1="400" y1="70" x2="400" y2="113" stroke="#52525b" strokeWidth="1.5" markerEnd="url(#arrow-grey-precise)" />
 
             {/* Line 2: Deploy Candidate -> Health Check */}
-            <line x1="400" y1="175" x2="400" y2="222" stroke="#52525b" strokeWidth="1.5" markerEnd="url(#arrow-grey-precise)" />
+            <line x1="400" y1="175" x2="400" y2="221" stroke="#52525b" strokeWidth="1.5" markerEnd="url(#arrow-grey-precise)" />
 
             {/* Line 3: Health Check -> Junction Split */}
             <line x1="400" y1="283" x2="400" y2="310" stroke="#52525b" strokeWidth="1.5" />
 
             {/* Left Branch (FAIL -> Red Curve) */}
             <path
-              d="M 400 310 C 400 340, 240 340, 240 379"
+              d="M 400 310 C 400 340, 240 340, 240 376"
               fill="none"
               stroke="#ef4444"
               strokeWidth="2"
@@ -79,7 +79,7 @@ export default function RusselPipelineGraph() {
 
             {/* Right Branch (PASS -> Green Curve) */}
             <path
-              d="M 400 310 C 400 340, 560 340, 560 379"
+              d="M 400 310 C 400 340, 560 340, 560 376"
               fill="none"
               stroke="#10b981"
               strokeWidth="2"
@@ -87,39 +87,41 @@ export default function RusselPipelineGraph() {
             />
 
             {/* Line 4: Reject Release -> Bottom Rollback Outcome */}
-            <line x1="240" y1="440" x2="240" y2="494" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-red-precise)" />
+            <line x1="240" y1="438" x2="240" y2="494" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-red-precise)" />
 
             {/* Line 5: Shift Traffic -> Bottom Production Outcome */}
-            <line x1="560" y1="440" x2="560" y2="494" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-green-precise)" />
+            <line x1="560" y1="438" x2="560" y2="494" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-green-precise)" />
 
 
-            {/* NODES / CARDS */}
+            {/* NODES / CARDS (UNIFORM WIDTH & HEIGHT) */}
 
             {/* NODE 1: Top Card - Production (v1.0.0) */}
             <g transform="translate(400, 42)">
-              <rect x="-135" y="-25" width="270" height="50" rx="10" fill="#090d0a" stroke="#1f2923" strokeWidth="1.5" />
-              <rect x="-125" y="-16" width="54" height="32" rx="6" fill="#10b981" />
-              <text x="-98" y="4" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">LIVE</text>
-              <text x="-54" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Production</text>
-              <text x="-54" y="14" fill="#818cf8" fontSize="11" fontFamily="monospace" className="fill-zinc-400">v1.0.0 · serving traffic</text>
+              <rect x="-155" y="-28" width="310" height="56" rx="10" fill="#090d0a" stroke="#1f2923" strokeWidth="1.5" />
+              <rect x="-142" y="-17" width="56" height="34" rx="6" fill="#10b981" />
+              <text x="-114" y="4" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">LIVE</text>
+              <text x="-72" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Production</text>
+              <text x="-72" y="14" fill="#71717a" fontSize="11" fontFamily="monospace">v1.0.0 · serving traffic</text>
             </g>
 
 
             {/* NODE 2: Deploy Candidate Box */}
             <g transform="translate(400, 147)">
-              <rect x="-135" y="-28" width="270" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
-              <text x="0" y="-4" fill="#10b981" fontSize="10" fontFamily="monospace" fontWeight="bold" letterSpacing="0.5" textAnchor="middle">DEPLOY CANDIDATE</text>
-              <text x="0" y="15" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold" textAnchor="middle">v1.1.0-microvm</text>
+              <rect x="-155" y="-28" width="310" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
+              <rect x="-142" y="-17" width="76" height="34" rx="6" fill="#064e3b" stroke="#10b981" strokeWidth="1" />
+              <text x="-104" y="4" fill="#10b981" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">CANDIDATE</text>
+              <text x="-52" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">v1.1.0-microvm</text>
+              <text x="-52" y="14" fill="#10b981" fontSize="11" fontFamily="monospace">microVM candidate</text>
             </g>
 
 
             {/* NODE 3: Health Check Gate */}
             <g transform="translate(400, 255)">
-              <rect x="-145" y="-27" width="290" height="54" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
-              <circle cx="-118" cy="0" r="16" fill="#022c22" stroke="#10b981" strokeWidth="1.5" />
-              <path d="M -123 0 L -120 3 L -113 -4" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="-88" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Health check</text>
-              <text x="-88" y="14" fill="#8b949e" fontSize="11" fontFamily="monospace">pass before traffic moves</text>
+              <rect x="-155" y="-28" width="310" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
+              <circle cx="-122" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="1.5" />
+              <path d="M -127 0 L -124 3 L -117 -4" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="-90" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Health check</text>
+              <text x="-90" y="14" fill="#8b949e" fontSize="11" fontFamily="monospace">pass before traffic moves</text>
             </g>
 
 
@@ -136,41 +138,41 @@ export default function RusselPipelineGraph() {
 
             {/* NODE 4 (LEFT): Reject Release */}
             <g transform="translate(240, 410)">
-              <rect x="-130" y="-28" width="260" height="56" rx="10" fill="#110707" stroke="#7f1d1d" strokeWidth="1.5" />
-              <circle cx="-103" cy="0" r="16" fill="#450a0a" stroke="#ef4444" strokeWidth="1.5" />
-              <path d="M -107 -4 L -99 4 M -99 -4 L -107 4" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-              <text x="-73" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Reject release</text>
-              <text x="-73" y="14" fill="#f87171" fontSize="11" fontFamily="monospace">5xx errors detected</text>
+              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#110707" stroke="#7f1d1d" strokeWidth="1.5" />
+              <circle cx="-105" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="1.5" />
+              <path d="M -109 -4 L -101 4 M -101 -4 L -109 4" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
+              <text x="-74" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Reject release</text>
+              <text x="-74" y="14" fill="#f87171" fontSize="11" fontFamily="monospace">5xx errors detected</text>
             </g>
 
 
             {/* NODE 4 (RIGHT): Shift Traffic */}
             <g transform="translate(560, 410)">
-              <rect x="-130" y="-28" width="260" height="56" rx="10" fill="#05140d" stroke="#065f46" strokeWidth="1.5" />
-              <circle cx="-103" cy="0" r="16" fill="#022c22" stroke="#10b981" strokeWidth="1.5" filter="url(#glow-emerald-subtle)" />
-              <path d="M -108 0 L -105 3 L -98 -4" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="-73" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Shift traffic</text>
-              <text x="-73" y="14" fill="#34d399" fontSize="11" fontFamily="monospace">zero dropped connections</text>
+              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#05140d" stroke="#065f46" strokeWidth="1.5" />
+              <circle cx="-105" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="1.5" filter="url(#glow-emerald-subtle)" />
+              <path d="M -110 0 L -107 3 L -100 -4" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="-74" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Shift traffic</text>
+              <text x="-74" y="14" fill="#34d399" fontSize="11" fontFamily="monospace">zero dropped connections</text>
             </g>
 
 
             {/* NODE 5 (BOTTOM LEFT): Keep v1.0.0 Live (Rollback Outcome) */}
             <g transform="translate(240, 528)">
-              <rect x="-135" y="-28" width="270" height="56" rx="10" fill="#160909" stroke="#b91c1c" strokeWidth="1.5" />
-              <rect x="-125" y="-17" width="74" height="34" rx="6" fill="#450a0a" stroke="#7f1d1d" strokeWidth="1" />
-              <text x="-88" y="4" fill="#fca5a5" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">ROLLBACK</text>
-              <text x="-38" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Keep v1.0.0 live</text>
-              <text x="-38" y="14" fill="#f87171" fontSize="11" fontFamily="monospace">no outage · instant pivot</text>
+              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#160909" stroke="#b91c1c" strokeWidth="1.5" />
+              <rect x="-124" y="-17" width="76" height="34" rx="6" fill="#450a0a" stroke="#7f1d1d" strokeWidth="1" />
+              <text x="-86" y="4" fill="#fca5a5" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">ROLLBACK</text>
+              <text x="-36" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Keep v1.0.0 live</text>
+              <text x="-36" y="14" fill="#f87171" fontSize="11" fontFamily="monospace">no outage · instant</text>
             </g>
 
 
             {/* NODE 5 (BOTTOM RIGHT): Production v1.1.0 (Success Outcome) */}
             <g transform="translate(560, 528)">
-              <rect x="-135" y="-28" width="270" height="56" rx="10" fill="#061810" stroke="#047857" strokeWidth="1.5" />
-              <rect x="-125" y="-17" width="54" height="34" rx="6" fill="#10b981" />
-              <text x="-98" y="4" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">LIVE</text>
-              <text x="-58" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Production v1.1.0</text>
-              <text x="-58" y="14" fill="#34d399" fontSize="11" fontFamily="monospace">new version serving traffic</text>
+              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#061810" stroke="#047857" strokeWidth="1.5" />
+              <rect x="-124" y="-17" width="56" height="34" rx="6" fill="#10b981" />
+              <text x="-96" y="4" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">LIVE</text>
+              <text x="-56" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Production v1.1.0</text>
+              <text x="-56" y="14" fill="#34d399" fontSize="11" fontFamily="monospace">new version serving traffic</text>
             </g>
 
           </svg>
