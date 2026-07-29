@@ -2382,19 +2382,29 @@ export default function PierreLanding() {
 							</div>
 						</div>
 
-						{/* Column 3: Zero-downtime hot swaps */}
+						{/* Column 3: Instant Edge Ingress */}
 						<div className="feature-column">
 							<div
 								className="feature-illustration-container feature-illustration-container--circuit"
 								aria-hidden="true"
 							>
-								<ZeroDowntimeSwapDiagram />
+								<div className="flex flex-col items-center justify-center gap-2 p-4 w-full h-full text-center">
+									<div className="flex items-center gap-2 rounded-full border border-emerald-500/40 bg-zinc-950 px-3 py-1.5 font-mono text-[11px] text-emerald-400 shadow-md">
+										<span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+										<span>https://app.trycloudflare.com</span>
+									</div>
+									<div className="flex items-center gap-2 font-mono text-[10px] text-zinc-400 mt-1">
+										<span className="rounded bg-zinc-900 border border-zinc-700 px-2 py-0.5 text-zinc-300">IPAM 172.16.0.2</span>
+										<span>→</span>
+										<span className="rounded bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 px-2 py-0.5 font-semibold">Edge Tunnel</span>
+									</div>
+								</div>
 							</div>
-							<h3 className="feature-column-title">Zero-downtime hot swaps</h3>
+							<h3 className="feature-column-title">Instant Edge Ingress</h3>
 							<div className="feature-engine-list">
 								<p className="feature-column-desc">
-									Seamlessly pivot live workloads from container to microVM (or deploy v2 updates)
-									with zero dropped connections and instant background port re-routing.
+									Expose MicroVMs and containers to the web instantly via integrated Cloudflare Tunnels
+									and automatic IPAM. Zero firewall rules or port forwarding required.
 								</p>
 							</div>
 						</div>
