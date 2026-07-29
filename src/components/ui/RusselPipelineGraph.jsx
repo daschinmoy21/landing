@@ -1,11 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function RusselPipelineGraph() {
-  const [activeTab, setActiveTab] = useState('all') // 'all', 'microvm', 'container'
-
-  const showRight = activeTab === 'all' || activeTab === 'microvm'
-  const showLeft = activeTab === 'all' || activeTab === 'container'
-
   return (
     <div className="w-full relative overflow-hidden rounded-2xl border border-[oklch(0.18_0.028_145)] bg-[#040803] p-4 md:p-8 select-none">
       {/* Dark Grid Background */}
@@ -20,7 +15,7 @@ export default function RusselPipelineGraph() {
         }}
       />
 
-      {/* Header Title & Controls */}
+      {/* Header Title (Toggle removed as requested) */}
       <div className="relative z-10 mb-6 flex flex-col items-center text-center">
         <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[oklch(0.24_0.04_145)] bg-[oklch(0.08_0.02_145)] px-3 py-1 font-mono text-xs font-semibold text-emerald-400">
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -35,47 +30,13 @@ export default function RusselPipelineGraph() {
           Instant Preview Branches
         </h3>
         <p className="mt-1.5 max-w-xl text-xs md:text-sm text-zinc-400">
-          Change and test in isolation with any branch before it reaches production.
+          Change and test in isolation with hardware-isolated MicroVM branches before reaching production.
         </p>
-
-        {/* Filter Tabs */}
-        <div className="mt-4 inline-flex items-center gap-1 rounded-lg border border-zinc-800 bg-[#080d09] p-1">
-          <button
-            onClick={() => setActiveTab('all')}
-            className={`rounded-md px-3 py-1 font-mono text-xs font-semibold transition-all ${
-              activeTab === 'all'
-                ? 'bg-emerald-500 text-zinc-950 shadow'
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            All Branches
-          </button>
-          <button
-            onClick={() => setActiveTab('microvm')}
-            className={`rounded-md px-3 py-1 font-mono text-xs font-semibold transition-all ${
-              activeTab === 'microvm'
-                ? 'bg-emerald-500 text-zinc-950 shadow'
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            MicroVM (Auth-v2)
-          </button>
-          <button
-            onClick={() => setActiveTab('container')}
-            className={`rounded-md px-3 py-1 font-mono text-xs font-semibold transition-all ${
-              activeTab === 'container'
-                ? 'bg-red-500 text-white shadow'
-                : 'text-zinc-400 hover:text-white'
-            }`}
-          >
-            Container (Database-v2)
-          </button>
-        </div>
       </div>
 
       {/* Main SVG Graph Container */}
       <div className="relative z-10 w-full overflow-x-auto">
-        <div className="min-w-[720px] max-w-[840px] mx-auto relative h-[620px]">
+        <div className="min-w-[760px] max-w-[860px] mx-auto relative h-[620px]">
           <svg className="w-full h-full" viewBox="0 0 800 620">
             <defs>
               <filter id="glow-emerald" x="-30%" y="-30%" width="160%" height="160%">
@@ -116,123 +77,118 @@ export default function RusselPipelineGraph() {
               14:45
             </text>
 
-            {/* RIGHT BRANCH (Auth / MicroVM - Green) */}
-            {showRight && (
-              <g className="transition-opacity duration-300">
-                {/* Branch curve out from 09:45 */}
-                <path
-                  d="M 400 100 C 530 100, 570 130, 570 170"
-                  fill="none"
-                  stroke="#52525b"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
-                />
-                {/* Vertical line down right side */}
-                <line x1="570" y1="170" x2="570" y2="480" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
-                
-                {/* Rejoin curve back to 14:45 */}
-                <path
-                  d="M 570 480 C 570 540, 480 540, 400 540"
-                  fill="none"
-                  stroke="#10b981"
-                  strokeWidth="2.5"
-                  filter="url(#glow-emerald)"
-                />
+            {/* RIGHT BRANCH (MicroVM / Cloud Hypervisor - Green) */}
+            <g>
+              {/* Branch curve out from 09:45 */}
+              <path
+                d="M 400 100 C 530 100, 570 130, 570 170"
+                fill="none"
+                stroke="#52525b"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+              {/* Vertical line down right side */}
+              <line x1="570" y1="170" x2="570" y2="480" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+              
+              {/* Rejoin curve back to 14:45 */}
+              <path
+                d="M 570 480 C 570 540, 480 540, 400 540"
+                fill="none"
+                stroke="#10b981"
+                strokeWidth="2.5"
+                filter="url(#glow-emerald)"
+              />
 
-                {/* Right Node 1: Changed Auth Pill */}
-                <g transform="translate(570, 160)">
-                  <rect x="-85" y="-18" width="170" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
-                  {/* Icon Chip Left */}
-                  <rect x="-77" y="-12" width="24" height="24" rx="6" fill="#6366f1" />
-                  <text x="-65" y="4" fill="white" fontSize="11" fontWeight="bold" textAnchor="middle">&gt;_</text>
-                  <text x="-44" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Changed</text>
-                  {/* Lock Icon */}
-                  <path d="M 18 -4 L 18 -6 A 4 4 0 0 1 26 -6 L 26 -4 M 16 -4 L 28 -4 L 28 8 L 16 8 Z" fill="none" stroke="#e4e4e7" strokeWidth="1.5" />
-                  <text x="34" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">Auth</text>
-                </g>
-
-                {/* Right Node 2: White Preview Auth-v2-Branch Pill */}
-                <g transform="translate(570, 245)">
-                  <rect x="-125" y="-20" width="250" height="40" rx="8" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
-                  <rect x="-117" y="-13" width="70" height="26" rx="4" fill="#09090b" />
-                  <text x="-82" y="4" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">PREVIEW</text>
-                  <text x="-35" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">Auth-v2-Branch</text>
-                </g>
-
-                {/* Right Node 3: Test Passed Circle */}
-                <g transform="translate(570, 340)">
-                  <text x="-32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="end">
-                    Test Passed
-                  </text>
-                  <circle cx="0" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
-                  <path d="M -6 0 L -2 4 L 6 -4" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </g>
-
-                {/* Right Node 4: Push to Prod Circle */}
-                <g transform="translate(570, 430)">
-                  <text x="-32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="end">
-                    Push to Prod
-                  </text>
-                  <circle cx="0" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
-                  <path d="M 0 6 L 0 -6 M -5 -1 L 0 -6 L 5 -1" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </g>
+              {/* Right Node 1: Changed MicroVM Pill */}
+              <g transform="translate(570, 160)">
+                <rect x="-105" y="-18" width="210" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
+                {/* Rust / MicroVM Icon Chip */}
+                <rect x="-97" y="-12" width="24" height="24" rx="6" fill="#10b981" />
+                <text x="-85" y="4" fill="#09090b" fontSize="11" fontWeight="bold" textAnchor="middle">KVM</text>
+                <text x="-64" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Changed</text>
+                {/* virtio-fs / nix store icon */}
+                <path d="M 12 -4 L 24 -4 L 28 4 L 16 4 Z" fill="none" stroke="#e4e4e7" strokeWidth="1.2" />
+                <text x="36" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">virtio-fs</text>
               </g>
-            )}
 
-            {/* LEFT BRANCH (Database / Container - Red) */}
-            {showLeft && (
-              <g className="transition-opacity duration-300">
-                {/* Branch curve out from 11:45 */}
-                <path
-                  d="M 400 220 C 270 220, 230 250, 230 290"
-                  fill="none"
-                  stroke="#52525b"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
-                />
-                {/* Vertical line down left side */}
-                <line x1="230" y1="290" x2="230" y2="540" stroke="#ef4444" strokeWidth="2" />
-
-                {/* Left Node 1: Changed Database Pill */}
-                <g transform="translate(230, 285)">
-                  <rect x="-95" y="-18" width="190" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
-                  {/* Icon Chip Left */}
-                  <rect x="-87" y="-12" width="24" height="24" rx="6" fill="#f97316" />
-                  <rect x="-81" y="-6" width="12" height="12" rx="2" fill="white" />
-                  <text x="-52" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Changed</text>
-                  {/* Database Icon */}
-                  <ellipse cx="18" cy="-4" rx="7" ry="2.5" fill="none" stroke="#e4e4e7" strokeWidth="1.2" />
-                  <path d="M 11 -4 L 11 4 C 11 5.5 14 7 18 7 C 22 7 25 5.5 25 4 L 25 -4" fill="none" stroke="#e4e4e7" strokeWidth="1.2" />
-                  <text x="32" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">Database</text>
-                </g>
-
-                {/* Left Node 2: White Preview Database-v2-Branch Pill */}
-                <g transform="translate(230, 360)">
-                  <rect x="-140" y="-20" width="280" height="40" rx="8" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
-                  <rect x="-132" y="-13" width="70" height="26" rx="4" fill="#09090b" />
-                  <text x="-97" y="4" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">PREVIEW</text>
-                  <text x="-48" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">Database-v2-Branch</text>
-                </g>
-
-                {/* Left Node 3: Test Failed Circle */}
-                <g transform="translate(230, 440)">
-                  <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
-                  <text x="0" y="5" fill="#ef4444" fontSize="16" fontFamily="sans-serif" fontWeight="extrabold" textAnchor="middle">!</text>
-                  <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
-                    Test Failed
-                  </text>
-                </g>
-
-                {/* Left Node 4: Close Branch Circle */}
-                <g transform="translate(230, 520)">
-                  <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
-                  <path d="M -5 -5 L 5 5 M 5 -5 L -5 5" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
-                  <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
-                    Close Branch
-                  </text>
-                </g>
+              {/* Right Node 2: White Preview microvm-v2-branch Pill */}
+              <g transform="translate(570, 245)">
+                <rect x="-135" y="-20" width="270" height="40" rx="8" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
+                <rect x="-127" y="-13" width="70" height="26" rx="4" fill="#09090b" />
+                <text x="-92" y="4" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">PREVIEW</text>
+                <text x="-48" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">microvm-v2-branch</text>
               </g>
-            )}
+
+              {/* Right Node 3: KVM Bounds Verified Circle */}
+              <g transform="translate(570, 340)">
+                <text x="-32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="end">
+                  KVM Bounds Verified
+                </text>
+                <circle cx="0" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+                <path d="M -6 0 L -2 4 L 6 -4" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+
+              {/* Right Node 4: Cloudflare Tunnel Hot-Swap Circle */}
+              <g transform="translate(570, 430)">
+                <text x="-32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="end">
+                  Cloudflare Tunnel Swap
+                </text>
+                <circle cx="0" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+                <path d="M 0 6 L 0 -6 M -5 -1 L 0 -6 L 5 -1" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+            </g>
+
+            {/* LEFT BRANCH (Container Staging - Red) */}
+            <g>
+              {/* Branch curve out from 11:45 */}
+              <path
+                d="M 400 220 C 270 220, 230 250, 230 290"
+                fill="none"
+                stroke="#52525b"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+              {/* Vertical line down left side */}
+              <line x1="230" y1="290" x2="230" y2="540" stroke="#ef4444" strokeWidth="2" />
+
+              {/* Left Node 1: Changed Podman Staging Pill */}
+              <g transform="translate(230, 285)">
+                <rect x="-95" y="-18" width="190" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
+                {/* Icon Chip Left */}
+                <rect x="-87" y="-12" width="24" height="24" rx="6" fill="#f97316" />
+                <text x="-75" y="4" fill="white" fontSize="11" fontWeight="bold" textAnchor="middle">🐳</text>
+                <text x="-52" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Changed</text>
+                {/* Container Icon */}
+                <rect x="12" y="-5" width="12" height="10" rx="2" fill="none" stroke="#e4e4e7" strokeWidth="1.2" />
+                <text x="32" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">Podman</text>
+              </g>
+
+              {/* Left Node 2: White Preview podman-staging-branch Pill */}
+              <g transform="translate(230, 360)">
+                <rect x="-140" y="-20" width="280" height="40" rx="8" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
+                <rect x="-132" y="-13" width="70" height="26" rx="4" fill="#09090b" />
+                <text x="-97" y="4" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">PREVIEW</text>
+                <text x="-48" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">podman-staging-v2</text>
+              </g>
+
+              {/* Left Node 3: IPAM Port Conflict Circle */}
+              <g transform="translate(230, 440)">
+                <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
+                <text x="0" y="5" fill="#ef4444" fontSize="16" fontFamily="sans-serif" fontWeight="extrabold" textAnchor="middle">!</text>
+                <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
+                  IPAM Conflict
+                </text>
+              </g>
+
+              {/* Left Node 4: QCOW2 Overlay Cleaned Circle */}
+              <g transform="translate(230, 520)">
+                <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
+                <path d="M -5 -5 L 5 5 M 5 -5 L -5 5" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
+                <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
+                  Overlay Cleaned
+                </text>
+              </g>
+            </g>
 
             {/* TOP MAIN NODE: [ LIVE ] Production */}
             <g transform="translate(400, 36)">
