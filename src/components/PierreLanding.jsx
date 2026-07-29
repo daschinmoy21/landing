@@ -2188,10 +2188,6 @@ export default function PierreLanding() {
 				<AsciiBackground />
 				<div className="hero-inner">
 					<div className="hero-text-card">
-						<div className="hero-top-badge">
-							<span className="hero-badge-pill">R</span>
-							<span className="hero-badge-text">Open-Source Dual-Runtime Infrastructure</span>
-						</div>
 						<h1 className="hero-title">
 							<span className="hero-title-accent">Deploy without limits.</span>
 							<span className="hero-title-main">
