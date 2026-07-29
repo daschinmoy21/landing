@@ -97,7 +97,7 @@ export default function RusselPipelineGraph() {
               <g transform="translate(570, 160)">
                 <rect x="-95" y="-18" width="190" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
                 <rect x="-87" y="-12" width="24" height="24" rx="6" fill="#10b981" />
-                <text x="-75" y="4" fill="#09090b" fontSize="11" fontWeight="bold" textAnchor="middle">🚀</text>
+                <text x="-75" y="4" fill="#09090b" fontSize="10" fontFamily="monospace" fontWeight="extrabold" textAnchor="middle">&gt;_</text>
                 <text x="-52" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Deploy</text>
                 <text x="24" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">v1.1.0</text>
               </g>
@@ -153,7 +153,7 @@ export default function RusselPipelineGraph() {
               <g transform="translate(230, 285)">
                 <rect x="-105" y="-18" width="210" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
                 <rect x="-97" y="-12" width="24" height="24" rx="6" fill="#ef4444" />
-                <text x="-85" y="4" fill="white" fontSize="11" fontWeight="bold" textAnchor="middle">⚠️</text>
+                <text x="-85" y="4" fill="#ffffff" fontSize="13" fontFamily="sans-serif" fontWeight="extrabold" textAnchor="middle">!</text>
                 <text x="-60" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Deploy</text>
                 <text x="24" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">v1.2.0-rc</text>
               </g>
