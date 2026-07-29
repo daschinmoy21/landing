@@ -5,7 +5,7 @@ export default function RusselPipelineGraph() {
     <div className="w-full relative overflow-hidden rounded-2xl border border-[oklch(0.18_0.028_145)] bg-[#040803] p-4 md:p-8 select-none">
       {/* Dark Grid Background */}
       <div 
-        className="absolute inset-0 opacity-20 pointer-events-none"
+        className="absolute inset-0 opacity-25 pointer-events-none"
         style={{
           backgroundImage: `
             linear-gradient(to right, #1c261e 1px, transparent 1px),
@@ -15,166 +15,183 @@ export default function RusselPipelineGraph() {
         }}
       />
 
-      {/* Header Title */}
-      <div className="relative z-10 mb-8 flex flex-col items-center text-center">
-        <h3 className="font-sans text-2xl md:text-3xl font-extrabold tracking-tight text-white">
-          One health check decides the traffic path
-        </h3>
-        <p className="mt-2 max-w-xl text-xs md:text-sm text-zinc-400">
-          The current version keeps serving while a new MicroVM is tested. Traffic moves only when it is healthy.
-        </p>
-      </div>
-
-      {/* Main Flowchart SVG Container */}
+      {/* Main SVG Timeline Tree Container */}
       <div className="relative z-10 w-full overflow-x-auto">
-        <div className="min-w-[780px] max-w-[860px] mx-auto relative h-[620px]">
-          <svg className="w-full h-full" viewBox="0 0 800 620">
+        <div className="min-w-[780px] max-w-[860px] mx-auto relative h-[640px]">
+          <svg className="w-full h-full" viewBox="0 0 800 640">
             <defs>
-              <filter id="glow-emerald-subtle" x="-20%" y="-20%" width="140%" height="140%">
+              <filter id="glow-emerald" x="-30%" y="-30%" width="160%" height="160%">
                 <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
-              <filter id="glow-red-subtle" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              {/* Precise Arrowhead Markers */}
-              <marker id="arrow-grey-precise" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 1 1 L 9 5 L 1 9 z" fill="#71717a" />
-              </marker>
-              <marker id="arrow-red-precise" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 1 1 L 9 5 L 1 9 z" fill="#ef4444" />
-              </marker>
-              <marker id="arrow-green-precise" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 1 1 L 9 5 L 1 9 z" fill="#10b981" />
-              </marker>
             </defs>
 
-            {/* CONNECTING LINES WITH CLEAN GAPS */}
+            {/* Center Timeline Vertical Line */}
+            <line x1="400" y1="56" x2="400" y2="600" stroke="#27272a" strokeWidth="1.5" />
 
-            {/* Line 1: Top Production Card -> Deploy Candidate */}
-            <line x1="400" y1="70" x2="400" y2="113" stroke="#52525b" strokeWidth="1.5" markerEnd="url(#arrow-grey-precise)" />
+            {/* Timeline Dots along Center Line */}
+            {[140, 180, 260, 300, 340, 380, 420, 460, 500, 580].map((y) => (
+              <circle key={y} cx="400" cy={y} r="2.5" fill="#3f3f46" />
+            ))}
 
-            {/* Line 2: Deploy Candidate -> Health Check */}
-            <line x1="400" y1="175" x2="400" y2="221" stroke="#52525b" strokeWidth="1.5" markerEnd="url(#arrow-grey-precise)" />
-
-            {/* Line 3: Health Check -> Junction Split */}
-            <line x1="400" y1="283" x2="400" y2="310" stroke="#52525b" strokeWidth="1.5" />
-
-            {/* Left Branch (FAIL -> Red Curve) */}
-            <path
-              d="M 400 310 C 400 340, 240 340, 240 376"
-              fill="none"
-              stroke="#ef4444"
-              strokeWidth="2"
-              filter="url(#glow-red-subtle)"
-            />
-
-            {/* Right Branch (PASS -> Green Curve) */}
-            <path
-              d="M 400 310 C 400 340, 560 340, 560 376"
-              fill="none"
-              stroke="#10b981"
-              strokeWidth="2"
-              filter="url(#glow-emerald-subtle)"
-            />
-
-            {/* Line 4: Reject Release -> Bottom Rollback Outcome */}
-            <line x1="240" y1="438" x2="240" y2="494" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-red-precise)" />
-
-            {/* Line 5: Shift Traffic -> Bottom Production Outcome */}
-            <line x1="560" y1="438" x2="560" y2="494" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-green-precise)" />
-
-
-            {/* NODES / CARDS (UNIFORM WIDTH & HEIGHT) */}
-
-            {/* NODE 1: Top Card - Production (v1.0.0) */}
-            <g transform="translate(400, 42)">
-              <rect x="-155" y="-28" width="310" height="56" rx="10" fill="#090d0a" stroke="#1f2923" strokeWidth="1.5" />
-              <rect x="-142" y="-17" width="56" height="34" rx="6" fill="#10b981" />
-              <text x="-114" y="4" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">LIVE</text>
-              <text x="-72" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Production</text>
-              <text x="-72" y="14" fill="#71717a" fontSize="11" fontFamily="monospace">v1.0.0 · serving traffic</text>
+            {/* 09:45 Timestamp Dot (Centered Text Above Dot) */}
+            <g transform="translate(400, 100)">
+              <text x="0" y="-12" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                09:45
+              </text>
+              <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+              <circle cx="0" cy="0" r="8.5" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
             </g>
 
-
-            {/* NODE 2: Deploy Candidate Box */}
-            <g transform="translate(400, 147)">
-              <rect x="-155" y="-28" width="310" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
-              <rect x="-142" y="-17" width="76" height="34" rx="6" fill="#064e3b" stroke="#10b981" strokeWidth="1" />
-              <text x="-104" y="4" fill="#10b981" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">CANDIDATE</text>
-              <text x="-52" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">v1.1.0-microvm</text>
-              <text x="-52" y="14" fill="#10b981" fontSize="11" fontFamily="monospace">microVM candidate</text>
+            {/* 11:45 Timestamp Dot (Centered Text Above Dot) */}
+            <g transform="translate(400, 220)">
+              <text x="0" y="-12" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                11:45
+              </text>
+              <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+              <circle cx="0" cy="0" r="8.5" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
             </g>
 
-
-            {/* NODE 3: Health Check Gate */}
-            <g transform="translate(400, 255)">
-              <rect x="-155" y="-28" width="310" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
-              <circle cx="-122" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="1.5" />
-              <path d="M -127 0 L -124 3 L -117 -4" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="-90" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Health check</text>
-              <text x="-90" y="14" fill="#8b949e" fontSize="11" fontFamily="monospace">pass before traffic moves</text>
+            {/* 14:45 Timestamp Dot (Centered Text Above Dot) */}
+            <g transform="translate(400, 540)">
+              <text x="0" y="-12" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                14:45
+              </text>
+              <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+              <circle cx="0" cy="0" r="8.5" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
             </g>
 
+            {/* RIGHT BRANCH (Zero Downtime Hot Swap - Green) */}
+            <g>
+              {/* 1. Dashed branch in curve from 09:45 into top-center of Deploy Pill */}
+              <path
+                d="M 400 100 C 510 100, 570 115, 570 142"
+                fill="none"
+                stroke="#52525b"
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+              />
 
-            {/* SPLIT BADGES (FAIL / PASS) */}
-            <g transform="translate(315, 326)">
-              <rect x="-28" y="-11" width="56" height="22" rx="11" fill="#450a0a" stroke="#ef4444" strokeWidth="1.5" />
-              <text x="0" y="4" fill="#fca5a5" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">FAIL</text>
+              {/* 2. Solid grey line from Deploy Pill bottom to Hot-Swap Pill top */}
+              <line x1="570" y1="178" x2="570" y2="225" stroke="#52525b" strokeWidth="1.5" />
+
+              {/* 3. Solid green line from Hot-Swap Pill bottom to Health Check Circle top */}
+              <line x1="570" y1="265" x2="570" y2="322" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+
+              {/* 4. Solid green line from Health Check Circle bottom to Traffic Swapped Circle top */}
+              <line x1="570" y1="358" x2="570" y2="412" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+
+              {/* 5. Smooth 90-degree green curve rejoining center line at 14:45 */}
+              <path
+                d="M 570 448 C 570 540, 480 540, 400 540"
+                fill="none"
+                stroke="#10b981"
+                strokeWidth="2.5"
+                filter="url(#glow-emerald)"
+              />
+
+              {/* Right Node 1: Deploy v1.1.0 Release Pill */}
+              <g transform="translate(570, 160)">
+                <rect x="-95" y="-18" width="190" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
+                <rect x="-87" y="-12" width="24" height="24" rx="6" fill="#10b981" />
+                <text x="-75" y="4" fill="#09090b" fontSize="11" fontWeight="bold" textAnchor="middle">🚀</text>
+                <text x="-52" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Deploy</text>
+                <text x="24" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">v1.1.0</text>
+              </g>
+
+              {/* Right Node 2: White Deploying Pill */}
+              <g transform="translate(570, 245)">
+                <rect x="-135" y="-20" width="270" height="40" rx="8" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
+                <rect x="-127" y="-13" width="85" height="26" rx="4" fill="#09090b" />
+                <text x="-85" y="4" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">HOT-SWAP</text>
+                <text x="-38" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">v1.1.0-microvm</text>
+              </g>
+
+              {/* Right Node 3: Health Check Passed Circle */}
+              <g transform="translate(570, 340)">
+                <text x="-32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="end">
+                  Health Check Passed
+                </text>
+                <circle cx="0" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+                <path d="M -6 0 L -2 4 L 6 -4" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+
+              {/* Right Node 4: Traffic Swapped Circle */}
+              <g transform="translate(570, 430)">
+                <text x="-32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="end">
+                  Traffic Swapped (0ms)
+                </text>
+                <circle cx="0" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
+                <path d="M 0 6 L 0 -6 M -5 -1 L 0 -6 L 5 -1" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
             </g>
-            <g transform="translate(485, 326)">
-              <rect x="-28" y="-11" width="56" height="22" rx="11" fill="#022c22" stroke="#10b981" strokeWidth="1.5" />
-              <text x="0" y="4" fill="#a7f3d0" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">PASS</text>
+
+            {/* LEFT BRANCH (Instant Rollback - Red/Amber) */}
+            <g>
+              {/* 1. Dashed branch in curve from 11:45 into top-center of Bad Deploy Pill */}
+              <path
+                d="M 400 220 C 290 220, 230 235, 230 267"
+                fill="none"
+                stroke="#52525b"
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+              />
+
+              {/* 2. Solid grey line from Bad Deploy Pill bottom to Unhealthy Pill top */}
+              <line x1="230" y1="303" x2="230" y2="340" stroke="#52525b" strokeWidth="1.5" />
+
+              {/* 3. Solid red line from Unhealthy Pill bottom to Error Circle top */}
+              <line x1="230" y1="380" x2="230" y2="422" stroke="#ef4444" strokeWidth="2" />
+
+              {/* 4. Solid red line from Error Circle bottom to Rollback Circle top */}
+              <line x1="230" y1="458" x2="230" y2="502" stroke="#ef4444" strokeWidth="2" />
+
+              {/* Left Node 1: Deploy Bad Build Pill */}
+              <g transform="translate(230, 285)">
+                <rect x="-105" y="-18" width="210" height="36" rx="18" fill="#09090b" stroke="#3f3f46" strokeWidth="1.5" />
+                <rect x="-97" y="-12" width="24" height="24" rx="6" fill="#ef4444" />
+                <text x="-85" y="4" fill="white" fontSize="11" fontWeight="bold" textAnchor="middle">⚠️</text>
+                <text x="-60" y="4" fill="#e4e4e7" fontSize="12" fontFamily="sans-serif" fontWeight="500">Deploy</text>
+                <text x="24" y="4" fill="#ffffff" fontSize="12" fontFamily="sans-serif" fontWeight="bold">v1.2.0-rc</text>
+              </g>
+
+              {/* Left Node 2: White Preview Bad Build Pill */}
+              <g transform="translate(230, 360)">
+                <rect x="-140" y="-20" width="280" height="40" rx="8" fill="#ffffff" stroke="#ef4444" strokeWidth="1.5" />
+                <rect x="-132" y="-13" width="85" height="26" rx="4" fill="#450a0a" />
+                <text x="-90" y="4" fill="#fca5a5" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">UNHEALTHY</text>
+                <text x="-40" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">v1.2.0-rc-microvm</text>
+              </g>
+
+              {/* Left Node 3: 5xx Error Detected Circle */}
+              <g transform="translate(230, 440)">
+                <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
+                <text x="0" y="5" fill="#ef4444" fontSize="16" fontFamily="sans-serif" fontWeight="extrabold" textAnchor="middle">!</text>
+                <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
+                  5xx Errors Detected
+                </text>
+              </g>
+
+              {/* Left Node 4: Instant Rollback Circle */}
+              <g transform="translate(230, 520)">
+                <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
+                <path d="M -5 -5 L 5 5 M 5 -5 L -5 5" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
+                <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
+                  Instant Rollback to v1.1
+                </text>
+              </g>
             </g>
 
-
-            {/* NODE 4 (LEFT): Reject Release */}
-            <g transform="translate(240, 410)">
-              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#110707" stroke="#7f1d1d" strokeWidth="1.5" />
-              <circle cx="-105" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="1.5" />
-              <path d="M -109 -4 L -101 4 M -101 -4 L -109 4" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-              <text x="-74" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Reject release</text>
-              <text x="-74" y="14" fill="#f87171" fontSize="11" fontFamily="monospace">5xx errors detected</text>
+            {/* TOP MAIN NODE: [ LIVE ] Production (v1.0.0) */}
+            <g transform="translate(400, 36)">
+              <rect x="-115" y="-20" width="230" height="40" rx="10" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
+              <rect x="-107" y="-13" width="52" height="26" rx="5" fill="#10b981" />
+              <text x="-81" y="4" fill="#ffffff" fontSize="10" fontFamily="monospace" fontWeight="extrabold" textAnchor="middle">LIVE</text>
+              <text x="-35" y="4" fill="#09090b" fontSize="13" fontFamily="sans-serif" fontWeight="bold">Production (v1.0.0)</text>
             </g>
-
-
-            {/* NODE 4 (RIGHT): Shift Traffic */}
-            <g transform="translate(560, 410)">
-              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#05140d" stroke="#065f46" strokeWidth="1.5" />
-              <circle cx="-105" cy="0" r="18" fill="#022c22" stroke="#10b981" strokeWidth="1.5" filter="url(#glow-emerald-subtle)" />
-              <path d="M -110 0 L -107 3 L -100 -4" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="-74" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Shift traffic</text>
-              <text x="-74" y="14" fill="#34d399" fontSize="11" fontFamily="monospace">zero dropped connections</text>
-            </g>
-
-
-            {/* NODE 5 (BOTTOM LEFT): Keep v1.0.0 Live (Rollback Outcome) */}
-            <g transform="translate(240, 528)">
-              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#160909" stroke="#b91c1c" strokeWidth="1.5" />
-              <rect x="-124" y="-17" width="76" height="34" rx="6" fill="#450a0a" stroke="#7f1d1d" strokeWidth="1" />
-              <text x="-86" y="4" fill="#fca5a5" fontSize="10" fontFamily="monospace" fontWeight="bold" textAnchor="middle">ROLLBACK</text>
-              <text x="-36" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Keep v1.0.0 live</text>
-              <text x="-36" y="14" fill="#f87171" fontSize="11" fontFamily="monospace">no outage · instant</text>
-            </g>
-
-
-            {/* NODE 5 (BOTTOM RIGHT): Production v1.1.0 (Success Outcome) */}
-            <g transform="translate(560, 528)">
-              <rect x="-137" y="-28" width="274" height="56" rx="10" fill="#061810" stroke="#047857" strokeWidth="1.5" />
-              <rect x="-124" y="-17" width="56" height="34" rx="6" fill="#10b981" />
-              <text x="-96" y="4" fill="#ffffff" fontSize="11" fontFamily="monospace" fontWeight="bold" textAnchor="middle">LIVE</text>
-              <text x="-56" y="-3" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">Production v1.1.0</text>
-              <text x="-56" y="14" fill="#34d399" fontSize="11" fontFamily="monospace">new version serving traffic</text>
-            </g>
-
           </svg>
         </div>
       </div>
