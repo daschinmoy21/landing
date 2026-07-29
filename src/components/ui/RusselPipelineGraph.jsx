@@ -107,13 +107,9 @@ export default function RusselPipelineGraph() {
 
             {/* NODE 2: Deploy Candidate Box */}
             <g transform="translate(400, 147)">
-              <rect x="-165" y="-28" width="330" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
-              <rect x="-155" y="-18" width="76" height="36" rx="6" fill="#064e3b" stroke="#10b981" strokeWidth="1" />
-              <svg x="-128" y="-11" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-              </svg>
-              <text x="-64" y="-4" fill="#10b981" fontSize="10" fontFamily="monospace" fontWeight="bold" letterSpacing="0.5">DEPLOY CANDIDATE</text>
-              <text x="-64" y="15" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold">v1.1.0-microvm</text>
+              <rect x="-135" y="-28" width="270" height="56" rx="10" fill="#090d0a" stroke="#27272a" strokeWidth="1.5" />
+              <text x="0" y="-4" fill="#10b981" fontSize="10" fontFamily="monospace" fontWeight="bold" letterSpacing="0.5" textAnchor="middle">DEPLOY CANDIDATE</text>
+              <text x="0" y="15" fill="#ffffff" fontSize="14" fontFamily="sans-serif" fontWeight="bold" textAnchor="middle">v1.1.0-microvm</text>
             </g>
 
 
