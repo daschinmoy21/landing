@@ -172,7 +172,7 @@ function CircuitBoard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden",
+        "relative overflow-visible",
         className
       )}
       style={{ width, height }}
@@ -378,7 +378,7 @@ function CircuitBoard({
             {/* Label */}
             {node.label && (
               <div
-                className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium"
+                className="absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium"
                 style={{ color: statusColor }}
               >
                 {node.label}

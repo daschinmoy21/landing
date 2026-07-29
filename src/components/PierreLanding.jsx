@@ -1,12 +1,10 @@
 import React from 'react'
 import AsciiBackground from './AsciiBackground.jsx'
 import AnimatedCardStack from './ui/animate-card-animation'
-import CurvedInput from './ui/CurvedInput.jsx'
 import { CircuitBoard } from './ui/circuit-board'
 import ZeroDowntimeSwapDiagram from './ui/ZeroDowntimeSwapDiagram.jsx'
 import { Box, Cpu, Server, Terminal, PackageCheck } from 'lucide-react'
 import './ui/SpecularButton.css'
-import './ui/CurvedInput.css'
 
 const LOGO = (name) =>
 	`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}/${name}-original.svg`
@@ -1984,8 +1982,6 @@ const BOKEH_INNER = [
 
 export default function PierreLanding() {
 	const [activeRuntime, setActiveRuntime] = React.useState('container')
-	const [heroWaitlist, setHeroWaitlist] = React.useState({ state: 'idle', message: '' })
-	const [ctaWaitlist, setCtaWaitlist] = React.useState({ state: 'idle', message: '', email: '' })
 	const [ctaInView, setCtaInView] = React.useState(false)
 	const ctaSectionRef = React.useRef(null)
 
@@ -2009,25 +2005,6 @@ export default function PierreLanding() {
 		return () => io.disconnect()
 	}, [])
 
-	const submitWaitlist = (email, setState) => {
-		const value = String(email || '').trim()
-		if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-			setState({
-				state: 'error',
-				message: 'Enter a valid email to join the waitlist.',
-				email: value
-			})
-			return
-		}
-		// Shell only until a real waitlist endpoint is wired.
-		console.log('Waitlist signup:', value)
-		setState({
-			state: 'success',
-			message: "You're on the list. We'll be in touch.",
-			email: value
-		})
-	}
-
 	return (
 		<div className="pierre-page">
 			<style>{CSS}</style>
@@ -2045,25 +2022,6 @@ export default function PierreLanding() {
 							One workflow for containers and microVMs. Reproducible builds. Containers for speed.
 							MicroVMs for security. Managed or self-hosted. Zero drift.
 						</p>
-						<div className="hero-waitlist">
-							<CurvedInput
-								placeholder="you@domain.com"
-								buttonText={heroWaitlist.state === 'success' ? 'Joined' : 'Join waitlist'}
-								theme="dark"
-								bend={-28}
-								height={60}
-								width="100%"
-								onSubmit={(email) => submitWaitlist(email, setHeroWaitlist)}
-							/>
-							<p
-								className="hero-waitlist-note"
-								data-state={heroWaitlist.state}
-								role={heroWaitlist.state === 'error' ? 'alert' : 'status'}
-								aria-live="polite"
-							>
-								{heroWaitlist.message || 'Early access for engineers and teams.'}
-							</p>
-						</div>
 						<div className="hero-secondary-actions">
 							<a className="hero-why-btn" href="/why">
 								Why Russel?
@@ -2173,7 +2131,7 @@ export default function PierreLanding() {
 										{
 											id: 'dev',
 											x: 45,
-											y: 80,
+											y: 75,
 											label: 'Dev Box',
 											icon: <Terminal className="h-4 w-4 text-neutral-300" />,
 											status: 'active',
@@ -2182,7 +2140,7 @@ export default function PierreLanding() {
 										{
 											id: 'nix',
 											x: 150,
-											y: 80,
+											y: 75,
 											label: 'sha256-f83a…',
 											icon: <PackageCheck className="h-4 w-4 text-emerald-400" />,
 											status: 'processing',
@@ -2191,7 +2149,7 @@ export default function PierreLanding() {
 										{
 											id: 'prod',
 											x: 255,
-											y: 80,
+											y: 75,
 											label: 'Prod Node',
 											icon: <Server className="h-4 w-4 text-neutral-300" />,
 											status: 'active',
@@ -2312,7 +2270,7 @@ export default function PierreLanding() {
 			</section>
 
 			{/* Centered CTA Section with Orbiting Logos */}
-			<section className="centered-cta-section" id="early-access" ref={ctaSectionRef}>
+			<section className="centered-cta-section" id="cta" ref={ctaSectionRef}>
 				{/* Dual counter-rotating tech fields — animate while in view */}
 				<div
 					className={`scattered-bg-container${ctaInView ? ' is-active' : ''}`}
@@ -2408,8 +2366,7 @@ export default function PierreLanding() {
 					</h2>
 
 					<p className="cta-subtitle">
-						One workflow for Wasm, containers, and microVMs. Get early access to the infrastructure
-						built for speed, isolation, and control.
+						One workflow for Wasm, containers, and microVMs. Built for speed, isolation, and control.
 					</p>
 
 					<div className="cta-tags">
@@ -2420,51 +2377,14 @@ export default function PierreLanding() {
 						<span>KVM Isolation</span>
 					</div>
 
-					<form
-						className="cta-form"
-						onSubmit={(e) => {
-							e.preventDefault()
-							const data = new FormData(e.currentTarget)
-							submitWaitlist(data.get('email'), setCtaWaitlist)
-						}}
-						noValidate
-					>
-						<div className="cta-input-bar">
-							<input
-								type="email"
-								name="email"
-								placeholder="you@domain.com"
-								autoComplete="email"
-								aria-label="Email for waitlist"
-								value={ctaWaitlist.email}
-								onChange={(e) =>
-									setCtaWaitlist((prev) => ({
-										...prev,
-										email: e.target.value,
-										state: prev.state === 'success' ? 'idle' : prev.state,
-										message: prev.state === 'success' ? '' : prev.message
-									}))
-								}
-								disabled={ctaWaitlist.state === 'success'}
-								required
-							/>
-							<button
-								type="submit"
-								className="cta-submit-btn"
-								disabled={ctaWaitlist.state === 'success'}
-							>
-								{ctaWaitlist.state === 'success' ? 'Joined' : 'Join waitlist'}
-							</button>
-						</div>
-						<p
-							className="cta-form-note"
-							data-state={ctaWaitlist.state}
-							role={ctaWaitlist.state === 'error' ? 'alert' : 'status'}
-							aria-live="polite"
-						>
-							{ctaWaitlist.message || 'No spam. Product updates only.'}
-						</p>
-					</form>
+					<div className="hero-secondary-actions" style={{ justifyContent: 'center', marginTop: '28px' }}>
+						<a className="hero-why-btn" href="/why">
+							Why Russel?
+							<span className="arr" aria-hidden="true">
+								→
+							</span>
+						</a>
+					</div>
 				</div>
 			</section>
 		</div>

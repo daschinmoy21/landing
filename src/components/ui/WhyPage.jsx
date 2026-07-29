@@ -198,8 +198,8 @@ export default function WhyPage() {
       {/* CTA — committed, not floating */}
       <section className="why-cta">
         <h2>Deploy without the runtime trade-offs</h2>
-        <p>Get early access. One workflow for containers and microVMs.</p>
-        <a href="/#early-access" className="btn-fill">Join waitlist</a>
+        <p>One workflow for containers and microVMs.</p>
+        <a href="/" className="btn-fill">Explore Architecture</a>
       </section>
 
       <style jsx>{`

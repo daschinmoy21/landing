@@ -23,7 +23,7 @@ export default function ZeroDowntimeSwapDiagram() {
 					{
 						id: 'ingress',
 						x: 45,
-						y: 80,
+						y: 75,
 						label: 'Ingress Router',
 						icon: <Globe className="w-4 h-4 text-emerald-400" />,
 						status: 'active',
@@ -41,7 +41,7 @@ export default function ZeroDowntimeSwapDiagram() {
 					{
 						id: 'v2_microvm',
 						x: 150,
-						y: 125,
+						y: 115,
 						label: 'v2 (MicroVM)',
 						icon: <Cpu className={`w-4 h-4 ${!isV1 ? 'text-emerald-400' : 'text-neutral-500'}`} />,
 						status: !isV1 ? 'active' : 'inactive',
@@ -50,7 +50,7 @@ export default function ZeroDowntimeSwapDiagram() {
 					{
 						id: 'live_traffic',
 						x: 255,
-						y: 80,
+						y: 75,
 						label: '200 OK',
 						icon: <CheckCircle className="w-4 h-4 text-emerald-400" />,
 						status: 'active',
