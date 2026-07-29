@@ -43,116 +43,70 @@ export default function RusselPipelineGraph() {
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
-              <filter id="glow-amber" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="glow-red" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              {/* Arrowhead Markers */}
-              <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#10b981" />
-              </marker>
-              <marker id="arrow-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ef4444" />
-              </marker>
-              <marker id="arrow-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f59e0b" />
-              </marker>
-              <marker id="arrow-grey" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#a1a1aa" />
-              </marker>
             </defs>
 
             {/* Center Timeline Vertical Line */}
-            <line x1="400" y1="65" x2="400" y2="600" stroke="#27272a" strokeWidth="2" />
+            <line x1="400" y1="56" x2="400" y2="600" stroke="#27272a" strokeWidth="1.5" />
 
             {/* Timeline Dots along Center Line */}
-            {[140, 180, 260, 300, 340, 380, 420, 460, 500, 540, 580].map((y) => (
+            {[140, 180, 260, 300, 340, 380, 420, 460, 500, 580].map((y) => (
               <circle key={y} cx="400" cy={y} r="2.5" fill="#3f3f46" />
             ))}
 
-            {/* Timestamps (placed to the left of main line) */}
-            {/* 09:45 Timestamp Dot */}
-            <circle cx="400" cy="100" r="5" fill="#10b981" />
-            <circle cx="400" cy="100" r="9" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
-            <text x="382" y="104" fill="#a1a1aa" fontSize="11" fontFamily="monospace" textAnchor="end">
-              09:45
-            </text>
+            {/* 09:45 Timestamp Dot (Centered Text Above Dot) */}
+            <g transform="translate(400, 100)">
+              <text x="0" y="-12" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                09:45
+              </text>
+              <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+              <circle cx="0" cy="0" r="8.5" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
+            </g>
 
-            {/* 11:45 Timestamp Dot */}
-            <circle cx="400" cy="220" r="5" fill="#10b981" />
-            <circle cx="400" cy="220" r="9" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
-            <text x="382" y="224" fill="#a1a1aa" fontSize="11" fontFamily="monospace" textAnchor="end">
-              11:45
-            </text>
+            {/* 11:45 Timestamp Dot (Centered Text Above Dot) */}
+            <g transform="translate(400, 220)">
+              <text x="0" y="-12" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                11:45
+              </text>
+              <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+              <circle cx="0" cy="0" r="8.5" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
+            </g>
 
-            {/* 14:45 Timestamp Dot */}
-            <circle cx="400" cy="540" r="5" fill="#10b981" />
-            <circle cx="400" cy="540" r="9" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
-            <text x="382" y="544" fill="#a1a1aa" fontSize="11" fontFamily="monospace" textAnchor="end">
-              14:45
-            </text>
+            {/* 14:45 Timestamp Dot (Centered Text Above Dot) */}
+            <g transform="translate(400, 540)">
+              <text x="0" y="-12" fill="#71717a" fontSize="11" fontFamily="monospace" textAnchor="middle">
+                14:45
+              </text>
+              <circle cx="0" cy="0" r="4.5" fill="#10b981" />
+              <circle cx="0" cy="0" r="8.5" fill="none" stroke="#10b981" strokeWidth="1.5" opacity="0.6" />
+            </g>
 
             {/* RIGHT BRANCH (Zero Downtime Hot Swap - Green) */}
             <g>
-              {/* 1. Branch in from 09:45 into top of Deploy Pill */}
+              {/* 1. Dashed branch in curve from 09:45 into top-center of Deploy Pill */}
               <path
-                d="M 400 100 C 510 100, 570 115, 570 140"
+                d="M 400 100 C 510 100, 570 115, 570 142"
                 fill="none"
-                stroke="#a1a1aa"
-                strokeWidth="2"
+                stroke="#52525b"
+                strokeWidth="1.5"
                 strokeDasharray="4 4"
-                markerEnd="url(#arrow-grey)"
               />
 
-              {/* 2. Arrow from Deploy Pill bottom to Hot-Swap Pill top */}
-              <line 
-                x1="570" y1="178" 
-                x2="570" y2="223 font" 
-                stroke="#10b981" 
-                strokeWidth="2" 
-                filter="url(#glow-emerald)" 
-                markerEnd="url(#arrow-green)"
-              />
+              {/* 2. Solid grey line from Deploy Pill bottom to Hot-Swap Pill top */}
+              <line x1="570" y1="178" x2="570" y2="225" stroke="#52525b" strokeWidth="1.5" />
 
-              {/* 3. Arrow from Hot-Swap Pill bottom to Health Check Circle top */}
-              <line 
-                x1="570" y1="265" 
-                x2="570" y2="320" 
-                stroke="#10b981" 
-                strokeWidth="2" 
-                filter="url(#glow-emerald)" 
-                markerEnd="url(#arrow-green)"
-              />
+              {/* 3. Solid green line from Hot-Swap Pill bottom to Health Check Circle top */}
+              <line x1="570" y1="265" x2="570" y2="322" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
 
-              {/* 4. Arrow from Health Check Circle bottom to Traffic Swapped Circle top */}
-              <line 
-                x1="570" y1="358" 
-                x2="570" y2="410" 
-                stroke="#10b981" 
-                strokeWidth="2" 
-                filter="url(#glow-emerald)" 
-                markerEnd="url(#arrow-green)"
-              />
+              {/* 4. Solid green line from Health Check Circle bottom to Traffic Swapped Circle top */}
+              <line x1="570" y1="358" x2="570" y2="412" stroke="#10b981" strokeWidth="2" filter="url(#glow-emerald)" />
 
-              {/* 5. Rejoin curve with Arrowhead merging into 14:45 */}
+              {/* 5. Smooth 90-degree green curve rejoining center line at 14:45 */}
               <path
-                d="M 570 448 C 570 540, 470 540, 412 540"
+                d="M 570 448 C 570 540, 480 540, 400 540"
                 fill="none"
                 stroke="#10b981"
                 strokeWidth="2.5"
                 filter="url(#glow-emerald)"
-                markerEnd="url(#arrow-green)"
               />
 
               {/* Right Node 1: Deploy v1.1.0 Release Pill */}
@@ -193,56 +147,23 @@ export default function RusselPipelineGraph() {
 
             {/* LEFT BRANCH (Instant Rollback - Red/Amber) */}
             <g>
-              {/* 1. Branch in from 11:45 into top of Bad Deploy Pill */}
+              {/* 1. Dashed branch in curve from 11:45 into top-center of Bad Deploy Pill */}
               <path
-                d="M 400 220 C 290 220, 230 235, 230 265"
+                d="M 400 220 C 290 220, 230 235, 230 267"
                 fill="none"
-                stroke="#a1a1aa"
-                strokeWidth="2"
+                stroke="#52525b"
+                strokeWidth="1.5"
                 strokeDasharray="4 4"
-                markerEnd="url(#arrow-grey)"
               />
 
-              {/* 2. Arrow from Bad Deploy Pill bottom to Unhealthy Pill top */}
-              <line 
-                x1="230" y1="303" 
-                x2="230" y2="338" 
-                stroke="#ef4444" 
-                strokeWidth="2" 
-                filter="url(#glow-red)" 
-                markerEnd="url(#arrow-red)"
-              />
+              {/* 2. Solid grey line from Bad Deploy Pill bottom to Unhealthy Pill top */}
+              <line x1="230" y1="303" x2="230" y2="340" stroke="#52525b" strokeWidth="1.5" />
 
-              {/* 3. Arrow from Unhealthy Pill bottom to Error Circle top */}
-              <line 
-                x1="230" y1="380" 
-                x2="230" y2="420" 
-                stroke="#ef4444" 
-                strokeWidth="2" 
-                filter="url(#glow-red)" 
-                markerEnd="url(#arrow-red)"
-              />
+              {/* 3. Solid red line from Unhealthy Pill bottom to Error Circle top */}
+              <line x1="230" y1="380" x2="230" y2="422" stroke="#ef4444" strokeWidth="2" />
 
-              {/* 4. Arrow from Error Circle bottom to Rollback Circle top */}
-              <line 
-                x1="230" y1="458" 
-                x2="230" y2="500" 
-                stroke="#ef4444" 
-                strokeWidth="2" 
-                filter="url(#glow-red)" 
-                markerEnd="url(#arrow-red)"
-              />
-
-              {/* 5. Rollback Redirect Curve back towards main timeline */}
-              <path
-                d="M 230 538 C 230 585, 330 585, 388 548"
-                fill="none"
-                stroke="#f59e0b"
-                strokeWidth="2"
-                strokeDasharray="4 4"
-                filter="url(#glow-amber)"
-                markerEnd="url(#arrow-amber)"
-              />
+              {/* 4. Solid red line from Error Circle bottom to Rollback Circle top */}
+              <line x1="230" y1="458" x2="230" y2="502" stroke="#ef4444" strokeWidth="2" />
 
               {/* Left Node 1: Deploy Bad Build Pill */}
               <g transform="translate(230, 285)">
@@ -272,15 +193,15 @@ export default function RusselPipelineGraph() {
 
               {/* Left Node 4: Instant Rollback Circle */}
               <g transform="translate(230, 520)">
-                <circle cx="0" cy="0" r="18" fill="#451a03" stroke="#f59e0b" strokeWidth="2" filter="url(#glow-amber)" />
-                <path d="M -4 -4 A 6 6 0 1 1 -5 3 M -5 -7 L -5 -3 L -1 -3" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <text x="32" y="5" fill="#fef08a" fontSize="13" fontFamily="sans-serif" fontWeight="bold" textAnchor="start">
+                <circle cx="0" cy="0" r="18" fill="#450a0a" stroke="#ef4444" strokeWidth="2" />
+                <path d="M -5 -5 L 5 5 M 5 -5 L -5 5" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
+                <text x="32" y="5" fill="#e4e4e7" fontSize="13" fontFamily="sans-serif" fontWeight="500" textAnchor="start">
                   Instant Rollback to v1.1
                 </text>
               </g>
             </g>
 
-            {/* TOP MAIN NODE: [ LIVE ] Production v1.0.0 */}
+            {/* TOP MAIN NODE: [ LIVE ] Production (v1.0.0) */}
             <g transform="translate(400, 36)">
               <rect x="-115" y="-20" width="230" height="40" rx="10" fill="#ffffff" stroke="#e4e4e7" strokeWidth="1" />
               <rect x="-107" y="-13" width="52" height="26" rx="5" fill="#10b981" />
