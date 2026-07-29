@@ -144,9 +144,11 @@ const CSS = `
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(ellipse 70% 55% at 72% 42%, oklch(0.24 0.07 145 / 0.22) 0%, transparent 58%),
-    radial-gradient(circle at 50% 100%, oklch(0.14 0.04 145 / 0.35) 0%, var(--bg-color) 70%);
+  background-color: var(--bg-color);
+  background-image:
+    linear-gradient(to right, oklch(0.18 0.028 145 / 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.18 0.028 145 / 0.14) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 .hero-section-grid::after {
@@ -259,56 +261,235 @@ const CSS = `
   color: var(--error);
 }
 
-.hero-secondary-actions {
+.hero-top-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid oklch(0.24 0.04 145);
+  background: oklch(0.08 0.02 145 / 0.85);
+  backdrop-filter: blur(8px);
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--ink-on-accent);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.hero-badge-text {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+  letter-spacing: -0.01em;
+}
+
+.hero-title-accent {
+  color: var(--accent);
+  font-size: clamp(28px, 4vw, 50px);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  text-shadow: 0 0 32px oklch(0.72 0.17 145 / 0.3);
+}
+
+.hero-title-main {
+  color: #ffffff;
+  font-size: clamp(34px, 5.2vw, 62px);
+  font-weight: 800;
+  display: block;
+}
+
+.hero-button-group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 14px;
+  margin-top: 24px;
+  margin-bottom: 12px;
 }
 
-.hero-why-btn {
+.hero-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 44px;
-  padding: 0 20px;
+  height: 48px;
+  padding: 0 28px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #040803;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 20px -2px rgba(255, 255, 255, 0.2);
+  transition: all 0.2s var(--ease-out);
+}
+
+.hero-btn-primary:hover,
+.hero-btn-primary:focus-visible {
+  color: #040803;
+  background: #f0fdf4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px -2px rgba(255, 255, 255, 0.35);
+}
+
+.hero-btn-primary .arr {
+  transition: transform 0.2s var(--ease-out);
+  font-weight: 700;
+}
+
+.hero-btn-primary:hover .arr {
+  transform: translateX(4px);
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 10px;
+  border: 1px solid oklch(0.24 0.04 145);
+  background: oklch(0.08 0.02 145 / 0.6);
+  color: var(--text-color);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s var(--ease-out);
+}
+
+.hero-btn-secondary:hover,
+.hero-btn-secondary:focus-visible {
+  color: #ffffff;
+  border-color: oklch(0.42 0.07 145);
+  background: oklch(0.12 0.03 145 / 0.8);
+  transform: translateY(-2px);
+}
+
+.hero-bottom-bar {
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  background: oklch(0.03 0.01 145 / 0.95);
+  backdrop-filter: blur(12px);
+  padding: 16px 28px;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-bottom-bar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.hero-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.hero-bottom-label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-faint);
+  letter-spacing: -0.01em;
+}
+
+.hero-bottom-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+}
+
+.hero-bottom-logos {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.hero-bottom-logos::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-bottom-logos img {
+  height: 22px;
+  width: auto;
+  opacity: 0.75;
+  filter: grayscale(0.2);
+  transition: opacity 0.2s var(--ease-out), filter 0.2s var(--ease-out);
+}
+
+.hero-bottom-logos img:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+.runtime-toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
   border-radius: 999px;
-  border: 1px solid var(--accent);
+  border: 1px solid oklch(0.24 0.04 145);
+  background: oklch(0.08 0.02 145);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s var(--ease-out);
+}
+
+.toggle-tab {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-faint);
+  transition: all 0.2s var(--ease-out);
+}
+
+.toggle-tab.active {
   background: var(--accent);
   color: var(--ink-on-accent);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  box-shadow:
-    0 1px 0 oklch(1 0 0 / 0.14) inset,
-    0 10px 28px -10px var(--accent-glow);
-  transition: filter 0.2s var(--ease-out), transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  box-shadow: 0 2px 8px -2px oklch(0.72 0.17 145 / 0.5);
 }
 
-.hero-why-btn:hover,
-.hero-why-btn:focus-visible {
-  /* Keep ink-on-accent — global main a:hover otherwise forces a light color */
-  color: var(--ink-on-accent);
-  filter: brightness(1.12);
-  transform: translateY(-1px);
-  box-shadow:
-    0 1px 0 oklch(1 0 0 / 0.18) inset,
-    0 14px 32px -10px var(--accent-glow);
-}
+@media (max-width: 900px) {
+  .hero-bottom-bar-inner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
 
-.hero-why-btn .arr {
-  transition: transform 0.2s var(--ease-out);
-  color: inherit;
-  font-weight: 700;
-}
+  .hero-bottom-left {
+    justify-content: center;
+  }
 
-.hero-why-btn:hover .arr {
-  transform: translateX(3px);
+  .hero-bottom-logos {
+    justify-content: center;
+  }
 }
 
 .hero-bench-col {
@@ -2014,20 +2195,40 @@ export default function PierreLanding() {
 				<AsciiBackground />
 				<div className="hero-inner">
 					<div className="hero-text-card">
+						<div className="hero-top-badge">
+							<span className="hero-badge-pill">R</span>
+							<span className="hero-badge-text">Open-Source Dual-Runtime Infrastructure</span>
+						</div>
 						<h1 className="hero-title">
-							Deploy without limits. Boot <span className="hero-gradient-text">FAST</span>. Stay in
-							control.
+							<span className="hero-title-accent">Deploy without limits.</span>
+							<span className="hero-title-main">
+								Boot <span className="hero-gradient-text">FAST</span>. Stay in control.
+							</span>
 						</h1>
 						<p className="hero-subhead">
 							One workflow for containers and microVMs. Reproducible builds. Containers for speed.
 							MicroVMs for security. Managed or self-hosted. Zero drift.
 						</p>
-						<div className="hero-secondary-actions">
-							<a className="hero-why-btn" href="/why">
-								Why Russel?
+						<div className="hero-button-group">
+							<a className="hero-btn-primary" href="/why">
+								Start Building Today
 								<span className="arr" aria-hidden="true">
 									→
 								</span>
+							</a>
+							<a
+								className="hero-btn-secondary"
+								href="#features"
+								onClick={(e) => {
+									e.preventDefault()
+									document.getElementById('features')?.scrollIntoView({
+										behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+											? 'auto'
+											: 'smooth'
+									})
+								}}
+							>
+								Read Docs
 							</a>
 						</div>
 						<button
@@ -2055,6 +2256,34 @@ export default function PierreLanding() {
 								<path d="M12 5v14M5 12l7 7 7-7" />
 							</svg>
 						</button>
+					</div>
+				</div>
+				<div className="hero-bottom-bar">
+					<div className="hero-bottom-bar-inner">
+						<div className="hero-bottom-left">
+							<span className="hero-bottom-label">Works perfectly with</span>
+							<span className="hero-bottom-divider" aria-hidden="true" />
+						</div>
+						<div className="hero-bottom-logos">
+							<img src={logoDocker} alt="Docker" title="Docker" />
+							<img src={logoRust} alt="Rust" title="Rust" />
+							<img src={logoGo} alt="Go" title="Go" />
+							<img src={logoLinux} alt="Linux" title="Linux" />
+							<img src={logoNixos} alt="NixOS" title="NixOS" />
+							<img src={logoK8s} alt="Kubernetes" title="Kubernetes" />
+							<img src={logoWasm} alt="Wasm" title="Wasm" />
+							<img src={logoRedis} alt="Redis" title="Redis" />
+						</div>
+						<div className="hero-bottom-toggle">
+							<button
+								className="runtime-toggle-pill"
+								onClick={() => setActiveRuntime((prev) => (prev === 'container' ? 'microvm' : 'container'))}
+								title="Toggle Mode"
+							>
+								<span className={`toggle-tab ${activeRuntime === 'container' ? 'active' : ''}`}>HUMAN</span>
+								<span className={`toggle-tab ${activeRuntime === 'microvm' ? 'active' : ''}`}>AGENT</span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
