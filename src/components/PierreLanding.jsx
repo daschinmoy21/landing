@@ -3,6 +3,7 @@ import AsciiBackground from './AsciiBackground.jsx'
 import AnimatedCardStack from './ui/animate-card-animation'
 import { CircuitBoard } from './ui/circuit-board'
 import ZeroDowntimeSwapDiagram from './ui/ZeroDowntimeSwapDiagram.jsx'
+import RusselPipelineGraph from './ui/RusselPipelineGraph.jsx'
 import { Box, Cpu, Server, Terminal, PackageCheck } from 'lucide-react'
 import './ui/SpecularButton.css'
 
@@ -386,20 +387,20 @@ const CSS = `
 .hero-bottom-bar {
   width: 100%;
   border-top: 1px solid var(--border-color);
-  background: oklch(0.03 0.01 145 / 0.95);
+  background: oklch(0.04 0.015 145 / 0.9);
   backdrop-filter: blur(12px);
-  padding: 16px 28px;
+  padding: 18px 28px;
   position: relative;
   z-index: 3;
 }
 
 .hero-bottom-bar-inner {
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  justify-content: center;
+  gap: 32px;
 }
 
 .hero-bottom-left {
@@ -410,11 +411,12 @@ const CSS = `
 }
 
 .hero-bottom-label {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--text-faint);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .hero-bottom-divider {
@@ -426,7 +428,7 @@ const CSS = `
 .hero-bottom-logos {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 32px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -436,50 +438,22 @@ const CSS = `
 }
 
 .hero-bottom-logos img {
-  height: 22px;
+  height: 26px;
   width: auto;
-  opacity: 0.75;
-  filter: grayscale(0.2);
-  transition: opacity 0.2s var(--ease-out), filter 0.2s var(--ease-out);
+  opacity: 0.85;
+  filter: brightness(1.1);
+  transition: all 0.2s var(--ease-out);
 }
 
 .hero-bottom-logos img:hover {
   opacity: 1;
-  filter: grayscale(0);
-}
-
-.runtime-toggle-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px;
-  border-radius: 999px;
-  border: 1px solid oklch(0.24 0.04 145);
-  background: oklch(0.08 0.02 145);
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.2s var(--ease-out);
-}
-
-.toggle-tab {
-  padding: 5px 14px;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-faint);
-  transition: all 0.2s var(--ease-out);
-}
-
-.toggle-tab.active {
-  background: var(--accent);
-  color: var(--ink-on-accent);
-  box-shadow: 0 2px 8px -2px oklch(0.72 0.17 145 / 0.5);
+  transform: scale(1.1);
 }
 
 @media (max-width: 900px) {
   .hero-bottom-bar-inner {
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     text-align: center;
   }
 
@@ -2301,16 +2275,6 @@ export default function PierreLanding() {
 							<img src={logoWasm} alt="Wasm" title="Wasm" />
 							<img src={logoRedis} alt="Redis" title="Redis" />
 						</div>
-						<div className="hero-bottom-toggle">
-							<button
-								className="runtime-toggle-pill"
-								onClick={() => setActiveRuntime((prev) => (prev === 'container' ? 'microvm' : 'container'))}
-								title="Toggle Mode"
-							>
-								<span className={`toggle-tab ${activeRuntime === 'container' ? 'active' : ''}`}>HUMAN</span>
-								<span className={`toggle-tab ${activeRuntime === 'microvm' ? 'active' : ''}`}>AGENT</span>
-							</button>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -2448,6 +2412,13 @@ export default function PierreLanding() {
 						</div>
 					</div>
 
+				</div>
+			</section>
+
+			{/* Isolated Branching Pipeline Section (InsForge Branch Visual) */}
+			<section className="pipeline-graph-section my-16" id="pipeline-graph">
+				<div className="section-inner">
+					<RusselPipelineGraph />
 				</div>
 			</section>
 
