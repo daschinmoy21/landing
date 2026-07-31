@@ -18,9 +18,7 @@ import Section from '../components/ui/Section.astro'
 import Hero from '../components/blocks/hero/SimpleHeroBasic.astro'
 import CTAPrimary from '../components/blocks/cta/CTAPrimary.astro'
 // - UI
-import Card from '../components/ui/cards/Card.astro'
 import DecorationBorder from '../components/ui/DecorationBorder.astro'
-import { Image } from 'astro:assets'
 
 // Content
 // - Formatting author slug like "john-doe" into "John Doe"
@@ -58,13 +56,14 @@ const CTA = {
 				<Row>
 					<Col span="12">
 						<div class="parallax h-96 w-full lg:h-[680px]">
-							<Image
+							<img
 								class="h-[calc(100%+50px)] w-full object-cover will-change-transform"
 								src={frontmatter.image}
 								alt={frontmatter.title}
+								width="1920"
+								height="1080"
 								loading="lazy"
 								decoding="async"
-								layout="constrained"
 							/>
 						</div>
 					</Col>

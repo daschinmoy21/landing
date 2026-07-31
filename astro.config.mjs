@@ -5,8 +5,8 @@ import lottie from "astro-integration-lottie";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
-import netlify from "@astrojs/netlify";
 
+// Static output (no adapter) — serve `dist/` with Caddy on your VPS (see Caddyfile)
 export default defineConfig({
   site: "https://russel.dev/",
   integrations: [
@@ -28,5 +28,4 @@ export default defineConfig({
       },
     },
   },
-  adapter: netlify(),
 });

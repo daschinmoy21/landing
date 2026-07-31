@@ -61,13 +61,30 @@ Modify JSON files in `src/data/json-files/` for content.
 
 Colors defined in `src/styles/global.css` under `@theme`.
 
-## Deployment
+## Deployment (Caddy on VPS)
 
-The project is natively optimized for **Netlify**. It uses the `@astrojs/netlify` adapter to automatically map Astro API endpoints and SSR routes directly into Netlify Edge Functions.
+This project builds as a **static site**. Serve `dist/` with [Caddy](https://caddyserver.com/) (auto HTTPS).
 
-To deploy:
-1. Push your repository to GitHub.
-2. Go to your Netlify dashboard and click **"Add New Site"** -> **"Import an existing project"**.
-3. Connect your GitHub account and select this repository.
-4. Netlify will automatically detect the Astro framework and apply the correct build settings (`npm run build` as the Build command, and `dist` as the publish directory).
-5. Click **"Deploy Site"**. Every push to the `main` branch will automatically trigger a new deployment.
+1. Set your production domain in `astro.config.mjs` (`site` is currently `https://russel.dev/`).
+2. Build (on the VPS or in CI), then copy `dist/` onto the server:
+
+```bash
+npm run build
+# e.g. rsync -avz --delete dist/ user@vps:/var/www/landing/dist/
+```
+
+3. Point Caddy at that directory. A ready-made config lives in `Caddyfile` — edit the domain and `root` path if needed, then:
+
+```bash
+# system-wide (Debian/Ubuntu-style)
+sudo cp Caddyfile /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+```
+
+Or run from the project root after editing `Caddyfile`:
+
+```bash
+caddy run --config Caddyfile
+```
+
+Caddy will obtain and renew TLS certificates for the domain automatically (ports 80/443 must be open, DNS A/AAAA records pointed at the VPS).

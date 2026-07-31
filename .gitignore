@@ -3,7 +3,6 @@ dist/
 
 # generated types
 .astro/
-.vercel/
 # dependencies
 node_modules/
 
@@ -22,9 +21,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-
-# Local Netlify folder
-.netlify
 
 # Local project files
 docs/
