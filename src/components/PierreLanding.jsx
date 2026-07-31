@@ -2205,19 +2205,8 @@ export default function PierreLanding() {
 									→
 								</span>
 							</a>
-							<a
-								className="hero-btn-secondary"
-								href="#features"
-								onClick={(e) => {
-									e.preventDefault()
-									document.getElementById('features')?.scrollIntoView({
-										behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-											? 'auto'
-											: 'smooth'
-									})
-								}}
-							>
-								Read Docs
+							<a className="hero-btn-secondary" href="/why">
+								Why Russel
 							</a>
 						</div>
 						<button
@@ -2486,11 +2475,6 @@ export default function PierreLanding() {
 				<div className="bench-visual-col">
 					<AnimatedCardStack />
 				</div>
-				<p className="bench-footnote">
-					Warm run benchmarks across 7 test workloads (HTTP server, env-config, hello-rust,
-					shortlink, static site, filebrowser). Russel container vs Russel microVM vs Podman
-					baseline.
-				</p>
 			</section>
 
 			{/* Centered CTA Section with Orbiting Logos */}
@@ -2599,15 +2583,6 @@ export default function PierreLanding() {
 						<span>Reproducible Builds</span>
 						<span className="divider">·</span>
 						<span>KVM Isolation</span>
-					</div>
-
-					<div className="hero-secondary-actions" style={{ justifyContent: 'center', marginTop: '28px' }}>
-						<a className="hero-why-btn" href="/why">
-							Why Russel?
-							<span className="arr" aria-hidden="true">
-								→
-							</span>
-						</a>
 					</div>
 				</div>
 			</section>
