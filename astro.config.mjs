@@ -21,7 +21,9 @@ export default defineConfig({
     resolve: {
       dedupe: ["react", "react-dom"],
     },
-    // Live mode writes session journals under .impeccable/ — do not HMR-reload on those.
+    optimizeDeps: {
+      include: ["react", "react-dom", "framer-motion", "lucide-react"],
+    },
     server: {
       watch: {
         ignored: ["**/.impeccable/**"],

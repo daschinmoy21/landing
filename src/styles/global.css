@@ -1,320 +1,186 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+@import url('https://db.onlinewebfonts.com/c/bb5de19d87c09a95216dc6ccd96e37c6?family=Nimbus+Sans+TW01');
 @import 'tailwindcss';
 
-/* @plugin "@tailwindcss/typography"; — package not installed */
-
-@source inline("{lg:,}col-{span-{1,2,3,4,5,6,7,8,9,10,11,12},span-mobile-{1,2,3,4,5,6,7,8,9,10,11,12}}");
-@source inline("{lg:,}col-span-{1,2,3,4,5,6,7,8,9,10,11,12}");
-@source inline("{lg:,}col-start-{1,2,3,4,5,6,7,8,9,10,11,12}");
-@source inline("{lg:,}h-{0,2,3,4,6,8,12,16,24,32}");
-@source inline("{lg:,}text-{xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,8xl,9xl}");
-@source inline("font-{thin,extralight,light,normal,medium,semibold,bold,extrabold,black}");
-@source inline("text-{left,center,right}");
-@source inline("{lg:,}gap-x-{0,6,8,12}");
-@source inline("{lg:,}gap-y-{0,6,8,12}");
-@source inline("{lg:,}gap-{0,6,8,12}");
-@source inline("{lg:,}max-w-none");
-
-@custom-variant dark (&:where(.dark, .dark *));
-
 :root {
-  --bg-color: #040803;
-  --bg-alt: #040803;
-  --text-color: oklch(0.90 0.008 145);
-  --text-muted: oklch(0.58 0.020 145);
-  --text-faint: oklch(0.36 0.015 145);
-  --border-color: oklch(0.11 0.022 145);
-  --border-subtle: oklch(0.08 0.015 145);
-  --card-bg: #0a1405;
-  --card-hover: oklch(0.13 0.030 145);
-  --accent: oklch(0.65 0.15 145);
-  --accent-soft: oklch(0.72 0.11 145);
-  --accent-muted: oklch(0.38 0.06 145);
-  --accent-glow: oklch(0.65 0.15 145 / 0.08);
-  --accent-alt: oklch(0.60 0.18 310);
-  --accent-alt-soft: oklch(0.70 0.12 310);
-  --accent-alt-muted: oklch(0.38 0.08 310);
-  --accent-alt-glow: oklch(0.60 0.18 310 / 0.08);
-  --success: oklch(0.65 0.15 145);
-  --error: oklch(0.50 0.14 25);
-  --focus-ring: var(--accent);
-  --selection-bg: oklch(0.68 0.16 145 / 0.2);
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Inter', sans-serif;
-}
-
-@utility container {
-	@apply relative z-1 mx-auto max-w-[96rem]! px-4 md:px-6 lg:px-8;
+  --font-sans: 'Nimbus Sans TW01', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @theme {
-	/* Container */
+  --font-sans: 'Nimbus Sans TW01', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-	/* Colors */
-	/* Primary - Green Matrix Theme */
-	--color-primary-50: oklch(98% 0.015 145);
-	--color-primary-100: oklch(95% 0.03 145);
-	--color-primary-200: oklch(90% 0.06 145);
-	--color-primary-300: oklch(83% 0.10 145);
-	--color-primary-400: oklch(75% 0.13 145);
-	--color-primary-500: oklch(68% 0.15 145);
-	--color-primary-600: oklch(60% 0.14 145);
-	--color-primary-700: oklch(50% 0.12 145);
-	--color-primary-800: oklch(40% 0.10 145);
-	--color-primary-900: oklch(30% 0.08 145);
-	--color-primary-950: oklch(20% 0.05 145);
-	/* Neutral - Green-tinted darks */
-	--color-neutral-50: oklch(98% 0.005 145);
-	--color-neutral-100: oklch(95% 0.005 145);
-	--color-neutral-200: oklch(88% 0.008 145);
-	--color-neutral-300: oklch(78% 0.01 145);
-	--color-neutral-400: oklch(65% 0.012 145);
-	--color-neutral-500: oklch(55% 0.012 145);
-	--color-neutral-600: oklch(45% 0.01 145);
-	--color-neutral-700: oklch(35% 0.01 145);
-	--color-neutral-800: oklch(20% 0.015 145);
-	--color-neutral-900: oklch(10% 0.02 145);
-	--color-neutral-950: #040803;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-stroke: #e2e8f0;
+  --color-muted: #64748b;
+  --color-text-primary: #0f172a;
+  --color-text-muted: #64748b;
 
-	/* Fonts */
-	--font-headings: 'JetBrains Mono', monospace;
-	--font-body: 'Inter', sans-serif;
+  --color-primary-50: #f0f7ff;
+  --color-primary-100: #e0effe;
+  --color-primary-200: #bae0fd;
+  --color-primary-300: #7cc8fb;
+  --color-primary-400: #36a9f7;
+  --color-primary-500: #89AACC;
+  --color-primary-600: #4E85BF;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
 
-	/* Spacing */
-	--spacing-15: 60px;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
 
-	/* Animations */
-	--animate-dropdown: dropdown 300ms ease-in-out forwards;
-	--animate-fadeUp: fadeUp 500ms ease-in-out forwards;
-	--animate-marquee: marquee 120s linear infinite;
-	--animate-marqueeFollowup: marqueefollowup 120s linear infinite;
-	--animate-pulsing: pulsing 8s ease-in-out infinite;
+  --animate-dropdown: dropdown 300ms ease-in-out forwards;
+  --animate-fadeUp: fadeUp 500ms ease-in-out forwards;
+  --animate-marquee: marquee 120s linear infinite;
+  --animate-marqueeFollowup: marqueefollowup 120s linear infinite;
+  --animate-pulsing: pulsing 8s ease-in-out infinite;
 
-	@keyframes dropdown {
-		0% {
-			transform: 'translateY(-1rem)';
-			opacity: 0;
-		}
-		100% {
-			transform: 'translateY(0)';
-			opacity: 1;
-		}
-	}
+  @keyframes dropdown {
+    0% {
+      transform: translateY(-1rem);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
-	@keyframes fadeInColorTransparentLight {
-		100% {
-			backdropfilter: 'blur(4px)';
-			background: 'rgba(255, 255, 255, .9)';
-		}
-	}
-	@keyframes fadeInColorTransparentDark {
-		100% {
-			backdropfilter: 'blur(4px)';
-			background: 'rgba(15, 23, 42, .9)';
-		}
-	}
-	@keyframes fadeInColorTransparentDark {
-		100% {
-			backdropfilter: 'blur(4px)';
-			background: 'rgba(15, 23, 42, .9)';
-		}
-	}
-	@keyframes marquee {
-		0% {
-			transform: translateX(0%);
-		}
-		100% {
-			transform: translateX(-100%);
-		}
-	}
+  @keyframes fadeUp {
+    0% {
+      transform: translateY(1rem);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
-	@keyframes marqueefollowup {
-		0% {
-			transform: translateX(100%);
-		}
-		100% {
-			transform: translateX(0%);
-		}
-	}
-	@keyframes fadeUp {
-		0% {
-			transform: 'translateY(1rem)';
-			opacity: 0;
-		}
-		100% {
-			transform: 'translateY(0)';
-			opacity: 1;
-		}
-	}
-	@keyframes pulsing {
-		0% {
-			transform: scale(1);
-		}
-		50% {
-			transform: scale(1.1);
-		}
-		100% {
-			transform: scale(1);
-		}
-	}
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes marqueefollowup {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes pulsing {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 }
 
-@font-face {
-	font-family: 'Clash-Display';
-	src:
-		url('/fonts/clashdisplay/ClashDisplay-Variable.woff2') format('woff2'),
-		url('/fonts/clashdisplay/ClashDisplay-Variable.woff') format('woff'),
-		url('/fonts/clashdisplay/ClashDisplay-Variable.ttf') format('truetype');
-	font-weight: 200 700;
-	font-display: swap;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Clash-Grotesk';
-	src:
-		url('/fonts/clashgrotesk/ClashGrotesk-Variable.woff2') format('woff2'),
-		url('/fonts/clashgrotesk/ClashGrotesk-Variable.woff') format('woff'),
-		url('/fonts/clashgrotesk/ClashGrotesk-Variable.ttf') format('truetype');
-	font-weight: 200 700;
-	font-display: swap;
-	font-style: normal;
-}
-/* Layout rules */
 html {
-	@apply scroll-smooth antialiased;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
+
 body {
-	@apply font-body bg-[#040803] text-base leading-7 text-[oklch(0.85_0.01_145)] selection:bg-[oklch(0.68_0.16_145_/_0.2)] selection:text-white has-[.header\_\_menu--open]:overflow-hidden lg:has-[.header\_\_menu--open]:overflow-auto;
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
-/* Main typography */
-p {
-	@apply mb-6 last:mb-0 text-[oklch(0.72_0.01_145)];
+::selection {
+  background-color: #0f172a;
+  color: #ffffff;
 }
-.text-lead {
-	@apply text-[21px] leading-9 font-light text-[oklch(0.80_0.01_145)];
+::-moz-selection {
+  background-color: #0f172a;
+  color: #ffffff;
 }
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
-	@apply font-headings text-white last:mb-0;
-}
-h1 strong,
-h2 strong,
-h3 strong,
-h4 strong,
-h5 strong,
-h6 strong {
-	font-weight: inherit;
-}
-h1,
-.h1,
-h2,
-.h2 {
-	@apply mb-6 font-medium;
+*::selection {
+  background-color: #0f172a;
+  color: #ffffff;
 }
 
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
-	@apply mb-4 font-medium;
+/* Custom animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
-h1,
-.h1 {
-	@apply text-5xl leading-14 md:text-7xl md:leading-20 lg:text-[5.375rem] lg:leading-24 lg:tracking-[-2px];
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-h2,
-.h2 {
-	@apply text-4xl lg:text-[4rem] lg:leading-18;
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(64px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-h3,
-.h3 {
-	@apply text-2xl lg:leading-9;
+.animate-fade-up {
+  animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-h4,
-.h4 {
-	@apply text-lg leading-8 lg:text-xl;
+.animate-fade-down {
+  animation: fade-down 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-h5,
-.h5 {
-	@apply text-sm leading-6 font-normal tracking-wider text-neutral-500 uppercase dark:text-neutral-400;
+.animate-hero-rise {
+  animation: hero-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-h6,
-.h6 {
-	@apply text-base lg:text-lg;
-}
-/* Content links only — skip buttons / branded CTAs that set their own colors */
-main a:not([class*='btn']):not([class*='button']):not(.brand):not(.why-brand) {
-	@apply text-primary-500 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-400;
-}
-.small {
-	@apply text-sm font-normal text-neutral-400 dark:text-neutral-500;
-}
-blockquote,
-.blockquote {
-	@apply font-headings text-2xl leading-12 font-light lg:text-4xl lg:leading-14;
-}
-
-ul li,
-ol li {
-	@apply marker:text-primary-700 dark:marker:text-primary-300 mb-2 ml-4 pl-2;
-}
-ul li {
-	@apply list-disc marker:font-medium;
-}
-ol li {
-	@apply list-decimal;
-}
-form input {
-	@apply relative mb-6 h-12 w-full border border-neutral-200 px-4 text-neutral-700 placeholder-transparent transition-all outline-none autofill:bg-white invalid:border-red-500 invalid:text-red-500 focus:border-neutral-500 focus:outline-none invalid:focus:border-red-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-neutral-50 disabled:text-neutral-400 dark:border-neutral-800 dark:bg-neutral-900 dark:autofill:bg-neutral-900 dark:disabled:bg-neutral-600;
-}
-form textarea {
-	@apply relative mb-6 w-full border border-neutral-200 px-4 text-neutral-700 placeholder-transparent -backdrop-hue-rotate-30 transition-all outline-none autofill:bg-white invalid:border-red-500 invalid:text-red-500 focus:border-neutral-500 focus:outline-none invalid:focus:border-red-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-neutral-50 disabled:text-neutral-400 dark:border-neutral-800 dark:bg-neutral-900 dark:autofill:bg-neutral-800 dark:disabled:bg-neutral-600;
-}
-form label {
-	@apply font-headings text-sm;
-}
-form button {
-	@apply inline-flex h-12 cursor-pointer items-center justify-center gap-2 bg-neutral-900 bg-[url('/bgs/dark.webp')] bg-size-[200px] px-6 text-sm font-medium tracking-wide whitespace-nowrap text-white transition duration-300 hover:bg-neutral-950 focus:bg-neutral-950 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-neutral-300 disabled:bg-neutral-300 disabled:shadow-none;
-}
-
-/* Global basic styling */
-.basic-text {
-	@apply [&_blockquote_p]:font-headings [&_blockquote]:relative [&_blockquote]:mb-8 [&_blockquote]:border [&_blockquote]:border-[#E7E5E4] [&_blockquote]:bg-neutral-50/30 [&_blockquote]:py-24 [&_blockquote]:transition-colors [&_blockquote]:duration-400 [&_blockquote]:before:absolute [&_blockquote]:before:top-4 [&_blockquote]:before:left-7.5 [&_blockquote]:before:z-0 [&_blockquote]:before:block [&_blockquote]:before:h-12 [&_blockquote]:before:text-7xl [&_blockquote]:before:content-[url('/assets/quotemark.webp')] [&_blockquote]:dark:border-neutral-700 [&_blockquote]:dark:bg-neutral-900/40 [&_blockquote_p]:bg-neutral-50 [&_blockquote_p]:text-2xl [&_blockquote_p]:leading-12 [&_blockquote_p]:text-neutral-950 [&_blockquote_p]:lg:text-3xl [&_blockquote_p]:dark:border-neutral-700! [&_blockquote_p]:dark:bg-neutral-900 [&_blockquote_p]:dark:text-neutral-50 [&_blockquote>p]:border-y [&_blockquote>p]:border-dashed [&_blockquote>p]:border-[#E7E5E4] [&_blockquote>p]:p-8! [&_h1:not(:first-child)]:mt-12 [&_h2:not(:first-child)]:mt-12 [&_h3:not(:first-child)]:mask-t-to-12 [&_h4:not(:first-child)]:mt-12 [&_img]:rounded-sm [&_img]:border [&_img]:border-neutral-100 dark:[&_img]:border-neutral-600 [&_li]:mb-2 [&_li]:ml-4 [&_li]:pl-2 [&_li]:text-neutral-700 [&_li]:marker:text-neutral-500 [&_li]:dark:text-neutral-400 [&_li]:dark:marker:text-neutral-400 [&_ol_li]:list-decimal [&_pre]:mb-6 [&_pre]:rounded-sm [&_pre]:border [&_pre]:border-neutral-950 [&_pre]:bg-neutral-800! [&_pre]:p-6 [&_pre]:text-base [&_pre]:outline-hidden [&_pre]:dark:border-neutral-800! [&_pre]:dark:bg-neutral-900! [&_ul_li]:list-disc [&_ul_li]:marker:font-medium;
-}
-
-/* Scroll animations */
-/* To disable scroll animations remove the class "scroll-animation" from root html in the layout file. To make a col not scroll animated add the class "no-scroll-animation" */
-.scroll-animation .col:not(.no-scroll-animation),
-.scroll-animation .scroll-animate {
-	@apply translate-y-2 scale-y-99 transform opacity-0 blur-sm transition-all duration-1000 nth-1:delay-50 nth-10:delay-1300 nth-11:delay-1450 nth-12:delay-1600 nth-2:delay-200 nth-3:delay-350 nth-4:delay-400 nth-5:delay-550 nth-6:delay-700 nth-7:delay-850 nth-8:delay-1000 nth-9:delay-1150 [&.scroll-animated]:translate-y-0 [&.scroll-animated]:scale-y-100 [&.scroll-animated]:opacity-100 [&.scroll-animated]:blur-none;
-}
-
-/* Disable all transitions/animations while the html has .disable-transitions */
-html.disable-transitions *,
-html.disable-transitions *::before,
-html.disable-transitions *::after {
-	transition: none !important;
-	animation: none !important;
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-down,
+  .animate-hero-rise {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }

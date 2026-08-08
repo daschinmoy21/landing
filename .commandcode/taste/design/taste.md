@@ -1,0 +1,13 @@
+# design
+- Prefers systematic application of visual changes across all routes/pages — when a styling fix is made to one page, the same treatment should propagate to every page that shares the same surface. Confidence: 0.80
+- Prefers navbar brand text to use pure white rather than a tinted off-white. Confidence: 0.95
+- When supplying a visual asset, prefers it to be used directly at the requested filename/path rather than replaced with a fallback or approximation. Confidence: 0.95
+- Prefers high-contrast, readable text selection styling (dark background with light text) over low-contrast white-on-white selection that renders selected text unreadable. Confidence: 0.88
+- Prefers the hero section to serve as the canonical visual style with the rest of the site matching its light, airy palette rather than diverging into mismatched dark sections. Confidence: 0.90
+- Prefers a text-only wordmark for the brand (no accompanying icon/logo graphic) in the navbar. Confidence: 0.85
+- Prefers simple, minimal, static layouts with direct technical presentation over complex interactive patterns — explicitly dislikes click-to-open cards and excessive moving parts. Confidence: 0.92
+- Prefers benchmarks section to include a toggle to compare different deployment targets. Confidence: 0.88
+- Prefers code examples shown as tabs switching between Russel CLI and Russelfile. Confidence: 0.88
+- Prefers deployment pipeline visualization to be animated rather than static, while keeping the overall aesthetic aligned with the hero. Confidence: 0.85
+- Prefers the sky blue/grasslands theme from the hero background image to be used consistently across the rest of the site for visual continuity. Confidence: 0.90
+- Dislikes plain all-white backgrounds for below-hero sections; prefers gradients or other styled backgrounds that extend the hero's visual language for continuity. Confidence: 0.85

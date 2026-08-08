@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.2",
     "gsap": "^3.15.0",
+    "hls.js": "^1.6.17",
     "lottie-web": "^5.13.0",
     "lucide-react": "^1.26.0",
     "ogl": "^1.0.11",
@@ -42,5 +43,9 @@
   "devDependencies": {
     "@astrojs/partytown": "^2.1.7",
     "@tailwindcss/typography": "^0.5.15"
+  },
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
   }
 }

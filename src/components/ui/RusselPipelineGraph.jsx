@@ -31,8 +31,8 @@ export default function RusselPipelineGraph() {
 					<span className="text-zinc-400">Release flow</span>
 					<span className="flex flex-wrap items-center gap-x-4 gap-y-1">
 						<span className="inline-flex items-center gap-1.5">
-							<span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-							<span className="text-emerald-500/80">live spine</span>
+							<span className="h-1.5 w-1.5 rounded-full bg-zinc-100" />
+							<span className="text-zinc-300/90">live spine</span>
 						</span>
 						<span className="inline-flex items-center gap-1.5">
 							<span className="h-px w-3 bg-emerald-500/80" />
@@ -71,10 +71,11 @@ export default function RusselPipelineGraph() {
 										<feMergeNode in="SourceGraphic" />
 									</feMerge>
 								</filter>
+								{/* Main production trunk — white/neutral, not green */}
 								<linearGradient id="live-spine" x1="0" y1="0" x2="0" y2="1">
-									<stop offset="0%" stopColor="#10b981" stopOpacity="0.9" />
-									<stop offset="45%" stopColor="#34d399" stopOpacity="1" />
-									<stop offset="100%" stopColor="#10b981" stopOpacity="0.9" />
+									<stop offset="0%" stopColor="#f4f4f5" stopOpacity="0.55" />
+									<stop offset="45%" stopColor="#fafafa" stopOpacity="0.95" />
+									<stop offset="100%" stopColor="#e4e4e7" stopOpacity="0.6" />
 								</linearGradient>
 								<marker
 									id="arrow-gray"
@@ -111,15 +112,15 @@ export default function RusselPipelineGraph() {
 								</marker>
 							</defs>
 
-							{/* ===== CENTER SPINE: production never stops ===== */}
+							{/* ===== CENTER SPINE: production never stops (white trunk) ===== */}
 							<line
 								x1="440"
 								y1="52"
 								x2="440"
 								y2="575"
-								stroke="#10b981"
+								stroke="#fafafa"
 								strokeWidth="12"
-								opacity="0.07"
+								opacity="0.06"
 							/>
 							<line
 								x1="440"
@@ -128,7 +129,6 @@ export default function RusselPipelineGraph() {
 								y2="575"
 								stroke="url(#live-spine)"
 								strokeWidth="3"
-								filter="url(#glow-emerald)"
 							/>
 
 							{/* Top LIVE pill */}
@@ -170,12 +170,12 @@ export default function RusselPipelineGraph() {
 							{/* Spine markers — labels LEFT so right branch stays clear */}
 							{/* A: v1.0.0 */}
 							<g transform="translate(440, 88)">
-								<circle cx="0" cy="0" r="7" fill="#022c22" stroke="#10b981" strokeWidth="2" />
-								<circle cx="0" cy="0" r="3" fill="#34d399" />
+								<circle cx="0" cy="0" r="7" fill="#18181b" stroke="#f4f4f5" strokeWidth="2" />
+								<circle cx="0" cy="0" r="3" fill="#fafafa" />
 								<text
 									x="-14"
 									y="4"
-									fill="#a7f3d0"
+									fill="#e4e4e7"
 									fontSize="11"
 									fontFamily="ui-monospace, monospace"
 									fontWeight="600"
@@ -191,16 +191,15 @@ export default function RusselPipelineGraph() {
 									cx="0"
 									cy="0"
 									r="10"
-									fill="#022c22"
-									stroke="#34d399"
+									fill="#18181b"
+									stroke="#fafafa"
 									strokeWidth="2.5"
-									filter="url(#glow-emerald)"
 								/>
-								<circle cx="0" cy="0" r="4" fill="#6ee7b7" />
+								<circle cx="0" cy="0" r="4" fill="#fff" />
 								<text
 									x="-16"
 									y="-2"
-									fill="#6ee7b7"
+									fill="#f4f4f5"
 									fontSize="12"
 									fontFamily="ui-monospace, monospace"
 									fontWeight="700"
@@ -222,12 +221,12 @@ export default function RusselPipelineGraph() {
 
 							{/* C: still live after failed attempt — labels on RIGHT so they never collide with reject path */}
 							<g transform="translate(440, 560)">
-								<circle cx="0" cy="0" r="7" fill="#022c22" stroke="#10b981" strokeWidth="2" />
-								<circle cx="0" cy="0" r="3" fill="#34d399" />
+								<circle cx="0" cy="0" r="7" fill="#18181b" stroke="#f4f4f5" strokeWidth="2" />
+								<circle cx="0" cy="0" r="3" fill="#fafafa" />
 								<text
 									x="14"
 									y="-2"
-									fill="#a7f3d0"
+									fill="#e4e4e7"
 									fontSize="11"
 									fontFamily="ui-monospace, monospace"
 									fontWeight="600"
