@@ -126,19 +126,6 @@ export const QuoteSection: React.FC = () => {
         <img src={CLOUD} alt="" className="w-full h-auto block" loading="lazy" />
       </div>
 
-      {/* Center quote */}
-      <div className="relative z-20 h-full flex items-center justify-center px-6 md:px-10">
-        <div className="max-w-4xl text-center">
-          <p className="font-instrument text-white text-xl sm:text-2xl md:text-4xl lg:text-[42px] leading-[1.45] md:leading-[1.5] text-glow">
-            “Serene was founded on a belief in beauty that honors your nature. We pursue refined outcomes, considered
-            approaches, and lasting vitality. We spend time learning what matters to you before deciding what serves you
-            best. No rushing, no excess — just support that lets you feel radiant.”
-          </p>
-          <p className="mt-6 md:mt-8 text-white/80 text-sm md:text-base tracking-wide">
-            Dr. Mia Callahan — Founder
-          </p>
-        </div>
-      </div>
     </section>
   );
 };
