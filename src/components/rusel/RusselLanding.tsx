@@ -19,9 +19,9 @@ export const RusselLanding: React.FC = () => {
       {/* Fixed animated gradient-wave background — visible below hero, hero covers it */}
       <div className="fixed inset-0 z-0" aria-hidden>
         <GradientWaves
-          horizonColor="#071428"
-          waveColor="#134B6A"
-          crestColor="#9ED1EA"
+          horizonColor="#0F2E4E"
+          waveColor="#3A8DB5"
+          crestColor="#9CD3EC"
           speed={0.22}
           amplitude={3.2}
           waveScale={0.62}
@@ -40,7 +40,7 @@ export const RusselLanding: React.FC = () => {
           grain={true}
           grainIntensity={0.04}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#010A17]/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F2E4E]/15 via-transparent to-transparent" />
       </div>
 
       <main className="relative z-10">

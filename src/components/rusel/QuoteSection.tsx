@@ -85,7 +85,7 @@ export const QuoteSection: React.FC = () => {
       ref={sectionRef}
       className="relative h-screen overflow-hidden"
       style={{
-        background: 'linear-gradient(180deg, #010A17 0%, #0A4267 30%, #20658E 60%, #6BADC4 100%)',
+        background: 'linear-gradient(180deg, #0F2E4E 0%, #1A5C84 30%, #3A8DB5 60%, #9CD3EC 100%)',
       }}
       aria-label="Russel quote"
     >
