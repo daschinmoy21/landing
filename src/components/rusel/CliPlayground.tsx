@@ -38,19 +38,18 @@ ssl = true`;
   };
 
   return (
-    <section id="cli" className="relative overflow-hidden py-16 md:py-24 border-t border-slate-200/40">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-50/25 via-transparent to-emerald-50/12" />
+    <section id="cli" className="relative overflow-hidden py-16 md:py-24">
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8 bg-slate-300" />
-            <span className="text-xs tracking-[0.22em] font-mono text-slate-500">DEVELOPER ERGONOMICS</span>
+            <span className="h-px w-8 bg-white/30" />
+            <span className="text-xs tracking-[0.22em] font-mono text-white/70">DEVELOPER ERGONOMICS</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-slate-900">
-            One surface, <span className="text-slate-500">both runtimes.</span>
+          <h2 className="font-instrument font-normal tracking-tight text-white text-3xl sm:text-4xl md:text-5xl">
+            One surface, <span className="italic text-white/80">both runtimes.</span>
           </h2>
-          <p className="text-[15px] leading-relaxed text-slate-600 mt-3">
-            Declarative <span className="font-mono text-slate-900">Russelfile.toml</span> or imperative <span className="font-mono text-slate-900">russel-cli</span>. Same control plane for containers and microVMs.
+          <p className="text-[15px] leading-relaxed text-white/70 mt-3">
+            Declarative <span className="font-mono text-white">Russelfile.toml</span> or imperative <span className="font-mono text-white">russel-cli</span>. Same control plane for containers and microVMs.
           </p>
         </div>
 
@@ -59,18 +58,18 @@ ssl = true`;
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-5 rounded-3xl bg-white/85 backdrop-blur-sm border border-slate-200/70 p-6 shadow-sm"
+            className="lg:col-span-5 rounded-3xl liquid-glass p-6"
           >
-            <h3 className="text-sm font-semibold tracking-tight text-slate-900">Manifest</h3>
-            <div className="mt-4 space-y-4">
+            <h3 className="relative z-10 text-sm font-semibold tracking-tight text-white">Manifest</h3>
+            <div className="relative z-10 mt-4 space-y-4">
               <div>
-                <div className="text-[11px] font-mono tracking-wide text-slate-500 mb-1.5">ISOLATION</div>
-                <div className="grid grid-cols-2 gap-2 rounded-2xl bg-slate-50 p-1 border border-slate-200">
+                <div className="text-[11px] font-mono tracking-wide text-white/60 mb-1.5">ISOLATION</div>
+                <div className="grid grid-cols-2 gap-2 rounded-2xl bg-white/10 p-1 border border-white/15">
                   {(['microvm', 'container'] as const).map((r) => (
                     <button
                       key={r}
                       onClick={() => setRuntime(r)}
-                      className={`rounded-xl px-3 py-2 text-xs font-mono border transition-colors cursor-pointer ${runtime === r ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+                      className={`rounded-xl px-3 py-2 text-xs font-mono border backdrop-blur-sm transition-colors cursor-pointer ${runtime === r ? 'bg-white text-[#010A17] border-white' : 'bg-white/10 text-white/80 border-white/15 hover:bg-white/15'}`}
                     >
                       {r === 'microvm' ? 'microVM (KVM)' : 'Container (Podman)'}
                     </button>
@@ -79,19 +78,19 @@ ssl = true`;
               </div>
 
               <label className="block">
-                <span className="text-[11px] font-mono tracking-wide text-slate-500">SERVICE</span>
-                <input value={svc} onChange={(e) => setSvc(e.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-mono text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-300" />
+                <span className="text-[11px] font-mono tracking-wide text-white/60">SERVICE</span>
+                <input value={svc} onChange={(e) => setSvc(e.target.value)} className="mt-1.5 w-full rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm px-3 py-2.5 text-sm font-mono text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/20" />
               </label>
 
               <label className="block">
-                <span className="text-[11px] font-mono tracking-wide text-slate-500">PORTS (HOST:GUEST)</span>
-                <input value={port} onChange={(e) => setPort(e.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10" />
+                <span className="text-[11px] font-mono tracking-wide text-white/60">PORTS (HOST:GUEST)</span>
+                <input value={port} onChange={(e) => setPort(e.target.value)} className="mt-1.5 w-full rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm px-3 py-2.5 text-sm font-mono text-white focus:outline-none focus:ring-2 focus:ring-white/20" />
               </label>
 
               <div className="grid grid-cols-2 gap-3">
                 <label className="block">
-                  <span className="text-[11px] font-mono tracking-wide text-slate-500">vCPUS</span>
-                  <select value={cpus} onChange={(e) => setCpus(e.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10">
+                  <span className="text-[11px] font-mono tracking-wide text-white/60">vCPUS</span>
+                  <select value={cpus} onChange={(e) => setCpus(e.target.value)} className="mt-1.5 w-full rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm px-3 py-2.5 text-sm font-mono text-white focus:outline-none focus:ring-2 focus:ring-white/20">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="4">4</option>
@@ -99,8 +98,8 @@ ssl = true`;
                   </select>
                 </label>
                 <label className="block">
-                  <span className="text-[11px] font-mono tracking-wide text-slate-500">MEMORY</span>
-                  <select value={mem} onChange={(e) => setMem(e.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10">
+                  <span className="text-[11px] font-mono tracking-wide text-white/60">MEMORY</span>
+                  <select value={mem} onChange={(e) => setMem(e.target.value)} className="mt-1.5 w-full rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm px-3 py-2.5 text-sm font-mono text-white focus:outline-none focus:ring-2 focus:ring-white/20">
                     <option value="256M">256 MiB</option>
                     <option value="512M">512 MiB</option>
                     <option value="1GiB">1 GiB</option>
@@ -115,7 +114,7 @@ ssl = true`;
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 rounded-3xl bg-slate-900 border border-slate-800 overflow-hidden shadow-sm flex flex-col"
+            className="lg:col-span-7 rounded-3xl bg-[#010A17]/60 backdrop-blur-xl border border-white/15 overflow-hidden flex flex-col"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/[0.03]">
               <div className="flex items-center gap-2">
@@ -127,14 +126,14 @@ ssl = true`;
                     <button
                       key={k}
                       onClick={() => setTab(k)}
-                      className={`px-3 py-1 rounded-full text-[11px] font-mono cursor-pointer ${tab === k ? 'bg-white text-slate-900' : 'text-white/70 hover:text-white'}`}
+                      className={`px-3 py-1 rounded-full text-[11px] font-mono cursor-pointer ${tab === k ? 'bg-white text-[#010A17]' : 'text-white/70 hover:text-white'}`}
                     >
                       {k === 'cli' ? 'russel-cli' : 'Russelfile.toml'}
                     </button>
                   ))}
                 </div>
               </div>
-              <button onClick={() => copy(tab === 'cli' ? cmd : toml)} className="text-xs font-mono px-3 py-1.5 rounded-full bg-white text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer">
+              <button onClick={() => copy(tab === 'cli' ? cmd : toml)} className="text-xs font-mono px-3 py-1.5 rounded-full bg-white text-[#010A17] hover:bg-white/90 transition-colors cursor-pointer">
                 {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
@@ -143,9 +142,9 @@ ssl = true`;
               {tab === 'cli' ? (
                 <div className="space-y-3">
                   <div className="text-white/60"># Deploy via control plane</div>
-                  <div className="text-sky-300 whitespace-pre-wrap break-words">{cmd}</div>
-                  <div className="pt-3 text-emerald-300 space-y-1">
-                    <div>[+] Resolving Nix derivations…</div>
+                  <div className="text-sky-200 whitespace-pre-wrap break-words">{cmd}</div>
+                  <div className="pt-3 text-emerald-200 space-y-1">
+                    <div>[+] Resolving derivations…</div>
                     <div>[+] Building closure /nix/store/a89f…</div>
                     <div>[+] Booting {runtime === 'microvm' ? 'Cloud Hypervisor' : 'Podman'} ({cpus} vCPU, {mem})</div>
                     <div>[+] TAP ready · 10G virtio-net</div>
@@ -153,13 +152,13 @@ ssl = true`;
                   </div>
                 </div>
               ) : (
-                <pre className="text-slate-100 whitespace-pre-wrap break-words">{toml}</pre>
+                <pre className="text-sky-100 whitespace-pre-wrap break-words">{toml}</pre>
               )}
             </div>
 
             <div className="px-4 py-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-white/60">
               <span>target 127.0.0.1:7878</span>
-              <span className="text-emerald-300">100% zero-drift closure</span>
+              <span className="text-emerald-200">100% zero-drift closure</span>
             </div>
           </motion.div>
         </div>
