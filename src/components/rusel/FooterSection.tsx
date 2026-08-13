@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hls from 'hls.js';
-import gsap from 'gsap';
 
 export const FooterSection: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const marqueeRef = useRef<HTMLDivElement>(null);
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -35,45 +33,17 @@ export const FooterSection: React.FC = () => {
     };
   }, []);
 
-  // GSAP Infinite Marquee Animation
-  useEffect(() => {
-    if (!marqueeRef.current) return;
-
-    const marquee = marqueeRef.current;
-    const animation = gsap.to(marquee, {
-      xPercent: -50,
-      duration: 40,
-      ease: 'none',
-      repeat: -1,
-    });
-
-    return () => {
-      animation.kill();
-    };
-  }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes('@')) return;
     setSubmitted(true);
   };
 
-  const MARQUEE_TEXT = 'HARDWARE ISOLATION • DETERMINISTIC NIX • ZERO DRIFT • DUAL RUNTIME • OPEN SOURCE • ';
-  const REPEATED_MARQUEE = MARQUEE_TEXT.repeat(10);
-
   return (
     <footer
       id="waitlist"
       className="pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden relative"
     >
-      <div className="relative z-10 mb-16 w-full select-none overflow-hidden border-y border-[#214b65]/15 bg-white/35 py-4 backdrop-blur-sm">
-        <div ref={marqueeRef} className="whitespace-nowrap inline-block flex items-center">
-          <span className="font-instrument italic text-2xl sm:text-3xl md:text-4xl text-[#315a71]/70 tracking-widest uppercase">
-            {REPEATED_MARQUEE}
-          </span>
-        </div>
-      </div>
-
       <div className="relative z-10 max-w-2xl mx-auto px-6 text-center mb-20">
         <span className="text-xs text-[#52768a] uppercase tracking-[0.3em] font-mono mb-4 inline-block">
           OPEN SOURCE
