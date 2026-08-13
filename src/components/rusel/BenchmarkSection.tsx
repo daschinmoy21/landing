@@ -35,13 +35,13 @@ export const BenchmarkSection: React.FC = () => {
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8 bg-white/30" />
-            <span className="text-xs tracking-[0.22em] font-mono text-white/70">BENCHMARKS</span>
+            <span className="h-px w-8 bg-[#315a71]/45" />
+            <span className="text-xs tracking-[0.22em] font-mono text-[#52768a]">BENCHMARKS</span>
           </div>
-          <h2 className="font-instrument font-normal tracking-tight text-white text-3xl sm:text-4xl md:text-5xl">
-            Isolation costs — <span className="italic text-white/80">measured.</span>
+          <h2 className="font-instrument font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-5xl">
+            Isolation costs — <span className="italic text-[#3e7895]">measured.</span>
           </h2>
-          <p className="text-[15px] leading-relaxed text-white/70 mt-3">
+          <p className="text-[15px] leading-relaxed text-[#4d6176] mt-3">
             Spawn-to-ready on bare metal. Toggle workloads to compare KVM microVMs vs rootless Podman.
           </p>
         </div>
@@ -51,38 +51,38 @@ export const BenchmarkSection: React.FC = () => {
             <button
               key={w.name}
               onClick={() => setSel(w)}
-              className={`px-3.5 py-2 rounded-full text-xs font-mono border backdrop-blur-sm transition-colors cursor-pointer ${sel.name === w.name ? 'bg-white text-[#010A17] border-white' : 'bg-white/10 text-white/80 border-white/15 hover:bg-white/15'}`}
+              className={`px-3.5 py-2 rounded-full text-xs font-mono border backdrop-blur-sm transition-colors cursor-pointer ${sel.name === w.name ? 'bg-[#14233c] text-white border-[#14233c] shadow-[0_8px_18px_rgba(20,35,60,0.16)]' : 'bg-white/55 text-[#52768a] border-white/75 hover:bg-white/80'}`}
             >
               {w.name}
             </button>
           ))}
         </div>
-        <p className="mt-3 text-xs font-mono text-white/70 bg-white/10 border border-white/15 rounded-xl px-3 py-2 max-w-2xl backdrop-blur-sm">
+        <p className="mt-3 text-xs font-mono text-[#52768a] bg-white/45 border border-white/70 rounded-xl px-3 py-2 max-w-2xl backdrop-blur-sm">
           {sel.desc}
         </p>
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-7 rounded-3xl liquid-glass p-6">
             <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/15">
-              <span className="text-xs font-mono tracking-wide text-white/70 uppercase">Spawn-to-ready · ms</span>
-              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">WARM</span>
+              <span className="text-xs font-mono tracking-wide text-[#52768a] uppercase">Spawn-to-ready · ms</span>
+              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-white/55 text-[#315a71] border border-white/75 backdrop-blur-sm">WARM</span>
             </div>
 
             <div className="mt-6 space-y-6 relative z-10">
               {[
-                { label: 'Russel microVM · KVM', val: sel.microvm, color: 'bg-sky-400', dot: 'bg-sky-400' },
-                { label: 'Russel container · Podman', val: sel.container, color: 'bg-violet-300', dot: 'bg-violet-300' },
-                { label: 'Podman baseline', val: sel.podman, color: 'bg-white/60', dot: 'bg-white/60', muted: true },
+                { label: 'Russel microVM · KVM', val: sel.microvm, color: 'bg-[#3a9a72]', dot: 'bg-[#3a9a72]' },
+                { label: 'Russel container · Podman', val: sel.container, color: 'bg-[#4e9fc3]', dot: 'bg-[#4e9fc3]' },
+                { label: 'Podman baseline', val: sel.podman, color: 'bg-[#9eb2bd]', dot: 'bg-[#9eb2bd]', muted: true },
               ].map((row) => (
                 <div key={row.label}>
                   <div className="flex justify-between text-xs font-mono mb-2">
-                    <span className={`flex items-center gap-2 ${row.muted ? 'text-white/60' : 'text-white'}`}>
+                    <span className={`flex items-center gap-2 ${row.muted ? 'text-[#708599]' : 'text-[#315a71]'}`}>
                       <span className={`w-2 h-2 rounded-full ${row.dot} inline-block`} />
                       {row.label}
                     </span>
-                    <span className={`font-bold ${row.muted ? 'text-white/60' : row.dot === 'bg-sky-400' ? 'text-sky-200' : 'text-violet-200'}`}>{row.val}ms</span>
+                    <span className={`font-bold ${row.muted ? 'text-[#708599]' : row.dot === 'bg-[#3a9a72]' ? 'text-[#2d805e]' : 'text-[#2c779c]'}`}>{row.val}ms</span>
                   </div>
-                  <div className="h-2.5 bg-white/10 rounded-full overflow-hidden border border-white/15">
+                  <div className="h-2.5 bg-[#d7eaf0]/75 rounded-full overflow-hidden border border-white/70">
                     <motion.div
                       key={`${sel.name}-${row.label}`}
                       initial={{ width: 0 }}
@@ -94,27 +94,27 @@ export const BenchmarkSection: React.FC = () => {
                 </div>
               ))}
             </div>
-            <div className="relative z-10 mt-6 rounded-xl bg-white/10 border border-white/15 px-3 py-2.5 text-xs leading-relaxed text-white/70 font-mono backdrop-blur-sm">
+            <div className="relative z-10 mt-6 rounded-xl bg-white/45 border border-white/70 px-3 py-2.5 text-xs leading-relaxed text-[#52768a] font-mono backdrop-blur-sm">
               microVM includes CH init + virtiofs + guest kernel boot. Container is direct rootfs bind. Measured @ 50-concurrent HTTP.
             </div>
           </div>
 
           <div className="lg:col-span-5 rounded-3xl liquid-glass p-6">
             <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/15">
-              <span className="text-xs font-mono tracking-wide text-white/70 uppercase">Phase pipeline · 1.54s</span>
-              <span className="text-[10px] font-mono text-white/80">russel-ctrl</span>
+              <span className="text-xs font-mono tracking-wide text-[#52768a] uppercase">Phase pipeline · 1.54s</span>
+              <span className="text-[10px] font-mono text-[#708599]">russel-ctrl</span>
             </div>
             <div className="relative z-10 mt-4 space-y-3">
               {PHASES.map((p, i) => (
-                <div key={p.phase} className="flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-sm px-3.5 py-3">
+                <div key={p.phase} className="flex items-center justify-between gap-3 rounded-2xl border border-white/70 bg-white/42 backdrop-blur-sm px-3.5 py-3">
                   <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-full bg-white text-[#010A17] grid place-items-center text-[11px] font-mono">0{i + 1}</span>
+                    <span className="w-7 h-7 rounded-full bg-[#dff2f8] text-[#315a71] grid place-items-center text-[11px] font-mono">0{i + 1}</span>
                     <div>
-                      <div className="text-xs font-mono font-medium text-white">{p.phase}</div>
-                      <div className="text-[11px] text-white/60">{p.note}</div>
+                      <div className="text-xs font-mono font-medium text-[#315a71]">{p.phase}</div>
+                      <div className="text-[11px] text-[#708599]">{p.note}</div>
                     </div>
                   </div>
-                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-white text-[#0A4267] border border-white/30 shrink-0">{p.t}</span>
+                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-white/80 text-[#315a71] border border-white/90 shrink-0">{p.t}</span>
                 </div>
               ))}
             </div>

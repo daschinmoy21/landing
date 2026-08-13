@@ -71,13 +71,13 @@ export const ArchitecturePipeline: React.FC = () => {
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8 bg-white/30" />
-            <span className="text-xs tracking-[0.22em] font-mono text-white/70">DEPLOYMENT PIPELINE</span>
+            <span className="h-px w-8 bg-[#315a71]/45" />
+            <span className="text-xs tracking-[0.22em] font-mono text-[#52768a]">DEPLOYMENT PIPELINE</span>
           </div>
-          <h2 className="font-instrument font-normal tracking-tight text-white text-3xl sm:text-4xl md:text-5xl">
-            Source to serving, <span className="italic text-white/80">in four moves.</span>
+          <h2 className="font-instrument font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-5xl">
+            Source to serving, <span className="italic text-[#3e7895]">in four moves.</span>
           </h2>
-          <p className="text-[15px] leading-relaxed text-white/70 mt-3">
+          <p className="text-[15px] leading-relaxed text-[#4d6176] mt-3">
             Declarative input, reproducible artifact, dual-engine dispatch. No YAML sprawl, no drift.
           </p>
         </div>
@@ -85,9 +85,9 @@ export const ArchitecturePipeline: React.FC = () => {
         <div className="mt-10 rounded-3xl liquid-glass overflow-hidden">
           <div className="px-5 md:px-8 pt-6 md:pt-8">
             <div className="relative">
-              <div className="absolute left-0 right-0 top-4 h-px bg-white/15 hidden md:block" />
+              <div className="absolute left-0 right-0 top-4 h-px bg-[#315a71]/18 hidden md:block" />
               <motion.div
-                className="absolute left-0 top-4 h-px bg-white/70 hidden md:block origin-left"
+                className="absolute left-0 top-4 h-px bg-[#3e8fb3] hidden md:block origin-left"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: progress / 100 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -101,17 +101,17 @@ export const ArchitecturePipeline: React.FC = () => {
                     <button
                       key={s.id}
                       onClick={() => setActive(i)}
-                      className={`relative text-left rounded-2xl border px-4 py-4 transition-all cursor-pointer backdrop-blur-sm ${isActive ? 'bg-white text-[#010A17] border-white/60 shadow-lg' : isPast ? 'bg-white/10 border-white/15 text-white/80' : 'bg-white/5 border-white/10 text-white/75 hover:bg-white/10'}`}
+                      className={`relative text-left rounded-2xl border px-4 py-4 transition-all cursor-pointer backdrop-blur-sm ${isActive ? 'bg-[#14233c] text-white border-[#14233c] shadow-[0_14px_28px_rgba(20,35,60,0.22)]' : isPast ? 'bg-white/65 border-white/75 text-[#315a71]' : 'bg-white/42 border-white/60 text-[#52768a] hover:bg-white/65'}`}
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <span className={`w-7 h-7 rounded-full grid place-items-center text-[11px] font-mono ${isActive ? 'bg-[#010A17] text-white' : 'bg-white/90 text-[#010A17]'}`}>
+                        <span className={`w-7 h-7 rounded-full grid place-items-center text-[11px] font-mono ${isActive ? 'bg-white text-[#14233c]' : 'bg-[#dff2f8] text-[#315a71]'}`}>
                           {s.step}
                         </span>
-                        <span className={`text-[10px] font-mono tracking-wide rounded-full px-2 py-0.5 border ${isActive ? 'bg-[#010A17]/10 border-[#010A17]/15 text-[#010A17]/70' : 'bg-white/10 border-white/15 text-white/70'}`}>{s.badge}</span>
+                        <span className={`text-[10px] font-mono tracking-wide rounded-full px-2 py-0.5 border ${isActive ? 'bg-white/10 border-white/20 text-white/75' : 'bg-white/55 border-white/70 text-[#52768a]'}`}>{s.badge}</span>
                       </div>
-                      <div className={`text-sm font-semibold tracking-tight ${isActive ? 'text-[#010A17]' : 'text-white'}`}>{s.name}</div>
+                      <div className={`text-sm font-semibold tracking-tight ${isActive ? 'text-white' : 'text-[#14233c]'}`}>{s.name}</div>
                       {isActive && (
-                        <motion.span layoutId="active-dot" className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-white ring-4 ring-white/30" />
+                        <motion.span layoutId="active-dot" className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#4e9fc3] ring-4 ring-[#4e9fc3]/25" />
                       )}
                     </button>
                   );
@@ -128,15 +128,15 @@ export const ArchitecturePipeline: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="lg:col-span-7 rounded-2xl bg-white/90 backdrop-blur-sm border border-white/50 p-6"
+                className="lg:col-span-7 rounded-2xl bg-white/78 backdrop-blur-sm border border-white/80 p-6 shadow-[0_12px_30px_rgba(35,95,123,0.08)]"
               >
-                <div className="text-xs font-mono tracking-wide text-[#0A4267]/70">{STAGES[active].step} — {STAGES[active].badge}</div>
-                <h3 className="text-xl font-semibold tracking-tight text-[#010A17] mt-1">{STAGES[active].title}</h3>
-                <p className="text-sm leading-relaxed text-[#0A4267]/80 mt-2">{STAGES[active].desc}</p>
+                <div className="text-xs font-mono tracking-wide text-[#52768a]">{STAGES[active].step} — {STAGES[active].badge}</div>
+                <h3 className="text-xl font-semibold tracking-tight text-[#14233c] mt-1">{STAGES[active].title}</h3>
+                <p className="text-sm leading-relaxed text-[#4d6176] mt-2">{STAGES[active].desc}</p>
                 <ul className="mt-4 space-y-2">
                   {STAGES[active].bullets.map((b) => (
-                    <li key={b} className="flex items-center gap-2 text-sm text-[#0A4267]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A4267] shrink-0" />
+                    <li key={b} className="flex items-center gap-2 text-sm text-[#315a71]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#3e8fb3] shrink-0" />
                       <span className="font-mono text-xs">{b}</span>
                     </li>
                   ))}
@@ -144,7 +144,7 @@ export const ArchitecturePipeline: React.FC = () => {
               </motion.div>
             </AnimatePresence>
 
-            <div className="lg:col-span-5 rounded-2xl bg-[#010A17]/70 backdrop-blur-sm text-sky-100 p-5 font-mono text-xs leading-relaxed border border-white/15">
+            <div className="lg:col-span-5 rounded-2xl bg-[#14233c]/92 backdrop-blur-sm text-[#dff2f8] p-5 font-mono text-xs leading-relaxed border border-white/30 shadow-[0_16px_34px_rgba(20,35,60,0.2)]">
               <div className="flex items-center justify-between border-b border-white/15 pb-2 mb-3">
                 <span className="font-bold text-white">Control plane trace</span>
                 <span className="text-[10px] tracking-wide text-white/60">russel-ctrl</span>
@@ -158,15 +158,15 @@ export const ArchitecturePipeline: React.FC = () => {
                   transition={{ duration: 0.25 }}
                   className="space-y-1"
                 >
-                  <div className={active >= 0 ? 'text-white' : 'text-white/40'}>[00:00.01] Parse Russelfile → OK {active === 0 && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="ml-2 inline-block w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />}</div>
+                  <div className={active >= 0 ? 'text-white' : 'text-white/40'}>[00:00.01] Parse Russelfile → OK {active === 0 && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="ml-2 inline-block w-1.5 h-1.5 rounded-full bg-[#79d5ac] animate-pulse" />}</div>
                   <div className={active >= 1 ? 'text-white' : 'text-white/40'}>[00:00.32] Evaluate derivation → {active >= 1 ? 'OK' : '…'}</div>
                   <div className={active >= 1 ? 'text-white' : 'text-white/40'}>[00:00.89] Store closure /nix/store/a89f…</div>
                   <div className={active >= 2 ? 'text-white' : 'text-white/40'}>[00:01.42] Dispatch: {STAGES[active].badge}</div>
-                  <div className="text-emerald-300 font-bold pt-2">✓ {STAGES[active].name} · {(420 + active * 180)}ms</div>
+                  <div className="text-[#79d5ac] font-bold pt-2">✓ {STAGES[active].name} · {(420 + active * 180)}ms</div>
                 </motion.div>
               </AnimatePresence>
               <div className="mt-4 h-1 rounded-full bg-white/15 overflow-hidden">
-                <motion.div className="h-full bg-white" initial={{ width: '0%' }} animate={{ width: `${((active + 1) / STAGES.length) * 100}%` }} transition={{ duration: 0.6 }} />
+                <motion.div className="h-full bg-[#7fc9e0]" initial={{ width: '0%' }} animate={{ width: `${((active + 1) / STAGES.length) * 100}%` }} transition={{ duration: 0.6 }} />
               </div>
             </div>
           </div>

@@ -39,8 +39,8 @@ const ITEMS = [
 
 export const SelectedWorks: React.FC<{ onSelectWork?: (item: any) => void }> = () => {
   return (
-    <section id="architecture" className="relative overflow-hidden py-16 md:py-24 border-t border-white/15">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0A4267]/15 via-transparent to-transparent" />
+    <section id="architecture" className="relative overflow-hidden border-t border-[#214b65]/15 py-16 md:py-24">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/45 via-transparent to-transparent" />
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -50,13 +50,13 @@ export const SelectedWorks: React.FC<{ onSelectWork?: (item: any) => void }> = (
           className="max-w-2xl"
         >
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8 bg-white/30" />
-            <span className="text-xs tracking-[0.22em] font-mono text-white/70">PRIMITIVES</span>
+            <span className="h-px w-8 bg-[#315a71]/45" />
+            <span className="text-xs tracking-[0.22em] font-mono text-[#52768a]">PRIMITIVES</span>
           </div>
-          <h2 className="font-instrument font-normal tracking-tight text-white text-3xl sm:text-4xl md:text-5xl">
-            Isolated, reproducible, <span className="italic text-white/80">portable.</span>
+          <h2 className="font-instrument font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-5xl">
+            Isolated, reproducible, <span className="italic text-[#3e7895]">portable.</span>
           </h2>
-          <p className="text-[15px] leading-relaxed text-white/70 mt-3">
+          <p className="text-[15px] leading-relaxed text-[#4d6176] mt-3">
             Four primitives that make Russel what it is — hardware isolation without the weight, zero-drift builds, and one path to prod.
           </p>
         </motion.div>
@@ -72,15 +72,15 @@ export const SelectedWorks: React.FC<{ onSelectWork?: (item: any) => void }> = (
               className="liquid-glass rounded-3xl p-6 md:p-7"
             >
               <div className="flex items-center justify-between mb-4 relative z-10">
-                <span className="inline-flex items-center gap-2 text-[11px] font-mono tracking-wide text-white/80 bg-white/10 border border-white/20 rounded-full px-2.5 py-1 backdrop-blur-sm">
+                <span className="inline-flex items-center gap-2 text-[11px] font-mono tracking-wide text-[#315a71] bg-white/55 border border-white/75 rounded-full px-2.5 py-1 backdrop-blur-sm">
                   <it.icon className="w-3.5 h-3.5" />
                   {it.label}
                 </span>
-                <span className="text-xs font-mono text-white/60">{it.k}</span>
+                <span className="text-xs font-mono text-[#708599]">{it.k}</span>
               </div>
-              <h3 className="relative z-10 text-lg font-semibold tracking-tight text-white">{it.title}</h3>
-              <p className="relative z-10 text-sm leading-relaxed text-white/70 mt-2">{it.desc}</p>
-              <div className="relative z-10 mt-4 text-[11px] font-mono text-white/70 bg-white/10 border border-white/15 rounded-full inline-flex px-2.5 py-1 backdrop-blur-sm">
+              <h3 className="relative z-10 text-lg font-semibold tracking-tight text-[#14233c]">{it.title}</h3>
+              <p className="relative z-10 text-sm leading-relaxed text-[#4d6176] mt-2">{it.desc}</p>
+              <div className="relative z-10 mt-4 text-[11px] font-mono text-[#3e7088] bg-white/45 border border-white/70 rounded-full inline-flex px-2.5 py-1 backdrop-blur-sm">
                 {it.mono}
               </div>
             </motion.div>

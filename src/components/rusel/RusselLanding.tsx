@@ -15,13 +15,13 @@ export const RusselLanding: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen font-sans antialiased selection:bg-slate-900 selection:text-white relative">
-      {/* Fixed animated gradient-wave background — visible below hero, hero covers it */}
-      <div className="fixed inset-0 z-0" aria-hidden>
+    <div className="relative min-h-screen overflow-x-clip bg-[#eaf6fa] font-sans antialiased text-[#14233c] selection:bg-[#14233c] selection:text-white">
+      {/* Keep the lower page in the same open, blue-sky atmosphere as the hero. */}
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
         <GradientWaves
-          horizonColor="#0F2E4E"
-          waveColor="#3A8DB5"
-          crestColor="#9CD3EC"
+          horizonColor="#b9dfed"
+          waveColor="#70b5d0"
+          crestColor="#f5fcff"
           speed={0.22}
           amplitude={3.2}
           waveScale={0.62}
@@ -33,14 +33,14 @@ export const RusselLanding: React.FC = () => {
           height={5.6}
           fogDepth={14}
           detail="medium"
-          brightness={1.08}
-          opacity={0.95}
+          brightness={1.02}
+          opacity={0.58}
           mouseInteraction={true}
           parallaxStrength={0.45}
           grain={true}
           grainIntensity={0.04}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F2E4E]/15 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#dff3f8]/75 via-[#eaf6fa]/25 to-[#f7fcfd]/75" />
       </div>
 
       <main className="relative z-10">

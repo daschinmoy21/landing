@@ -66,22 +66,22 @@ export const FooterSection: React.FC = () => {
       id="waitlist"
       className="pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden relative"
     >
-      <div className="relative z-10 w-full overflow-hidden border-y border-white/15 py-4 mb-16 select-none bg-white/5 backdrop-blur-sm">
+      <div className="relative z-10 mb-16 w-full select-none overflow-hidden border-y border-[#214b65]/15 bg-white/35 py-4 backdrop-blur-sm">
         <div ref={marqueeRef} className="whitespace-nowrap inline-block flex items-center">
-          <span className="font-instrument italic text-2xl sm:text-3xl md:text-4xl text-white/70 tracking-widest uppercase">
+          <span className="font-instrument italic text-2xl sm:text-3xl md:text-4xl text-[#315a71]/70 tracking-widest uppercase">
             {REPEATED_MARQUEE}
           </span>
         </div>
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 text-center mb-20">
-        <span className="text-xs text-white/60 uppercase tracking-[0.3em] font-mono mb-4 inline-block">
+        <span className="text-xs text-[#52768a] uppercase tracking-[0.3em] font-mono mb-4 inline-block">
           OPEN SOURCE
         </span>
-        <h2 className="font-instrument italic text-white text-4xl sm:text-6xl md:text-7xl mb-4 tracking-tight text-glow">
+        <h2 className="font-instrument italic text-[#14233c] text-4xl sm:text-6xl md:text-7xl mb-4 tracking-tight text-glow">
           Deploy with zero drift.
         </h2>
-        <p className="text-sm md:text-base text-white/70 mb-8 leading-relaxed">
+        <p className="text-sm md:text-base text-[#4d6176] mb-8 leading-relaxed">
           Self-hosted, MIT-licensed. Clone, build, and run — or grab the installer.
         </p>
 
@@ -90,42 +90,42 @@ export const FooterSection: React.FC = () => {
             href="https://github.com/rusel/landing"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-white text-[#010A17] px-6 py-3 rounded-full text-sm font-medium hover:bg-white/90 transition-colors button-glow"
+            className="inline-flex items-center gap-2 bg-[#14233c] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[#203651] transition-colors button-glow"
           >
             View on GitHub ↗
           </a>
           <button
             onClick={() => document.getElementById('cli')?.scrollIntoView({ behavior: 'smooth' })}
-            className="inline-flex items-center gap-2 bg-white/10 text-white border border-white/15 backdrop-blur-sm px-6 py-3 rounded-full text-sm font-medium hover:bg-white/15 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 bg-white/45 text-[#315a71] border border-white/75 backdrop-blur-sm px-6 py-3 rounded-full text-sm font-medium hover:bg-white/75 transition-colors cursor-pointer"
           >
             Read docs
           </button>
         </div>
       </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 pt-8 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-white/60 font-mono">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 pt-8 border-t border-[#214b65]/15 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#708599] font-mono">
         <div className="flex items-center gap-6">
           <a
             href="https://github.com/rusel/landing"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors"
+            className="hover:text-[#14233c] transition-colors"
           >
             GitHub
           </a>
-          <a href="#architecture" className="hover:text-white transition-colors">
+          <a href="#architecture" className="hover:text-[#14233c] transition-colors">
             Documentation
           </a>
-          <a href="#cli" className="hover:text-white transition-colors">
+          <a href="#cli" className="hover:text-[#14233c] transition-colors">
             Install
           </a>
-          <a href="#benchmarks" className="hover:text-white transition-colors">
+          <a href="#benchmarks" className="hover:text-[#14233c] transition-colors">
             Benchmarks
           </a>
         </div>
 
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/45 border border-white/75 backdrop-blur-sm">
+          <span className="w-2 h-2 rounded-full bg-[#3a9a72] animate-pulse" />
           <span>Engine Status: Operational</span>
         </div>
 
