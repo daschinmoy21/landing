@@ -11,3 +11,5 @@
 - Prefers deployment pipeline visualization to be animated rather than static, while keeping the overall aesthetic aligned with the hero. Confidence: 0.85
 - Prefers the sky blue/grasslands theme from the hero background image to be used consistently across the rest of the site for visual continuity. Confidence: 0.90
 - Dislikes plain all-white backgrounds for below-hero sections; prefers gradients or other styled backgrounds that extend the hero's visual language for continuity. Confidence: 0.85
+- Prefers lighter, brighter mid-sky blues for atmospheric backgrounds over very dark navy tones — explicitly requested lightening from #010A17-range to #0F2E4E → #9CD3EC range. Confidence: 0.85
+- Prefers the interstitial atmosphere gradient and the fixed GradientWaves to share an identical blue palette so they read as a single continuous sky. Confidence: 0.88
