@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Copy, Check, Sparkles } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Check, ChevronDown, Copy } from 'lucide-react';
 import { Navbar } from './Navbar';
 
 const GithubIcon = ({ className }: { className?: string }) => (
@@ -25,10 +25,34 @@ const INSTALL_CMDS = {
 
 type InstallMethod = keyof typeof INSTALL_CMDS;
 
+const INSTALL_LABELS: Record<InstallMethod, string> = {
+  curl: 'curl',
+  nix: 'nix',
+};
+
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [installMethod, setInstallMethod] = useState<InstallMethod>('curl');
   const [copied, setCopied] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const activeCmd = INSTALL_CMDS[installMethod];
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onPointer = (event: MouseEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setMenuOpen(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('mousedown', onPointer);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onPointer);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [menuOpen]);
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(activeCmd);
@@ -37,12 +61,24 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     } catch {}
   };
 
+  const chooseMethod = (method: InstallMethod) => {
+    setInstallMethod(method);
+    setMenuOpen(false);
+  };
+
   return (
     <section
       id="hero"
-      className="relative min-h-[100svh] overflow-hidden bg-cover bg-center flex flex-col font-sans"
-      style={{ backgroundImage: `url("${BG_IMAGE_URL}")` }}
+      className="relative min-h-[100svh] overflow-hidden flex flex-col font-sans"
     >
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url("${BG_IMAGE_URL}")`,
+          filter: 'saturate(1.45) contrast(1.04)',
+        }}
+        aria-hidden
+      />
       {/* Top Navbar */}
       <Navbar onNavigate={onNavigate} />
 
@@ -53,26 +89,58 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       <div className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
         {/* Headline */}
         <h1 className="text-gray-900 font-normal leading-[1.05] tracking-tight text-[40px] min-[400px]:text-[44px] sm:text-6xl lg:text-7xl xl:text-[80px]">
-          <span className="block animate-fade-up">Deploy services.</span>
-          <span className="block animate-fade-up [animation-delay:100ms]">Stay in control.</span>
+          <span className="block animate-fade-up">One command.</span>
+          <span className="block animate-fade-up [animation-delay:80ms]">Either runtime.</span>
         </h1>
+        <p className="animate-fade-up [animation-delay:120ms] mt-5 sm:mt-6 text-gray-800 text-xl sm:text-2xl lg:text-[28px] font-semibold tracking-tight leading-snug">
+          Containers for speed. VMs for isolation.
+        </p>
 
-        {/* Install command — single toggleable line (curl / nix) */}
+        {/* Install command — method dropdown sits inside the bar */}
         <div className="animate-fade-up [animation-delay:220ms] mt-5 sm:mt-6 w-full max-w-xl mx-auto">
-          <div className="flex items-center justify-center gap-1.5 mb-2.5">
-            {(['curl', 'nix'] as const).map((m) => (
+          <div className="flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-md ring-1 ring-gray-200 pl-1.5 pr-1.5 py-1.5 shadow-sm">
+            <div ref={menuRef} className="relative shrink-0">
               <button
-                key={m}
                 type="button"
-                onClick={() => setInstallMethod(m)}
-                className={`px-3.5 py-1 rounded-full text-[11px] font-mono tracking-wide border transition-colors cursor-pointer ${installMethod === m ? 'bg-gray-900 text-white border-gray-900' : 'bg-white/70 text-gray-700 border-gray-200 hover:bg-white'}`}
+                onClick={() => setMenuOpen((open) => !open)}
+                aria-haspopup="listbox"
+                aria-expanded={menuOpen}
+                aria-label="Install method"
+                className="inline-flex items-center gap-0.5 rounded-full px-2.5 py-1.5 text-xs font-semibold text-gray-800 hover:bg-white hover:text-gray-900 transition-colors cursor-pointer"
               >
-                {m === 'curl' ? 'curl' : 'nix run'}
+                {INSTALL_LABELS[installMethod]}
+                <ChevronDown className={`w-3 h-3 text-gray-500 transition-transform ${menuOpen ? 'rotate-180' : ''}`} />
               </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-3 rounded-full bg-white/80 backdrop-blur-md ring-1 ring-gray-200 pl-5 pr-1.5 py-1.5 shadow-sm">
-            <span className="flex-1 text-left text-[13px] sm:text-sm font-mono text-gray-900 truncate select-all">
+              {menuOpen && (
+                <div
+                  role="listbox"
+                  aria-label="Install methods"
+                  className="absolute left-0 top-[calc(100%+6px)] z-30 min-w-[92px] overflow-hidden rounded-xl bg-white/95 py-1 shadow-lg ring-1 ring-gray-200 backdrop-blur-md"
+                >
+                  {(['curl', 'nix'] as const).map((method) => (
+                    <button
+                      key={method}
+                      type="button"
+                      role="option"
+                      aria-selected={installMethod === method}
+                      onClick={() => chooseMethod(method)}
+                      className={`block w-full px-3 py-1.5 text-left text-xs font-semibold cursor-pointer transition-colors ${
+                        installMethod === method
+                          ? 'bg-gray-900 text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      {INSTALL_LABELS[method]}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <span className="h-5 w-px shrink-0 bg-gray-200/90" aria-hidden />
+            <span
+              title={activeCmd}
+              className="flex-1 min-w-0 text-left text-sm sm:text-[15px] font-mono font-medium text-gray-900 truncate select-all"
+            >
               $ {activeCmd}
             </span>
             <button
@@ -86,26 +154,20 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Description */}
-        <p className="animate-fade-up [animation-delay:340ms] mt-4 sm:mt-5 text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed max-w-md mx-auto">
-          Deploy any service as a fast container or an isolated microVM, on infrastructure you control.
-          <Sparkles className="inline w-4 h-4 ml-1 -mt-1 text-gray-700" />
-        </p>
-
         {/* CTA Buttons */}
         <div className="animate-fade-up [animation-delay:460ms] mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-3">
           <a
             href="https://github.com/rusel/landing"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-6 py-2.5 rounded-full hover:bg-gray-800 hover:shadow-lg transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 bg-gray-900 text-white text-base font-semibold px-6 py-2.5 rounded-full hover:bg-gray-800 hover:shadow-lg transition-all cursor-pointer"
           >
             <GithubIcon className="w-4 h-4" />
             View on GitHub
           </a>
           <button
             onClick={() => onNavigate && onNavigate('architecture')}
-            className="text-gray-700 text-sm font-medium px-6 py-2.5 rounded-full ring-1 ring-gray-300 hover:bg-gray-100 transition-colors inline-block bg-white/40 backdrop-blur-xs cursor-pointer"
+            className="text-gray-800 text-base font-semibold px-6 py-2.5 rounded-full ring-1 ring-gray-300 hover:bg-gray-100 transition-colors inline-block bg-white/40 backdrop-blur-xs cursor-pointer"
           >
             Read Specs
           </button>
@@ -130,7 +192,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       <img
         src={GRASS_IMAGE_URL}
         alt=""
-        className="pointer-events-none absolute bottom-0 left-0 z-10 w-full select-none"
+        className="pointer-events-none absolute bottom-0 left-0 z-10 w-full select-none saturate-[1.45] contrast-[1.04]"
       />
     </section>
   );

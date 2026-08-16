@@ -14,7 +14,7 @@ Situation: early-awareness or evaluation — comparing Russel to containers/K8s/
 
 ## Product Purpose
 
-Russel is a self-hosted microVM and container deployment platform. One workflow deploys services as containers (speed) or hardware-isolated microVMs (security), with reproducible/immutable builds (Nix), and a one-line runtime switch. Open source (MIT), managed or self-hosted, zero drift / no lock-in framing.
+Russel is a self-hosted microVM and container deployment platform. One workflow deploys services as containers (speed) or hardware-isolated microVMs (security), with reproducible/immutable builds (Nix), and a one-line runtime switch. Open source (Apache 2.0), managed or self-hosted, zero drift / no lock-in framing.
 
 This surface (the marketing landing) must make visitors understand what Russel is and why it differs, then convert them to the waitlist.
 

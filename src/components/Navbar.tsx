@@ -41,26 +41,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
         <div className="hidden md:flex items-center gap-8">
           <button
             onClick={() => handleNavClick('architecture')}
-            className="inline-flex items-center gap-1 text-[13px] text-gray-700 hover:text-gray-900 transition-colors font-medium cursor-pointer"
+            className="inline-flex items-center gap-1 text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
-            <span>Primitives</span>
+            <span>Platform</span>
             <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
           </button>
           <button
             onClick={() => handleNavClick('topology')}
-            className="text-[13px] text-gray-700 hover:text-gray-900 transition-colors font-medium cursor-pointer"
+            className="text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
             Topology
           </button>
           <button
             onClick={() => handleNavClick('benchmarks')}
-            className="text-[13px] text-gray-700 hover:text-gray-900 transition-colors font-medium cursor-pointer"
+            className="text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
             Benchmarks
           </button>
           <button
             onClick={() => handleNavClick('cli')}
-            className="text-[13px] text-gray-700 hover:text-gray-900 transition-colors font-medium cursor-pointer"
+            className="text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
             CLI Demo
           </button>
@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
             href="https://github.com/rusel/landing"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 bg-gray-900 text-white text-[13px] font-medium px-4 sm:px-5 py-2 rounded-full hover:bg-gray-800 transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 bg-gray-900 text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-full hover:bg-gray-800 transition-colors"
           >
             <GithubIcon className="w-4 h-4" />
             GitHub
@@ -103,26 +103,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
         <div className="md:hidden absolute left-4 right-4 top-full mt-2 rounded-2xl bg-white/90 backdrop-blur-xl ring-1 ring-gray-200 px-5 py-3 animate-fade-up z-50 shadow-2xl flex flex-col">
           <button
             onClick={() => handleNavClick('architecture')}
-            className="text-[15px] text-gray-700 hover:text-gray-900 py-3 border-b border-gray-200 flex items-center justify-between font-medium text-left"
+            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 flex items-center justify-between font-semibold text-left"
           >
-            <span>Primitives</span>
+            <span>Platform</span>
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </button>
           <button
             onClick={() => handleNavClick('topology')}
-            className="text-[15px] text-gray-700 hover:text-gray-900 py-3 border-b border-gray-200 font-medium text-left"
+            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 font-semibold text-left"
           >
             Topology
           </button>
           <button
             onClick={() => handleNavClick('benchmarks')}
-            className="text-[15px] text-gray-700 hover:text-gray-900 py-3 border-b border-gray-200 font-medium text-left"
+            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 font-semibold text-left"
           >
             Benchmarks
           </button>
           <button
             onClick={() => handleNavClick('cli')}
-            className="text-[15px] text-gray-700 hover:text-gray-900 py-3 border-b border-gray-200 font-medium text-left"
+            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 font-semibold text-left"
           >
             CLI Demo
           </button>
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
             href="https://github.com/rusel/landing"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[15px] text-gray-700 hover:text-gray-900 py-3 font-medium text-left inline-flex items-center gap-2"
+            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 font-semibold text-left inline-flex items-center gap-2"
           >
             <GithubIcon className="w-4 h-4" />
             GitHub

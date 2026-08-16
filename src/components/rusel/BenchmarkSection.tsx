@@ -10,115 +10,104 @@ interface Workload {
 }
 
 const WORKLOADS: Workload[] = [
-  { name: 'microvm-http', desc: 'Rust HTTP microservice · virtio-net TAP', microvm: 919, container: 655, podman: 366 },
-  { name: 'hello-rust', desc: 'Static Rust binary · minimal closure', microvm: 880, container: 659, podman: 562 },
-  { name: 'env-config', desc: 'Node.js · dynamic Nix store closure', microvm: 851, container: 639, podman: 443 },
-  { name: 'basic-http', desc: 'Go server · standard container baseline', microvm: 1892, container: 669, podman: 528 },
-  { name: 'filebrowser', desc: 'Multi-threaded · read-only virtiofs', microvm: 1261, container: 840, podman: 766 },
+  { name: 'basic-http', desc: 'Go server · standard HTTP baseline', microvm: 1975, container: 874, podman: 7504 },
+  { name: 'microvm-http', desc: 'Rust HTTP microservice · virtio-net TAP', microvm: 1383, container: 859, podman: 9015 },
+  { name: 'hello-rust', desc: 'Static Rust binary · minimal closure', microvm: 1913, container: 1128, podman: 7475 },
+  { name: 'env-config', desc: 'Node.js · dynamic store closure', microvm: 1362, container: 797, podman: 9407 },
+  { name: 'shortlink', desc: 'URL shortener · small service', microvm: 1353, container: 787, podman: 8305 },
+  { name: 'static-test', desc: 'Static files · read-heavy', microvm: 1684, container: 1099, podman: 1637 },
+  { name: 'filebrowser', desc: 'Multi-threaded · read-only virtiofs', microvm: 2034, container: 1380, podman: 9099 },
 ];
 
-const PHASES = [
-  { phase: 'Resolve', t: '0ms', note: 'Parse repo & Russelfile.toml' },
-  { phase: 'Nix Build', t: '897ms', note: 'Hermetic flake closure' },
-  { phase: 'Rootfs Create', t: '0ms', note: 'Store path adapter' },
-  { phase: 'Network Tap', t: '0ms', note: 'virtio-net TAP' },
-  { phase: 'Spawn & Start', t: '643ms', note: 'CH boot / Podman run' },
-  { phase: 'Ingress Ready', t: '0ms', note: 'Traefik dynamic route' },
-];
+const fmt = (n: number) => n.toLocaleString('en-US');
 
 export const BenchmarkSection: React.FC = () => {
   const [sel, setSel] = useState<Workload>(WORKLOADS[0]);
   const max = Math.max(sel.microvm, sel.container, sel.podman);
+  const speedup = sel.podman / sel.container;
+
+  const rows = [
+    { label: 'Russel microVM · KVM', val: sel.microvm, color: 'bg-[#1f6b4a]', text: 'text-[#1a4d38]' },
+    { label: 'Russel container', val: sel.container, color: 'bg-[#185a7a]', text: 'text-[#143f56]' },
+    { label: 'Podman baseline', val: sel.podman, color: 'bg-[#3a4a58]', text: 'text-[#2a3640]' },
+  ];
 
   return (
-    <section id="benchmarks" className="relative overflow-hidden py-16 md:py-24">
+    <section id="benchmarks" className="relative overflow-hidden py-14 md:py-20">
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-8 bg-[#315a71]/45" />
-            <span className="text-xs tracking-[0.22em] font-mono text-[#52768a]">BENCHMARKS</span>
-          </div>
-          <h2 className="font-instrument font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-5xl">
-            Isolation costs — <span className="italic text-[#3e7895]">measured.</span>
+          <h2 className="font-sans font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-[44px] leading-[1.08]">
+            Isolation costs — <span className="text-[#3e7895]">measured.</span>
           </h2>
-          <p className="text-[15px] leading-relaxed text-[#4d6176] mt-3">
-            Spawn-to-ready on bare metal. Toggle workloads to compare KVM microVMs vs rootless Podman.
+          <p className="text-[17px] sm:text-lg font-medium leading-relaxed text-[#315a71] mt-3 max-w-[48ch]">
+            Spawn-to-ready on bare metal. Compare KVM microVMs against rootless Podman.
           </p>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          {WORKLOADS.map((w) => (
-            <button
-              key={w.name}
-              onClick={() => setSel(w)}
-              className={`px-3.5 py-2 rounded-full text-xs font-mono border backdrop-blur-sm transition-colors cursor-pointer ${sel.name === w.name ? 'bg-[#14233c] text-white border-[#14233c] shadow-[0_8px_18px_rgba(20,35,60,0.16)]' : 'bg-white/55 text-[#52768a] border-white/75 hover:bg-white/80'}`}
-            >
-              {w.name}
-            </button>
-          ))}
+        <div className="mt-7 inline-flex flex-wrap items-center gap-1 rounded-full bg-white/55 border border-white/75 p-1 backdrop-blur-sm max-w-full">
+          {WORKLOADS.map((w) => {
+            const on = sel.name === w.name;
+            return (
+              <button
+                key={w.name}
+                type="button"
+                onClick={() => setSel(w)}
+                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-colors cursor-pointer ${
+                  on
+                    ? 'bg-[#14233c] text-white shadow-[0_6px_14px_rgba(20,35,60,0.16)]'
+                    : 'text-[#315a71] hover:bg-white/80 hover:text-[#14233c]'
+                }`}
+              >
+                {w.name}
+              </button>
+            );
+          })}
         </div>
-        <p className="mt-3 text-xs font-mono text-[#52768a] bg-white/45 border border-white/70 rounded-xl px-3 py-2 max-w-2xl backdrop-blur-sm">
-          {sel.desc}
-        </p>
+        <p className="mt-3 text-[15px] font-medium text-[#315a71]">{sel.desc}</p>
 
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-7 rounded-3xl liquid-glass p-6">
-            <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/15">
-              <span className="text-xs font-mono tracking-wide text-[#52768a] uppercase">Spawn-to-ready · ms</span>
-              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-white/55 text-[#315a71] border border-white/75 backdrop-blur-sm">WARM</span>
+        <div className="mt-5 rounded-3xl liquid-glass p-5 md:p-7">
+          <div className="relative z-10 flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[15px] font-semibold text-[#14233c]">Spawn-to-ready</div>
+              <div className="text-[13px] font-medium text-[#52768a] mt-0.5">Milliseconds · lower is better</div>
             </div>
+            <div className="flex items-center gap-2 flex-wrap justify-end">
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/65 text-[#315a71] border border-white/75">
+                WARM
+              </span>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#185a7a]/12 text-[#143f56] border border-[#185a7a]/25">
+                Russel container · {speedup.toFixed(1)}× vs Podman
+              </span>
+            </div>
+          </div>
 
-            <div className="mt-6 space-y-6 relative z-10">
-              {[
-                { label: 'Russel microVM · KVM', val: sel.microvm, color: 'bg-[#3a9a72]', dot: 'bg-[#3a9a72]' },
-                { label: 'Russel container · Podman', val: sel.container, color: 'bg-[#4e9fc3]', dot: 'bg-[#4e9fc3]' },
-                { label: 'Podman baseline', val: sel.podman, color: 'bg-[#9eb2bd]', dot: 'bg-[#9eb2bd]', muted: true },
-              ].map((row) => (
+          <div className="mt-7 space-y-6 relative z-10">
+            {rows.map((row) => {
+              const pct = Math.max((row.val / max) * 100, 3.5);
+              return (
                 <div key={row.label}>
-                  <div className="flex justify-between text-xs font-mono mb-2">
-                    <span className={`flex items-center gap-2 ${row.muted ? 'text-[#708599]' : 'text-[#315a71]'}`}>
-                      <span className={`w-2 h-2 rounded-full ${row.dot} inline-block`} />
-                      {row.label}
-                    </span>
-                    <span className={`font-bold ${row.muted ? 'text-[#708599]' : row.dot === 'bg-[#3a9a72]' ? 'text-[#2d805e]' : 'text-[#2c779c]'}`}>{row.val}ms</span>
+                  <div className="flex justify-between items-baseline gap-3 mb-2">
+                    <span className={`text-[15px] font-semibold ${row.text}`}>{row.label}</span>
+                    <span className={`text-[15px] font-semibold tabular-nums ${row.text}`}>{fmt(row.val)}ms</span>
                   </div>
-                  <div className="h-2.5 bg-[#d7eaf0]/75 rounded-full overflow-hidden border border-white/70">
+                  <div className="h-3 bg-[#c5d6df] rounded-full overflow-hidden">
                     <motion.div
                       key={`${sel.name}-${row.label}`}
                       initial={{ width: 0 }}
-                      animate={{ width: `${(row.val / max) * 100}%` }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                      animate={{ width: `${pct}%` }}
+                      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
                       className={`h-full rounded-full ${row.color}`}
                     />
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="relative z-10 mt-6 rounded-xl bg-white/45 border border-white/70 px-3 py-2.5 text-xs leading-relaxed text-[#52768a] font-mono backdrop-blur-sm">
-              microVM includes CH init + virtiofs + guest kernel boot. Container is direct rootfs bind. Measured @ 50-concurrent HTTP.
-            </div>
+              );
+            })}
           </div>
 
-          <div className="lg:col-span-5 rounded-3xl liquid-glass p-6">
-            <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/15">
-              <span className="text-xs font-mono tracking-wide text-[#52768a] uppercase">Phase pipeline · 1.54s</span>
-              <span className="text-[10px] font-mono text-[#708599]">russel-ctrl</span>
-            </div>
-            <div className="relative z-10 mt-4 space-y-3">
-              {PHASES.map((p, i) => (
-                <div key={p.phase} className="flex items-center justify-between gap-3 rounded-2xl border border-white/70 bg-white/42 backdrop-blur-sm px-3.5 py-3">
-                  <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-full bg-[#dff2f8] text-[#315a71] grid place-items-center text-[11px] font-mono">0{i + 1}</span>
-                    <div>
-                      <div className="text-xs font-mono font-medium text-[#315a71]">{p.phase}</div>
-                      <div className="text-[11px] text-[#708599]">{p.note}</div>
-                    </div>
-                  </div>
-                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-white/80 text-[#315a71] border border-white/90 shrink-0">{p.t}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <p className="relative z-10 mt-6 text-[14px] font-medium leading-relaxed text-[#52768a]">
+            Totals are spawn-to-ready. microVM includes Cloud Hypervisor init, virtiofs, and guest kernel boot.
+            Container is a direct rootfs bind. Lower is better.
+          </p>
         </div>
       </div>
     </section>

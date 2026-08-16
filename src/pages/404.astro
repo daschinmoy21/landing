@@ -1,41 +1,24 @@
 ---
-// 404 Page
-// ------------
-// Description: The 404 page is a page that displays when a page is not found.
-
-// Components
-// - Layout
 import Layout from '../layouts/Layout.astro'
-// - Blocks
-import BasicHeroSplitImageCTA from '../components/blocks/hero/BasicHeroSplitImageCTA.astro'
 
-// Content
-// - Images
-import image from '../assets/404.webp'
-// - SEO
 const SEO = {
-	title: 'Error 404: VM Not Found',
-	description:
-		'The page or host container you are trying to dispatch to does not exist or has been terminated.'
-}
-// - Hero data
-const heroData = {
-	title: 'Error 404: VM Not Found',
-	subtitle: 'routing error',
-	text: 'The page or host container you are trying to dispatch to does not exist or has been terminated. Let\'s return to the supervisor node.',
-	image: image,
-	buttonText: 'Back to supervisor',
-	buttonLink: '/'
+	title: '404 — Russel',
+	description: 'This page does not exist.'
 }
 ---
 
-<Layout title={SEO.title} description={SEO.description}>
-	<BasicHeroSplitImageCTA
-		subtitle={heroData.subtitle}
-		title={heroData.title}
-		text={heroData.text}
-		image={heroData.image}
-		buttonText={heroData.buttonText}
-		buttonLink={heroData.buttonLink}
-	/>
+<Layout title={SEO.title} description={SEO.description} navigation="none" footer="none">
+	<main class="min-h-svh flex flex-col items-center justify-center px-6 text-center bg-[#cfeaf6] text-[#14233c]">
+		<p class="text-sm font-semibold tracking-wide text-[#315a71] mb-3">404</p>
+		<h1 class="text-4xl sm:text-5xl font-normal tracking-tight mb-4">Page not found.</h1>
+		<p class="text-lg font-medium text-[#315a71] mb-8 max-w-md">
+			That route is not on this host.
+		</p>
+		<a
+			href="/"
+			class="inline-flex items-center bg-[#14233c] text-white px-6 py-3 rounded-full text-base font-semibold hover:bg-[#203651] transition-colors"
+		>
+			Back to Russel
+		</a>
+	</main>
 </Layout>

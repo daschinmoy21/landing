@@ -4,8 +4,9 @@
 
 :root {
   --font-sans: 'Nimbus Sans TW01', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-instrument: 'Instrument Serif', serif;
+  --font-instrument: 'Nimbus Sans TW01', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-cursive: 'Dancing Script', cursive;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
   --sky-ink: #14233c;
   --sky-ink-muted: #4d6176;
@@ -21,6 +22,7 @@
 
 @theme {
   --font-sans: 'Nimbus Sans TW01', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
@@ -119,11 +121,19 @@ html {
   scroll-behavior: smooth;
 }
 
+.font-mono,
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+}
+
 body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
-  background-color: #eaf6fa;
+  background-color: #cfeaf6;
   color: var(--sky-ink);
 }
 
@@ -201,7 +211,23 @@ body {
 
 /* ── Serene surface: below-hero ── */
 .font-instrument {
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-sans);
+}
+
+@keyframes topo-dash {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+
+.topo-dash {
+  animation: topo-dash 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topo-dash {
+    animation: none;
+  }
 }
 .font-cursive {
   font-family: 'Dancing Script', cursive;
