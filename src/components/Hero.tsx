@@ -8,11 +8,7 @@ const GithubIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const BG_IMAGE_URL =
-  'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260611_133301_d5f2a94a-b22e-4e4a-a6b6-eacdddf1f5b0.png&w=1280&q=85';
-
-const GRASS_IMAGE_URL =
-  'https://res.cloudinary.com/dy5er7kv5/image/upload/q_auto/f_auto/v1781191264/grass_eam204.png';
+const BG_IMAGE_URL = '/hero-bg.webp';
 
 interface HeroProps {
   onNavigate?: (sectionId: string) => void;
@@ -132,22 +128,18 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       {/* Flex Spacer 2 */}
       <div className="flex-1 min-h-10 sm:min-h-12 lg:min-h-16 shrink-0" />
 
-      {/* Dashboard image — use dash.png */}
+      {/* Dashboard image */}
       <div className="animate-hero-rise [animation-delay:620ms] relative z-0 w-[92%] sm:w-[84%] lg:w-[72%] max-w-4xl mx-auto shrink-0 -mb-10 sm:-mb-20 lg:-mb-32">
         <img
-          src="/dash.png"
+          src="/dash.webp"
           alt="Russel dashboard"
+          width={1917}
+          height={1127}
           className="w-full h-auto rounded-2xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ring-1 ring-black/10"
           loading="eager"
+          fetchPriority="high"
         />
       </div>
-
-      {/* Grass Overlay PNG at bottom */}
-      <img
-        src={GRASS_IMAGE_URL}
-        alt=""
-        className="pointer-events-none absolute bottom-0 left-0 z-10 w-full select-none saturate-[1.45] contrast-[1.04]"
-      />
     </section>
   );
 };

@@ -1,6 +1,13 @@
-@import url('https://db.onlinewebfonts.com/c/bb5de19d87c09a95216dc6ccd96e37c6?family=Nimbus+Sans+TW01');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import 'tailwindcss';
+
+/* Self-hosted Nimbus Sans TW01 (CC BY 4.0) — replaces render-blocking remote import */
+@font-face {
+  font-family: 'Nimbus Sans TW01';
+  src: url('/fonts/nimbus/NimbusSansTW01.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --font-sans: 'Nimbus Sans TW01', 'Helvetica Neue', Helvetica, Arial, sans-serif;

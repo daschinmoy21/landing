@@ -19,6 +19,10 @@ type Props = {
 }
 
 const { title, description, ogImage, canonical, noindex } = Astro.props
+
+// Open Graph images must be absolute URLs; resolve relative paths against the site URL
+const siteUrl = Astro.site ?? Astro.url
+const ogImageUrl = new URL(ogImage ?? '', siteUrl).toString()
 ---
 
 <Fragment>
@@ -28,12 +32,15 @@ const { title, description, ogImage, canonical, noindex } = Astro.props
 	<meta property="og:url" content={Astro.url} />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
-	<meta property="og:image" content={ogImage} />
+	<meta property="og:image" content={ogImageUrl} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content={title} />
 	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:url" content={Astro.url} />
 	<meta property="twitter:title" content={title} />
 	<meta property="twitter:description" content={description} />
-	<meta property="twitter:image" content={ogImage} />
+	<meta property="twitter:image" content={ogImageUrl} />
 	<link rel="canonical" href={Astro.url} />
 	{canonical && <link rel="canonical" href={Astro.url} item-prop="url" />}
 	{noindex && <meta name="robots" content="noindex,nofollow" />}
