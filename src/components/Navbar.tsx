@@ -68,24 +68,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
 
         {/* Right CTA + Hamburger */}
         <div className="flex items-center gap-3">
-          <a
-            href="https://github.com/rusel/landing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 bg-gray-900 text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-full hover:bg-gray-800 transition-colors"
+          <span
+            aria-disabled="true"
+            title="Coming soon"
+            className="hidden sm:inline-flex items-center gap-1.5 bg-gray-300/85 text-gray-500 text-sm font-semibold px-4 sm:px-5 py-2 rounded-full cursor-not-allowed select-none"
           >
             <GithubIcon className="w-4 h-4" />
             GitHub
-          </a>
-          <a
-            href="https://github.com/rusel/landing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sm:hidden w-9 h-9 rounded-full bg-gray-900 text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
-            aria-label="GitHub"
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-500/90">
+              Coming soon
+            </span>
+          </span>
+          <span
+            aria-disabled="true"
+            title="GitHub — coming soon"
+            className="sm:hidden w-9 h-9 rounded-full bg-gray-300/85 text-gray-500 flex items-center justify-center cursor-not-allowed select-none"
+            aria-label="GitHub, coming soon"
           >
             <GithubIcon className="w-4 h-4" />
-          </a>
+          </span>
 
           {/* Hamburger (md:hidden) */}
           <button
@@ -126,15 +127,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
           >
             CLI Demo
           </button>
-          <a
-            href="https://github.com/rusel/landing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 font-semibold text-left inline-flex items-center gap-2"
+          <span
+            aria-disabled="true"
+            className="text-[16px] text-gray-400 py-3 font-semibold text-left inline-flex items-center gap-2 cursor-not-allowed select-none"
           >
             <GithubIcon className="w-4 h-4" />
             GitHub
-          </a>
+            <span className="text-[10px] font-semibold uppercase tracking-wider">Coming soon</span>
+          </span>
         </div>
       )}
     </header>

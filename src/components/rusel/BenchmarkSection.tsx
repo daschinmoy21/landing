@@ -1,35 +1,43 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+interface PathTimes {
+  total: number;
+  build: number;
+  ready: number;
+}
+
 interface Workload {
   name: string;
   desc: string;
-  microvm: number;
-  container: number;
-  podman: number;
+  microvm: PathTimes;
+  container: PathTimes;
+  podman: PathTimes;
 }
 
+const t = (total: number, build: number, ready: number): PathTimes => ({ total, build, ready });
+
 const WORKLOADS: Workload[] = [
-  { name: 'basic-http', desc: 'Go server · standard HTTP baseline', microvm: 1975, container: 874, podman: 7504 },
-  { name: 'microvm-http', desc: 'Rust HTTP microservice · virtio-net TAP', microvm: 1383, container: 859, podman: 9015 },
-  { name: 'hello-rust', desc: 'Static Rust binary · minimal closure', microvm: 1913, container: 1128, podman: 7475 },
-  { name: 'env-config', desc: 'Node.js · dynamic store closure', microvm: 1362, container: 797, podman: 9407 },
-  { name: 'shortlink', desc: 'URL shortener · small service', microvm: 1353, container: 787, podman: 8305 },
-  { name: 'static-test', desc: 'Static files · read-heavy', microvm: 1684, container: 1099, podman: 1637 },
-  { name: 'filebrowser', desc: 'Multi-threaded · read-only virtiofs', microvm: 2034, container: 1380, podman: 9099 },
+  { name: 'basic-http', desc: 'Go server · standard HTTP baseline', microvm: t(1445, 582, 863), container: t(812, 291, 521), podman: t(5228, 4860, 368) },
+  { name: 'microvm-http', desc: 'Rust HTTP microservice · virtio-net TAP', microvm: t(867, 225, 642), container: t(813, 207, 606), podman: t(8196, 7851, 345) },
+  { name: 'hello-rust', desc: 'Static Rust binary · minimal closure', microvm: t(1061, 436, 625), container: t(924, 384, 540), podman: t(4969, 4522, 447) },
+  { name: 'env-config', desc: 'Node.js · dynamic store closure', microvm: t(874, 215, 659), container: t(778, 215, 563), podman: t(6288, 6034, 254) },
+  { name: 'shortlink', desc: 'URL shortener · small service', microvm: t(825, 245, 580), container: t(602, 225, 377), podman: t(6277, 5939, 338) },
+  { name: 'static-test', desc: 'Static files · read-heavy', microvm: t(1057, 330, 727), container: t(873, 311, 562), podman: t(1331, 607, 724) },
+  { name: 'filebrowser', desc: 'Multi-threaded · read-only virtiofs', microvm: t(1291, 582, 709), container: t(1223, 544, 679), podman: t(8387, 7775, 612) },
 ];
 
 const fmt = (n: number) => n.toLocaleString('en-US');
 
 export const BenchmarkSection: React.FC = () => {
   const [sel, setSel] = useState<Workload>(WORKLOADS[0]);
-  const max = Math.max(sel.microvm, sel.container, sel.podman);
-  const speedup = sel.podman / sel.container;
+  const max = Math.max(sel.microvm.total, sel.container.total, sel.podman.total);
+  const speedup = sel.podman.total / sel.container.total;
 
   const rows = [
-    { label: 'Russel microVM · KVM', val: sel.microvm, color: 'bg-[#1f6b4a]', text: 'text-[#1a4d38]' },
-    { label: 'Russel container', val: sel.container, color: 'bg-[#185a7a]', text: 'text-[#143f56]' },
-    { label: 'Podman baseline', val: sel.podman, color: 'bg-[#3a4a58]', text: 'text-[#2a3640]' },
+    { label: 'Russel microVM · KVM', path: sel.microvm, color: 'bg-[#1f6b4a]', text: 'text-[#1a4d38]' },
+    { label: 'Russel container', path: sel.container, color: 'bg-[#185a7a]', text: 'text-[#143f56]' },
+    { label: 'Podman baseline', path: sel.podman, color: 'bg-[#3a4a58]', text: 'text-[#2a3640]' },
   ];
 
   return (
@@ -40,7 +48,7 @@ export const BenchmarkSection: React.FC = () => {
             Isolation costs — <span className="text-[#3e7895]">measured.</span>
           </h2>
           <p className="text-[17px] sm:text-lg font-medium leading-relaxed text-[#315a71] mt-3 max-w-[48ch]">
-            Spawn-to-ready on bare metal. Compare KVM microVMs against rootless Podman.
+            End-to-end on bare metal — build/deploy plus HTTP ready. Compare KVM microVMs against rootless Podman.
           </p>
         </div>
 
@@ -68,8 +76,8 @@ export const BenchmarkSection: React.FC = () => {
         <div className="mt-5 rounded-3xl liquid-glass p-5 md:p-7">
           <div className="relative z-10 flex items-start justify-between gap-4">
             <div>
-              <div className="text-[15px] font-semibold text-[#14233c]">Spawn-to-ready</div>
-              <div className="text-[13px] font-medium text-[#52768a] mt-0.5">Milliseconds · lower is better</div>
+              <div className="text-[15px] font-semibold text-[#14233c]">End-to-end</div>
+              <div className="text-[13px] font-medium text-[#52768a] mt-0.5">Build/deploy + HTTP ready · ms · lower is better</div>
             </div>
             <div className="flex items-center gap-2 flex-wrap justify-end">
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/65 text-[#315a71] border border-white/75">
@@ -83,12 +91,17 @@ export const BenchmarkSection: React.FC = () => {
 
           <div className="mt-7 space-y-6 relative z-10">
             {rows.map((row) => {
-              const pct = Math.max((row.val / max) * 100, 3.5);
+              const pct = Math.max((row.path.total / max) * 100, 3.5);
               return (
                 <div key={row.label}>
                   <div className="flex justify-between items-baseline gap-3 mb-2">
                     <span className={`text-[15px] font-semibold ${row.text}`}>{row.label}</span>
-                    <span className={`text-[15px] font-semibold tabular-nums ${row.text}`}>{fmt(row.val)}ms</span>
+                    <span className={`text-right tabular-nums ${row.text}`}>
+                      <span className="text-[15px] font-semibold">{fmt(row.path.total)}ms</span>
+                      <span className="ml-2 text-[12px] font-medium opacity-70">
+                        ({fmt(row.path.build)}+{fmt(row.path.ready)})
+                      </span>
+                    </span>
                   </div>
                   <div className="h-3 bg-[#c5d6df] rounded-full overflow-hidden">
                     <motion.div
@@ -105,7 +118,7 @@ export const BenchmarkSection: React.FC = () => {
           </div>
 
           <p className="relative z-10 mt-6 text-[14px] font-medium leading-relaxed text-[#52768a]">
-            Totals are spawn-to-ready. microVM includes Cloud Hypervisor init, virtiofs, and guest kernel boot.
+            Totals are end-to-end: build/deploy + first HTTP ready. microVM includes Cloud Hypervisor init, virtiofs, and guest kernel boot.
             Container is a direct rootfs bind. Lower is better.
           </p>
         </div>

@@ -21,7 +21,7 @@ const ITEMS = [
     icon: Repeat2,
     label: 'Velocity',
     title: 'Dual-engine switching',
-    desc: 'One flag switches runtime. Rootless Podman ↔ microVM via live socket handover. Zero downtime.',
+    desc: 'One flag switches runtime. Rootless Podman or microVMs via live socket handover. Zero downtime.',
     mono: 'SWAP 420ms',
   },
   {
