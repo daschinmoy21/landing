@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -25,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
   };
 
   return (
-    <header className="animate-fade-down relative z-20 w-full px-5 sm:px-8 lg:px-10 py-4 sm:py-5">
+    <header className="animate-fade-down relative z-30 w-full px-5 sm:px-8 lg:px-10 py-4 sm:py-5">
       <nav className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo Left — text only per request */}
         <button
@@ -40,17 +40,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
         {/* Desktop Nav Links (hidden below md) */}
         <div className="hidden md:flex items-center gap-8">
           <button
-            onClick={() => handleNavClick('architecture')}
-            className="inline-flex items-center gap-1 text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
+            onClick={() => handleNavClick('runtimes')}
+            className="text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
-            <span>Platform</span>
-            <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
+            Runtimes
           </button>
           <button
             onClick={() => handleNavClick('topology')}
             className="text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
-            Topology
+            How it works
           </button>
           <button
             onClick={() => handleNavClick('benchmarks')}
@@ -62,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
             onClick={() => handleNavClick('cli')}
             className="text-[15px] text-gray-800 hover:text-gray-900 transition-colors font-semibold cursor-pointer"
           >
-            CLI Demo
+            Try the CLI
           </button>
         </div>
 
@@ -92,6 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
             className="md:hidden w-9 h-9 rounded-full text-gray-900 hover:bg-gray-900/10 flex items-center justify-center transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -103,17 +103,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute left-4 right-4 top-full mt-2 rounded-2xl bg-white/90 backdrop-blur-xl ring-1 ring-gray-200 px-5 py-3 animate-fade-up z-50 shadow-2xl flex flex-col">
           <button
-            onClick={() => handleNavClick('architecture')}
-            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 flex items-center justify-between font-semibold text-left"
+            onClick={() => handleNavClick('runtimes')}
+            className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 font-semibold text-left"
           >
-            <span>Platform</span>
-            <ChevronDown className="w-4 h-4 text-gray-500" />
+            Runtimes
           </button>
           <button
             onClick={() => handleNavClick('topology')}
             className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 font-semibold text-left"
           >
-            Topology
+            How it works
           </button>
           <button
             onClick={() => handleNavClick('benchmarks')}
@@ -125,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
             onClick={() => handleNavClick('cli')}
             className="text-[16px] text-gray-800 hover:text-gray-900 py-3 border-b border-gray-200 font-semibold text-left"
           >
-            CLI Demo
+            Try the CLI
           </button>
           <span
             aria-disabled="true"

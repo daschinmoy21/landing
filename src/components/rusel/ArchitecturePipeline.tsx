@@ -1,5 +1,8 @@
-import React, { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useMemo, useState } from 'react';
+import { GitBranch, Globe, Hammer, Search, Terminal } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { ContainerGlyph, MicroVMGlyph, type Glyph } from './Glyphs';
+import { SectionHeader } from './SectionHeader';
 
 type NodeKind = 'cli' | 'repo' | 'resolve' | 'build' | 'microvm' | 'container' | 'ingress';
 
@@ -8,290 +11,141 @@ interface GraphNode {
   x: number;
   y: number;
   w: number;
-  h: number;
   title: string;
   subtitle: string;
   color: string;
-}
-
-interface GraphEdge {
-  id: string;
-  from: NodeKind;
-  to: NodeKind;
-  label?: string;
-  curve?: number;
+  icon: LucideIcon | Glyph;
 }
 
 const C = {
   ink: '#14233c',
-  panel: '#173049',
-  sky: '#4e9fc3',
-  skyDeep: '#2c779c',
-  skySoft: '#7eb8d4',
-  skyText: '#3e7895',
-  green: '#3a9a72',
-  greenSoft: '#5dcaa0',
+  muted: '#52768a',
+  sky: '#2c779c',
   line: '#8fb5c6',
+  container: '#185a7a',
+  microvm: '#1f6b4a',
 };
+
+const NODE_H = 58;
+const VIEW_W = 1170;
+const VIEW_H = 340;
 
 const NODES: GraphNode[] = [
-  { id: 'cli', x: 36, y: 72, w: 172, h: 48, title: 'russel-cli', subtitle: '', color: C.sky },
-  { id: 'repo', x: 36, y: 224, w: 172, h: 48, title: 'Git repo', subtitle: '', color: C.skySoft },
-  { id: 'resolve', x: 304, y: 148, w: 168, h: 48, title: 'Resolve', subtitle: '', color: C.sky },
-  { id: 'build', x: 536, y: 148, w: 168, h: 48, title: 'Build', subtitle: '', color: C.skyDeep },
-  { id: 'microvm', x: 768, y: 72, w: 160, h: 48, title: 'microVM', subtitle: '', color: C.green },
-  { id: 'container', x: 768, y: 224, w: 160, h: 48, title: 'Container', subtitle: '', color: C.sky },
-  { id: 'ingress', x: 988, y: 148, w: 152, h: 48, title: 'Ingress', subtitle: '', color: C.skyText },
+  { id: 'cli', x: 24, y: 84, w: 184, title: 'russel deploy', subtitle: 'CLI · git URL', color: C.sky, icon: Terminal },
+  { id: 'repo', x: 24, y: 222, w: 184, title: 'Git repo', subtitle: 'Russelfile.toml', color: C.sky, icon: GitBranch },
+  { id: 'resolve', x: 268, y: 153, w: 170, title: 'Resolve', subtitle: 'clone + parse', color: C.sky, icon: Search },
+  { id: 'build', x: 486, y: 153, w: 170, title: 'Build', subtitle: 'reproducible', color: C.sky, icon: Hammer },
+  { id: 'microvm', x: 716, y: 84, w: 190, title: 'microVM', subtitle: 'Cloud Hypervisor', color: C.microvm, icon: MicroVMGlyph },
+  { id: 'container', x: 716, y: 222, w: 190, title: 'Container', subtitle: 'rootless Podman', color: C.container, icon: ContainerGlyph },
+  { id: 'ingress', x: 962, y: 153, w: 184, title: 'Traefik', subtitle: 'route + cutover', color: C.sky, icon: Globe },
 ];
 
-const EDGES: GraphEdge[] = [
-  { id: 'e-cli', from: 'cli', to: 'resolve', label: 'deploy', curve: -6 },
-  { id: 'e-repo', from: 'repo', to: 'resolve', label: 'push', curve: 6 },
+const EDGES: { id: string; from: NodeKind; to: NodeKind }[] = [
+  { id: 'e-cli', from: 'cli', to: 'resolve' },
+  { id: 'e-repo', from: 'repo', to: 'resolve' },
   { id: 'e-res', from: 'resolve', to: 'build' },
-  { id: 'e-vm', from: 'build', to: 'microvm', curve: -8 },
-  { id: 'e-ct', from: 'build', to: 'container', curve: 8 },
-  { id: 'e-in-vm', from: 'microvm', to: 'ingress', curve: 8 },
-  { id: 'e-in-ct', from: 'container', to: 'ingress', curve: -8 },
+  { id: 'e-vm', from: 'build', to: 'microvm' },
+  { id: 'e-ct', from: 'build', to: 'container' },
+  { id: 'e-in-vm', from: 'microvm', to: 'ingress' },
+  { id: 'e-in-ct', from: 'container', to: 'ingress' },
 ];
 
-const DETAIL: Record<NodeKind, { kicker: string; title: string; body: string }> = {
-  cli: {
-    kicker: 'Input',
-    title: 'russel-cli',
-    body: 'One command deploys the same service as a microVM or a container. Flags map 1:1 to the manifest.',
-  },
-  repo: {
-    kicker: 'Input',
-    title: 'Git + Russelfile.toml',
-    body: 'Declarative source. The control plane clones the repo and reads the service block — no extra YAML sprawl.',
-  },
-  resolve: {
-    kicker: '01',
-    title: 'Parse & prepare',
-    body: 'Detects the stack, pins the runtime, and prepares a hermetic evaluation. Nothing leaks from the host.',
-  },
-  build: {
-    kicker: '02',
-    title: 'Hermetic build',
-    body: 'Produces a content-addressed closure. Hash-verified, cache-accelerated, identical on every machine.',
-  },
-  microvm: {
-    kicker: '03',
-    title: 'microVM · KVM',
-    body: 'Cloud Hypervisor guest. Hardware page-table isolation, virtio-fs store, TAP networking. Boot under 2s.',
-  },
-  container: {
-    kicker: '03',
-    title: 'Container · Podman',
-    body: 'Rootless Podman on the same artifact. Faster spawn, process-level isolation, live socket handover.',
-  },
-  ingress: {
-    kicker: '04',
-    title: 'Route & verify',
-    body: 'Health probe first, then cut traffic with automatic TLS. Ready end-to-end in under two seconds.',
-  },
-};
-
-const PATH: Record<NodeKind, NodeKind[]> = {
-  cli: ['cli', 'resolve', 'build', 'microvm', 'container', 'ingress'],
-  repo: ['repo', 'resolve', 'build', 'microvm', 'container', 'ingress'],
-  resolve: ['cli', 'repo', 'resolve', 'build', 'microvm', 'container', 'ingress'],
-  build: ['cli', 'repo', 'resolve', 'build', 'microvm', 'container', 'ingress'],
-  microvm: ['cli', 'repo', 'resolve', 'build', 'microvm', 'ingress'],
-  container: ['cli', 'repo', 'resolve', 'build', 'container', 'ingress'],
-  ingress: ['cli', 'repo', 'resolve', 'build', 'microvm', 'container', 'ingress'],
-};
+const STEPS: { title: string; body: string; nodes: NodeKind[] }[] = [
+  { title: 'Push', body: 'Point russel deploy at a git repo. Its Russelfile.toml describes the service.', nodes: ['cli', 'repo'] },
+  { title: 'Resolve', body: 'The control plane clones the repo and reads the Russelfile, runtime included.', nodes: ['resolve'] },
+  { title: 'Build', body: 'Detects Rust, Go or static sites and builds a reproducible, hash-pinned package.', nodes: ['build'] },
+  { title: 'Run', body: 'Boots that same package as a microVM or a rootless container.', nodes: ['microvm', 'container'] },
+  { title: 'Route', body: 'Waits until the port answers, adds a Traefik route, then drains the old version.', nodes: ['ingress'] },
+];
 
 const nodeById = Object.fromEntries(NODES.map((n) => [n.id, n])) as Record<NodeKind, GraphNode>;
+const stepOf = (id: NodeKind) => STEPS.findIndex((s) => s.nodes.includes(id));
 
-function edgePath(from: GraphNode, to: GraphNode, curve = 0) {
+function edgePath(from: GraphNode, to: GraphNode) {
   const x1 = from.x + from.w;
-  const y1 = from.y + from.h / 2;
+  const y1 = from.y + NODE_H / 2;
   const x2 = to.x;
-  const y2 = to.y + to.h / 2;
+  const y2 = to.y + NODE_H / 2;
   const mid = (x1 + x2) / 2;
-  return `M ${x1} ${y1} C ${mid} ${y1 + curve}, ${mid} ${y2 + curve}, ${x2} ${y2}`;
+  return `M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`;
 }
 
-function NodeIcon({ kind, color }: { kind: NodeKind; color: string }) {
-  if (kind === 'cli') {
-    return (
-      <g>
-        <rect x="-6.5" y="-5.5" width="13" height="11" rx="1.6" fill="none" stroke={color} strokeWidth="1.4" />
-        <path d="M -3.2 -1.2 L -0.4 1.2 L -3.2 3.6" fill="none" stroke={color} strokeWidth="1.3" strokeLinejoin="round" />
-        <path d="M 1 3.6 H 4.2" stroke={color} strokeWidth="1.3" />
-      </g>
-    );
-  }
-  if (kind === 'repo') {
-    return (
-      <g>
-        <path d="M -5.5 -2.5 L -2.2 -5.5 H 5.5 V 5.5 H -5.5 Z" fill="none" stroke={color} strokeWidth="1.4" />
-        <path d="M -2.2 -5.5 V -2.5 H -5.5" fill="none" stroke={color} strokeWidth="1.3" />
-      </g>
-    );
-  }
-  if (kind === 'resolve') {
-    return (
-      <g>
-        <circle cx="-0.6" cy="-0.8" r="4.2" fill="none" stroke={color} strokeWidth="1.4" />
-        <path d="M 2.4 2.2 L 5.4 5.2" stroke={color} strokeWidth="1.4" strokeLinecap="round" />
-      </g>
-    );
-  }
-  if (kind === 'build') {
-    return (
-      <g>
-        <path d="M -5.5 -2 L 0 -5.2 L 5.5 -2 V 4.6 L 0 7.2 L -5.5 4.6 Z" fill="none" stroke={color} strokeWidth="1.35" />
-        <path d="M -5.5 -2 L 0 1.2 L 5.5 -2 M 0 1.2 V 7.2" stroke={color} strokeWidth="1.2" />
-      </g>
-    );
-  }
-  if (kind === 'microvm') {
-    return (
-      <g>
-        <rect x="-6" y="-5.5" width="12" height="11" rx="1.5" fill="none" stroke={color} strokeWidth="1.4" />
-        <path d="M -3.2 -1.6 H 3.2 M -3.2 1.6 H 3.2 M -3.2 1.6 V 3.4 H 0" stroke={color} strokeWidth="1.2" />
-      </g>
-    );
-  }
-  if (kind === 'container') {
-    return (
-      <g>
-        <rect x="-5.5" y="-5.5" width="11" height="11" rx="1.4" fill="none" stroke={color} strokeWidth="1.4" />
-        <path d="M -5.5 0 H 5.5 M 0 -5.5 V 5.5" stroke={color} strokeWidth="1.15" />
-      </g>
-    );
-  }
-  return (
-    <g>
-      <circle cx="0" cy="0" r="5.4" fill="none" stroke={color} strokeWidth="1.4" />
-      <path d="M -5.4 0 H 5.4 M 0 -5.4 C 2.2 -2 2.2 2 0 5.4 C -2.2 2 -2.2 -2 0 -5.4" fill="none" stroke={color} strokeWidth="1.15" />
-    </g>
-  );
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return reduced;
 }
 
 export const ArchitecturePipeline: React.FC = () => {
-  const [active, setActive] = useState<NodeKind>('build');
-  const lit = useMemo(() => new Set<NodeKind>(PATH[active]), [active]);
-  const detail = DETAIL[active];
+  const [step, setStep] = useState<number | null>(null);
+  const reducedMotion = usePrefersReducedMotion();
+  const lit = useMemo(
+    () => new Set<NodeKind>(step === null ? NODES.map((n) => n.id) : STEPS[step].nodes),
+    [step],
+  );
 
   return (
     <section id="topology" className="relative overflow-hidden py-14 md:py-20">
-      <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="max-w-2xl">
-          <h2 className="font-sans font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-[44px] leading-[1.08]">
-            Source to serving, <span className="text-[#3e7895]">one graph.</span>
-          </h2>
-          <p className="text-[17px] sm:text-lg font-medium leading-relaxed text-[#315a71] mt-3 max-w-[50ch]">
-            Parse the manifest, build a closure, dispatch to a microVM or a container, then publish a route.
-          </p>
-        </div>
+      <div className="relative max-w-[1080px] mx-auto px-6 md:px-10">
+        <SectionHeader title="From source to serving," accent="in five steps.">
+          You describe the service once. Russel builds it, runs it on the runtime you picked, and puts it behind a route.
+        </SectionHeader>
 
-        <div className="mt-7 rounded-3xl overflow-hidden border border-white/35 bg-[#14233c] shadow-[0_22px_48px_rgba(20,35,60,0.22)]">
-          <div className="relative overflow-x-auto">
+        <div className="mt-8 rounded-3xl liquid-glass">
+          <div className="relative z-10 hidden md:block p-3 lg:p-4">
             <svg
-              viewBox="0 0 1170 344"
-              className="block w-full min-w-[820px] h-auto"
+              viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+              className="block w-full h-auto"
               role="img"
-              aria-label="Deployment pipeline from source through resolve and build to microVM or container, then ingress"
+              aria-label="Deployment pipeline: russel deploy or a git repo feeds resolve and build, which runs as a microVM or a container, then Traefik routes traffic"
             >
               <defs>
-                <pattern id="topo-dots" width="18" height="18" patternUnits="userSpaceOnUse">
-                  <circle cx="1" cy="1" r="0.7" fill="#4e9fc3" fillOpacity="0.22" />
+                <pattern id="topo-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="1.5" cy="1.5" r="1" fill={C.sky} fillOpacity="0.16" />
                 </pattern>
-                {EDGES.map((edge) => {
-                  const from = nodeById[edge.from];
-                  const to = nodeById[edge.to];
-                  return (
-                    <linearGradient key={edge.id} id={`grad-${edge.id}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} gradientUnits="userSpaceOnUse">
-                      <stop stopColor={from.color} />
-                      <stop offset="1" stopColor={to.color} />
-                    </linearGradient>
-                  );
-                })}
+                <filter id="node-shadow" x="-20%" y="-30%" width="140%" height="180%">
+                  <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#205c79" floodOpacity="0.14" />
+                </filter>
+                <linearGradient id="runtime-wash" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor={C.microvm} stopOpacity="0.09" />
+                  <stop offset="1" stopColor={C.container} stopOpacity="0.09" />
+                </linearGradient>
               </defs>
 
-              <rect width="1170" height="344" fill={C.ink} />
-              <rect width="1170" height="344" fill="url(#topo-dots)" />
+              <rect width={VIEW_W} height={VIEW_H} rx="18" fill="url(#topo-dots)" />
 
-              <rect
-                x="256"
-                y="16"
-                width="898"
-                height="312"
-                rx="18"
-                fill="none"
-                stroke={C.sky}
-                strokeOpacity="0.42"
-                strokeWidth="1.2"
-                strokeDasharray="5 6"
-              />
-              <text
-                x="1136"
-                y="34"
-                textAnchor="end"
-                fill={C.sky}
-                fillOpacity="0.72"
-                fontSize="10"
-                fontFamily="var(--font-mono)"
-                letterSpacing="0.14em"
-              >
-                CONTROL PLANE
-              </text>
+              {/* Control plane */}
+              <rect x="244" y="18" width="918" height="304" rx="22" fill="#ffffff" fillOpacity="0.38" stroke="#ffffff" strokeOpacity="0.9" />
 
-              <rect
-                x="748"
-                y="40"
-                width="200"
-                height="264"
-                rx="16"
-                fill="none"
-                stroke={C.sky}
-                strokeOpacity="0.22"
-                strokeDasharray="4 5"
-              />
-              <text
-                x="848"
-                y="54"
-                textAnchor="middle"
-                fill={C.sky}
-                fillOpacity="0.58"
-                fontSize="9"
-                fontFamily="var(--font-sans)"
-                letterSpacing="0.16em"
-              >
-                RUNTIME
-              </text>
+              {/* Runtime choice */}
+              <rect x="700" y="62" width="222" height="240" rx="18" fill="url(#runtime-wash)" stroke={C.line} strokeOpacity="0.45" strokeDasharray="4 5" />
+              <g transform="translate(761 290)">
+                <rect width="100" height="22" rx="11" fill="#ffffff" stroke={C.line} strokeOpacity="0.5" />
+                <text x="50" y="15" textAnchor="middle" fill={C.muted} fontSize="11" fontWeight="600" fontFamily="var(--font-sans)" letterSpacing="0.06em">
+                  PICK ONE
+                </text>
+              </g>
 
-              {EDGES.map((edge) => {
+              {EDGES.map((edge, i) => {
                 const from = nodeById[edge.from];
                 const to = nodeById[edge.to];
-                const on = lit.has(edge.from) && lit.has(edge.to);
-                const d = edgePath(from, to, edge.curve ?? 0);
+                const on = step === null || lit.has(edge.from) || lit.has(edge.to);
+                const d = edgePath(from, to);
+                const color = to.color === C.sky ? from.color : to.color;
                 return (
-                  <g key={edge.id}>
-                    <path
-                      d={d}
-                      fill="none"
-                      stroke={`url(#grad-${edge.id})`}
-                      strokeWidth={on ? 1.75 : 1.2}
-                      strokeDasharray="5 6"
-                      opacity={on ? 0.95 : 0.28}
-                      className={on ? 'topo-dash' : undefined}
-                    />
-                    {edge.label && (
-                      <text
-                        x={(from.x + from.w + to.x) / 2}
-                        y={(from.y + from.h / 2 + to.y + to.h / 2) / 2 - 10}
-                        textAnchor="middle"
-                        fill={from.color}
-                        fillOpacity={on ? 0.92 : 0.38}
-                        fontSize="10"
-                        fontFamily="var(--font-sans)"
-                      >
-                        {edge.label}
-                      </text>
+                  <g key={edge.id} opacity={on ? 1 : 0.3} style={{ transition: 'opacity 200ms' }}>
+                    <path d={d} fill="none" stroke={C.line} strokeOpacity="0.55" strokeWidth="2" />
+                    <path d={d} fill="none" stroke={color} strokeWidth="2" strokeDasharray="2 8" strokeLinecap="round" className="topo-dash" />
+                    {!reducedMotion && (
+                      <circle r="4" fill={color} stroke="#ffffff" strokeWidth="1.5">
+                        <animateMotion dur="2.6s" repeatCount="indefinite" begin={`${(i % 4) * 0.45}s`} path={d} />
+                      </circle>
                     )}
                   </g>
                 );
@@ -299,64 +153,63 @@ export const ArchitecturePipeline: React.FC = () => {
 
               {NODES.map((node) => {
                 const on = lit.has(node.id);
-                const selected = active === node.id;
+                const selected = step !== null && on;
+                const Icon = node.icon;
                 return (
                   <g
                     key={node.id}
                     transform={`translate(${node.x} ${node.y})`}
-                    onClick={() => setActive(node.id)}
-                    className="cursor-pointer"
-                    role="button"
-                    tabIndex={0}
-                    aria-pressed={selected}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        setActive(node.id);
-                      }
-                    }}
+                    onMouseEnter={() => setStep(stepOf(node.id))}
+                    onMouseLeave={() => setStep(null)}
+                    opacity={on ? 1 : 0.4}
+                    style={{ transition: 'opacity 200ms' }}
                   >
                     <rect
                       width={node.w}
-                      height={node.h}
-                      rx="11"
-                      fill={selected ? `${node.color}24` : C.panel}
+                      height={NODE_H}
+                      rx="14"
+                      fill="#ffffff"
                       stroke={node.color}
-                      strokeWidth={selected ? 1.7 : 1.25}
-                      opacity={on ? 1 : 0.38}
+                      strokeOpacity={selected ? 0.9 : 0.22}
+                      strokeWidth={selected ? 1.75 : 1}
+                      filter="url(#node-shadow)"
                     />
-                    <rect x="-3" y={node.h / 2 - 3} width="6" height="6" rx="1" fill={C.ink} stroke={node.color} strokeWidth="1.2" />
-                    <rect x={node.w - 3} y={node.h / 2 - 3} width="6" height="6" rx="1" fill={C.ink} stroke={node.color} strokeWidth="1.2" />
-                    <g transform={`translate(22 ${node.h / 2})`}>
-                      <NodeIcon kind={node.id} color={node.color} />
-                    </g>
-                    <text
-                      x="40"
-                      y={node.h / 2 + 4}
-                      fill="#eaf6fa"
-                      fontSize="15"
-                      fontWeight="600"
-                      fontFamily="var(--font-sans)"
-                    >
+                    <rect x="12" y="13" width="32" height="32" rx="10" fill={node.color} fillOpacity="0.11" />
+                    <Icon x={20} y={21} width={16} height={16} color={node.color} strokeWidth={2} />
+                    <text x="56" y="26" fill={C.ink} fontSize="15" fontWeight="600" fontFamily="var(--font-sans)">
                       {node.title}
                     </text>
+                    <text x="56" y="44" fill={C.muted} fontSize="12" fontFamily="var(--font-sans)">
+                      {node.subtitle}
+                    </text>
+                    <circle cx="0" cy={NODE_H / 2} r="3.5" fill="#ffffff" stroke={node.color} strokeWidth="1.5" />
+                    <circle cx={node.w} cy={NODE_H / 2} r="3.5" fill="#ffffff" stroke={node.color} strokeWidth="1.5" />
                   </g>
                 );
               })}
             </svg>
           </div>
 
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22 }}
-            className="border-t border-white/10 px-5 py-4 sm:px-6 sm:py-5 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 bg-[#14233c]"
-          >
-            <span className="text-xs font-semibold tracking-wide text-[#7eb8d4] uppercase">{detail.kicker}</span>
-            <span className="text-base font-semibold text-white">{detail.title}</span>
-            <span className="text-[15px] font-medium leading-relaxed text-white/75 sm:flex-1">{detail.body}</span>
-          </motion.div>
+          <ol className="relative z-10 grid grid-cols-1 md:grid-cols-5 md:border-t border-[#214b65]/10">
+            {STEPS.map((st, i) => (
+              <li
+                key={st.title}
+                onMouseEnter={() => setStep(i)}
+                onMouseLeave={() => setStep(null)}
+                className={`px-5 py-4 md:py-5 border-[#214b65]/10 transition-colors ${i > 0 ? 'border-t md:border-t-0 md:border-l' : ''} ${
+                  step === i ? 'bg-white/55' : ''
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-6 h-6 rounded-full bg-white border border-[#8fb5c6]/50 text-[#2c779c] font-mono text-[11px] font-semibold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <span className="text-base font-semibold text-[#14233c]">{st.title}</span>
+                </div>
+                <p className="mt-2 text-[14px] font-medium leading-relaxed text-[#315a71]">{st.body}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

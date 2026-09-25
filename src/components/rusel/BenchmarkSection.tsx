@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { SectionHeader } from './SectionHeader';
 
 interface PathTimes {
   total: number;
@@ -32,84 +33,98 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 export const BenchmarkSection: React.FC = () => {
   const [sel, setSel] = useState<Workload>(WORKLOADS[0]);
   const max = Math.max(sel.microvm.total, sel.container.total, sel.podman.total);
-  const speedup = sel.podman.total / sel.container.total;
 
   const rows = [
-    { label: 'Russel microVM · KVM', path: sel.microvm, color: 'bg-[#1f6b4a]', text: 'text-[#1a4d38]' },
-    { label: 'Russel container', path: sel.container, color: 'bg-[#185a7a]', text: 'text-[#143f56]' },
-    { label: 'Podman baseline', path: sel.podman, color: 'bg-[#3a4a58]', text: 'text-[#2a3640]' },
+    { label: 'Russel · container', path: sel.container, build: 'bg-[#185a7a]', ready: 'bg-[#185a7a]/45', text: 'text-[#143f56]' },
+    { label: 'Russel · microVM', path: sel.microvm, build: 'bg-[#1f6b4a]', ready: 'bg-[#1f6b4a]/45', text: 'text-[#1a4d38]' },
+    { label: 'Podman (baseline)', path: sel.podman, build: 'bg-[#7d8e9b]', ready: 'bg-[#7d8e9b]/45', text: 'text-[#4d6176]' },
+  ];
+
+  const stats = [
+    { value: sel.podman.total / sel.container.total, label: 'faster than Podman, as a container', color: 'text-[#185a7a]' },
+    { value: sel.podman.total / sel.microvm.total, label: 'faster than Podman, even as a microVM', color: 'text-[#1f6b4a]' },
   ];
 
   return (
     <section id="benchmarks" className="relative overflow-hidden py-14 md:py-20">
-      <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
-        <div className="max-w-2xl">
-          <h2 className="font-sans font-normal tracking-tight text-[#14233c] text-3xl sm:text-4xl md:text-[44px] leading-[1.08]">
-            Isolation costs — <span className="text-[#3e7895]">measured.</span>
-          </h2>
-          <p className="text-[17px] sm:text-lg font-medium leading-relaxed text-[#315a71] mt-3 max-w-[48ch]">
-            End-to-end on bare metal — build/deploy plus HTTP ready. Compare KVM microVMs against rootless Podman.
-          </p>
-        </div>
+      <div className="relative max-w-[1080px] mx-auto px-6 md:px-10">
+        <SectionHeader title="Isolation costs," accent="measured.">
+          Time from deploy to first HTTP response on bare metal, compared with rootless Podman. Lower is better.
+        </SectionHeader>
 
-        <div className="mt-7 inline-flex flex-wrap items-center gap-1 rounded-full bg-white/55 border border-white/75 p-1 backdrop-blur-sm max-w-full">
-          {WORKLOADS.map((w) => {
-            const on = sel.name === w.name;
-            return (
-              <button
-                key={w.name}
-                type="button"
-                onClick={() => setSel(w)}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-colors cursor-pointer ${
-                  on
-                    ? 'bg-[#14233c] text-white shadow-[0_6px_14px_rgba(20,35,60,0.16)]'
-                    : 'text-[#315a71] hover:bg-white/80 hover:text-[#14233c]'
-                }`}
-              >
-                {w.name}
-              </button>
-            );
-          })}
+        <div className="mt-7 -mx-6 px-6 md:mx-0 md:px-0 overflow-x-auto scrollbar-hide">
+          <div
+            role="tablist"
+            aria-label="Workload"
+            className="inline-flex items-center gap-1 rounded-full bg-white/55 border border-white/75 p-1 backdrop-blur-sm whitespace-nowrap"
+          >
+            {WORKLOADS.map((w) => {
+              const on = sel.name === w.name;
+              return (
+                <button
+                  key={w.name}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => setSel(w)}
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-semibold font-mono transition-colors cursor-pointer ${
+                    on
+                      ? 'bg-[#14233c] text-white shadow-[0_6px_14px_rgba(20,35,60,0.16)]'
+                      : 'text-[#315a71] hover:bg-white/80 hover:text-[#14233c]'
+                  }`}
+                >
+                  {w.name}
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <p className="mt-3 text-[15px] font-medium text-[#315a71]">{sel.desc}</p>
 
         <div className="mt-5 rounded-3xl liquid-glass p-5 md:p-7">
-          <div className="relative z-10 flex items-start justify-between gap-4">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-5 md:items-end">
             <div>
-              <div className="text-[15px] font-semibold text-[#14233c]">End-to-end</div>
-              <div className="text-[13px] font-medium text-[#52768a] mt-0.5">Build/deploy + HTTP ready · ms · lower is better</div>
+              <div className="text-[13px] font-semibold uppercase tracking-wider text-[#52768a]">Workload</div>
+              <div className="mt-1 text-lg font-semibold text-[#14233c]">
+                <span className="font-mono">{sel.name}</span>
+                <span className="text-[#52768a] font-medium"> · {sel.desc}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 flex-wrap justify-end">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/65 text-[#315a71] border border-white/75">
-                WARM
-              </span>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#185a7a]/12 text-[#143f56] border border-[#185a7a]/25">
-                Russel container · {speedup.toFixed(1)}× vs Podman
-              </span>
+            <div className="grid grid-cols-2 gap-3">
+              {stats.map((st) => (
+                <div key={st.label} className="rounded-2xl bg-white/60 border border-white/80 px-4 py-3 min-w-0 md:min-w-[170px]">
+                  <div className={`text-3xl font-semibold tracking-tight tabular-nums ${st.color}`}>{st.value.toFixed(1)}×</div>
+                  <div className="mt-0.5 text-[13px] font-medium leading-snug text-[#315a71]">{st.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-7 space-y-6 relative z-10">
+          <div className="mt-7 space-y-5 relative z-10">
             {rows.map((row) => {
-              const pct = Math.max((row.path.total / max) * 100, 3.5);
+              const buildPct = (row.path.build / max) * 100;
+              const readyPct = (row.path.ready / max) * 100;
               return (
                 <div key={row.label}>
                   <div className="flex justify-between items-baseline gap-3 mb-2">
                     <span className={`text-[15px] font-semibold ${row.text}`}>{row.label}</span>
-                    <span className={`text-right tabular-nums ${row.text}`}>
-                      <span className="text-[15px] font-semibold">{fmt(row.path.total)}ms</span>
-                      <span className="ml-2 text-[12px] font-medium opacity-70">
-                        ({fmt(row.path.build)}+{fmt(row.path.ready)})
-                      </span>
-                    </span>
+                    <span className={`text-[15px] font-semibold tabular-nums ${row.text}`}>{fmt(row.path.total)} ms</span>
                   </div>
-                  <div className="h-3 bg-[#c5d6df] rounded-full overflow-hidden">
+                  <div className="h-3.5 bg-[#14233c]/[0.07] rounded-full overflow-hidden flex">
                     <motion.div
-                      key={`${sel.name}-${row.label}`}
+                      key={`${sel.name}-${row.label}-b`}
                       initial={{ width: 0 }}
-                      animate={{ width: `${pct}%` }}
+                      animate={{ width: `${buildPct}%` }}
                       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                      className={`h-full rounded-full ${row.color}`}
+                      className={`h-full ${row.build}`}
+                      title={`Build/deploy ${fmt(row.path.build)} ms`}
+                    />
+                    <motion.div
+                      key={`${sel.name}-${row.label}-r`}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${readyPct}%` }}
+                      transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                      className={`h-full rounded-r-full ${row.ready}`}
+                      title={`HTTP ready ${fmt(row.path.ready)} ms`}
                     />
                   </div>
                 </div>
@@ -117,10 +132,20 @@ export const BenchmarkSection: React.FC = () => {
             })}
           </div>
 
-          <p className="relative z-10 mt-6 text-[14px] font-medium leading-relaxed text-[#52768a]">
-            Totals are end-to-end: build/deploy + first HTTP ready. microVM includes Cloud Hypervisor init, virtiofs, and guest kernel boot.
-            Container is a direct rootfs bind. Lower is better.
-          </p>
+          <div className="relative z-10 mt-6 pt-5 border-t border-[#214b65]/10 flex flex-col md:flex-row md:items-start gap-3 md:gap-8">
+            <div className="flex items-center gap-4 shrink-0 text-[13px] font-semibold text-[#315a71]">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-sm bg-[#315a71]" aria-hidden /> Build / deploy
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-sm bg-[#315a71]/45" aria-hidden /> Until HTTP ready
+              </span>
+            </div>
+            <p className="text-[13px] font-medium leading-relaxed text-[#52768a]">
+              Warm cache, bare metal. microVM time includes Cloud Hypervisor init, virtio-fs, and guest kernel boot; the
+              container is a direct rootfs bind. Most of the gap with Podman is build time.
+            </p>
+          </div>
         </div>
       </div>
     </section>

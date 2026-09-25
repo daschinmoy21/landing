@@ -1,5 +1,6 @@
 import React from 'react';
 import { Hero } from '../Hero';
+import { RuntimeCompare } from './RuntimeCompare';
 import { SelectedWorks } from './SelectedWorks';
 import { ArchitecturePipeline } from './ArchitecturePipeline';
 import { BenchmarkSection } from './BenchmarkSection';
@@ -21,6 +22,7 @@ export const RusselLanding: React.FC = () => {
 
       <main className="relative z-10">
         <Hero onNavigate={handleNavigate} />
+        <RuntimeCompare />
         <SelectedWorks />
         <ArchitecturePipeline />
         <BenchmarkSection />
