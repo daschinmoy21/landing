@@ -133,8 +133,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <img
           src="/dash.webp"
           alt="Russel dashboard"
-          width={1917}
-          height={1127}
+          width={1882}
+          height={1159}
           className="w-full h-auto rounded-2xl shadow-[0_20px_80px_rgba(0,0,0,0.35)] ring-1 ring-black/10"
           loading="eager"
           fetchPriority="high"
