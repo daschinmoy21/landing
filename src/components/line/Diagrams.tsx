@@ -1,126 +1,63 @@
 import React from 'react';
 import { useInView, useLoop } from './primitives';
 
-const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 
-// basic-http, warm cache, bare metal: build, then boot until HTTP answers (ms).
-const LANES = [
-  {
-    key: 'container',
-    label: 'container',
-    build: 291,
-    ready: 521,
-    tone: 'text-ct',
-    fill: 'bg-ct/75',
-    phases: {
-      resolve: 'Resolving source & Russelfile',
-      build: 'Building package',
-      create: 'Preparing container rootfs',
-      start: 'Starting rootless Podman container',
-      ready: 'Waiting for service to be reachable',
-    },
-  },
-  {
-    key: 'microvm',
-    label: 'microVM',
-    build: 582,
-    ready: 863,
-    tone: 'text-vm',
-    fill: 'bg-vm/75',
-    phases: {
-      resolve: 'Resolving source & Russelfile',
-      build: 'Building package + kernel/busybox',
-      create: 'Writing deploy config',
-      start: 'Booting the VM',
-      ready: 'Waiting for service to be reachable',
-    },
-  },
-] as const;
+// A real Russelfile, annotated from the field docs in russel-dev's crates/core/src/config.rs.
+type RfLine = { text?: string; key?: string; value?: string; tone?: string; note?: string };
+const RUSSELFILE: RfLine[] = [
+  { text: '[service]' },
+  { key: 'name', value: '"api"', note: 'Service id: 1–128 of A–Z, a–z, 0–9, _ and -.' },
+  { key: 'source', value: '"."', note: 'Directory inside the repo. Relative only; ".." is rejected.' },
+  { key: 'port', value: '3000', note: 'Where the app listens in the guest. Russel also sets PORT.' },
+  { key: 'memory', value: '"256mb"', note: 'microVM RAM, or the container --memory limit. At least 16mb.' },
+  { key: 'type', value: '"microvm"', tone: 'text-vm', note: 'container (the default) or microvm. The one line to switch.' },
+  { key: 'cpus', value: '2', note: 'microVM vCPUs, or the container --cpus limit. 1 to 32.' },
+  { text: '' },
+  { text: '[ingress]' },
+  { key: 'host', value: '"api.example.com"', note: 'The exact Traefik Host() rule for this service.' },
+  { key: 'port', value: '8080', note: 'Host-side backend port that Traefik routes to.' },
+  { text: '' },
+  { text: '[service.env]' },
+  { key: 'API_KEY', value: '"secret://API_KEY"', note: 'Resolved from russel secrets on the control plane at deploy.' },
+];
+const RF_KEYED = RUSSELFILE.map((l, i) => (l.key ? i : -1)).filter((i) => i >= 0);
 
-const SCALE_MS = 1500;
-const TICKS = [0, 500, 1000, 1500];
-
-/** Where a lane is at `ms`: which CLI phase, or done. Phase splits inside build/boot are approximate. */
-function phaseAt(ms: number, build: number, ready: number) {
-  const total = build + ready;
-  if (ms >= total) return 'done' as const;
-  if (ms < build * 0.15) return 'resolve' as const;
-  if (ms < build) return 'build' as const;
-  if (ms < build + ready * 0.15) return 'create' as const;
-  if (ms < build + ready * 0.7) return 'start' as const;
-  return 'ready' as const;
-}
-
-/** Both runtimes racing on one clock, from russel deploy to the first HTTP response. */
-export const BootDiagram: React.FC = () => {
+/** The Russelfile, one key at a time: the active line is highlighted and explained below. */
+export const RusselfileDiagram: React.FC = () => {
   const [ref, seen] = useInView<HTMLDivElement>(0.4);
-  const t = useLoop(6000, seen);
-  const ms = Math.min(1, t / 0.72) * SCALE_MS;
-  const pct = (v: number) => `${(v / SCALE_MS) * 100}%`;
+  const [hover, setHover] = React.useState<number | null>(null);
+  const t = useLoop(RF_KEYED.length * 2200, seen && hover === null, 0);
+  const active = hover ?? RF_KEYED[Math.floor(t * RF_KEYED.length) % RF_KEYED.length];
+  const width = Math.max(...RUSSELFILE.filter((l) => l.key).map((l) => l.key!.length));
 
   return (
     <div ref={ref} className="font-mono">
-      <div className="relative">
-        <div className="relative space-y-7 py-1">
-          {LANES.map((l) => {
-            const total = l.build + l.ready;
-            const phase = phaseAt(ms, l.build, l.ready);
-            const done = phase === 'done';
-            return (
-              <div key={l.key}>
-                <div className="flex items-baseline justify-between gap-3 text-[13px]">
-                  <span className={l.tone}>{l.label}</span>
-                  <span className={`tabular-nums ${done ? 'text-fg' : 'text-mute'}`}>
-                    {done && <span className="mr-1.5 text-ok">✓</span>}
-                    {fmt(Math.min(ms, total))} ms
-                  </span>
-                </div>
-                <div className="relative mt-2 h-3 bg-raise" aria-hidden>
-                  {TICKS.slice(1, -1).map((v) => (
-                    <div key={v} className="absolute -inset-y-1 w-px bg-line" style={{ left: pct(v) }} />
-                  ))}
-                  <div className={`hatch absolute inset-y-0 left-0 ${l.tone}`} style={{ width: pct(Math.min(ms, l.build)) }} />
-                  <div
-                    className={`absolute inset-y-0 ${l.fill}`}
-                    style={{ left: pct(l.build), width: pct(Math.max(0, Math.min(ms, total) - l.build)) }}
-                  />
-                  <div className="absolute -inset-y-1.5 w-px bg-fg/80" style={{ left: pct(Math.min(ms, SCALE_MS - 1)) }} />
-                </div>
-                <div className="mt-2 truncate text-[12px] text-dimmer">
-                  {done ? (
-                    <span className="text-mute">deployed · first response</span>
-                  ) : (
-                    <>
-                      <span className={l.tone}>›</span> {phase} · {l.phases[phase]}
-                    </>
-                  )}
-                </div>
+      <div className="border border-line bg-night">
+        <div className="border-b border-line px-4 py-2 text-[11px] text-dimmer">Russelfile.toml</div>
+        <div className="overflow-x-auto py-2 text-[12.5px] leading-[1.8]" onMouseLeave={() => setHover(null)}>
+          {RUSSELFILE.map((l, i) =>
+            l.key ? (
+              <div
+                key={i}
+                onMouseEnter={() => setHover(i)}
+                className={`relative cursor-default whitespace-pre px-4 ${active === i ? 'bg-raise' : ''}`}
+              >
+                <span className={`absolute inset-y-0 left-0 w-0.5 ${active === i ? 'bg-vm' : ''}`} aria-hidden />
+                <span className={active === i ? 'text-fg' : 'text-mute'}>{l.key.padEnd(width)}</span>
+                <span className="text-dimmer"> = </span>
+                <span className={l.tone ?? (active === i ? 'text-ok' : 'text-ok/70')}>{l.value}</span>
               </div>
-            );
-          })}
+            ) : (
+              <div key={i} className="whitespace-pre px-4 text-fg">
+                {l.text || ' '}
+              </div>
+            ),
+          )}
         </div>
       </div>
-
-      <div className="relative mt-3 h-4 whitespace-nowrap text-[11px] text-dimmer" aria-hidden>
-        {TICKS.map((v, i) => (
-          <span
-            key={v}
-            className={`absolute ${i === 0 ? '' : i === TICKS.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`}
-            style={{ left: pct(v) }}
-          >
-            {v === 0 ? '0' : `${v / 1000} s`}
-          </span>
-        ))}
-      </div>
-
-      <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-dimmer">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="hatch inline-block h-2.5 w-5 text-mute" aria-hidden /> build
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="inline-block h-2.5 w-5 bg-mute/60" aria-hidden /> boot until http
-        </span>
-      </div>
+      <p className="mt-4 min-h-[3.2em] text-[12.5px] leading-relaxed text-mute" aria-live="polite">
+        <span className="text-fg">{RUSSELFILE[active].key}</span> · {RUSSELFILE[active].note}
+      </p>
     </div>
   );
 };

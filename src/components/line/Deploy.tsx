@@ -66,7 +66,7 @@ export const Deploy: React.FC = () => {
     `port = ${guest}`,
     `memory = "${mem}"`,
     `type = "${runtime}"`,
-    ...(runtime === 'microvm' ? [`cpus = ${cpus}`] : []),
+    `cpus = ${cpus}`,
     ...(host || hp ? ['', '[ingress]', ...(host ? [`host = "${host}"`] : []), ...(hp ? [`port = ${hp}`] : [])] : []),
     '',
     '[service.env]',
@@ -197,8 +197,8 @@ export const Deploy: React.FC = () => {
               </select>
             </label>
             <label className="block">
-              <Label hint={runtime === 'microvm' ? 'service.cpus' : 'microVM only'}>vCPUs</Label>
-              <select value={cpus} onChange={(e) => setCpus(e.target.value)} disabled={runtime !== 'microvm'} className={field}>
+              <Label hint="service.cpus">CPUs</Label>
+              <select value={cpus} onChange={(e) => setCpus(e.target.value)} className={field}>
                 {CPUS.map((c) => (
                   <option key={c}>{c}</option>
                 ))}

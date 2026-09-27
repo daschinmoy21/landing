@@ -1,13 +1,13 @@
 import React from 'react';
 import { RuntimeArt } from './Art';
-import { BootDiagram, CutoverDiagram } from './Diagrams';
+import { CutoverDiagram, RusselfileDiagram } from './Diagrams';
 import { Cell, Grid, Section, SectionTitle, TileBody, TileTitle } from './primitives';
 
 const TILES = [
   {
-    title: 'Ready in 0.8 s, or 1.4 s with its own kernel',
-    body: "basic-http from russel deploy to its first HTTP response. The microVM's extra time goes to its own kernel: packaging it, then booting it.",
-    art: BootDiagram,
+    title: 'Everything in one Russelfile',
+    body: 'Runtime, resources, routing and secrets, versioned next to your code. Apps run unprivileged by default.',
+    art: RusselfileDiagram,
   },
   {
     title: 'Isolation you pick per service',
