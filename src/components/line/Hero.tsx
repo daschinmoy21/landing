@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { GithubIcon, SpecRow, VIEWS } from './primitives';
+import { GithubIcon, VIEWS } from './primitives';
 
 const INSTALL = {
   curl: 'curl -fsSL https://russel.dev/install.sh | sh',
@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
   return (
     <section id="top" className="relative">
       <div className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-16 sm:pt-24">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(0,480px)]">
           <div className="min-w-0">
             <h1 className="animate-fade-up font-display font-medium tracking-[-0.03em] leading-[0.98] text-fg text-[48px] min-[420px]:text-[56px] sm:text-[76px] lg:text-[72px] xl:text-[92px]">
               One command.
@@ -97,16 +97,24 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          <div className="animate-fade-up [animation-delay:320ms] hidden lg:block border-l border-line pl-8 pb-1">
-            <div className="space-y-3">
-              <SpecRow label="runtimes" value={<><span className="text-ct">podman</span> · <span className="text-vm">kvm</span></>} />
-              <SpecRow label="microVM boot" value="< 2 s" />
-              <SpecRow label="builds" value="nix, hash-pinned" />
-              <SpecRow label="ingress" value="traefik" />
-              <SpecRow label="hosting" value="self-hosted" />
-              <SpecRow label="license" value="apache 2.0" />
+          <figure className="animate-hero-rise [animation-delay:320ms] relative">
+            <div
+              className="pointer-events-none absolute inset-0 sm:-inset-8 bg-[radial-gradient(ellipse_at_30%_40%,rgba(178,148,255,0.12),transparent_65%)]"
+              aria-hidden
+            />
+            <div className="relative border border-line bg-[#121212] p-1.5">
+              {/* Left half of the dashboard; the cut edge fades out instead of slicing through the bars. */}
+              <img
+                src="/dash-left.webp"
+                alt="The Russel dashboard: fleet health and services across both runtimes"
+                width={1000}
+                height={1159}
+                className="block w-full h-auto [mask-image:linear-gradient(to_right,#000_72%,transparent)]"
+                loading="eager"
+                fetchPriority="high"
+              />
             </div>
-          </div>
+          </figure>
         </div>
       </div>
     </section>

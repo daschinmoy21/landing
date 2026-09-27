@@ -119,18 +119,6 @@ export const TileBody: React.FC<{ children: React.ReactNode; className?: string 
   <p className={twMerge('mt-2 text-[15px] leading-relaxed text-mute', className)}>{children}</p>
 );
 
-/** `label ....... value` — a mono spec row, label left and value right. */
-export const SpecRow: React.FC<{ label: React.ReactNode; value?: React.ReactNode; className?: string }> = ({
-  label,
-  value,
-  className = '',
-}) => (
-  <div className={`grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 font-mono text-[14px] ${className}`}>
-    <span className="min-w-0 text-fg">{label}</span>
-    {value !== undefined && <span className="tabular-nums text-mute">{value}</span>}
-  </div>
-);
-
 export const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
     <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.2-3.37-1.2-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.64.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8a9.56 9.56 0 0 1 2.5.34c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
