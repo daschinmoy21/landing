@@ -97,19 +97,20 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          <figure className="animate-hero-rise [animation-delay:320ms] relative">
+          <figure className="animate-hero-rise [animation-delay:320ms] relative min-w-0">
             <div
               className="pointer-events-none absolute inset-0 sm:-inset-8 bg-[radial-gradient(ellipse_at_30%_40%,rgba(178,148,255,0.12),transparent_65%)]"
               aria-hidden
             />
-            <div className="relative border border-line bg-[#121212] p-1.5">
-              {/* Left half of the dashboard; the cut edge fades out instead of slicing through the bars. */}
+            {/* The whole dashboard at a fixed size, wider than its column: it runs off the right edge of the
+                viewport (the page root clips x-overflow), so only the left side shows. */}
+            <div className="relative w-[760px] max-w-none border border-line bg-[#141414] p-1.5 sm:w-[960px] lg:w-[1000px] xl:w-[max(1120px,calc(50vw+300px))]">
               <img
-                src="/dash-left.webp"
-                alt="The Russel dashboard: fleet health and services across both runtimes"
-                width={1000}
-                height={1159}
-                className="block w-full h-auto [mask-image:linear-gradient(to_right,#000_72%,transparent)]"
+                src="/dash-hero.webp"
+                alt="The Russel dashboard: fleet health, services across both runtimes, and composition"
+                width={1872}
+                height={1140}
+                className="block w-full h-auto"
                 loading="eager"
                 fetchPriority="high"
               />
