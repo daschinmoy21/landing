@@ -1,5 +1,5 @@
-import RusselLanding from './rusel/RusselLanding';
+import LineLanding from './line/LineLanding';
 
 export default function PierreLanding() {
-  return <RusselLanding />;
+  return <LineLanding />;
 }
