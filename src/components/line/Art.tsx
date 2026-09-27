@@ -1,11 +1,11 @@
 import React from 'react';
 
 // Hand-built line art: ink on paper. Violet marks a microVM and blue a container, as in the dashboard.
-const INK = 'var(--color-ink)';
+const INK = 'var(--color-fg)';
 const VM = 'var(--color-vm)';
 const CT = 'var(--color-ct)';
 const OK = 'var(--color-ok)';
-const PAPER = 'var(--color-paper)';
+const PAPER = 'var(--color-night)';
 
 const Label: React.FC<{ x: number; y: number; children: React.ReactNode; fill?: string; size?: number; anchor?: 'start' | 'middle' | 'end' }> = ({
   x,
@@ -73,7 +73,7 @@ export const RuntimeArt: React.FC = () => {
         <line key={i} x1={40 + i * 11} y1="320" x2={44 + i * 11} y2="320" stroke={INK} strokeWidth="0.8" strokeOpacity="0.5" />
       ))}
       <Label x={200} y={313} size={12}>your hardware</Label>
-      <Label x={200} y={364} size={12} fill="var(--color-dim)">
+      <Label x={200} y={364} size={12} fill="var(--color-mute)">
         type = "container" | "microvm"
       </Label>
     </svg>
@@ -88,7 +88,7 @@ export const DriftArt: React.FC = () => (
       <rect x="28" y="70" width="196" height="136" />
       <path d="M14 214 L238 214 L250 234 L2 234 Z" />
     </g>
-    <rect x="36" y="78" width="180" height="120" fill={INK} />
+    <rect x="36" y="78" width="180" height="120" fill="#000" stroke={INK} strokeOpacity="0.35" />
     <g fontFamily="var(--font-mono)" fontSize="11">
       <text x="46" y="98" fill="#8a8a8a">$ nix build .#api</text>
       <text x="46" y="116" fill="#d6d6d6">building api-0.4.2…</text>
@@ -122,14 +122,14 @@ export const DriftArt: React.FC = () => (
     <line x1="266" y1="232" x2="386" y2="232" stroke={INK} strokeWidth="1.2" />
 
     {/* Same bits */}
-    <path d="M150 152 C 200 152, 230 70, 326 88" fill="none" stroke={VM} strokeWidth="1.2" strokeDasharray="4 4" />
+    <path d="M218 146 C 258 146, 272 88, 322 88" fill="none" stroke={VM} strokeWidth="1.2" strokeDasharray="4 4" />
 
     <g fontFamily="var(--font-mono)" fontSize="13">
       <rect x="28" y="268" width="344" height="30" fill={PAPER} stroke={INK} strokeWidth="1" />
-      <text x="40" y="287" fill="var(--color-dim)">laptop</text>
+      <text x="40" y="287" fill="var(--color-mute)">laptop</text>
       <text x="360" y="287" textAnchor="end" fill={INK}>/nix/store/9f2c…e41-api</text>
       <rect x="28" y="304" width="344" height="30" fill={PAPER} stroke={INK} strokeWidth="1" />
-      <text x="40" y="323" fill="var(--color-dim)">server</text>
+      <text x="40" y="323" fill="var(--color-mute)">server</text>
       <text x="360" y="323" textAnchor="end" fill={INK}>/nix/store/9f2c…e41-api</text>
       <text x="200" y="364" textAnchor="middle" fill={OK}>identical · 0% drift</text>
     </g>
@@ -178,7 +178,7 @@ export const RackArt: React.FC = () => {
       <Label x={92} y={73} anchor="end">bare metal</Label>
       <Label x={308} y={193} anchor="start">edge</Label>
       <Label x={92} y={273} anchor="end">your cloud</Label>
-      <Label x={200} y={374} fill="var(--color-dim)" size={12}>
+      <Label x={200} y={374} fill="var(--color-mute)" size={12}>
         nothing phones home
       </Label>
     </svg>

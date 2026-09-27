@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export function useInView<T extends Element>(threshold = 0.35) {
   const ref = useRef<T>(null);
@@ -33,44 +34,104 @@ export function useReducedMotion() {
   return reduced;
 }
 
+/**
+ * Loop progress in [0, 1) over `period` ms, running only while `active`.
+ * With reduced motion it holds at `rest` so diagrams show their finished state.
+ */
+export function useLoop(period: number, active: boolean, rest = 1) {
+  const reduced = useReducedMotion();
+  const [t, setT] = useState(rest);
+  useEffect(() => {
+    if (!active || reduced) {
+      setT(rest);
+      return;
+    }
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      setT(((now - start) % period) / period);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [period, active, reduced, rest]);
+  return t;
+}
+
 /** The dashboard's views, numbered so 1–4 on the keyboard jump between them. */
 export const VIEWS = [
   { id: 'runtimes', label: 'runtimes' },
   { id: 'benchmarks', label: 'benchmarks' },
-  { id: 'pipeline', label: 'pipeline' },
+  { id: 'operate', label: 'operate' },
   { id: 'deploy', label: 'deploy' },
 ] as const;
 
-export const SectionTitle: React.FC<{ title: React.ReactNode; children?: React.ReactNode }> = ({ title, children }) => (
-  <div className="max-w-2xl">
-    <h2 className="font-display text-[34px] sm:text-[46px] font-medium tracking-tight leading-[1.04] text-ink">
-      {title}
+/** Two-tone heading: the claim in full white, the qualifier in grey. */
+export const SectionTitle: React.FC<{ lead: React.ReactNode; rest?: React.ReactNode; children?: React.ReactNode }> = ({
+  lead,
+  rest,
+  children,
+}) => (
+  <div className="max-w-3xl">
+    <h2 className="font-display text-[34px] sm:text-[48px] font-medium tracking-tight leading-[1.06] text-fg">
+      {lead}
+      {rest && (
+        <>
+          <br />
+          <span className="text-mute">{rest}</span>
+        </>
+      )}
     </h2>
-    {children && <p className="mt-4 text-[17px] leading-relaxed text-dim max-w-[56ch]">{children}</p>}
+    {children && <p className="mt-5 text-[17px] leading-relaxed text-mute max-w-[58ch]">{children}</p>}
   </div>
 );
 
-/** `└ label ....... value  note` — the dashboard's tree row. */
-export const TreeRow: React.FC<{
-  label: React.ReactNode;
-  value?: React.ReactNode;
-  note?: React.ReactNode;
-  className?: string;
-}> = ({ label, value, note, className = '' }) => (
+export const Section: React.FC<{ id?: string; className?: string; children: React.ReactNode }> = ({
+  id,
+  className = '',
+  children,
+}) => (
+  <section id={id} className={`mx-auto max-w-[1240px] px-4 sm:px-8 pt-28 sm:pt-36 ${className}`}>
+    {children}
+  </section>
+);
+
+/** Cells share hairlines: the grid draws top/left, each cell right/bottom. */
+export const Grid: React.FC<{ className?: string; children: React.ReactNode; innerRef?: React.Ref<HTMLDivElement> }> = ({
+  className = '',
+  children,
+  innerRef,
+}) => (
+  <div ref={innerRef} className={twMerge('mt-12 grid border-t border-l border-line', className)}>
+    {children}
+  </div>
+);
+
+export const Cell: React.FC<{ className?: string; children: React.ReactNode }> = ({ className = '', children }) => (
+  <div className={twMerge('relative min-w-0 border-r border-b border-line', className)}>{children}</div>
+);
+
+export const TileTitle: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <h3 className={twMerge('font-mono text-[17px] sm:text-[19px] leading-snug tracking-tight text-fg', className)}>{children}</h3>
+);
+
+export const TileBody: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <p className={twMerge('mt-2 text-[15px] leading-relaxed text-mute', className)}>{children}</p>
+);
+
+/** `└ label ....... value` — the dashboard's tree row. */
+export const TreeRow: React.FC<{ label: React.ReactNode; value?: React.ReactNode; className?: string }> = ({
+  label,
+  value,
+  className = '',
+}) => (
   <div className={`grid grid-cols-[16px_minmax(0,1fr)_auto] items-baseline gap-x-2 font-mono text-[14px] ${className}`}>
-    <span className="text-faint select-none" aria-hidden>
+    <span className="text-dimmer select-none" aria-hidden>
       └
     </span>
-    <span className="min-w-0 text-ink">
-      {label}
-      {note && <span className="ml-3 text-dim">{note}</span>}
-    </span>
-    {value !== undefined && <span className="tabular-nums text-ink">{value}</span>}
+    <span className="min-w-0 text-fg">{label}</span>
+    {value !== undefined && <span className="tabular-nums text-mute">{value}</span>}
   </div>
-);
-
-export const Square: React.FC<{ className?: string }> = ({ className = 'bg-ok' }) => (
-  <span className={`inline-block w-2.5 h-2.5 ${className}`} aria-hidden />
 );
 
 export const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (

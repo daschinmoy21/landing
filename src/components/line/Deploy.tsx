@@ -28,12 +28,12 @@ const PHASES: Record<Runtime, [string, string][]> = {
 const pad = (s: string) => s.padStart(10, ' ');
 
 const field =
-  'mt-1.5 w-full border border-ink bg-paper px-3 py-2.5 font-mono text-[14px] text-ink placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-vm/40 disabled:border-rule disabled:text-faint disabled:cursor-not-allowed';
+  'mt-1.5 w-full border border-line bg-night px-3 py-2.5 font-mono text-[14px] text-fg placeholder:text-dimmer focus:outline-none focus:ring-2 focus:ring-vm/40 disabled:border-line disabled:text-dimmer disabled:cursor-not-allowed';
 
 const Label: React.FC<{ children: React.ReactNode; hint: string }> = ({ children, hint }) => (
-  <span className="flex items-baseline justify-between gap-2 text-[13px] text-dim">
+  <span className="flex items-baseline justify-between gap-2 text-[13px] text-mute">
     {children}
-    <span className="hidden sm:inline font-mono text-[11px] text-faint">{hint}</span>
+    <span className="hidden sm:inline font-mono text-[11px] text-dimmer">{hint}</span>
   </span>
 );
 
@@ -152,17 +152,17 @@ export const Deploy: React.FC = () => {
   const vmTone = runtime === 'microvm' ? 'text-[#c4a5ff]' : 'text-[#8cb4ff]';
 
   return (
-    <section id="deploy" className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-24 sm:pt-32">
-      <SectionTitle title="One file, one command.">
-        Describe the service in a <span className="font-mono text-[15px] text-ink">Russelfile.toml</span>, then{' '}
-        <span className="font-mono text-[15px] text-ink">russel deploy</span> it. Change the options to see both update.
+    <section id="try" className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-20 sm:pt-28">
+      <SectionTitle lead="One file, one command." rest="Try it.">
+        Describe the service in a <span className="font-mono text-[15px] text-fg">Russelfile.toml</span>, then{' '}
+        <span className="font-mono text-[15px] text-fg">russel deploy</span> it. Change the options to see both update.
       </SectionTitle>
 
-      <div className="mt-12 grid border-t border-l border-ink lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        <div className="border-r border-b border-ink p-6 sm:p-8">
+      <div className="mt-12 grid border-t border-l border-line bg-night lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div className="border-r border-b border-line p-6 sm:p-8">
           <div>
             <Label hint="service.type">Runtime</Label>
-            <div className="mt-1.5 grid grid-cols-2 border border-ink">
+            <div className="mt-1.5 grid grid-cols-2 border border-line">
               {(['microvm', 'container'] as const).map((r) => (
                 <button
                   key={r}
@@ -170,7 +170,7 @@ export const Deploy: React.FC = () => {
                   aria-pressed={runtime === r}
                   onClick={() => setRuntime(r)}
                   className={`py-2.5 font-mono text-[14px] cursor-pointer ${
-                    runtime === r ? (r === 'microvm' ? 'bg-vm text-paper' : 'bg-ct text-paper') : 'text-dim hover:text-ink'
+                    runtime === r ? (r === 'microvm' ? 'bg-vm text-night' : 'bg-ct text-night') : 'text-mute hover:text-fg'
                   }`}
                 >
                   {r === 'microvm' ? 'microVM' : 'container'}
@@ -227,8 +227,8 @@ export const Deploy: React.FC = () => {
           </label>
         </div>
 
-        <div ref={ref} className="flex min-w-0 flex-col border-r border-b border-ink bg-[#141414]">
-          <div className="flex items-center justify-between gap-3 border-b border-white/15 px-4 sm:px-6 h-14">
+        <div ref={ref} className="flex min-w-0 flex-col border-r border-b border-line bg-cell">
+          <div className="flex items-center justify-between gap-3 border-b border-line px-4 sm:px-6 h-14">
             <div role="tablist" className="flex gap-5 font-mono text-[12px] uppercase tracking-[0.16em]">
               {(['cli', 'toml'] as const).map((k) => (
                 <button
@@ -258,7 +258,7 @@ export const Deploy: React.FC = () => {
                 type="button"
                 onClick={() => copy(tab === 'cli' ? cmd : toml)}
                 aria-label={copied ? "Copied" : "Copy"}
-                className="inline-flex h-8 items-center gap-1.5 border border-white/25 px-2.5 sm:px-3 font-mono text-[12px] text-[#e5e5e5] hover:bg-white hover:text-ink cursor-pointer"
+                className="inline-flex h-8 items-center gap-1.5 border border-white/25 px-2.5 sm:px-3 font-mono text-[12px] text-[#e5e5e5] hover:bg-white hover:text-fg cursor-pointer"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                 <span className="hidden sm:inline">{copied ? 'copied' : 'copy'}</span>

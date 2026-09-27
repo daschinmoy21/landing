@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Hero } from './Hero';
+import { Hero, Nav } from './Hero';
 import { Runtimes } from './Runtimes';
 import { Benchmarks } from './Benchmarks';
+import { Operate } from './Operate';
 import { Pipeline } from './Pipeline';
 import { Deploy } from './Deploy';
 import { Footer } from './Footer';
@@ -22,11 +23,13 @@ export const LineLanding: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-paper font-sans text-ink antialiased selection:bg-ink selection:text-paper">
+    <div className="min-h-screen overflow-x-clip bg-night font-sans text-fg antialiased selection:bg-vm selection:text-night">
+      <Nav />
       <main>
         <Hero />
         <Runtimes />
         <Benchmarks />
+        <Operate />
         <Pipeline />
         <Deploy />
       </main>

@@ -41,16 +41,18 @@
 
   --font-display: 'Clash Grotesk', 'Nimbus Sans TW01', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Line-art surface: paper and ink; violet = microVM, blue = container (as in the dashboard) */
-  --color-paper: #ffffff;
-  --color-ink: #111111;
-  --color-dim: #5f5f5f;
-  --color-faint: #8f8f8f;
-  --color-rule: #e4e4e4;
-  --color-vm: #7c3aed;
-  --color-ct: #1d5fc4;
-  --color-ok: #6b8e23;
-  --color-warn: #c2410c;
+  /* Night surface, matched to the dashboard: violet = microVM, blue = container */
+  --color-night: #0a0a0a;
+  --color-cell: #111111;
+  --color-raise: #181818;
+  --color-line: #262626;
+  --color-fg: #ededed;
+  --color-mute: #9a9a9a;
+  --color-dimmer: #616161;
+  --color-vm: #b294ff;
+  --color-ct: #6ea8ff;
+  --color-ok: #a9c25d;
+  --color-warn: #e38b5c;
 
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
@@ -161,7 +163,7 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #0a0a0a;
   color: var(--sky-ink);
 }
 

@@ -1,45 +1,42 @@
 import React from 'react';
-import { DriftArt, RackArt, RuntimeArt } from './Art';
-import { SectionTitle } from './primitives';
+import { RuntimeArt } from './Art';
+import { BootDiagram, CutoverDiagram } from './Diagrams';
+import { Cell, Grid, Section, SectionTitle, TileBody, TileTitle } from './primitives';
 
-const COLUMNS = [
+const TILES = [
   {
-    title: 'Pick the isolation per service',
-    body: 'Containers share the host kernel and start fastest. microVMs get their own kernel behind KVM and still boot in under two seconds.',
+    title: 'Deploy to ready in 1.4 s',
+    body: 'A microVM with its own kernel, from russel deploy to the first HTTP response. Containers get there in 0.8 s.',
+    art: BootDiagram,
+  },
+  {
+    title: 'Isolation you pick per service',
+    body: 'Containers share the host kernel. microVMs get their own, behind a hardware boundary.',
     art: RuntimeArt,
   },
   {
-    title: 'Builds that never drift',
-    body: 'Every service is a hash-pinned Nix package. What you tested on your laptop is bit-for-bit what runs on the server.',
-    art: DriftArt,
-  },
-  {
-    title: 'Runs on machines you own',
-    body: 'Bare metal, an edge box, or a cloud account you control. No external APIs, nothing phoning home, Apache 2.0.',
-    art: RackArt,
+    title: 'Switch in one line',
+    body: 'Redeploy, and the new version takes traffic before the old one drains.',
+    art: CutoverDiagram,
   },
 ];
 
 export const Runtimes: React.FC = () => (
-  <section id="runtimes" className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-24 sm:pt-32">
-    <SectionTitle title="Same build, same config, same CLI.">
-      The only thing you choose is how strongly each service is walled off, and you can change your mind later.
-    </SectionTitle>
+  <Section id="runtimes">
+    <SectionTitle lead="Same build, same config, same CLI." rest="Only the isolation changes." />
 
-    <div className="mt-12 grid border-t border-l border-ink lg:grid-cols-3">
-      {COLUMNS.map(({ title, body, art: Art }) => (
-        <article key={title} className="flex flex-col border-r border-b border-ink">
-          <div className="border-b border-ink px-4 py-6 sm:px-6">
-            <div className="mx-auto max-w-[420px]">
+    <Grid className="lg:grid-cols-3">
+      {TILES.map(({ title, body, art: Art }) => (
+        <Cell key={title} className="flex flex-col p-6 sm:p-9">
+          <TileTitle>{title}</TileTitle>
+          <TileBody>{body}</TileBody>
+          <div className="mt-auto pt-10">
+            <div className="mx-auto max-w-[380px] lg:max-w-none">
               <Art />
             </div>
           </div>
-          <div className="p-6 sm:p-7">
-            <h3 className="font-display text-[22px] font-medium tracking-tight text-ink">{title}</h3>
-            <p className="mt-2 text-[16px] leading-relaxed text-dim">{body}</p>
-          </div>
-        </article>
+        </Cell>
       ))}
-    </div>
-  </section>
+    </Grid>
+  </Section>
 );

@@ -48,34 +48,34 @@ export const Pipeline: React.FC = () => {
   const on = hover ?? active;
 
   return (
-    <section id="pipeline" className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-24 sm:pt-32">
-      <SectionTitle title="From source to serving, in five steps.">
+    <section id="deploy" className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-28 sm:pt-36">
+      <SectionTitle lead="From source to serving." rest="Five steps, one command.">
         You describe the service once. Russel builds it, runs it on the runtime you picked, and puts it behind a route.
       </SectionTitle>
 
-      <div ref={ref} className="mt-12 grid border-t border-l border-ink sm:grid-cols-2 lg:grid-cols-5">
+      <div ref={ref} className="mt-12 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-5">
         {STEPS.map((s, i) => (
           <div
             key={s.title}
             onMouseEnter={() => setHover(i)}
             onMouseLeave={() => setHover(null)}
-            className="relative flex flex-col border-r border-b border-ink p-6"
+            className="relative flex flex-col border-r border-b border-line p-6"
           >
             <div
-              className={`absolute inset-x-0 top-0 h-1 bg-ink origin-left transition-transform duration-500 ${on === i ? 'scale-x-100' : 'scale-x-0'}`}
+              className={`absolute inset-x-0 top-0 h-1 bg-fg origin-left transition-transform duration-500 ${on === i ? 'scale-x-100' : 'scale-x-0'}`}
               aria-hidden
             />
             <div className="flex items-baseline justify-between font-mono text-[13px]">
-              <span className={on === i ? 'text-ink' : 'text-faint'}>{i + 1}</span>
+              <span className={on === i ? 'text-fg' : 'text-dimmer'}>{i + 1}</span>
               {i < STEPS.length - 1 && (
-                <span className="hidden lg:inline text-faint" aria-hidden>
+                <span className="hidden lg:inline text-dimmer" aria-hidden>
                   →
                 </span>
               )}
             </div>
-            <h3 className="mt-6 font-display text-[24px] font-medium tracking-tight text-ink">{s.title}</h3>
-            <p className="mt-2 text-[15px] leading-relaxed text-dim">{s.body}</p>
-            <div className="mt-auto pt-6 font-mono text-[12px] text-dim">└ {s.detail}</div>
+            <h3 className="mt-6 font-mono text-[19px] tracking-tight text-fg">{s.title}</h3>
+            <p className="mt-2 text-[15px] leading-relaxed text-mute">{s.body}</p>
+            <div className="mt-auto pt-6 font-mono text-[12px] text-mute">└ {s.detail}</div>
           </div>
         ))}
       </div>
