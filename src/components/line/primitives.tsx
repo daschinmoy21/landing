@@ -119,16 +119,13 @@ export const TileBody: React.FC<{ children: React.ReactNode; className?: string 
   <p className={twMerge('mt-2 text-[15px] leading-relaxed text-mute', className)}>{children}</p>
 );
 
-/** `└ label ....... value` — the dashboard's tree row. */
-export const TreeRow: React.FC<{ label: React.ReactNode; value?: React.ReactNode; className?: string }> = ({
+/** `label ....... value` — a mono spec row, label left and value right. */
+export const SpecRow: React.FC<{ label: React.ReactNode; value?: React.ReactNode; className?: string }> = ({
   label,
   value,
   className = '',
 }) => (
-  <div className={`grid grid-cols-[16px_minmax(0,1fr)_auto] items-baseline gap-x-2 font-mono text-[14px] ${className}`}>
-    <span className="text-dimmer select-none" aria-hidden>
-      └
-    </span>
+  <div className={`grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 font-mono text-[14px] ${className}`}>
     <span className="min-w-0 text-fg">{label}</span>
     {value !== undefined && <span className="tabular-nums text-mute">{value}</span>}
   </div>

@@ -75,7 +75,7 @@ export const Pipeline: React.FC = () => {
             </div>
             <h3 className="mt-6 font-mono text-[19px] tracking-tight text-fg">{s.title}</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-mute">{s.body}</p>
-            <div className="mt-auto pt-6 font-mono text-[12px] text-mute">└ {s.detail}</div>
+            <div className="mt-auto pt-6 font-mono text-[12px] text-mute">{s.detail}</div>
           </div>
         ))}
       </div>

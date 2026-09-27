@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { GithubIcon, TreeRow, VIEWS } from './primitives';
+import { GithubIcon, SpecRow, VIEWS } from './primitives';
 
 const INSTALL = {
   curl: 'curl -fsSL https://russel.dev/install.sh | sh',
@@ -99,12 +99,12 @@ export const Hero: React.FC = () => {
 
           <div className="animate-fade-up [animation-delay:320ms] hidden lg:block border-l border-line pl-8 pb-1">
             <div className="space-y-3">
-              <TreeRow label="runtimes" value={<><span className="text-ct">podman</span> · <span className="text-vm">kvm</span></>} />
-              <TreeRow label="microVM boot" value="< 2 s" />
-              <TreeRow label="builds" value="nix, hash-pinned" />
-              <TreeRow label="ingress" value="traefik" />
-              <TreeRow label="hosting" value="self-hosted" />
-              <TreeRow label="license" value="apache 2.0" />
+              <SpecRow label="runtimes" value={<><span className="text-ct">podman</span> · <span className="text-vm">kvm</span></>} />
+              <SpecRow label="microVM boot" value="< 2 s" />
+              <SpecRow label="builds" value="nix, hash-pinned" />
+              <SpecRow label="ingress" value="traefik" />
+              <SpecRow label="hosting" value="self-hosted" />
+              <SpecRow label="license" value="apache 2.0" />
             </div>
           </div>
         </div>

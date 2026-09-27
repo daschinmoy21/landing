@@ -1,125 +1,145 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Cell, Grid, Section, SectionTitle, TreeRow } from './primitives';
-
-type Runtime = 'container' | 'microvm';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Cell, Grid, Section, SectionTitle, SpecRow, useInView } from './primitives'
 
 // Deploy → first HTTP response, warm cache, bare metal (ms).
-const WORKLOADS: { name: string; desc: string; container: number; microvm: number; podman: number }[] = [
-  { name: 'basic-http', desc: 'Go, stdlib HTTP', container: 812, microvm: 1445, podman: 5228 },
-  { name: 'microvm-http', desc: 'Rust, virtio-net TAP', container: 813, microvm: 867, podman: 8196 },
-  { name: 'hello-rust', desc: 'static Rust binary', container: 924, microvm: 1061, podman: 4969 },
-  { name: 'env-config', desc: 'Node.js', container: 778, microvm: 874, podman: 6288 },
-  { name: 'shortlink', desc: 'URL shortener', container: 602, microvm: 825, podman: 6277 },
-  { name: 'static-test', desc: 'static files', container: 873, microvm: 1057, podman: 1331 },
-  { name: 'filebrowser', desc: 'read-only virtiofs', container: 1223, microvm: 1291, podman: 8387 },
-];
+const WORKLOADS: {
+	name: string
+	desc: string
+	container: number
+	microvm: number
+	podman: number
+}[] = [
+	{ name: 'basic-http', desc: 'Go, stdlib HTTP', container: 812, microvm: 1445, podman: 5228 },
+	{
+		name: 'microvm-http',
+		desc: 'Rust, virtio-net TAP',
+		container: 813,
+		microvm: 867,
+		podman: 8196
+	},
+	{ name: 'hello-rust', desc: 'static Rust binary', container: 924, microvm: 1061, podman: 4969 },
+	{ name: 'env-config', desc: 'Node.js', container: 778, microvm: 874, podman: 6288 },
+	{ name: 'shortlink', desc: 'URL shortener', container: 602, microvm: 825, podman: 6277 },
+	{ name: 'static-test', desc: 'static files', container: 873, microvm: 1057, podman: 1331 },
+	{ name: 'filebrowser', desc: 'read-only virtiofs', container: 1223, microvm: 1291, podman: 8387 }
+]
 
-const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)];
-const fmt = (n: number) => n.toLocaleString('en-US');
-const MAX = Math.max(...WORKLOADS.map((w) => w.podman));
+const SERIES = [
+	{ key: 'container', label: 'container', tone: 'text-ct' },
+	{ key: 'microvm', label: 'microVM', tone: 'text-vm' },
+	{ key: 'podman', label: 'rootless podman', tone: 'text-dimmer' }
+] as const
+
+const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)]
+const fmt = (n: number) => n.toLocaleString('en-US')
+const MAX = Math.max(...WORKLOADS.map((w) => w.podman))
+const best = (k: 'container' | 'microvm') => Math.max(...WORKLOADS.map((w) => w.podman / w[k]))
 
 export const Benchmarks: React.FC = () => {
-  const [rt, setRt] = useState<Runtime>('container');
-  const tone = rt === 'container' ? 'text-ct' : 'text-vm';
-  const best = Math.max(...WORKLOADS.map((w) => w.podman / w[rt]));
+	const [ref, seen] = useInView<HTMLDivElement>(0.15)
+	return (
+		<Section id="benchmarks">
+			<SectionTitle lead="Isolation costs, measured." rest="Against rootless Podman, same host." />
 
-  return (
-    <Section id="benchmarks">
-      <SectionTitle lead="Isolation costs, measured." rest="Against rootless Podman, same host." />
+			<Grid className="lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+				<Cell className="p-6 sm:p-9">
+					<div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+						<span className="text-mute font-mono text-[13px] tracking-[0.16em] uppercase">
+							deploy → first response
+						</span>
+						<div className="text-mute flex flex-wrap gap-x-5 gap-y-1 font-mono text-[12px]">
+							{SERIES.map((s) => (
+								<span key={s.key} className="inline-flex items-center gap-2">
+									<span className={`hatch inline-block h-2.5 w-5 ${s.tone}`} aria-hidden />{' '}
+									{s.label}
+								</span>
+							))}
+						</div>
+					</div>
 
-      <Grid className="lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-        <Cell className="p-6 sm:p-9">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <span className="font-mono text-[13px] uppercase tracking-[0.16em] text-mute">deploy → first response</span>
-            <div role="tablist" aria-label="Runtime" className="flex border border-line bg-night p-1 font-mono text-[13px]">
-              {(['container', 'microvm'] as const).map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  role="tab"
-                  aria-selected={rt === r}
-                  onClick={() => setRt(r)}
-                  className={`cursor-pointer px-3.5 py-1.5 ${
-                    rt === r ? `bg-raise ${r === 'container' ? 'text-ct' : 'text-vm'}` : 'text-dimmer hover:text-mute'
-                  }`}
-                >
-                  {r === 'container' ? 'container' : 'microVM'}
-                </button>
-              ))}
-            </div>
-          </div>
+					<div ref={ref} className="divide-line border-line mt-8 divide-y border-y">
+						{WORKLOADS.map((w) => (
+							<div
+								key={w.name}
+								className="grid gap-x-6 gap-y-3 py-4 sm:grid-cols-[140px_minmax(0,1fr)]"
+							>
+								<div className="min-w-0">
+									<div className="text-fg truncate font-mono text-[14px]">{w.name}</div>
+									<div className="text-dimmer truncate text-[12px]">{w.desc}</div>
+								</div>
+								<div
+									className="space-y-1.5"
+									aria-label={`${w.name}: container ${w.container} ms, microVM ${w.microvm} ms, Podman ${w.podman} ms`}
+								>
+									{SERIES.map((s, i) => {
+										const v = w[s.key]
+										return (
+											<div
+												key={s.key}
+												className="grid grid-cols-[minmax(0,1fr)_72px_44px] items-center gap-x-3 font-mono text-[12px] tabular-nums"
+											>
+												<motion.div
+													initial={{ width: 0 }}
+													animate={{ width: seen ? `${(v / MAX) * 100}%` : 0 }}
+													transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+													className={`hatch h-2.5 ${s.tone}`}
+												/>
+												<span
+													className={`text-right ${s.key === 'podman' ? 'text-dimmer' : 'text-fg'}`}
+												>
+													{fmt(v)} ms
+												</span>
+												<span className={`text-right ${s.tone}`}>
+													{s.key === 'podman' ? '' : `${(w.podman / v).toFixed(1)}×`}
+												</span>
+											</div>
+										)
+									})}
+								</div>
+							</div>
+						))}
+					</div>
 
-          <div className="mt-8 divide-y divide-line border-y border-line">
-            {WORKLOADS.map((w) => {
-              const ours = w[rt];
-              return (
-                <div
-                  key={w.name}
-                  className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 py-3.5 sm:grid-cols-[150px_minmax(0,1fr)_auto]"
-                >
-                  <div className="min-w-0">
-                    <div className="font-mono text-[14px] text-fg truncate">{w.name}</div>
-                    <div className="text-[12px] text-dimmer truncate">{w.desc}</div>
-                  </div>
-                  <div
-                    className="col-span-2 row-start-2 sm:col-span-1 sm:row-start-auto"
-                    title={`Russel ${fmt(ours)} ms · Podman ${fmt(w.podman)} ms`}
-                  >
-                    <motion.div
-                      key={`${rt}-${w.name}`}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(ours / MAX) * 100}%` }}
-                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                      className={`hatch h-2.5 ${tone}`}
-                    />
-                    <div className="hatch mt-1.5 h-2.5 text-dimmer" style={{ width: `${(w.podman / MAX) * 100}%` }} />
-                  </div>
-                  <div className="text-right font-mono tabular-nums whitespace-nowrap">
-                    <span className="text-[14px] text-fg">{fmt(ours)} ms</span>
-                    <span className={`ml-3 inline-block w-14 text-[14px] ${tone}`}>{(w.podman / ours).toFixed(1)}×</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+					<p className="text-dimmer mt-5 font-mono text-[12px]">
+						× = times faster than rootless podman
+					</p>
+				</Cell>
 
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[12px] text-mute">
-            <span className="inline-flex items-center gap-2">
-              <span className={`hatch inline-block h-2.5 w-6 ${tone}`} aria-hidden /> russel
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="hatch inline-block h-2.5 w-6 text-dimmer" aria-hidden /> rootless podman
-            </span>
-            <span>× faster than podman</span>
-          </div>
-        </Cell>
+				<Cell className="flex flex-col p-6 sm:p-9">
+					<p className="font-display text-fg text-[30px] leading-[1.08] font-medium tracking-tight sm:text-[38px]">
+						Up to <span className="text-ct">{best('container').toFixed(1)}×</span> faster.
+						<br />
+						<span className="text-mute">
+							<span className="text-vm">{best('microvm').toFixed(1)}×</span> even with a kernel per
+							VM.
+						</span>
+					</p>
+					<p className="text-mute mt-5 text-[15px] leading-relaxed">
+						Most of the gap with Podman is build time. microVM time includes Cloud Hypervisor init,
+						virtio-fs and the guest kernel boot; the container is a direct rootfs bind.
+					</p>
 
-        <Cell className="flex flex-col p-6 sm:p-9">
-          <p className="font-display text-[30px] sm:text-[38px] font-medium tracking-tight leading-[1.08] text-fg">
-            Up to <span className={tone}>{best.toFixed(1)}×</span> faster.
-            <br />
-            <span className="text-mute">Even with a kernel per VM.</span>
-          </p>
-          <p className="mt-5 text-[15px] leading-relaxed text-mute">
-            Most of the gap with Podman is build time. microVM time includes Cloud Hypervisor init, virtio-fs and the guest
-            kernel boot; the container is a direct rootfs bind.
-          </p>
-
-          <div className="mt-auto space-y-3 pt-10">
-            <TreeRow
-              label={<span className="text-ct">container, median</span>}
-              value={`${fmt(median(WORKLOADS.map((w) => w.container)))} ms`}
-            />
-            <TreeRow
-              label={<span className="text-vm">microVM, median</span>}
-              value={`${fmt(median(WORKLOADS.map((w) => w.microvm)))} ms`}
-            />
-            <TreeRow label="rootless podman, median" value={`${fmt(median(WORKLOADS.map((w) => w.podman)))} ms`} />
-            <TreeRow label={<span className="text-mute">setup</span>} value="bare metal · warm cache" />
-          </div>
-        </Cell>
-      </Grid>
-    </Section>
-  );
-};
+					<div className="mt-auto space-y-3 pt-10">
+						<SpecRow
+							label={<span className="text-ct">container, median</span>}
+							value={`${fmt(median(WORKLOADS.map((w) => w.container)))} ms`}
+						/>
+						<SpecRow
+							label={<span className="text-vm">microVM, median</span>}
+							value={`${fmt(median(WORKLOADS.map((w) => w.microvm)))} ms`}
+						/>
+						<SpecRow
+							label="rootless podman, median"
+							value={`${fmt(median(WORKLOADS.map((w) => w.podman)))} ms`}
+						/>
+						<SpecRow
+							label={<span className="text-mute">setup</span>}
+							value="bare metal · warm cache"
+						/>
+					</div>
+				</Cell>
+			</Grid>
+		</Section>
+	)
+}

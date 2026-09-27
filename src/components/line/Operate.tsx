@@ -189,7 +189,7 @@ export const Operate: React.FC = () => {
         </Cell>
         <Cell className="flex min-h-[420px] flex-col bg-cell">
           <div className="flex h-12 items-center justify-between border-b border-line px-5 font-mono text-[12px] text-dimmer">
-            <span>└ ~/api</span>
+            <span>~/api</span>
             <span>
               {active + 1} / {ITEMS.length}
             </span>

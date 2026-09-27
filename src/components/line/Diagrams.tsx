@@ -1,68 +1,126 @@
 import React from 'react';
 import { useInView, useLoop } from './primitives';
 
-const ease = (x: number) => 1 - Math.pow(1 - x, 3);
 const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 
-// basic-http as a microVM, warm cache: 582 ms build + 863 ms until HTTP answers.
-const BUILD_MS = 582;
-const READY_MS = 863;
-const TOTAL_MS = BUILD_MS + READY_MS;
-const PHASES: [string, number][] = [
-  ['resolve', 0.06],
-  ['build', BUILD_MS / TOTAL_MS],
-  ['create', 0.47],
-  ['start', 0.84],
-  ['ready', 1],
-];
+// basic-http, warm cache, bare metal: build, then boot until HTTP answers (ms).
+const LANES = [
+  {
+    key: 'container',
+    label: 'container',
+    build: 291,
+    ready: 521,
+    tone: 'text-ct',
+    fill: 'bg-ct/75',
+    phases: {
+      resolve: 'Resolving source & Russelfile',
+      build: 'Building package',
+      create: 'Preparing container rootfs',
+      start: 'Starting rootless Podman container',
+      ready: 'Waiting for service to be reachable',
+    },
+  },
+  {
+    key: 'microvm',
+    label: 'microVM',
+    build: 582,
+    ready: 863,
+    tone: 'text-vm',
+    fill: 'bg-vm/75',
+    phases: {
+      resolve: 'Resolving source & Russelfile',
+      build: 'Building package + kernel/busybox',
+      create: 'Writing deploy config',
+      start: 'Booting the VM',
+      ready: 'Waiting for service to be reachable',
+    },
+  },
+] as const;
 
-/** Deploy → first HTTP response, played back as the CLI reports it. */
+const SCALE_MS = 1500;
+const TICKS = [0, 500, 1000, 1500];
+
+/** Where a lane is at `ms`: which CLI phase, or done. Phase splits inside build/boot are approximate. */
+function phaseAt(ms: number, build: number, ready: number) {
+  const total = build + ready;
+  if (ms >= total) return 'done' as const;
+  if (ms < build * 0.15) return 'resolve' as const;
+  if (ms < build) return 'build' as const;
+  if (ms < build + ready * 0.15) return 'create' as const;
+  if (ms < build + ready * 0.7) return 'start' as const;
+  return 'ready' as const;
+}
+
+/** Both runtimes racing on one clock, from russel deploy to the first HTTP response. */
 export const BootDiagram: React.FC = () => {
   const [ref, seen] = useInView<HTMLDivElement>(0.4);
-  const t = useLoop(5200, seen);
-  const p = ease(Math.min(1, t / 0.62));
-  const done = p >= 1;
-  const split = BUILD_MS / TOTAL_MS;
+  const t = useLoop(6000, seen);
+  const ms = Math.min(1, t / 0.72) * SCALE_MS;
+  const pct = (v: number) => `${(v / SCALE_MS) * 100}%`;
 
   return (
     <div ref={ref} className="font-mono">
-      <div className="flex items-baseline justify-between">
-        <span className={`text-[40px] sm:text-[46px] leading-none tabular-nums ${done ? 'text-fg' : 'text-mute'}`}>
-          {fmt(p * TOTAL_MS)}
-          <span className="ml-1 text-[18px] text-dimmer">ms</span>
+      <div className="relative">
+        <div className="relative space-y-7 py-1">
+          {LANES.map((l) => {
+            const total = l.build + l.ready;
+            const phase = phaseAt(ms, l.build, l.ready);
+            const done = phase === 'done';
+            return (
+              <div key={l.key}>
+                <div className="flex items-baseline justify-between gap-3 text-[13px]">
+                  <span className={l.tone}>{l.label}</span>
+                  <span className={`tabular-nums ${done ? 'text-fg' : 'text-mute'}`}>
+                    {done && <span className="mr-1.5 text-ok">✓</span>}
+                    {fmt(Math.min(ms, total))} ms
+                  </span>
+                </div>
+                <div className="relative mt-2 h-3 bg-raise" aria-hidden>
+                  {TICKS.slice(1, -1).map((v) => (
+                    <div key={v} className="absolute -inset-y-1 w-px bg-line" style={{ left: pct(v) }} />
+                  ))}
+                  <div className={`hatch absolute inset-y-0 left-0 ${l.tone}`} style={{ width: pct(Math.min(ms, l.build)) }} />
+                  <div
+                    className={`absolute inset-y-0 ${l.fill}`}
+                    style={{ left: pct(l.build), width: pct(Math.max(0, Math.min(ms, total) - l.build)) }}
+                  />
+                  <div className="absolute -inset-y-1.5 w-px bg-fg/80" style={{ left: pct(Math.min(ms, SCALE_MS - 1)) }} />
+                </div>
+                <div className="mt-2 truncate text-[12px] text-dimmer">
+                  {done ? (
+                    <span className="text-mute">deployed · first response</span>
+                  ) : (
+                    <>
+                      <span className={l.tone}>›</span> {phase} · {l.phases[phase]}
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="relative mt-3 h-4 whitespace-nowrap text-[11px] text-dimmer" aria-hidden>
+        {TICKS.map((v, i) => (
+          <span
+            key={v}
+            className={`absolute ${i === 0 ? '' : i === TICKS.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`}
+            style={{ left: pct(v) }}
+          >
+            {v === 0 ? '0' : `${v / 1000} s`}
+          </span>
+        ))}
+      </div>
+
+      <div className="mt-5 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-dimmer">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="hatch inline-block h-2.5 w-5 text-mute" aria-hidden /> build
         </span>
-        <span className={`text-[12px] ${done ? 'text-ok' : 'text-dimmer'}`}>{done ? '✓ deployed' : 'deploying…'}</span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block h-2.5 w-5 bg-mute/60" aria-hidden /> boot until http
+        </span>
       </div>
-
-      <div className="relative mt-5 h-4 border border-line" aria-hidden>
-        <div className="hatch absolute inset-y-0 left-0 text-vm/70" style={{ width: `${Math.min(p, split) * 100}%` }} />
-        <div
-          className="absolute inset-y-0 bg-vm/80"
-          style={{ left: `${split * 100}%`, width: `${Math.max(0, p - split) * 100}%` }}
-        />
-        <div className="absolute -bottom-5 text-[11px] text-dimmer" style={{ left: 0 }}>
-          build {BUILD_MS}
-        </div>
-        <div className="absolute -bottom-5 text-[11px] text-dimmer" style={{ left: `${split * 100}%` }}>
-          boot + ready {READY_MS}
-        </div>
-      </div>
-
-      <ul className="mt-10 space-y-1.5 text-[13px]">
-        {PHASES.map(([name, end], i) => {
-          const start = i === 0 ? 0 : PHASES[i - 1][1];
-          const state = p >= end ? 'done' : p > start ? 'active' : 'todo';
-          return (
-            <li key={name} className="grid grid-cols-[16px_72px_1fr] items-baseline">
-              <span className={state === 'done' ? 'text-ok' : state === 'active' ? 'text-vm' : 'text-dimmer'}>
-                {state === 'done' ? '✓' : state === 'active' ? '›' : '·'}
-              </span>
-              <span className={state === 'todo' ? 'text-dimmer' : 'text-fg'}>{name}</span>
-              <span className="h-px self-center bg-line" />
-            </li>
-          );
-        })}
-      </ul>
     </div>
   );
 };

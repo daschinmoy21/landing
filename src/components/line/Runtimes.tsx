@@ -5,8 +5,8 @@ import { Cell, Grid, Section, SectionTitle, TileBody, TileTitle } from './primit
 
 const TILES = [
   {
-    title: 'Deploy to ready in 1.4 s',
-    body: 'A microVM with its own kernel, from russel deploy to the first HTTP response. Containers get there in 0.8 s.',
+    title: 'Ready in 0.8 s, or 1.4 s with its own kernel',
+    body: "basic-http from russel deploy to its first HTTP response. The microVM's extra time goes to its own kernel: packaging it, then booting it.",
     art: BootDiagram,
   },
   {
