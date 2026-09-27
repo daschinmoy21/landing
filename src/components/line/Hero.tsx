@@ -108,28 +108,6 @@ export const Hero: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <figure className="animate-hero-rise [animation-delay:420ms] relative mt-16 sm:mt-20">
-          <div
-            className="pointer-events-none absolute inset-x-0 sm:-inset-x-10 -top-16 h-40 bg-[radial-gradient(ellipse_at_center,rgba(178,148,255,0.14),transparent_70%)]"
-            aria-hidden
-          />
-          <div className="relative border border-line bg-cell p-1.5 sm:p-2">
-            <img
-              src="/dash.webp"
-              alt="The Russel dashboard: fleet health, services by runtime, and composition"
-              width={1882}
-              height={1159}
-              className="block w-full h-auto"
-              loading="eager"
-              fetchPriority="high"
-            />
-          </div>
-          <figcaption className="mt-3 flex flex-wrap justify-between gap-2 font-mono text-[12px] text-mute">
-            <span>└ the dashboard: every service, both runtimes, one fleet view</span>
-            <span className="hidden sm:inline text-dimmer">press 1–4 to switch views</span>
-          </figcaption>
-        </figure>
       </div>
     </section>
   );

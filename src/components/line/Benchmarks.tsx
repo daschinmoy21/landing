@@ -73,7 +73,7 @@ export const Benchmarks: React.FC = () => {
                       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                       className={`hatch h-2.5 ${tone}`}
                     />
-                    <div className="mt-1 h-px bg-dimmer" style={{ width: `${(w.podman / MAX) * 100}%` }} />
+                    <div className="hatch mt-1.5 h-2.5 text-dimmer" style={{ width: `${(w.podman / MAX) * 100}%` }} />
                   </div>
                   <div className="text-right font-mono tabular-nums whitespace-nowrap">
                     <span className="text-[14px] text-fg">{fmt(ours)} ms</span>
@@ -89,7 +89,7 @@ export const Benchmarks: React.FC = () => {
               <span className={`hatch inline-block h-2.5 w-6 ${tone}`} aria-hidden /> russel
             </span>
             <span className="inline-flex items-center gap-2">
-              <span className="inline-block h-px w-6 bg-dimmer" aria-hidden /> rootless podman
+              <span className="hatch inline-block h-2.5 w-6 text-dimmer" aria-hidden /> rootless podman
             </span>
             <span>× faster than podman</span>
           </div>
