@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DriftArt, HostsArt } from './Art';
-import { GenerationsDiagram, SecretsDiagram } from './Diagrams';
+import { GenerationsDiagram } from './Diagrams';
 import { Cell, Grid, Section, SectionTitle, TileBody, TileTitle } from './primitives';
 
 const D = ({ children }: { children: React.ReactNode }) => <span className="text-dimmer">{children}</span>;
@@ -14,29 +14,6 @@ const Cmd = ({ children }: { children: React.ReactNode }) => (
 const pad = (s: string) => s.padStart(10, ' ');
 
 const ITEMS: { title: string; body: string; screen: React.ReactNode }[] = [
-  {
-    title: 'Start from a Russelfile',
-    body: 'russel init writes a starter file. Runtime, port and memory live there, next to your code.',
-    screen: (
-      <>
-        <Cmd>russel init --type microvm --port 3000</Cmd>
-        <Cmd>cat Russelfile.toml</Cmd>
-        {'\n'}
-        <span className="text-fg">[service]</span>
-        {'\nname   = '}
-        <span className="text-ok">"api"</span>
-        {'\nsource = '}
-        <span className="text-ok">"."</span>
-        {'\nport   = '}
-        <span className="text-ok">3000</span>
-        {'\nmemory = '}
-        <span className="text-ok">"256mb"</span>
-        {'\ntype   = '}
-        <span className="text-vm">"microvm"</span>
-        {'\n'}
-      </>
-    ),
-  },
   {
     title: 'See every service',
     body: 'Both runtimes in one list, with ports and uptime. The same data the dashboard shows.',
@@ -95,25 +72,32 @@ const ITEMS: { title: string; body: string; screen: React.ReactNode }[] = [
       </>
     ),
   },
-  {
-    title: 'Keep secrets off the repo',
-    body: 'Values live on the control plane. The Russelfile only holds a secret:// reference.',
-    screen: (
-      <>
-        <Cmd>printf '%s' "$DATABASE_URL" | russel secrets set DATABASE_URL</Cmd>
-        {'\n'}
-        <span className="font-bold text-fg">{'  secrets'}</span>
-        {'\n'}
-        <D>{`  ${pad('set')}`}</D>
-        {'  DATABASE_URL\n\n'}
-        <Cmd>russel secrets list</Cmd>
-        {'\n'}
-        <span className="font-bold text-fg">{'  secrets'}</span>
-        {'\n  DATABASE_URL\n  STRIPE_KEY'}
-      </>
-    ),
-  },
 ];
+
+/** Secrets from the CLI side: the value goes in over stdin, the Russelfile keeps only a reference. */
+const SecretsTerminal: React.FC = () => (
+  <div className="border border-line bg-night font-mono">
+    <div className="border-b border-line px-4 py-2 text-[11px] text-dimmer">~/api</div>
+    <pre className="scrollbar-hide overflow-x-auto whitespace-pre p-4 text-[12px] leading-[1.75] text-mute">
+      <Cmd>printf '%s' "$DATABASE_URL" \</Cmd>
+      <span className="text-fg">{'    | russel secrets set DATABASE_URL'}</span>
+      {'\n\n'}
+      <span className="font-bold text-fg">{'  secrets'}</span>
+      {'\n'}
+      <D>{`  ${pad('set')}`}</D>
+      {'  DATABASE_URL\n\n'}
+      <Cmd>russel secrets list</Cmd>
+      {'\n'}
+      <span className="font-bold text-fg">{'  secrets'}</span>
+      {'\n  DATABASE_URL\n  STRIPE_KEY\n\n'}
+      <D># Russelfile.toml</D>
+      {'\n'}
+      <span className="text-fg">[service.env]</span>
+      {'\nDATABASE_URL = '}
+      <span className="text-vm">"secret://DATABASE_URL"</span>
+    </pre>
+  </div>
+);
 
 const Footnote: React.FC<{ rows: [string, React.ReactNode][] }> = ({ rows }) => (
   <dl className="mt-6 grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-1 font-mono text-[13px]">
@@ -138,7 +122,7 @@ const CELLS = [
   },
   {
     title: 'Runs on machines you own',
-    body: 'Bare metal, an edge box, or a cloud account you control. Nothing phones home.',
+    body: 'Bare metal, an edge box, or a cloud account you control.',
     art: HostsArt,
     rows: [
       ['container', 'any VPS, rootless Podman'],
@@ -148,7 +132,7 @@ const CELLS = [
   {
     title: 'Secrets stay on the host',
     body: 'Referenced by name, stored on the control plane, handed to the service at deploy.',
-    art: SecretsDiagram,
+    art: SecretsTerminal,
     rows: [
       ['store', 'russel secrets set'],
       ['use', 'secret://NAME'],
@@ -165,7 +149,7 @@ export const Operate: React.FC = () => {
 
       <Grid className="lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <Cell>
-          <div role="tablist" aria-label="CLI tasks" aria-orientation="vertical">
+          <div role="tablist" aria-label="CLI tasks" aria-orientation="vertical" className="flex h-full flex-col">
             {ITEMS.map((it, i) => (
               <button
                 key={it.title}
@@ -173,7 +157,7 @@ export const Operate: React.FC = () => {
                 role="tab"
                 aria-selected={active === i}
                 onClick={() => setActive(i)}
-                className={`relative block w-full cursor-pointer border-b border-line px-6 py-6 text-left last:border-b-0 sm:px-9 sm:py-7 ${
+                className={`relative flex w-full flex-1 cursor-pointer flex-col justify-center border-b border-line px-6 py-6 text-left last:border-b-0 sm:px-9 sm:py-7 ${
                   active === i ? 'bg-raise' : 'hover:bg-cell'
                 }`}
               >
@@ -187,7 +171,7 @@ export const Operate: React.FC = () => {
             ))}
           </div>
         </Cell>
-        <Cell className="flex min-h-[420px] flex-col bg-cell">
+        <Cell className="flex min-h-[360px] flex-col bg-cell">
           <div className="flex h-12 items-center justify-between border-b border-line px-5 font-mono text-[12px] text-dimmer">
             <span>~/api</span>
             <span>
