@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DriftArt, RackArt } from './Art';
+import { DriftArt, HostsArt } from './Art';
 import { GenerationsDiagram, SecretsDiagram } from './Diagrams';
 import { Cell, Grid, Section, SectionTitle, TileBody, TileTitle } from './primitives';
 
@@ -139,7 +139,7 @@ const CELLS = [
   {
     title: 'Runs on machines you own',
     body: 'Bare metal, an edge box, or a cloud account you control. Nothing phones home.',
-    art: RackArt,
+    art: HostsArt,
     rows: [
       ['container', 'any VPS, rootless Podman'],
       ['microvm', 'needs /dev/kvm'],

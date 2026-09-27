@@ -1,4 +1,5 @@
 import React from 'react';
+import { useInView, useLoop } from './primitives';
 
 // Hand-built line art: ink on paper. Violet marks a microVM and blue a container, as in the dashboard.
 const INK = 'var(--color-fg)';
@@ -136,11 +137,10 @@ export const DriftArt: React.FC = () => (
   </svg>
 );
 
-/** A rack of your own machines, with a few lights on. */
-export const RackArt: React.FC = () => {
+const Rack: React.FC = () => {
   const units = [52, 92, 132, 172, 212, 252, 292];
   return (
-    <svg viewBox="0 30 400 350" className="block w-full h-auto" role="img" aria-label="A server rack you own: bare metal, edge, or your cloud">
+    <g>
       <rect x="118" y="38" width="164" height="304" fill={PAPER} stroke={INK} strokeWidth="1.6" />
       <g stroke={INK} strokeWidth="0.8" strokeOpacity="0.5">
         <line x1="130" y1="44" x2="130" y2="336" />
@@ -167,20 +167,139 @@ export const RackArt: React.FC = () => {
       ))}
       <rect x="126" y="342" width="16" height="10" fill={INK} />
       <rect x="258" y="342" width="16" height="10" fill={INK} />
-      <line x1="40" y1="352" x2="360" y2="352" stroke={INK} strokeWidth="1.1" />
       <path d="M264 318 C 300 318, 296 346, 332 352" fill="none" stroke={INK} strokeWidth="1.1" />
+    </g>
+  );
+};
 
-      <g stroke={INK} strokeWidth="0.8">
-        <line x1="96" y1="69" x2="136" y2="69" />
-        <line x1="282" y1="189" x2="304" y2="189" />
-        <line x1="96" y1="269" x2="136" y2="269" />
+/** A mini PC with a router on top: the box in a shop, a closet or a cell tower. */
+const EdgeBox: React.FC = () => (
+  <g>
+    {/* antennas and signal */}
+    <g stroke={INK} strokeWidth="1.3">
+      <line x1="164" y1="226" x2="150" y2="150" />
+      <line x1="236" y1="226" x2="250" y2="150" />
+    </g>
+    <circle cx="150" cy="148" r="3" fill={INK} />
+    <circle cx="250" cy="148" r="3" fill={INK} />
+    <g fill="none" stroke={OK} strokeWidth="1.2">
+      {[14, 24, 34].map((r, i) => (
+        <path
+          key={r}
+          d={`M${250 + r * 0.7} ${148 - r * 0.7} A ${r} ${r} 0 0 1 ${250 + r * 0.7} ${148 + r * 0.7}`}
+          className="anim-led"
+          style={{ animationDelay: `${i * 0.3}s` }}
+        />
+      ))}
+    </g>
+
+    {/* router */}
+    <rect x="148" y="224" width="104" height="30" fill={PAPER} stroke={INK} strokeWidth="1.2" />
+    {[0, 1, 2, 3, 4].map((i) => (
+      <circle
+        key={i}
+        cx={166 + i * 17}
+        cy="239"
+        r="2.6"
+        fill={i === 2 ? 'none' : OK}
+        stroke={INK}
+        strokeWidth="0.7"
+        className={i === 2 ? '' : 'anim-led'}
+        style={{ animationDelay: `${i * 0.45}s` }}
+      />
+    ))}
+
+    {/* mini PC */}
+    <rect x="116" y="258" width="168" height="86" fill={PAPER} stroke={INK} strokeWidth="1.5" />
+    <circle cx="138" cy="278" r="7" fill="none" stroke={INK} strokeWidth="1" />
+    <line x1="138" y1="273" x2="138" y2="279" stroke={INK} strokeWidth="1" />
+    <circle cx="158" cy="278" r="3" fill={OK} className="anim-led" />
+    <g stroke={INK} strokeWidth="0.8" strokeOpacity="0.6">
+      {Array.from({ length: 6 }, (_, i) => (
+        <line key={i} x1="196" y1={272 + i * 7} x2="268" y2={272 + i * 7} />
+      ))}
+    </g>
+    <g fill="none" stroke={INK} strokeWidth="0.8">
+      <rect x="130" y="318" width="12" height="8" />
+      <rect x="148" y="318" width="12" height="8" />
+      <rect x="166" y="316" width="18" height="12" />
+    </g>
+    <rect x="128" y="344" width="14" height="8" fill={INK} />
+    <rect x="258" y="344" width="14" height="8" fill={INK} />
+    <path d="M175 328 C 175 346, 250 342, 330 352" fill="none" stroke={INK} strokeWidth="1.1" />
+  </g>
+);
+
+/** A cloud account you hold the key to, running a few instances. */
+const CloudAccount: React.FC = () => (
+  <g>
+    <path
+      d="M100 222 C 64 222 58 174 96 168 C 94 126 148 108 174 138 C 188 96 258 92 270 138 C 304 124 342 150 324 184 C 352 192 346 222 310 222 Z"
+      fill={PAPER}
+      stroke={INK}
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    {/* key: the account is yours */}
+    <g stroke={INK} strokeWidth="1.4" fill="none">
+      <circle cx="182" cy="180" r="11" />
+      <path d="M193 180 H232 M220 180 V190 M230 180 V188" />
+    </g>
+    <circle cx="182" cy="180" r="3" fill={OK} />
+
+    <g stroke={INK} strokeWidth="0.9" strokeDasharray="3 4" strokeOpacity="0.6">
+      {[140, 200, 260].map((x) => (
+        <line key={x} x1={x} y1="222" x2={x} y2="270" />
+      ))}
+    </g>
+    {[112, 172, 232].map((x, i) => (
+      <g key={x}>
+        <rect x={x} y="270" width="56" height="44" fill={PAPER} stroke={INK} strokeWidth="1.2" />
+        {Array.from({ length: 3 }, (_, j) => (
+          <rect key={j} x={x + 8 + j * 9} y="282" width="6" height="20" fill="none" stroke={INK} strokeWidth="0.7" />
+        ))}
+        <circle
+          cx={x + 44}
+          cy="292"
+          r="2.8"
+          fill={OK}
+          className="anim-led"
+          style={{ animationDelay: `${i * 0.5}s` }}
+        />
       </g>
-      <Label x={92} y={73} anchor="end">bare metal</Label>
-      <Label x={308} y={193} anchor="start">edge</Label>
-      <Label x={92} y={273} anchor="end">your cloud</Label>
-      <Label x={200} y={374} fill="var(--color-mute)" size={12}>
-        nothing phones home
-      </Label>
+    ))}
+  </g>
+);
+
+const HOSTS = [
+  { name: 'bare metal', art: Rack },
+  { name: 'edge box', art: EdgeBox },
+  { name: 'your cloud', art: CloudAccount },
+];
+
+/** Where Russel runs, one host at a time: your rack, an edge box, your cloud account. */
+export const HostsArt: React.FC = () => {
+  const [ref, seen] = useInView<SVGSVGElement>(0.3);
+  const t = useLoop(HOSTS.length * 2800, seen, 0);
+  const at = Math.floor(t * HOSTS.length) % HOSTS.length;
+
+  return (
+    <svg
+      ref={ref}
+      viewBox="0 30 400 350"
+      className="block w-full h-auto"
+      role="img"
+      aria-label="Machines you own: a bare-metal rack, an edge box, or a cloud account"
+    >
+      {HOSTS.map(({ name, art: Art }, i) => (
+        <g key={name} style={{ opacity: at === i ? 1 : 0, transition: 'opacity 600ms ease' }} aria-hidden={at !== i}>
+          <Art />
+          <Label x={200} y={374} fill="var(--color-mute)" size={12}>
+            {name}
+          </Label>
+        </g>
+      ))}
+      <line x1="40" y1="352" x2="360" y2="352" stroke={INK} strokeWidth="1.1" />
     </svg>
   );
 };
