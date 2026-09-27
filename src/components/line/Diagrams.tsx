@@ -123,87 +123,82 @@ export const CutoverDiagram: React.FC = () => {
   );
 };
 
-const GEN_Y = 132;
-
-const GenNode: React.FC<{ x: number; label: string; sub: string; color: string; square?: boolean }> = ({
-  x,
-  label,
-  sub,
-  color,
-  square,
-}) => (
-  <g>
-    {square ? (
-      <rect x={x - 9} y={GEN_Y - 9} width="18" height="18" fill={color} />
-    ) : (
-      <circle cx={x} cy={GEN_Y} r="8" fill="var(--color-night)" stroke={color} strokeWidth="1.6" />
-    )}
-    <text x={x} y={GEN_Y + 36} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="13" letterSpacing="1.5" fill="var(--color-mute)">
-      {label}
-    </text>
-    <text x={x} y={GEN_Y + 56} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="12" fill="var(--color-dimmer)">
-      {sub}
-    </text>
-  </g>
-);
+type GenRow = { id: string; label: string; runtime: 'container' | 'microvm' | 'failed'; from: number };
+const GEN_ROWS: GenRow[] = [
+  { id: 'g1', label: 'gen 1', runtime: 'container', from: 0 },
+  { id: 'g2', label: 'gen 2', runtime: 'container', from: 1 },
+  { id: 'fail', label: 'build failed', runtime: 'failed', from: 2 },
+  { id: 'g3', label: 'gen 3', runtime: 'microvm', from: 3 },
+];
+// One entry per step: the command run, what it did, and which generation serves afterwards.
+const GEN_STEPS: { cmd: string; result: string; serving: string; tone: string }[] = [
+  { cmd: 'russel deploy <repo>', result: '✓ deployed', serving: 'g1', tone: 'text-ok' },
+  { cmd: 'russel update api --refresh', result: '✓ deployed', serving: 'g2', tone: 'text-ok' },
+  { cmd: 'russel update api --refresh', result: '↩ rolled_back', serving: 'g2', tone: 'text-warn' },
+  { cmd: 'russel update api --refresh', result: '✓ deployed · microvm', serving: 'g3', tone: 'text-ok' },
+  { cmd: 'russel rollback api --version 2', result: '✓ deployed', serving: 'g2', tone: 'text-ok' },
+];
 
 /**
- * A service's life as generations: each deploy is pinned to its commit and
- * Russelfile, a failed redeploy rolls itself back, and any kept generation
- * can be redeployed.
+ * A service's history as generations: each deploy is pinned to its commit and
+ * Russelfile, a failed redeploy rolls itself back, and any kept one can come back.
  */
 export const GenerationsDiagram: React.FC = () => {
-  const [ref, seen] = useInView<HTMLDivElement>(0.3);
-  const t = useLoop(7000, seen, 0);
-  const dot = 60 + t * 1110;
-  const CT = 'var(--color-ct)';
-  const VM = 'var(--color-vm)';
-  const WARN = 'var(--color-warn)';
-  const MUTE = 'var(--color-mute)';
-  const DIM = 'var(--color-dimmer)';
-  const Y = GEN_Y;
+  const [ref, seen] = useInView<HTMLDivElement>(0.4);
+  // Six slots for five steps, so the last state holds a beat before looping.
+  const t = useLoop(GEN_STEPS.length * 1900 + 1900, seen, 0.99);
+  const step = Math.min(GEN_STEPS.length - 1, Math.floor(t * (GEN_STEPS.length + 1)));
+  const now = GEN_STEPS[step];
 
   return (
-    <div ref={ref} className="overflow-x-auto">
-      <svg viewBox="0 0 1200 250" className="block w-full min-w-[760px] h-auto" role="img" aria-label="Generations: deploy, update, a failed build that rolls itself back, a runtime switch to microVM, then a rollback to generation 2">
-        <defs>
-          <marker id="arrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 Z" fill={MUTE} />
-          </marker>
-          <linearGradient id="tail" x1="0" x2="1">
-            <stop offset="0" stopColor={CT} />
-            <stop offset="1" stopColor={CT} stopOpacity="0" />
-          </linearGradient>
-        </defs>
+    <div ref={ref} className="border border-line bg-night font-mono text-[12.5px]">
+      <div className="flex justify-between border-b border-line px-4 py-2 text-[11px] text-dimmer">
+        <span>api · generations</span>
+        <span>
+          step {step + 1}/{GEN_STEPS.length}
+        </span>
+      </div>
 
-        <line x1="60" y1={Y} x2="700" y2={Y} stroke={CT} strokeWidth="1.6" />
-        <line x1="700" y1={Y} x2="980" y2={Y} stroke={VM} strokeWidth="1.6" />
-        <line x1="980" y1={Y} x2="1180" y2={Y} stroke="url(#tail)" strokeWidth="1.6" />
+      <ul className="relative px-4 py-3">
+        <span className="absolute bottom-6 left-[27px] top-6 w-px bg-line" aria-hidden />
+        {GEN_ROWS.map((r) => {
+          const shown = step >= r.from;
+          const serving = now.serving === r.id;
+          const color = r.runtime === 'microvm' ? 'text-vm' : r.runtime === 'container' ? 'text-ct' : 'text-warn';
+          return (
+            <li
+              key={r.id}
+              className={`relative grid grid-cols-[24px_minmax(0,1fr)_auto] items-center gap-x-2 py-1.5 transition-opacity duration-500 ${
+                shown ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <span className="flex justify-center" aria-hidden>
+                {r.runtime === 'failed' ? (
+                  <span className="grid h-3 w-3 place-items-center border border-warn text-[8px] leading-none text-warn">✕</span>
+                ) : r.runtime === 'microvm' ? (
+                  <span className="h-3 w-3 bg-vm" />
+                ) : (
+                  <span className={`h-3 w-3 rounded-full border-[1.5px] border-ct ${serving ? 'bg-ct' : 'bg-night'}`} />
+                )}
+              </span>
+              <span className={serving ? 'text-fg' : r.runtime === 'failed' ? 'text-warn' : 'text-mute'}>
+                {r.label} <span className={`ml-1 ${r.runtime === 'failed' ? 'text-dimmer' : color}`}>{r.runtime === 'failed' ? 'rolled_back' : r.runtime}</span>
+              </span>
+              <span className={`text-[11px] transition-opacity duration-300 ${serving ? 'text-ok opacity-100' : 'opacity-0'}`}>
+                ● serving
+              </span>
+            </li>
+          );
+        })}
+      </ul>
 
-        {/* Failed redeploy branches off and dies; generation 2 never stops serving. */}
-        <path d={`M470 ${Y} C 515 ${Y}, 520 214, 572 214 L 590 214`} fill="none" stroke={WARN} strokeWidth="1.3" strokeDasharray="3 4" />
-        <rect x="592" y="207" width="14" height="14" fill="none" stroke={WARN} strokeWidth="1.4" />
-        <path d="M596 211 L602 217 M602 211 L596 217" stroke={WARN} strokeWidth="1.4" />
-        <text x="618" y="212" fontFamily="var(--font-mono)" fontSize="12" letterSpacing="1.5" fill={WARN}>
-          BUILD FAILED
-        </text>
-        <text x="618" y="230" fontFamily="var(--font-mono)" fontSize="12" fill={DIM}>
-          rolled_back · gen 2 keeps serving
-        </text>
-
-        {/* Explicit rollback back to generation 2 */}
-        <path d={`M980 ${Y - 14} C 980 20, 360 20, 360 ${Y - 16}`} fill="none" stroke={MUTE} strokeWidth="1" strokeDasharray="2 5" markerEnd="url(#arrow)" />
-        <text x="670" y="60" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="13" fill={MUTE}>
-          russel rollback api --version 2
-        </text>
-
-        <GenNode x={100} label="DEPLOY" sub="gen 1 · container" color={CT} />
-        <GenNode x={360} label="UPDATE" sub="gen 2 · --refresh" color={CT} />
-        <GenNode x={700} label="SWITCH" sub="gen 3 · microvm" color={VM} square />
-        <GenNode x={980} label="ROLLBACK" sub="gen 2 · container" color={CT} />
-
-        <circle cx={dot} cy={Y} r="3.5" fill="var(--color-fg)" opacity={t > 0.97 ? 0 : 0.9} />
-      </svg>
+      <div className="border-t border-line px-4 py-3 leading-relaxed" aria-live="polite">
+        <div className="truncate text-fg">
+          <span className="select-none text-dimmer">$ </span>
+          {now.cmd}
+        </div>
+        <div className={now.tone}>{now.result}</div>
+      </div>
     </div>
   );
 };
