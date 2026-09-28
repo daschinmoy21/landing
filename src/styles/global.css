@@ -430,3 +430,84 @@ body {
     animation: none;
   }
 }
+
+/* ── Hero: letter reveal, drifting sky ── */
+@keyframes letter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(4deg);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.hero-letter {
+  display: inline-block;
+  animation: letter-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: 0 100%;
+}
+
+/* A slow band of light that sweeps across the two runtime words. */
+@keyframes sheen {
+  0%,
+  55% {
+    background-position: 160% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+.hero-sheen {
+  background-image: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.75) 50%, transparent 60%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 7s ease-in-out 1.6s infinite;
+}
+
+@keyframes sky-drift {
+  from {
+    transform: scale(1.08) translate3d(-1.5%, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(1.5%, -1%, 0);
+  }
+}
+
+.hero-sky {
+  animation: sky-drift 38s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes cloud-pass {
+  from {
+    transform: translate3d(-40vw, 0, 0);
+  }
+  to {
+    transform: translate3d(120vw, 0, 0);
+  }
+}
+
+.hero-cloud {
+  animation: cloud-pass linear infinite;
+  will-change: transform;
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-letter,
+  .hero-sheen,
+  .hero-sky,
+  .hero-cloud {
+    animation: none !important;
+    opacity: 1;
+    filter: none;
+  }
+}
