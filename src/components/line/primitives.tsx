@@ -103,7 +103,7 @@ export const Grid: React.FC<{ className?: string; children: React.ReactNode; inn
   children,
   innerRef,
 }) => (
-  <div ref={innerRef} className={twMerge('mt-12 grid border-t border-l border-line', className)}>
+  <div ref={innerRef} className={twMerge('mt-12 grid border-t border-l border-line bg-night/40 backdrop-blur-xl', className)}>
     {children}
   </div>
 );

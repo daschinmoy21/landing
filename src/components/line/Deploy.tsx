@@ -172,7 +172,7 @@ export const Deploy: React.FC = () => {
         <span className="font-mono text-[15px] text-fg">russel deploy</span> it. Change the options to see both update.
       </SectionTitle>
 
-      <div className="mt-12 grid border-t border-l border-line bg-night lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className="mt-12 grid border-t border-l border-line bg-night/40 backdrop-blur-xl lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <div className="border-r border-b border-line p-6 sm:p-8">
           <div>
             <Label hint="service.type">Runtime</Label>
@@ -241,7 +241,7 @@ export const Deploy: React.FC = () => {
           </label>
         </div>
 
-        <div ref={ref} className="min-w-0 border-r border-b border-line bg-cell p-3 sm:p-6">
+        <div ref={ref} className="min-w-0 border-r border-b border-line bg-cell/50 p-3 sm:p-6">
           <div className="overflow-hidden rounded-[10px] border border-white/10 bg-night font-mono shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]">
             {/* title bar */}
             <div className="relative flex h-9 items-center bg-raise px-3.5">

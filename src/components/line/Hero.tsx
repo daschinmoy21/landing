@@ -98,10 +98,6 @@ export const Hero: React.FC = () => {
           </div>
 
           <figure className="animate-hero-rise [animation-delay:320ms] relative min-w-0">
-            <div
-              className="pointer-events-none absolute inset-0 sm:-inset-8 bg-[radial-gradient(ellipse_at_30%_40%,rgba(178,148,255,0.12),transparent_65%)]"
-              aria-hidden
-            />
             {/* The whole dashboard at a fixed size, wider than its column: it runs off the right edge of the
                 viewport (the page root clips x-overflow), so only the left side shows. */}
             <div className="relative w-[760px] max-w-none border border-line bg-[#141414] p-1.5 sm:w-[960px] lg:w-[1000px] xl:w-[max(1120px,calc(50vw+300px))]">
