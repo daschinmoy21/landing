@@ -59,7 +59,7 @@ export const Deploy: React.FC = () => {
   const [domain, setDomain] = useState('api.example.com');
   const [cpus, setCpus] = useState('2');
   const [mem, setMem] = useState('256mb');
-  const [tab, setTab] = useState<'cli' | 'toml'>('cli');
+  const [tab, setTab] = useState<'cli' | 'toml'>('toml');
   const [copied, setCopied] = useState(false);
   const [run, setRun] = useState(0);
   const [shown, setShown] = useState(0);
@@ -266,7 +266,7 @@ export const Deploy: React.FC = () => {
 
             {/* tabs */}
             <div role="tablist" className="flex border-y border-black/60 bg-[#141414] text-[12px]">
-              {(['cli', 'toml'] as const).map((k) => (
+              {(['toml', 'cli'] as const).map((k) => (
                 <button
                   key={k}
                   type="button"

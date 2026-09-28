@@ -4,6 +4,8 @@ import { Runtimes } from './Runtimes';
 import { Benchmarks } from './Benchmarks';
 import { Operate } from './Operate';
 import { ControlPlane } from './ControlPlane';
+import { Compare } from './Compare';
+import { Sandboxes } from './Sandboxes';
 import { Deploy } from './Deploy';
 import { Footer } from './Footer';
 import { VIEWS } from './primitives';
@@ -31,6 +33,8 @@ export const LineLanding: React.FC = () => {
         <Benchmarks />
         <Operate />
         <ControlPlane />
+        <Compare />
+        <Sandboxes />
         <Deploy />
       </main>
       <Footer />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { GithubIcon } from './primitives';
 import { HeroTerminal } from './HeroTerminal';
+import { AGENTS, AgentMark } from './agentLogos';
 
 const INSTALL = {
   curl: 'curl -fsSL https://russel.dev/install.sh | sh',
@@ -36,8 +37,9 @@ export const Nav: React.FC = () => {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-6 px-4 sm:px-8">
-        <a href="#top" className="text-fg font-mono text-[22px] font-bold tracking-tight">
-          russel
+        <a href="#top" className="text-fg flex items-baseline gap-2 font-mono">
+          <span className="text-[22px] font-bold tracking-tight">russel</span>
+          <span className="text-dimmer text-[12px]">v0.1</span>
         </a>
         <span
           aria-disabled="true"
@@ -75,8 +77,33 @@ export const Hero: React.FC = () => {
             Same command.
           </h1>
           <p className="animate-fade-up text-mute mx-auto mt-7 max-w-[46ch] text-lg leading-snug [animation-delay:100ms] sm:text-[21px] lg:mx-0">
-            Self-hosted deploys on hardware you own. Pick the runtime per service, and switch with one line.
+            Self-hosted, reliable deployments for the agentic era.
           </p>
+          <a
+            href="#sandboxes"
+            onClick={(e) => {
+              e.preventDefault();
+              go('sandboxes');
+            }}
+            className="animate-fade-up border-line bg-cell/60 text-mute hover:text-fg hover:border-vm/50 mt-5 inline-flex items-center gap-2 border px-3 py-1.5 font-mono text-[12.5px] backdrop-blur-md [animation-delay:140ms]"
+          >
+            {/* A small window of agent logos drifting left, fading out at the right edge. */}
+            <span
+              className="flex w-[76px] overflow-hidden [mask-image:linear-gradient(90deg,#000_55%,transparent)]"
+              aria-hidden
+            >
+              {[0, 1].map((copy) => (
+                <span key={copy} className="anim-agent-reel flex shrink-0 items-center gap-2.5 pr-2.5">
+                  {AGENTS.map((a) => (
+                    <AgentMark key={a.name} mark={a} className="h-4 w-4 shrink-0" />
+                  ))}
+                </span>
+              ))}
+            </span>
+            Agent sandboxes
+            <span className="text-dimmer">· soon</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </a>
 
           <div className="animate-fade-up mx-auto mt-10 max-w-[640px] [animation-delay:180ms] lg:mx-0">
             <div className="border-line bg-cell/80 flex items-stretch border shadow-[0_18px_40px_-24px_rgba(20,55,95,0.45)] backdrop-blur-xl">

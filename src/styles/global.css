@@ -400,3 +400,33 @@ body {
     animation: none !important;
   }
 }
+
+/* Hero sandbox link: agent logos scrolling past. Two identical groups move together so the loop is seamless. */
+@keyframes agent-reel {
+  to {
+    transform: translateX(-100%);
+  }
+}
+.anim-agent-reel {
+  animation: agent-reel 14s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-agent-reel {
+    animation: none;
+  }
+}
+
+/* Network traffic in the sandbox egress art: dashes streaming along a path (dash period 16). */
+@keyframes flow {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+.anim-flow {
+  animation: flow 0.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-flow {
+    animation: none;
+  }
+}
