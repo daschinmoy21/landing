@@ -548,9 +548,15 @@ body {
   margin: 0 -1px -1px 0;
 }
 
-/* Frosted layer over the pinned hero video; its opacity follows scroll (see Backdrop in Hero.tsx). */
-.page-veil {
-  background: rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: blur(36px) saturate(115%);
-  backdrop-filter: blur(36px) saturate(115%);
+/* Frosted layers over the pinned hero video; their opacity follows scroll (see Backdrop in Hero.tsx).
+   Light alone is the footer's blur; light + heavy (~18px combined) is the body of the page. */
+.page-veil-light {
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  backdrop-filter: blur(8px) saturate(110%);
+}
+.page-veil-heavy {
+  background: rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(16px) saturate(105%);
+  backdrop-filter: blur(16px) saturate(105%);
 }

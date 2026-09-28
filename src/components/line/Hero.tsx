@@ -140,16 +140,22 @@ const VIDEO = '/hero.mp4';
  * away a blurred, darkened layer fades in over it so the sections below sit on frosted video.
  */
 export const Backdrop: React.FC = () => {
-  const veil = useRef<HTMLDivElement>(null);
+  const light = useRef<HTMLDivElement>(null);
+  const heavy = useRef<HTMLDivElement>(null);
   const warm = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const clamp = (n: number) => Math.min(1, Math.max(0, n));
+    const set = (el: HTMLDivElement | null, v: number) => el?.style.setProperty('opacity', String(v));
+    // Blur: none in the hero, most through the sections, eased back to a lighter blur at the footer.
     const update = () => {
       const vh = window.innerHeight;
-      veil.current?.style.setProperty('opacity', String(clamp(window.scrollY / (vh * 0.85))));
-      // Over the last ~1.5 screens the warm tint fades in, pulling the blue out of the video by the footer.
+      const leaving = clamp(window.scrollY / (vh * 0.85));
       const toEnd = document.documentElement.scrollHeight - vh - window.scrollY;
-      warm.current?.style.setProperty('opacity', String(clamp(1 - toEnd / (vh * 1.5))));
+      const nearEnd = clamp(1 - toEnd / (vh * 1.2));
+      set(light.current, leaving);
+      set(heavy.current, Math.min(leaving, 1 - nearEnd));
+      // The warm tint fades in over the last ~1.5 screens, pulling some blue out of the video by the footer.
+      set(warm.current, clamp(1 - toEnd / (vh * 1.5)));
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -172,8 +178,9 @@ export const Backdrop: React.FC = () => {
         disablePictureInPicture
       />
       <div className="page-vignette absolute inset-0" />
-      <div ref={warm} className="absolute inset-0 bg-[#ff9a6a] opacity-0 mix-blend-multiply" />
-      <div ref={veil} className="page-veil absolute inset-0 opacity-0" />
+      <div ref={warm} className="absolute inset-0 bg-[#ffae8c] opacity-0 mix-blend-multiply" />
+      <div ref={light} className="page-veil-light absolute inset-0 opacity-0" />
+      <div ref={heavy} className="page-veil-heavy absolute inset-0 opacity-0" />
     </div>
   );
 };
