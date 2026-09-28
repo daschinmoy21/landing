@@ -41,18 +41,20 @@
 
   --font-display: 'Clash Grotesk', 'Nimbus Sans TW01', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Night surface, matched to the dashboard: violet = microVM, blue = container */
-  --color-night: #0a0a0a;
-  --color-cell: #111111;
-  --color-raise: #181818;
-  --color-line: #262626;
-  --color-fg: #ededed;
-  --color-mute: #9a9a9a;
-  --color-dimmer: #616161;
-  --color-vm: #b294ff;
-  --color-ct: #6ea8ff;
-  --color-ok: #a9c25d;
-  --color-warn: #e38b5c;
+  /* Daylight surface, taken from the hero sky: violet = microVM, blue = container */
+  --color-sky: #d9e8f3;
+  --color-night: #e5eef6;
+  --color-cell: #ffffff;
+  --color-raise: #d6e3ee;
+  --color-line: #afc2d3;
+  --color-fg: #14233c;
+  --color-mute: #3d5166;
+  --color-dimmer: #687d91;
+  --color-vm: #5a3dc4;
+  --color-ct: #1d679d;
+  --color-ok: #3b7420;
+  --color-warn: #b35420;
+  --color-err: #c42b2b;
 
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
@@ -163,7 +165,7 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
-  background-color: #0a0a0a;
+  background-color: #d9e8f3;
   color: var(--sky-ink);
 }
 
@@ -320,12 +322,81 @@ body {
 
 /* Diagonal hatch, same as the dashboard's composition bars */
 .hatch {
-  background-image: repeating-linear-gradient(-55deg, currentColor 0 1.5px, transparent 1.5px 5px);
+  background-color: color-mix(in srgb, currentColor 22%, transparent);
+  background-image: repeating-linear-gradient(-55deg, currentColor 0 2px, transparent 2px 4.5px);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .anim-blink,
   .anim-led {
+    animation: none !important;
+  }
+}
+
+/* Terminal windows stay dark on the light page: scope the dashboard's night palette back in. */
+.theme-dark {
+  --color-night: #0a0a0a;
+  --color-cell: #111111;
+  --color-raise: #181818;
+  --color-line: #262626;
+  --color-fg: #ededed;
+  --color-mute: #9a9a9a;
+  --color-dimmer: #616161;
+  --color-vm: #b294ff;
+  --color-ct: #6ea8ff;
+  --color-ok: #a9c25d;
+  --color-warn: #e38b5c;
+  --color-err: #f06a64;
+}
+
+/* Control-plane diagram: SVG groups that react to state changes (remounted per state, so each plays once). */
+.cp-anim {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.cp-shake { animation: cp-shake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+.cp-pop { animation: cp-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.cp-enter { animation: cp-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.cp-exit { animation: cp-exit 0.6s cubic-bezier(0.55, 0, 0.8, 0.2) forwards; }
+.cp-ring { animation: cp-ring 0.9s ease-out forwards; }
+.cp-pulse { animation: cp-pulse 1.1s ease-in-out infinite; }
+.cp-spin { animation: cp-spin 1s linear infinite; }
+.cp-phase { animation: cp-phase 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes cp-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(3px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+@keyframes cp-pop {
+  from { opacity: 0; transform: scale(0.88); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes cp-enter {
+  from { opacity: 0; transform: translateX(70px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes cp-exit {
+  to { opacity: 0; transform: translateX(-50px); }
+}
+@keyframes cp-ring {
+  from { opacity: 0.9; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.18, 1.5); }
+}
+@keyframes cp-pulse {
+  50% { opacity: 0.3; }
+}
+@keyframes cp-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes cp-phase {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-shake, .cp-pop, .cp-enter, .cp-ring, .cp-pulse, .cp-spin, .cp-phase {
     animation: none !important;
   }
 }

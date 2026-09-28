@@ -7,21 +7,27 @@ import { Cell, Grid, Section, SectionTitle, useInView, useReducedMotion } from '
 const INK = 'var(--color-fg)';
 const MUTE = 'var(--color-mute)';
 const DIM = 'var(--color-dimmer)';
-const LINE = 'var(--color-line)';
 const PAPER = 'var(--color-night)';
 const OK = 'var(--color-ok)';
 const WARN = 'var(--color-warn)';
+const ERR = 'var(--color-err)';
 
-type Ctrl = 'up' | 'draining' | 'down' | 'reconciling';
+/** `stopped` is a clean exit (upgrade); `down` is a crash. `starting` is a freshly installed binary. */
+type Ctrl = 'up' | 'draining' | 'stopped' | 'down' | 'starting' | 'reconciling';
 type Svc = 'serving' | 'down' | 'restarting';
 type SvcId = 'api' | 'web' | 'docs';
+type Tone = 'ok' | 'warn' | 'err' | 'ink';
 
 type Ev = {
   at: number;
   log: string;
-  tone?: 'cmd' | 'ok' | 'warn' | 'dim';
+  tone?: 'cmd' | 'ok' | 'warn' | 'err' | 'dim';
   ctrl?: Ctrl;
+  /** the upgraded binary replaces the old box */
+  v2?: true;
   svc?: [SvcId, Svc, string?];
+  /** headline above the diagram while this step is current */
+  phase?: [string, Tone];
 };
 
 type Scenario = { title: string; body: string; ms: number; events: Ev[] };
@@ -32,14 +38,14 @@ const SCENARIOS: Scenario[] = [
     body: 'Killed mid-traffic. Services keep serving; systemd brings ctrl back and it re-adopts them.',
     ms: 12000,
     events: [
-      { at: 0, log: '3 services serving', tone: 'dim' },
-      { at: 800, log: 'kill -9 $(pidof russel-ctrl)', tone: 'cmd', ctrl: 'down' },
-      { at: 1900, log: 'traefik keeps routing from dynamic/*.json', tone: 'dim' },
-      { at: 5800, log: 'systemd: Restart=on-failure, 5s later', ctrl: 'reconciling' },
-      { at: 6600, log: 'api   pid 4121, /proc cmdline matches → adopted', svc: ['api', 'serving', 'adopted'] },
+      { at: 0, log: '3 services serving', tone: 'dim', phase: ['all 3 services serving', 'ok'] },
+      { at: 800, log: 'kill -9 $(pidof russel-ctrl)', tone: 'cmd', ctrl: 'down', phase: ['ctrl crashed', 'err'] },
+      { at: 1900, log: 'traefik keeps routing from dynamic/*.json', tone: 'dim', phase: ['traffic keeps flowing without it', 'ok'] },
+      { at: 5800, log: 'systemd: Restart=on-failure, 5s later', ctrl: 'reconciling', phase: ['systemd restarts ctrl', 'ink'] },
+      { at: 6600, log: 'api   pid 4121, /proc cmdline matches → adopted', svc: ['api', 'serving', 'adopted'], phase: ['re-adopting running services', 'ink'] },
       { at: 7300, log: 'web   podman inspect russel-web → adopted', svc: ['web', 'serving', 'adopted'] },
       { at: 8000, log: 'docs  podman inspect russel-docs → adopted', svc: ['docs', 'serving', 'adopted'] },
-      { at: 8800, log: 'no request went through ctrl', tone: 'ok', ctrl: 'up' },
+      { at: 8800, log: 'no request went through ctrl', tone: 'ok', ctrl: 'up', phase: ['recovered · zero dropped requests', 'ok'] },
     ],
   },
   {
@@ -47,15 +53,15 @@ const SCENARIOS: Scenario[] = [
     body: 'SIGTERM finishes in-flight deploys, then detaches. The new binary picks up where the old one stopped.',
     ms: 11000,
     events: [
-      { at: 0, log: './contrib/install.sh host', tone: 'cmd' },
-      { at: 900, log: 'SIGTERM: stop accepting, finish in-flight deploys', ctrl: 'draining' },
-      { at: 2400, log: 'KillMode=process: only ctrl exits', ctrl: 'down' },
-      { at: 3400, log: 'install /usr/local/bin/russel-ctrl', tone: 'dim' },
-      { at: 4400, log: 'restart unit, reconcile from metadata.json', ctrl: 'reconciling' },
-      { at: 5200, log: 'api   pid 4121, /proc cmdline matches → adopted', svc: ['api', 'serving', 'adopted'] },
+      { at: 0, log: './contrib/install.sh host', tone: 'cmd', phase: ['upgrade started', 'ink'] },
+      { at: 900, log: 'SIGTERM: stop accepting, finish in-flight deploys', ctrl: 'draining', phase: ['v1 draining in-flight deploys', 'warn'] },
+      { at: 2400, log: 'KillMode=process: only ctrl exits', ctrl: 'stopped', phase: ['v1 exits · services stay up', 'ok'] },
+      { at: 3400, log: 'install /usr/local/bin/russel-ctrl', tone: 'dim', ctrl: 'starting', v2: true, phase: ['v2 installed', 'ink'] },
+      { at: 4400, log: 'restart unit, reconcile from metadata.json', ctrl: 'reconciling', phase: ['v2 reads metadata.json', 'ink'] },
+      { at: 5200, log: 'api   pid 4121, /proc cmdline matches → adopted', svc: ['api', 'serving', 'adopted'], phase: ['v2 adopts running services', 'ink'] },
       { at: 5900, log: 'web   podman inspect russel-web → adopted', svc: ['web', 'serving', 'adopted'] },
       { at: 6600, log: 'docs  podman inspect russel-docs → adopted', svc: ['docs', 'serving', 'adopted'] },
-      { at: 7400, log: 'restart probe ok (a failed one restores the old binary)', tone: 'ok', ctrl: 'up' },
+      { at: 7400, log: 'restart probe ok (a failed one restores the old binary)', tone: 'ok', ctrl: 'up', phase: ['v2 live · nothing restarted', 'ok'] },
     ],
   },
   {
@@ -63,17 +69,17 @@ const SCENARIOS: Scenario[] = [
     body: 'Podman restarts containers on its own. A microVM is relaunched from its recorded generation when ctrl returns.',
     ms: 12500,
     events: [
-      { at: 0, log: 'restart = "unless-stopped" on every service', tone: 'dim' },
-      { at: 700, log: 'kill -9 $(pidof russel-ctrl)', tone: 'cmd', ctrl: 'down' },
-      { at: 1700, log: 'web exits: podman restart policy takes it', tone: 'warn', svc: ['web', 'restarting'] },
-      { at: 2700, log: 'web back, no ctrl needed', svc: ['web', 'serving', 'podman'] },
-      { at: 3500, log: 'api VM exits: 502 until ctrl returns', tone: 'warn', svc: ['api', 'down'] },
-      { at: 5700, log: 'systemd: Restart=on-failure, 5s later', ctrl: 'reconciling' },
+      { at: 0, log: 'restart = "unless-stopped" on every service', tone: 'dim', phase: ['all 3 services serving', 'ok'] },
+      { at: 700, log: 'kill -9 $(pidof russel-ctrl)', tone: 'cmd', ctrl: 'down', phase: ['ctrl crashed', 'err'] },
+      { at: 1700, log: 'web exits: podman restart policy takes it', tone: 'err', svc: ['web', 'restarting'], phase: ['web crashed · podman restarts it', 'err'] },
+      { at: 2700, log: 'web back, no ctrl needed', svc: ['web', 'serving', 'podman'], phase: ['web back, without ctrl', 'ok'] },
+      { at: 3500, log: 'api VM exits: 502 until ctrl returns', tone: 'err', svc: ['api', 'down'], phase: ['api VM died · 502s', 'err'] },
+      { at: 5700, log: 'systemd: Restart=on-failure, 5s later', ctrl: 'reconciling', phase: ['systemd restarts ctrl', 'ink'] },
       { at: 6400, log: 'web   podman inspect russel-web → adopted', svc: ['web', 'serving', 'adopted'] },
-      { at: 7100, log: 'api   VM down → relaunch gen 3, nothing rebuilt', svc: ['api', 'restarting'] },
-      { at: 8300, log: 'api   answering on :3000', svc: ['api', 'serving', 'relaunched'] },
+      { at: 7100, log: 'api   VM down → relaunch gen 3, nothing rebuilt', svc: ['api', 'restarting'], phase: ['relaunching api from gen 3', 'warn'] },
+      { at: 8300, log: 'api   answering on :3000', svc: ['api', 'serving', 'relaunched'], phase: ['api back', 'ok'] },
       { at: 8900, log: 'docs  podman inspect russel-docs → adopted', svc: ['docs', 'serving', 'adopted'] },
-      { at: 9600, log: 'all 3 serving', tone: 'ok', ctrl: 'up' },
+      { at: 9600, log: 'all 3 serving', tone: 'ok', ctrl: 'up', phase: ['recovered · all 3 serving', 'ok'] },
     ],
   },
 ];
@@ -84,24 +90,44 @@ const SERVICES: { id: SvcId; runtime: 'microvm' | 'container' }[] = [
   { id: 'docs', runtime: 'container' },
 ];
 
-type SvcState = { state: Svc; note?: string; since: number };
-type Snapshot = { ctrl: Ctrl; svcs: Record<SvcId, SvcState>; shown: Ev[] };
+type SvcState = { state: Svc; note?: string; since: number; prev?: Svc };
+type Snapshot = {
+  ctrl: Ctrl;
+  /** which ctrl box is on screen; changes remount it so its entry animation plays */
+  ctrlKey: 'v1' | 'crashed' | 'restarted' | 'exited' | 'v2';
+  svcs: Record<SvcId, SvcState>;
+  shown: Ev[];
+  phase: [string, Tone];
+  phaseAt: number;
+};
 
 function snapshot(s: Scenario, elapsed: number): Snapshot {
   const snap: Snapshot = {
     ctrl: 'up',
+    ctrlKey: 'v1',
     svcs: { api: { state: 'serving', since: -1e9 }, web: { state: 'serving', since: -1e9 }, docs: { state: 'serving', since: -1e9 } },
     shown: [],
+    phase: ['all 3 services serving', 'ok'],
+    phaseAt: 0,
   };
   for (const e of s.events) {
     if (e.at > elapsed) break;
     snap.shown.push(e);
-    if (e.ctrl) snap.ctrl = e.ctrl;
-    if (e.svc) snap.svcs[e.svc[0]] = { state: e.svc[1], note: e.svc[2], since: e.at };
+    if (e.ctrl) {
+      if (e.v2) snap.ctrlKey = 'v2';
+      else if (e.ctrl === 'down') snap.ctrlKey = 'crashed';
+      else if (e.ctrl === 'stopped') snap.ctrlKey = 'exited';
+      else if (snap.ctrlKey === 'crashed') snap.ctrlKey = 'restarted';
+      snap.ctrl = e.ctrl;
+    }
+    if (e.svc) snap.svcs[e.svc[0]] = { state: e.svc[1], note: e.svc[2], since: e.at, prev: snap.svcs[e.svc[0]].state };
+    if (e.phase) {
+      snap.phase = e.phase;
+      snap.phaseAt = e.at;
+    }
   }
   return snap;
 }
-
 type Pt = [number, number];
 type Box = { x: number; y: number; w: number; h: number };
 type Layout = {
@@ -192,10 +218,22 @@ const T: React.FC<React.SVGProps<SVGTextElement>> = ({ children, ...p }) => (
 
 const CTRL_LABEL: Record<Ctrl, [string, string]> = {
   up: ['● up', OK],
-  draining: ['draining', WARN],
-  down: ['✕ down', WARN],
-  reconciling: ['reconciling', INK],
+  draining: ['◐ draining', WARN],
+  stopped: ['○ stopped', DIM],
+  down: ['✕ crashed', ERR],
+  starting: ['↻ starting', MUTE],
+  reconciling: ['↻ reconciling', INK],
 };
+
+const CTRL_ANIM: Record<Snapshot['ctrlKey'], string> = {
+  v1: '',
+  crashed: 'cp-shake',
+  restarted: 'cp-pop',
+  exited: 'cp-exit',
+  v2: 'cp-enter',
+};
+
+const PHASE_COLOR: Record<Tone, string> = { ok: OK, warn: WARN, err: ERR, ink: INK };
 
 const PlaneDiagram: React.FC<{
   L: Layout;
@@ -203,11 +241,15 @@ const PlaneDiagram: React.FC<{
   clock: number;
   elapsed: number;
   animate: boolean;
+  /** label the ctrl box v1/v2 (upgrade scenario) */
+  versioned: boolean;
   className?: string;
-}> = ({ L, snap, clock, elapsed, animate, className }) => {
-  const ctrlUp = snap.ctrl === 'up' || snap.ctrl === 'reconciling';
-  const link = { stroke: ctrlUp ? MUTE : DIM, strokeOpacity: ctrlUp ? 1 : 0.4, strokeDasharray: '3 4' };
+}> = ({ L, snap, clock, elapsed, animate, versioned, className }) => {
+  const linked = snap.ctrl === 'up' || snap.ctrl === 'reconciling' || snap.ctrl === 'draining';
+  const link = { stroke: linked ? INK : DIM, strokeOpacity: linked ? 0.75 : 0.35, strokeDasharray: '4 4', strokeWidth: 1.3 };
   const [ctrlText, ctrlColor] = CTRL_LABEL[snap.ctrl];
+  const crashed = snap.ctrl === 'down';
+  const ctrlStroke = crashed ? ERR : snap.ctrl === 'up' ? INK : snap.ctrl === 'draining' ? WARN : MUTE;
   const { state, ctrl, clients, traefik, group, svc } = L;
 
   return (
@@ -217,53 +259,69 @@ const PlaneDiagram: React.FC<{
       role="img"
       aria-label="russel-ctrl sits above the request path: clients reach services through Traefik, so traffic flows while ctrl is down"
     >
-      <T x={L.cp[0]} y={L.cp[1]} fontSize={11} fill={DIM}>
+      <T x={L.cp[0]} y={L.cp[1]} fontSize={11} fill={MUTE}>
         control plane
       </T>
-      <T x={L.dp[0]} y={L.dp[1]} fontSize={11} fill={DIM}>
+      <T x={L.dp[0]} y={L.dp[1]} fontSize={11} fill={MUTE}>
         data plane
       </T>
-      <line x1={0} x2={L.vb[0]} y1={L.divider} y2={L.divider} stroke={LINE} strokeDasharray="2 5" />
+      <line x1={0} x2={L.vb[0]} y1={L.divider} y2={L.divider} stroke={MUTE} strokeOpacity={0.55} strokeDasharray="2 5" />
 
       {/* control links, cut when ctrl is gone */}
-      <polyline points={pts(L.stateLink)} fill="none" stroke={MUTE} />
+      <polyline points={pts(L.stateLink)} fill="none" stroke={INK} strokeOpacity={0.75} strokeWidth={1.3} />
       <polyline points={pts(L.routesLink)} fill="none" {...link} />
       <polyline points={pts(L.supervise)} fill="none" {...link} />
-      <T x={L.routesLabel[0]} y={L.routesLabel[1]} textAnchor={L.routesLabel[2]} fontSize={11} fill={DIM}>
+      <T x={L.routesLabel[0]} y={L.routesLabel[1]} textAnchor={L.routesLabel[2]} fontSize={11} fill={MUTE}>
         routes
       </T>
-      <T x={L.superviseLabel[0]} y={L.superviseLabel[1]} textAnchor={L.superviseLabel[2]} fontSize={11} fill={DIM}>
+      <T x={L.superviseLabel[0]} y={L.superviseLabel[1]} textAnchor={L.superviseLabel[2]} fontSize={11} fill={MUTE}>
         supervise
       </T>
 
       {/* state on disk outlives the process */}
-      <rect x={state.x} y={state.y} width={state.w} height={state.h} fill={PAPER} stroke={LINE} />
+      <rect x={state.x} y={state.y} width={state.w} height={state.h} fill={PAPER} stroke={MUTE} strokeWidth={1.2} />
       <T x={state.x + 14} y={state.y + 23}>
         /var/lib/russel
       </T>
-      <T x={state.x + 14} y={state.y + 41} fontSize={11} fill={DIM}>
+      <T x={state.x + 14} y={state.y + 41} fontSize={11} fill={MUTE}>
         metadata.json
       </T>
 
-      <rect
-        x={ctrl.x}
-        y={ctrl.y}
-        width={ctrl.w}
-        height={ctrl.h}
-        fill={PAPER}
-        stroke={snap.ctrl === 'up' ? INK : snap.ctrl === 'reconciling' ? MUTE : WARN}
-        strokeDasharray={snap.ctrl === 'down' ? '4 3' : undefined}
-        strokeWidth={1.2}
-      />
-      <T x={ctrl.x + 14} y={ctrl.y + 23} fill={snap.ctrl === 'down' ? MUTE : INK}>
-        russel-ctrl
-      </T>
-      <T x={ctrl.x + 14} y={ctrl.y + 41} fontSize={11} fill={ctrlColor}>
-        {ctrlText}
-      </T>
+      {/* the slot stays visible while the process is gone */}
+      <rect x={ctrl.x} y={ctrl.y} width={ctrl.w} height={ctrl.h} fill="none" stroke={DIM} strokeOpacity={0.6} strokeDasharray="3 4" />
+      <g key={snap.ctrlKey} className={`cp-anim ${CTRL_ANIM[snap.ctrlKey]}`}>
+        {crashed && animate && (
+          <rect className="cp-anim cp-ring" x={ctrl.x} y={ctrl.y} width={ctrl.w} height={ctrl.h} fill="none" stroke={ERR} strokeWidth={2} />
+        )}
+        <rect
+          x={ctrl.x}
+          y={ctrl.y}
+          width={ctrl.w}
+          height={ctrl.h}
+          fill={PAPER}
+          stroke={ctrlStroke}
+          strokeDasharray={crashed ? '5 3' : undefined}
+          strokeWidth={crashed ? 2 : 1.5}
+        />
+        {crashed && <rect x={ctrl.x} y={ctrl.y} width={ctrl.w} height={ctrl.h} fill={ERR} fillOpacity={0.1} />}
+        {snap.ctrl === 'draining' && (
+          <rect className="cp-pulse" x={ctrl.x} y={ctrl.y} width={ctrl.w} height={ctrl.h} fill={WARN} fillOpacity={0.14} />
+        )}
+        <T x={ctrl.x + 14} y={ctrl.y + 23} fill={crashed ? ERR : INK}>
+          russel-ctrl
+          {versioned && (
+            <tspan fill={snap.ctrlKey === 'v2' ? 'var(--color-ct)' : MUTE} fontWeight={700}>
+              {snap.ctrlKey === 'v2' ? ' v2' : ' v1'}
+            </tspan>
+          )}
+        </T>
+        <T x={ctrl.x + 14} y={ctrl.y + 41} fontSize={11} fill={ctrlColor} fontWeight={crashed ? 700 : undefined}>
+          {ctrlText}
+        </T>
+      </g>
 
       {/* request paths */}
-      <polyline points={pts(L.route(0).slice(0, 2))} fill="none" stroke={LINE} />
+      <polyline points={pts(L.route(0).slice(0, 2))} fill="none" stroke={MUTE} strokeOpacity={0.6} strokeWidth={1.3} />
       {SERVICES.map((s, i) => {
         const down = snap.svcs[s.id].state === 'down';
         return (
@@ -271,8 +329,9 @@ const PlaneDiagram: React.FC<{
             key={s.id}
             points={pts(L.route(svc.ys[i]).slice(1))}
             fill="none"
-            stroke={down ? WARN : LINE}
-            strokeOpacity={down ? 0.5 : 1}
+            stroke={down ? ERR : MUTE}
+            strokeOpacity={down ? 0.7 : 0.6}
+            strokeWidth={1.3}
             strokeDasharray={down ? '3 4' : undefined}
           />
         );
@@ -287,60 +346,71 @@ const PlaneDiagram: React.FC<{
             if (st === 'restarting') return null;
             // A request for a dead backend only gets as far as traefik, and comes back a 502.
             const [x, y] = along(st === 'down' ? L.route(0).slice(0, 2) : L.route(svc.ys[i]), p);
-            return <circle key={`${s.id}${k}`} cx={x} cy={y} r={2.6} fill={st === 'down' && p > 0.6 ? WARN : INK} />;
+            return <circle key={`${s.id}${k}`} cx={x} cy={y} r={3} fill={st === 'down' && p > 0.6 ? ERR : INK} />;
           }),
         )}
 
-      <rect x={clients.x} y={clients.y} width={clients.w} height={clients.h} fill={PAPER} stroke={LINE} />
+      <rect x={clients.x} y={clients.y} width={clients.w} height={clients.h} fill={PAPER} stroke={MUTE} strokeWidth={1.2} />
       <T x={clients.x + clients.w / 2} y={clients.y + clients.h / 2 + 4} textAnchor="middle" fill={MUTE}>
         clients
       </T>
 
-      <rect x={traefik.x} y={traefik.y} width={traefik.w} height={traefik.h} fill={PAPER} stroke={INK} strokeWidth={1.2} />
+      <rect x={traefik.x} y={traefik.y} width={traefik.w} height={traefik.h} fill={PAPER} stroke={INK} strokeWidth={1.5} />
       <T x={traefik.x + 14} y={traefik.y + traefik.h / 2 - 2}>
         traefik
       </T>
-      <T x={traefik.x + 14} y={traefik.y + traefik.h / 2 + 14} fontSize={11} fill={DIM}>
+      <T x={traefik.x + 14} y={traefik.y + traefik.h / 2 + 14} fontSize={11} fill={MUTE}>
         :80 :443
       </T>
       {snap.svcs.api.state === 'down' && (
-        <T x={L.err[0]} y={L.err[1]} fontSize={11} fill={WARN}>
+        <T x={L.err[0]} y={L.err[1]} fontSize={12} fontWeight={700} fill={ERR} className="cp-pulse">
           502
         </T>
       )}
 
-      <rect x={group.x} y={group.y} width={group.w} height={group.h} fill="none" stroke={LINE} />
+      <rect x={group.x} y={group.y} width={group.w} height={group.h} fill="none" stroke={DIM} strokeOpacity={0.8} />
       {SERVICES.map((s, i) => {
         const y = svc.ys[i];
         const st = snap.svcs[s.id];
         const flash = elapsed - st.since < 800;
         const tone = s.runtime === 'microvm' ? 'var(--color-vm)' : 'var(--color-ct)';
+        const died = st.state === 'down' || (st.state === 'restarting' && st.prev === 'serving');
+        const back = st.state === 'serving' && st.prev !== undefined && st.prev !== 'serving';
         const [label, color] =
-          st.state === 'serving' ? ['● serving', OK] : st.state === 'down' ? ['✕ down', WARN] : ['↻ starting', MUTE];
+          st.state === 'serving' ? ['● serving', OK] : st.state === 'down' ? ['✕ down', ERR] : ['↻ restarting', WARN];
+        const stroke = st.state === 'down' ? ERR : st.state === 'restarting' ? WARN : flash ? INK : DIM;
         const right = svc.x + svc.w - 10;
         return (
-          <g key={s.id}>
+          <g key={`${s.id}-${st.state}-${st.since}`} className={`cp-anim ${died ? 'cp-shake' : back ? 'cp-pop' : ''}`}>
+            {died && animate && (
+              <rect className="cp-anim cp-ring" x={svc.x} y={y} width={svc.w} height={40} fill="none" stroke={ERR} strokeWidth={2} />
+            )}
             <rect
               x={svc.x}
               y={y}
               width={svc.w}
               height={40}
               fill={PAPER}
-              stroke={st.state === 'down' ? WARN : flash ? INK : LINE}
+              stroke={stroke}
+              strokeWidth={st.state === 'serving' && !flash ? 1.2 : 1.8}
               strokeDasharray={st.state === 'down' ? '4 3' : undefined}
             />
-            <rect x={svc.x} y={y} width={3} height={40} fill={tone} opacity={st.state === 'down' ? 0.35 : 1} />
-            <T x={svc.x + 12} y={y + 17} fill={st.state === 'down' ? MUTE : INK}>
+            {st.state === 'down' && <rect x={svc.x} y={y} width={svc.w} height={40} fill={ERR} fillOpacity={0.1} />}
+            {st.state === 'restarting' && (
+              <rect className="cp-pulse" x={svc.x} y={y} width={svc.w} height={40} fill={WARN} fillOpacity={0.14} />
+            )}
+            <rect x={svc.x} y={y} width={4} height={40} fill={tone} opacity={st.state === 'down' ? 0.35 : 1} />
+            <T x={svc.x + 12} y={y + 17} fill={st.state === 'down' ? ERR : INK}>
               {s.id}
             </T>
-            <T x={right} y={y + 17} fontSize={11} fill={color} textAnchor="end">
+            <T x={right} y={y + 17} fontSize={11} fill={color} textAnchor="end" fontWeight={st.state === 'serving' ? undefined : 700}>
               {label}
             </T>
             <T x={svc.x + 12} y={y + 32} fontSize={10.5} fill={tone}>
               {s.runtime}
             </T>
             {st.note && (
-              <T x={right} y={y + 32} fontSize={10.5} fill={flash ? INK : DIM} textAnchor="end">
+              <T x={right} y={y + 32} fontSize={10.5} fill={flash ? INK : MUTE} textAnchor="end">
                 {st.note}
               </T>
             )}
@@ -351,7 +421,7 @@ const PlaneDiagram: React.FC<{
   );
 };
 
-const LOG_TONE = { cmd: 'text-fg', ok: 'text-ok', warn: 'text-warn', dim: 'text-dimmer' } as const;
+const LOG_TONE = { cmd: 'text-fg', ok: 'text-ok', warn: 'text-warn', err: 'text-err', dim: 'text-dimmer' } as const;
 const LOG_ROWS = 6;
 
 export const ControlPlane: React.FC = () => {
@@ -402,7 +472,8 @@ export const ControlPlane: React.FC = () => {
   const sc = SCENARIOS[frame.idx];
   const snap = snapshot(sc, frame.elapsed);
   const log = snap.shown.slice(-LOG_ROWS);
-  const diagram = { snap, clock: frame.clock, elapsed: frame.elapsed, animate: !reduced };
+  const diagram = { snap, clock: frame.clock, elapsed: frame.elapsed, animate: !reduced, versioned: frame.idx === 1 };
+  const phaseColor = PHASE_COLOR[snap.phase[1]];
 
   return (
     <Section id="control-plane">
@@ -424,7 +495,7 @@ export const ControlPlane: React.FC = () => {
                 className={`relative flex cursor-pointer flex-col items-start border-b border-line p-6 text-left last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0 xl:border-r-0 xl:border-b xl:last:border-b-0 ${on ? 'bg-raise/40' : 'hover:bg-raise/20'}`}
               >
                 <span
-                  className="absolute inset-x-0 top-0 h-0.5 origin-left bg-fg"
+                  className="absolute inset-x-0 top-0 h-1 origin-left bg-fg"
                   style={{ transform: `scaleX(${on ? Math.min(1, frame.elapsed / s.ms) : 0})` }}
                   aria-hidden
                 />
@@ -437,6 +508,19 @@ export const ControlPlane: React.FC = () => {
         </Cell>
 
         <Cell className="flex flex-col">
+          <div className="flex items-center gap-3 border-b border-line px-4 py-4 sm:px-8" aria-live="polite">
+            <span
+              className={`h-2.5 w-2.5 shrink-0 rounded-full ${snap.phase[1] === 'err' ? 'cp-pulse' : ''}`}
+              style={{ background: phaseColor }}
+              aria-hidden
+            />
+            <span key={`${frame.idx}-${snap.phaseAt}`} className="cp-phase font-mono text-[15px] font-bold tracking-tight sm:text-[18px]" style={{ color: phaseColor }}>
+              {snap.phase[0]}
+            </span>
+            <span className="ml-auto hidden font-mono text-[11px] tabular-nums text-dimmer sm:inline">
+              {frame.idx + 1} / {SCENARIOS.length}
+            </span>
+          </div>
           <div className="p-4 sm:p-8">
             <PlaneDiagram L={WIDE} className="hidden h-auto w-full md:block" {...diagram} />
             <PlaneDiagram L={TALL} className="mx-auto block h-auto w-full max-w-[440px] md:hidden" {...diagram} />

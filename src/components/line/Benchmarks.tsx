@@ -28,7 +28,7 @@ const WORKLOADS: {
 const SERIES = [
   { key: 'container', label: 'container', tone: 'text-ct' },
   { key: 'microvm', label: 'microVM', tone: 'text-vm' },
-  { key: 'podman', label: 'rootless podman', tone: 'text-dimmer' },
+  { key: 'podman', label: 'rootless podman', tone: 'text-mute' },
 ] as const;
 
 const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)];
@@ -51,7 +51,7 @@ export const Benchmarks: React.FC = () => {
             <div className="text-mute flex flex-wrap gap-x-5 gap-y-1 font-mono text-[12px]">
               {SERIES.map((s) => (
                 <span key={s.key} className="inline-flex items-center gap-2">
-                  <span className={`hatch inline-block h-2.5 w-5 ${s.tone}`} aria-hidden /> {s.label}
+                  <span className={`hatch inline-block h-3 w-5 ${s.tone}`} aria-hidden /> {s.label}
                 </span>
               ))}
             </div>
@@ -79,7 +79,7 @@ export const Benchmarks: React.FC = () => {
                           initial={{ width: 0 }}
                           animate={{ width: seen ? `${(v / MAX) * 100}%` : 0 }}
                           transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                          className={`hatch h-2.5 ${s.tone}`}
+                          className={`hatch h-3 ${s.tone}`}
                         />
                         <span className={`text-right ${s.key === 'podman' ? 'text-dimmer' : 'text-fg'}`}>
                           {fmt(v)} ms
@@ -129,7 +129,7 @@ export const Benchmarks: React.FC = () => {
             </div>
             <div className="mt-3 grid grid-cols-3 gap-4 font-mono text-[12px]">
               {MEDIANS.map((m) => (
-                <span key={m.key} className={m.tone === 'text-dimmer' ? 'text-mute' : m.tone}>
+                <span key={m.key} className={m.tone}>
                   {m.label}
                 </span>
               ))}

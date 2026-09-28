@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Check, Copy, RotateCcw } from 'lucide-react';
-import { SectionTitle, useInView, useReducedMotion } from './primitives';
+import { CARD, SectionTitle, useInView, useReducedMotion } from './primitives';
 
 type Runtime = 'microvm' | 'container';
 
@@ -71,7 +71,7 @@ export const Deploy: React.FC = () => {
   const host = domain.trim();
   const hp = hostPort.trim();
   const repo = `https://github.com/you/${id}.git`;
-  const cmd = `russel deploy ${repo}`;
+  const cmd = `russel apply ${repo}`;
 
   const toml = [
     '[service]',
@@ -88,9 +88,8 @@ export const Deploy: React.FC = () => {
     'DATABASE_URL = "secret://DATABASE_URL"',
   ].join('\n');
 
-  // Output of `russel deploy`, one entry per printed line.
+  // Output of `russel apply`, one entry per printed line.
   const lines: React.ReactNode[] = [
-    <span className="font-bold text-white">  russel apply</span>,
     <span className="text-[#7a7a7a]">  {repo}</span>,
     '',
     ...PHASES[runtime].map(([p, d]) => (
@@ -169,10 +168,10 @@ export const Deploy: React.FC = () => {
     <section id="try" className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-20 sm:pt-28">
       <SectionTitle lead="One file, one command." rest="Try it.">
         Describe the service in a <span className="font-mono text-[15px] text-fg">Russelfile.toml</span>, then{' '}
-        <span className="font-mono text-[15px] text-fg">russel deploy</span> it. Change the options to see both update.
+        <span className="font-mono text-[15px] text-fg">russel apply</span> it. Change the options to see both update.
       </SectionTitle>
 
-      <div className="mt-12 grid border-t border-l border-line bg-night/40 backdrop-blur-xl lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className={`mt-12 grid ${CARD} lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]`}>
         <div className="border-r border-b border-line p-6 sm:p-8">
           <div>
             <Label hint="service.type">Runtime</Label>
@@ -241,8 +240,8 @@ export const Deploy: React.FC = () => {
           </label>
         </div>
 
-        <div ref={ref} className="min-w-0 border-r border-b border-line bg-cell/50 p-3 sm:p-6">
-          <div className="overflow-hidden rounded-[10px] border border-white/10 bg-night font-mono shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]">
+        <div ref={ref} className="min-w-0 border-r border-b border-line bg-night p-3 sm:p-6">
+          <div className="theme-dark overflow-hidden rounded-[10px] border border-black/10 bg-night font-mono shadow-[0_24px_60px_-24px_rgba(20,35,60,0.45)]">
             {/* title bar */}
             <div className="relative flex h-9 items-center bg-raise px-3.5">
               <span className="flex gap-2" aria-hidden>
@@ -278,7 +277,7 @@ export const Deploy: React.FC = () => {
                     tab === k ? 'bg-night text-fg' : 'text-dimmer hover:bg-white/[0.03] hover:text-mute'
                   }`}
                 >
-                  {k === 'cli' ? 'deploy' : 'Russelfile.toml'}
+                  {k === 'cli' ? 'apply' : 'Russelfile.toml'}
                 </button>
               ))}
             </div>

@@ -45,7 +45,7 @@ export const RusselfileDiagram: React.FC = () => {
                 <span className={`absolute inset-y-0 left-0 w-0.5 ${active === i ? 'bg-vm' : ''}`} aria-hidden />
                 <span className={active === i ? 'text-fg' : 'text-mute'}>{l.key.padEnd(width)}</span>
                 <span className="text-dimmer"> = </span>
-                <span className={l.tone ?? (active === i ? 'text-ok' : 'text-ok/70')}>{l.value}</span>
+                <span className={l.tone ?? (active === i ? 'text-ok' : 'text-ok/85')}>{l.value}</span>
               </div>
             ) : (
               <div key={i} className="whitespace-pre px-4 text-fg">
@@ -88,12 +88,12 @@ export const CutoverDiagram: React.FC = () => {
 
       <div className="mt-6 space-y-3" aria-label="Cutover: v1 serves until v2 is ready, then drains">
         {[
-          { label: 'v1', parts: [[0, READY, 'hatch text-ct'], [READY, DRAINED, 'border border-dashed border-ct/60']] },
-          { label: 'v2', parts: [[DEPLOY, READY, 'border border-dashed border-vm/60'], [READY, 1, 'hatch text-vm']] },
+          { label: 'v1', parts: [[0, READY, 'hatch text-ct'], [READY, DRAINED, 'border-[1.5px] border-dashed border-ct bg-ct/10']] },
+          { label: 'v2', parts: [[DEPLOY, READY, 'border-[1.5px] border-dashed border-vm bg-vm/10'], [READY, 1, 'hatch text-vm']] },
         ].map((row) => (
           <div key={row.label} className="grid grid-cols-[28px_1fr] items-center gap-2">
             <span className="text-mute">{row.label}</span>
-            <div className="relative h-3">
+            <div className="relative h-4">
               {row.parts.map(([a, b, cls]) => (
                 <div key={String(a)} className={`absolute inset-y-0 ${cls}`} style={bar(a as number, b as number)} />
               ))}
@@ -132,7 +132,7 @@ const GEN_ROWS: GenRow[] = [
 ];
 // One entry per step: the command run, what it did, and which generation serves afterwards.
 const GEN_STEPS: { cmd: string; result: string; serving: string; tone: string }[] = [
-  { cmd: 'russel deploy <repo>', result: '✓ deployed', serving: 'g1', tone: 'text-ok' },
+  { cmd: 'russel apply <repo>', result: '✓ deployed', serving: 'g1', tone: 'text-ok' },
   { cmd: 'russel update api --refresh', result: '✓ deployed', serving: 'g2', tone: 'text-ok' },
   { cmd: 'russel update api --refresh', result: '↩ rolled_back', serving: 'g2', tone: 'text-warn' },
   { cmd: 'russel update api --refresh', result: '✓ deployed · microvm', serving: 'g3', tone: 'text-ok' },

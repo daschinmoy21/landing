@@ -15,14 +15,14 @@ export const Footer: React.FC = () => (
         <button
           type="button"
           onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth' })}
-          className="inline-flex items-center gap-2 bg-fg px-5 py-3 text-[15px] text-night hover:bg-white cursor-pointer"
+          className="inline-flex items-center gap-2 bg-fg px-5 py-3 text-[15px] text-night hover:bg-fg/90 cursor-pointer"
         >
           Try the CLI <ArrowRight className="h-4 w-4" />
         </button>
         <span
           aria-disabled="true"
           title="Coming soon"
-          className="inline-flex items-center gap-2 border border-line px-5 py-3 text-[15px] text-dimmer cursor-not-allowed select-none"
+          className="inline-flex items-center gap-2 border border-line bg-cell/60 px-5 py-3 text-[15px] text-dimmer cursor-not-allowed select-none"
         >
           <GithubIcon className="h-4 w-4" /> View on GitHub <span className="font-mono text-[11px]">soon</span>
         </span>
@@ -31,7 +31,6 @@ export const Footer: React.FC = () => (
 
     <div className="border-t border-line">
       <div className="mx-auto flex max-w-[1240px] flex-col gap-4 px-4 sm:px-8 py-6 font-mono text-[12px] uppercase tracking-[0.2em] text-mute md:flex-row md:items-center md:justify-between">
-        <span className="hidden md:inline">press 1–4 to switch views</span>
         <nav className="flex flex-wrap gap-x-6 gap-y-2">
           {VIEWS.map((v) => (
             <a key={v.id} href={`#${v.id}`} className="hover:text-fg">

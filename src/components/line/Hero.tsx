@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { GithubIcon, VIEWS } from './primitives';
+import { GithubIcon } from './primitives';
+import { HeroTerminal } from './HeroTerminal';
 
 const INSTALL = {
   curl: 'curl -fsSL https://russel.dev/install.sh | sh',
@@ -10,108 +11,127 @@ type Method = keyof typeof INSTALL;
 
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
-export const Nav: React.FC = () => (
-  <header className="sticky top-0 z-30 border-b border-line bg-night/85 backdrop-blur-md">
-    <nav className="mx-auto flex max-w-[1240px] items-center justify-between gap-6 px-4 sm:px-8 h-16">
-      <a href="#top" className="font-mono text-[22px] font-bold tracking-tight text-fg">
-        russel
-      </a>
-      <div className="hidden md:flex items-center gap-8 font-mono text-[13px] uppercase tracking-[0.18em]">
-        {VIEWS.map((v, i) => (
-          <button key={v.id} type="button" onClick={() => go(v.id)} className="group cursor-pointer text-mute hover:text-fg">
-            <span className="text-dimmer group-hover:text-mute">{i + 1}</span> {v.label}
-          </button>
-        ))}
-      </div>
-      <span
-        aria-disabled="true"
-        title="Coming soon"
-        className="inline-flex h-9 items-center gap-2 border border-line px-3 font-mono text-[12px] uppercase tracking-[0.14em] text-dimmer cursor-not-allowed select-none"
-      >
-        <GithubIcon className="w-4 h-4" />
-        <span className="hidden sm:inline">github · soon</span>
-      </span>
-    </nav>
-  </header>
-);
+/** True at the very top of the page; once anything scrolls under the nav it gets a frosted bar. */
+function useAtTop() {
+  const [over, setOver] = useState(true);
+  useEffect(() => {
+    const update = () => setOver(window.scrollY < 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+  return over;
+}
+
+export const Nav: React.FC = () => {
+  const sky = useAtTop();
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-30 border-b transition-colors duration-300 ${
+        sky ? 'border-transparent bg-transparent' : 'border-line bg-sky/80 backdrop-blur-md'
+      }`}
+    >
+      <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-6 px-4 sm:px-8">
+        <a href="#top" className="text-fg font-mono text-[22px] font-bold tracking-tight">
+          russel
+        </a>
+        <span
+          aria-disabled="true"
+          title="Coming soon"
+          className="border-line bg-cell/50 text-dimmer inline-flex h-9 shrink-0 cursor-not-allowed items-center gap-2 border px-3 font-mono text-[12px] tracking-[0.14em] whitespace-nowrap uppercase backdrop-blur-md select-none"
+        >
+          <GithubIcon className="h-4 w-4" />
+          <span className="hidden lg:inline">github · soon</span>
+        </span>
+      </nav>
+    </header>
+  );
+};
 
 export const Hero: React.FC = () => {
   const [method, setMethod] = useState<Method>('curl');
 
   return (
-    <section id="top" className="relative">
-      <div className="mx-auto max-w-[1240px] px-4 sm:px-8 pt-16 sm:pt-24">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(0,480px)]">
-          <div className="min-w-0">
-            <h1 className="animate-fade-up font-display font-medium tracking-[-0.03em] leading-[0.98] text-fg text-[48px] min-[420px]:text-[56px] sm:text-[76px] lg:text-[72px] xl:text-[92px]">
-              One command.
-              <br />
-              <span className="text-mute">Either runtime.</span>
-            </h1>
-            <p className="animate-fade-up [animation-delay:100ms] mt-6 text-xl sm:text-2xl text-fg">
-              <span className="text-ct">Containers</span> for speed. <span className="text-vm">VMs</span> for isolation.
-            </p>
+    <section id="top" className="text-fg relative">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[#bcd9ee] bg-[url('/hero-bg.webp')] bg-cover bg-[position:70%_bottom]"
+        aria-hidden
+      >
+        {/* Soft wash at the top so the nav and headline read over the brightest part of the sky. */}
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white/25 to-transparent" />
+        <div className="to-sky absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent" />
+      </div>
 
-            <div className="animate-fade-up [animation-delay:180ms] mt-9 max-w-[620px]">
-              <div className="flex items-stretch border border-line bg-cell">
-                <div role="tablist" aria-label="Install method" className="flex shrink-0 border-r border-line font-mono text-[13px]">
-                  {(Object.keys(INSTALL) as Method[]).map((m) => (
-                    <button
-                      key={m}
-                      type="button"
-                      role="tab"
-                      aria-selected={method === m}
-                      onClick={() => setMethod(m)}
-                      className={`px-3 sm:px-4 cursor-pointer ${method === m ? 'bg-fg text-night' : 'text-mute hover:text-fg'}`}
-                    >
-                      {m}
-                    </button>
-                  ))}
-                </div>
-                <code className="flex-1 min-w-0 truncate px-4 py-3.5 font-mono text-[13px] sm:text-[14px] text-dimmer" title={INSTALL[method]}>
-                  <span className="select-none">$ </span>
-                  {INSTALL[method]}
-                </code>
-                <span className="hidden sm:flex shrink-0 items-center border-l border-line px-4 font-mono text-[12px] text-dimmer">
-                  soon
-                </span>
+      <div className="relative mx-auto grid max-w-[1240px] items-center gap-12 px-4 pt-32 sm:px-8 sm:pt-40 pb-28 sm:pb-40 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:gap-14">
+        <div className="min-w-0 text-center lg:text-left">
+          <h1 className="animate-fade-up font-display text-[44px] leading-[0.98] font-medium tracking-[-0.03em] min-[420px]:text-[52px] sm:text-[72px] lg:text-[64px] xl:text-[76px]">
+            <span className="text-ct">Containers</span> or <span className="text-vm">microVMs</span>
+            .
+            <br />
+            Same command.
+          </h1>
+          <p className="animate-fade-up text-mute mx-auto mt-7 max-w-[46ch] text-lg leading-snug [animation-delay:100ms] sm:text-[21px] lg:mx-0">
+            Self-hosted deploys on hardware you own. Pick the runtime per service, and switch with one line.
+          </p>
+
+          <div className="animate-fade-up mx-auto mt-10 max-w-[640px] [animation-delay:180ms] lg:mx-0">
+            <div className="border-line bg-cell/80 flex items-stretch border shadow-[0_18px_40px_-24px_rgba(20,55,95,0.45)] backdrop-blur-xl">
+              <div
+                role="tablist"
+                aria-label="Install method"
+                className="border-line flex shrink-0 border-r font-mono text-[13px]"
+              >
+                {(Object.keys(INSTALL) as Method[]).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    role="tab"
+                    aria-selected={method === m}
+                    onClick={() => setMethod(m)}
+                    className={`cursor-pointer px-3 sm:px-4 ${method === m ? 'bg-fg text-night' : 'text-mute hover:text-fg'}`}
+                  >
+                    {m}
+                  </button>
+                ))}
               </div>
-              <p className="mt-2 font-mono text-[12px] text-dimmer">Installer ships with the first public release.</p>
-            </div>
-
-            <div className="animate-fade-up [animation-delay:260ms] mt-8 flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={() => go('runtimes')}
-                className="inline-flex h-12 items-center gap-2 bg-fg px-5 font-mono text-[13px] uppercase tracking-[0.14em] text-night hover:bg-white cursor-pointer"
+              <code
+                className="text-mute min-w-0 flex-1 truncate px-4 py-3.5 text-left font-mono text-[13px] sm:text-[14px]"
+                title={INSTALL[method]}
               >
-                Read the specs <ArrowRight className="w-4 h-4" />
-              </button>
-              <span
-                aria-disabled="true"
-                title="Coming soon"
-                className="inline-flex h-12 items-center gap-2 border border-line px-5 font-mono text-[13px] uppercase tracking-[0.14em] text-dimmer cursor-not-allowed select-none"
-              >
-                <GithubIcon className="w-4 h-4" /> GitHub · soon
+                <span className="text-dimmer select-none">$ </span>
+                {INSTALL[method]}
+              </code>
+              <span className="border-line text-dimmer hidden shrink-0 items-center border-l px-4 font-mono text-[12px] sm:flex">
+                soon
               </span>
             </div>
+            <p className="text-mute mt-3 font-mono text-[12px]">Installer ships with the first public release.</p>
           </div>
 
-          <figure className="animate-hero-rise [animation-delay:320ms] relative min-w-0">
-            {/* The whole dashboard at a fixed size, wider than its column: it runs off the right edge of the
-                viewport (the page root clips x-overflow), so only the left side shows. */}
-            <div className="relative w-[760px] max-w-none border border-line bg-[#141414] p-1.5 sm:w-[960px] lg:w-[1000px] xl:w-[max(1120px,calc(50vw+300px))]">
-              <img
-                src="/dash-hero.webp"
-                alt="The Russel dashboard: fleet health, services across both runtimes, and composition"
-                width={1872}
-                height={1140}
-                className="block w-full h-auto"
-                loading="eager"
-                fetchPriority="high"
-              />
-            </div>
-          </figure>
+          <div className="animate-fade-up mt-8 flex flex-wrap items-center justify-center gap-3 [animation-delay:260ms] lg:justify-start">
+            <button
+              type="button"
+              onClick={() => go('runtimes')}
+              className="bg-fg text-night hover:bg-fg/90 inline-flex cursor-pointer items-center gap-2 px-5 py-3 text-[15px]"
+            >
+              Read the specs <ArrowRight className="h-4 w-4" />
+            </button>
+            <span
+              aria-disabled="true"
+              title="Coming soon"
+              className="border-line bg-cell/60 text-dimmer inline-flex cursor-not-allowed items-center gap-2 border px-5 py-3 text-[15px] backdrop-blur-md select-none"
+            >
+              <GithubIcon className="h-4 w-4" /> View on GitHub <span className="font-mono text-[11px]">soon</span>
+            </span>
+          </div>
+        </div>
+
+        <div className="animate-hero-rise min-w-0 text-left [animation-delay:200ms]">
+          <HeroTerminal />
         </div>
       </div>
     </section>

@@ -97,13 +97,16 @@ export const Section: React.FC<{ id?: string; className?: string; children: Reac
   </section>
 );
 
+/** White card lifted off the sky page; shared by every section grid. */
+export const CARD = 'border-t border-l border-line bg-cell shadow-[0_1px_2px_rgba(20,45,75,0.06),0_24px_48px_-28px_rgba(20,55,95,0.35)]';
+
 /** Cells share hairlines: the grid draws top/left, each cell right/bottom. */
 export const Grid: React.FC<{ className?: string; children: React.ReactNode; innerRef?: React.Ref<HTMLDivElement> }> = ({
   className = '',
   children,
   innerRef,
 }) => (
-  <div ref={innerRef} className={twMerge('mt-12 grid border-t border-l border-line bg-night/40 backdrop-blur-xl', className)}>
+  <div ref={innerRef} className={twMerge('mt-12 grid', CARD, className)}>
     {children}
   </div>
 );
