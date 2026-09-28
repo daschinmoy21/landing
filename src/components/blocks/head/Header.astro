@@ -53,7 +53,9 @@ const {
 		canonical={canonical}
 		noindex={noindex}
 	/>
-	<link rel="icon" href={configData.logo.src} type="image/svg+xml" />
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 	<link
 		rel="preload"
 		href="/fonts/nimbus/NimbusSansTW01.woff2"
@@ -63,6 +65,6 @@ const {
 	/>
 	<link rel="sitemap" href="/sitemap-index.xml" />
 	<meta name="generator" content={Astro.generator} />
-	<meta name="theme-color" content="#134e4a" />
+	<meta name="theme-color" content="#14233c" />
 	<ClientRouter fallback="swap" />
 </head>
