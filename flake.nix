@@ -19,7 +19,7 @@
     devShells = forEachSupportedSystem ({pkgs}: {
       default = pkgs.mkShell {
         packages = with pkgs; [
-          nodejs_20
+          nodejs
           typescript
           nodePackages.typescript-language-server
           nodePackages.npm

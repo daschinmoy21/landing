@@ -3,7 +3,7 @@ import { Hero, Nav } from './Hero';
 import { Runtimes } from './Runtimes';
 import { Benchmarks } from './Benchmarks';
 import { Operate } from './Operate';
-import { Pipeline } from './Pipeline';
+import { ControlPlane } from './ControlPlane';
 import { Deploy } from './Deploy';
 import { Footer } from './Footer';
 import { VIEWS } from './primitives';
@@ -30,7 +30,7 @@ export const LineLanding: React.FC = () => {
         <Runtimes />
         <Benchmarks />
         <Operate />
-        <Pipeline />
+        <ControlPlane />
         <Deploy />
       </main>
       <Footer />

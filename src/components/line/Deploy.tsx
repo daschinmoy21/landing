@@ -37,6 +37,20 @@ const Label: React.FC<{ children: React.ReactNode; hint: string }> = ({ children
   </span>
 );
 
+const IconButton: React.FC<{ label: string; onClick: () => void; children: React.ReactNode }> = ({ label, onClick, children }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label={label}
+    title={label}
+    className="inline-flex h-7 w-7 cursor-pointer items-center justify-center text-dimmer hover:bg-raise hover:text-fg"
+  >
+    {children}
+  </button>
+);
+
+const Caret = () => <span className="anim-blink inline-block h-4 w-2 translate-y-0.5 bg-[#d4d4d4]" aria-hidden />;
+
 export const Deploy: React.FC = () => {
   const [runtime, setRuntime] = useState<Runtime>('microvm');
   const [name, setName] = useState('api');
@@ -227,9 +241,32 @@ export const Deploy: React.FC = () => {
           </label>
         </div>
 
-        <div ref={ref} className="flex min-w-0 flex-col border-r border-b border-line bg-cell">
-          <div className="flex items-center justify-between gap-3 border-b border-line px-4 sm:px-6 h-14">
-            <div role="tablist" className="flex gap-5 font-mono text-[12px] uppercase tracking-[0.16em]">
+        <div ref={ref} className="min-w-0 border-r border-b border-line bg-cell p-3 sm:p-6">
+          <div className="overflow-hidden rounded-[10px] border border-white/10 bg-night font-mono shadow-[0_24px_60px_-20px_rgba(0,0,0,0.8)]">
+            {/* title bar */}
+            <div className="relative flex h-9 items-center bg-raise px-3.5">
+              <span className="flex gap-2" aria-hidden>
+                <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+                <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+                <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+              </span>
+              <span className="pointer-events-none absolute inset-x-24 truncate text-center text-[12px] text-mute">
+                ~/{id} — russel
+              </span>
+              <span className="ml-auto flex items-center gap-0.5">
+                {tab === 'cli' && (
+                  <IconButton label="Run again" onClick={() => setRun((r) => r + 1)}>
+                    <RotateCcw className="h-3.5 w-3.5" />
+                  </IconButton>
+                )}
+                <IconButton label={copied ? 'Copied' : 'Copy'} onClick={() => copy(tab === 'cli' ? cmd : toml)}>
+                  {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                </IconButton>
+              </span>
+            </div>
+
+            {/* tabs */}
+            <div role="tablist" className="flex border-y border-black/60 bg-[#141414] text-[12px]">
               {(['cli', 'toml'] as const).map((k) => (
                 <button
                   key={k}
@@ -237,68 +274,56 @@ export const Deploy: React.FC = () => {
                   role="tab"
                   aria-selected={tab === k}
                   onClick={() => setTab(k)}
-                  className={`cursor-pointer py-1 ${tab === k ? 'font-bold text-white' : 'text-[#7a7a7a] hover:text-[#bdbdbd]'}`}
+                  className={`h-8 flex-1 cursor-pointer border-r border-black/60 last:border-r-0 ${
+                    tab === k ? 'bg-night text-fg' : 'text-dimmer hover:bg-white/[0.03] hover:text-mute'
+                  }`}
                 >
                   {k === 'cli' ? 'deploy' : 'Russelfile.toml'}
                 </button>
               ))}
             </div>
-            <div className="flex items-center gap-2">
-              {tab === 'cli' && (
-                <button
-                  type="button"
-                  onClick={() => setRun((r) => r + 1)}
-                  aria-label="Run again"
-                  className="inline-flex h-8 w-8 items-center justify-center border border-white/25 text-[#bdbdbd] hover:text-white cursor-pointer"
-                >
-                  <RotateCcw className="h-3.5 w-3.5" />
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => copy(tab === 'cli' ? cmd : toml)}
-                aria-label={copied ? "Copied" : "Copy"}
-                className="inline-flex h-8 items-center gap-1.5 border border-white/25 px-2.5 sm:px-3 font-mono text-[12px] text-[#e5e5e5] hover:bg-white hover:text-fg cursor-pointer"
-              >
-                {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                <span className="hidden sm:inline">{copied ? 'copied' : 'copy'}</span>
-              </button>
-            </div>
-          </div>
 
-          <div className="min-h-[420px] flex-1 overflow-x-auto p-5 sm:p-6 font-mono text-[13px] leading-[1.7] text-[#d4d4d4]">
-            {tab === 'cli' ? (
-              <>
-                <div className="whitespace-pre-wrap break-all">
-                  <span className="select-none text-[#7a7a7a]">$ </span>
-                  <span className={vmTone}>{cmd}</span>
-                </div>
-                <div className="mt-3 whitespace-pre" aria-live="polite">
-                  {lines.slice(0, shown).map((l, i) => (
-                    <div key={i}>{l || ' '}</div>
-                  ))}
-                  {shown < lines.length && <span className="anim-blink inline-block h-4 w-2 translate-y-0.5 bg-[#d4d4d4]" />}
-                </div>
-              </>
-            ) : (
-              <pre className="whitespace-pre">
-                {toml.split('\n').map((line, i) => (
-                  <div key={i}>
-                    {line.startsWith('[') ? (
-                      <span className="text-white font-bold">{line}</span>
-                    ) : line.includes(' = ') ? (
-                      <>
-                        <span className="text-[#bdbdbd]">{line.slice(0, line.indexOf(' = '))}</span>
-                        <span className="text-[#7a7a7a]"> = </span>
-                        <span className={line.startsWith('type') ? vmTone : 'text-[#b5c85a]'}>{line.slice(line.indexOf(' = ') + 3)}</span>
-                      </>
+            <div className="min-h-[440px] overflow-x-auto p-5 text-[13px] leading-[1.7] text-[#d4d4d4]">
+              {tab === 'cli' ? (
+                <>
+                  <div className="whitespace-pre-wrap [overflow-wrap:anywhere]">
+                    <span className="select-none text-[#7a7a7a]">$ </span>
+                    <span className={vmTone}>{cmd}</span>
+                  </div>
+                  <div className="mt-3 whitespace-pre" aria-live="polite">
+                    {lines.slice(0, shown).map((l, i) => (
+                      <div key={i}>{l || ' '}</div>
+                    ))}
+                    {shown < lines.length ? (
+                      <Caret />
                     ) : (
-                      line || ' '
+                      <div>
+                        <span className="select-none text-[#7a7a7a]">$ </span>
+                        <Caret />
+                      </div>
                     )}
                   </div>
-                ))}
-              </pre>
-            )}
+                </>
+              ) : (
+                <pre className="whitespace-pre">
+                  {toml.split('\n').map((line, i) => (
+                    <div key={i}>
+                      {line.startsWith('[') ? (
+                        <span className="font-bold text-white">{line}</span>
+                      ) : line.includes(' = ') ? (
+                        <>
+                          <span className="text-[#bdbdbd]">{line.slice(0, line.indexOf(' = '))}</span>
+                          <span className="text-[#7a7a7a]"> = </span>
+                          <span className={line.startsWith('type') ? vmTone : 'text-[#b5c85a]'}>{line.slice(line.indexOf(' = ') + 3)}</span>
+                        </>
+                      ) : (
+                        line || ' '
+                      )}
+                    </div>
+                  ))}
+                </pre>
+              )}
+            </div>
           </div>
         </div>
       </div>

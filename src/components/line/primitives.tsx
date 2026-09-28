@@ -49,7 +49,8 @@ export function useLoop(period: number, active: boolean, rest = 1) {
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
-      setT(((now - start) % period) / period);
+      // rAF timestamps are frame-start times and can precede `start`; clamp so t stays in [0, 1).
+      setT((Math.max(0, now - start) % period) / period);
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -63,7 +64,7 @@ export const VIEWS = [
   { id: 'runtimes', label: 'runtimes' },
   { id: 'benchmarks', label: 'benchmarks' },
   { id: 'operate', label: 'operate' },
-  { id: 'deploy', label: 'deploy' },
+  { id: 'try', label: 'deploy' },
 ] as const;
 
 /** Two-tone heading: the claim in full white, the qualifier in grey. */
