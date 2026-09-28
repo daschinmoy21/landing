@@ -6,7 +6,7 @@ import react from "@astrojs/react";
 
 // Static output (no adapter) — serve `dist/` with Caddy on your VPS (see Caddyfile)
 export default defineConfig({
-  site: "https://russel.dev/",
+  site: "https://russel.chinmoy.site/",
   integrations: [
     icon(),
     sitemap(),

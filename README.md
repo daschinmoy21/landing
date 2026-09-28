@@ -65,7 +65,7 @@ Colors defined in `src/styles/global.css` under `@theme`.
 
 This project builds as a **static site**. Serve `dist/` with [Caddy](https://caddyserver.com/) (auto HTTPS).
 
-1. Set your production domain in `astro.config.mjs` (`site` is currently `https://russel.dev/`).
+1. Set your production domain in `astro.config.mjs` (`site` is currently `https://russel.chinmoy.site/`).
 2. Build (on the VPS or in CI), then copy `dist/` onto the server:
 
 ```bash
