@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check, Minus } from 'lucide-react';
-import { CARD, Section, SectionTitle } from './primitives';
+import { FRAME, Section, SectionTitle } from './primitives';
 
 // `true` = built in, `false` = not offered, a string = how you get there.
 type Val = boolean | string;
@@ -31,7 +31,8 @@ export const Compare: React.FC = () => (
     </SectionTitle>
 
     {/* Scrolls inside the card on narrow screens so the page itself never scrolls sideways. */}
-    <div className={`mt-12 overflow-x-auto ${CARD}`}>
+    <div className={`mt-12 ${FRAME}`}>
+      <div className="glass-inner overflow-x-auto">
       <table className="w-full min-w-[860px] border-collapse text-left font-mono text-[13px]">
         <thead>
           <tr>
@@ -64,6 +65,7 @@ export const Compare: React.FC = () => (
           ))}
         </tbody>
       </table>
+      </div>
     </div>
     <p className="text-dimmer mt-4 font-mono text-[12px]">
       Managed PaaS = Vercel, Render, Fly and the like. Defaults as shipped; most gaps can be closed with enough setup.

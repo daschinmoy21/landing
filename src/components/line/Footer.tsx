@@ -1,6 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
-import { GithubIcon, VIEWS } from './primitives';
+import { GithubIcon, PrimaryButton, VIEWS } from './primitives';
 
 export const Footer: React.FC = () => (
   <footer className="mt-24 sm:mt-32 border-t border-line">
@@ -12,17 +11,13 @@ export const Footer: React.FC = () => (
         Open source under Apache 2.0. Run it on your own hardware, in containers or microVMs, from one CLI.
       </p>
       <div className="mt-9 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth' })}
-          className="inline-flex items-center gap-2 bg-fg px-5 py-3 text-[15px] text-night hover:bg-fg/90 cursor-pointer"
-        >
-          Try the CLI <ArrowRight className="h-4 w-4" />
-        </button>
+        <PrimaryButton onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth' })}>
+          Try the CLI
+        </PrimaryButton>
         <span
           aria-disabled="true"
           title="Coming soon"
-          className="inline-flex items-center gap-2 border border-line bg-cell/60 px-5 py-3 text-[15px] text-dimmer cursor-not-allowed select-none"
+          className="vh-glass inline-flex h-11 items-center gap-2 rounded-[7px] px-5 text-[15px] text-white/60 cursor-not-allowed select-none"
         >
           <GithubIcon className="h-4 w-4" /> View on GitHub <span className="font-mono text-[11px]">soon</span>
         </span>

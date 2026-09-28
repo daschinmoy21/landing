@@ -78,10 +78,50 @@ function script(): { lines: Line[]; total: number } {
 }
 
 const SCRIPT = script();
-const ROWS = 17;
+const ROWS = 11;
 
-export const HeroTerminal: React.FC = () => {
+/** Drag a window by its title bar, kept inside the nearest section. Double-click the bar to put it back. */
+function useDrag(win: React.RefObject<HTMLElement | null>) {
+  const pos = useRef({ x: 0, y: 0 });
+  const set = (x: number, y: number) => {
+    pos.current = { x, y };
+    win.current?.style.setProperty('translate', `${x}px ${y}px`);
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLElement>) => {
+    const el = win.current;
+    if (!el || e.button !== 0) return;
+    e.preventDefault();
+    const handle = e.currentTarget;
+    handle.setPointerCapture(e.pointerId);
+    const r = el.getBoundingClientRect();
+    const b = (el.closest('section') ?? document.body).getBoundingClientRect();
+    const from = { px: e.clientX, py: e.clientY, ...pos.current };
+    const pad = 8;
+    const move = (ev: PointerEvent) => {
+      const dx = Math.min(Math.max(ev.clientX - from.px, b.left + pad - r.left), b.right - pad - r.right);
+      const dy = Math.min(Math.max(ev.clientY - from.py, b.top + 72 - r.top), b.bottom - pad - r.bottom);
+      set(from.x + dx, from.y + dy);
+    };
+    const up = () => {
+      handle.removeEventListener('pointermove', move);
+      handle.removeEventListener('pointerup', up);
+      handle.removeEventListener('pointercancel', up);
+      el.dataset.dragging = '';
+    };
+    el.dataset.dragging = 'true';
+    handle.addEventListener('pointermove', move);
+    handle.addEventListener('pointerup', up);
+    handle.addEventListener('pointercancel', up);
+  };
+
+  return { onPointerDown, onDoubleClick: () => set(0, 0) };
+}
+
+/** The hero's terminal window: plays the deploy session, and can be dragged around by its title bar. */
+export const HeroTerminal: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [ref, seen] = useInView<HTMLDivElement>(0.3);
+  const drag = useDrag(ref);
   const reduced = useReducedMotion();
   const [now, setNow] = useState(0);
   const start = useRef(0);
@@ -111,22 +151,25 @@ export const HeroTerminal: React.FC = () => {
   return (
     <div
       ref={ref}
-      className="theme-dark bg-night overflow-hidden rounded-[10px] border border-black/10 font-mono shadow-[0_30px_70px_-30px_rgba(20,35,60,0.6)]"
-      aria-label="Terminal: russel apply as a container, change one Russelfile line, apply again as a microVM"
-      role="img"
+      className={`theme-dark group overflow-hidden rounded-[10px] border border-white/15 bg-[#0b0d0d]/80 font-mono shadow-[0_0_0_1px_rgba(0,0,0,.6),0_28px_70px_-18px_rgba(0,0,0,.85)] backdrop-blur-xl transition-shadow data-[dragging=true]:shadow-[0_0_0_1px_rgba(0,0,0,.6),0_40px_90px_-18px_rgba(0,0,0,.95)] ${className}`}
     >
-      <div className="bg-raise relative flex h-9 items-center px-3.5">
+      <div
+        {...drag}
+        title="Drag to move · double-click to reset"
+        className="relative flex h-8 cursor-grab touch-none items-center border-b border-black/60 bg-gradient-to-b from-[#2a2c2d] to-[#202223] px-3 select-none group-data-[dragging=true]:cursor-grabbing"
+      >
         <span className="flex gap-2" aria-hidden>
           <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
           <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
           <span className="h-3 w-3 rounded-full bg-[#28c840]" />
         </span>
-        <span className="text-mute pointer-events-none absolute inset-x-24 truncate text-center text-[12px]">~/api — russel</span>
+        <span className="text-mute pointer-events-none absolute inset-x-20 truncate text-center text-[12px]">~/api — russel — zsh</span>
       </div>
       <div
-        className="overflow-hidden px-5 py-4 text-[12.5px] leading-[1.7] text-[#d4d4d4]"
-        style={{ height: `calc(${ROWS} * 1.7em + 2rem)` }}
-        aria-hidden
+        role="img"
+        aria-label="Terminal: russel apply as a container, change one Russelfile line, apply again as a microVM"
+        className="overflow-hidden px-4 py-3 text-[11.5px] leading-[1.7] text-[#d4d4d4]"
+        style={{ height: `calc(${ROWS} * 1.7em + 1.5rem)` }}
       >
         {visible.map((l, i) => {
           const isLast = l === last;

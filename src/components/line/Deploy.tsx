@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Check, Copy, RotateCcw } from 'lucide-react';
-import { CARD, SectionTitle, useInView, useReducedMotion } from './primitives';
+import { FRAME, SectionTitle, useInView, useReducedMotion } from './primitives';
 
 type Runtime = 'microvm' | 'container';
 
@@ -28,7 +28,7 @@ const PHASES: Record<Runtime, [string, string][]> = {
 const pad = (s: string) => s.padStart(10, ' ');
 
 const field =
-  'mt-1.5 w-full border border-line bg-night px-3 py-2.5 font-mono text-[14px] text-fg placeholder:text-dimmer focus:outline-none focus:ring-2 focus:ring-vm/40 disabled:border-line disabled:text-dimmer disabled:cursor-not-allowed';
+  'mt-1.5 w-full rounded-[7px] border border-line bg-night px-3 py-2.5 font-mono text-[14px] text-fg placeholder:text-dimmer focus:outline-none focus:ring-2 focus:ring-vm/40 disabled:border-line disabled:text-dimmer disabled:cursor-not-allowed';
 
 const Label: React.FC<{ children: React.ReactNode; hint: string }> = ({ children, hint }) => (
   <span className="flex items-baseline justify-between gap-2 text-[13px] text-mute">
@@ -171,11 +171,12 @@ export const Deploy: React.FC = () => {
         <span className="font-mono text-[15px] text-fg">russel apply</span> it. Change the options to see both update.
       </SectionTitle>
 
-      <div className={`mt-12 grid ${CARD} lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]`}>
+      <div className={`mt-12 ${FRAME}`}>
+      <div className="glass-inner grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <div className="border-r border-b border-line p-6 sm:p-8">
           <div>
             <Label hint="service.type">Runtime</Label>
-            <div className="mt-1.5 grid grid-cols-2 border border-line">
+            <div className="mt-1.5 grid grid-cols-2 overflow-hidden rounded-[7px] border border-line">
               {(['microvm', 'container'] as const).map((r) => (
                 <button
                   key={r}
@@ -241,7 +242,7 @@ export const Deploy: React.FC = () => {
         </div>
 
         <div ref={ref} className="min-w-0 border-r border-b border-line bg-night p-3 sm:p-6">
-          <div className="theme-dark overflow-hidden rounded-[10px] border border-black/10 bg-night font-mono shadow-[0_24px_60px_-24px_rgba(20,35,60,0.45)]">
+          <div className="theme-dark overflow-hidden rounded-[10px] border border-white/10 bg-night font-mono shadow-[0_24px_60px_-24px_rgba(0,0,0,0.8)]">
             {/* title bar */}
             <div className="relative flex h-9 items-center bg-raise px-3.5">
               <span className="flex gap-2" aria-hidden>
@@ -325,6 +326,7 @@ export const Deploy: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

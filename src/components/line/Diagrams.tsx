@@ -32,7 +32,7 @@ export const RusselfileDiagram: React.FC = () => {
 
   return (
     <div ref={ref} className="font-mono">
-      <div className="border border-line bg-night">
+      <div className="overflow-hidden rounded-[10px] border border-line bg-night">
         <div className="border-b border-line px-4 py-2 text-[11px] text-dimmer">Russelfile.toml</div>
         <div className="overflow-x-auto py-2 text-[12.5px] leading-[1.8]" onMouseLeave={() => setHover(null)}>
           {RUSSELFILE.map((l, i) =>
@@ -78,7 +78,7 @@ export const CutoverDiagram: React.FC = () => {
 
   return (
     <div ref={ref} className="font-mono text-[12px]">
-      <pre className="border border-line bg-night px-4 py-3 text-[13px] leading-relaxed overflow-x-auto">
+      <pre className="rounded-[10px] border border-line bg-night px-4 py-3 text-[13px] leading-relaxed overflow-x-auto">
         <span className="text-dimmer"># Russelfile.toml</span>
         {'\n'}
         <span className="text-ct">- type = "container"</span>
@@ -151,7 +151,7 @@ export const GenerationsDiagram: React.FC = () => {
   const now = GEN_STEPS[step];
 
   return (
-    <div ref={ref} className="border border-line bg-night font-mono text-[12.5px]">
+    <div ref={ref} className="overflow-hidden rounded-[10px] border border-line bg-night font-mono text-[12.5px]">
       <div className="flex justify-between border-b border-line px-4 py-2 text-[11px] text-dimmer">
         <span>api · generations</span>
         <span>

@@ -23,7 +23,7 @@
   --font-cursive: 'Dancing Script', cursive;
   --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
-  --sky-ink: #14233c;
+  --sky-ink: #f4f4f2;
   --sky-ink-muted: #4d6176;
   --sky-ink-faint: #708599;
   --sky-line: rgba(20, 55, 79, 0.14);
@@ -41,20 +41,20 @@
 
   --font-display: 'Clash Grotesk', 'Nimbus Sans TW01', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Daylight surface, taken from the hero sky: violet = microVM, blue = container */
-  --color-sky: #d9e8f3;
-  --color-night: #e5eef6;
-  --color-cell: #ffffff;
-  --color-raise: #d6e3ee;
-  --color-line: #afc2d3;
-  --color-fg: #14233c;
-  --color-mute: #3d5166;
-  --color-dimmer: #687d91;
-  --color-vm: #5a3dc4;
-  --color-ct: #1d679d;
-  --color-ok: #3b7420;
-  --color-warn: #b35420;
-  --color-err: #c42b2b;
+  /* Night surface, taken from the video hero: black page, warm charcoal-to-teal glass, violet = microVM, blue = container */
+  --color-sky: #000000;
+  --color-night: #070909;
+  --color-cell: #0e1011;
+  --color-raise: #181b1c;
+  --color-line: #2a2d2e;
+  --color-fg: #f4f4f2;
+  --color-mute: #aeafae;
+  --color-dimmer: #6d7170;
+  --color-vm: #c3aaff;
+  --color-ct: #8ec2ff;
+  --color-ok: #a9c25d;
+  --color-warn: #e38b5c;
+  --color-err: #f06a64;
 
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
@@ -165,21 +165,22 @@ body {
   font-family: var(--font-sans);
   margin: 0;
   padding: 0;
-  background-color: #d9e8f3;
+  background-color: #000;
   color: var(--sky-ink);
+  color-scheme: dark;
 }
 
 ::selection {
-  background-color: var(--sky-ink);
-  color: #ffffff;
+  background-color: #c3aaff;
+  color: #000;
 }
 ::-moz-selection {
-  background-color: var(--sky-ink);
-  color: #ffffff;
+  background-color: #c3aaff;
+  color: #000;
 }
 *::selection {
-  background-color: var(--sky-ink);
-  color: #ffffff;
+  background-color: #c3aaff;
+  color: #000;
 }
 
 /* Custom animations */
@@ -333,17 +334,17 @@ body {
   }
 }
 
-/* Terminal windows stay dark on the light page: scope the dashboard's night palette back in. */
+/* Terminal windows: the dashboard night palette, pinned so terminals read the same everywhere. */
 .theme-dark {
-  --color-night: #0a0a0a;
-  --color-cell: #111111;
-  --color-raise: #181818;
-  --color-line: #262626;
-  --color-fg: #ededed;
-  --color-mute: #9a9a9a;
-  --color-dimmer: #616161;
-  --color-vm: #b294ff;
-  --color-ct: #6ea8ff;
+  --color-night: #070909;
+  --color-cell: #0e1011;
+  --color-raise: #151818;
+  --color-line: #2a2d2e;
+  --color-fg: #f4f4f2;
+  --color-mute: #a4a6a5;
+  --color-dimmer: #6d7170;
+  --color-vm: #c3aaff;
+  --color-ct: #8ec2ff;
   --color-ok: #a9c25d;
   --color-warn: #e38b5c;
   --color-err: #f06a64;
@@ -431,83 +432,125 @@ body {
   }
 }
 
-/* ── Hero: letter reveal, drifting sky ── */
-@keyframes letter-rise {
-  from {
-    opacity: 0;
-    transform: translateY(0.45em) rotate(4deg);
-    filter: blur(10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
+/* ── Hero: full-bleed video, bottom-anchored copy, glass terminal card ── */
+.vh-screen {
+  --gutter: clamp(20px, 4.1vw, 96px);
+  --hero-bottom: clamp(34px, 5.19vh, 64px);
+  --display-size: clamp(42px, min(7.64vh, 5vw), 92px);
 }
 
-.hero-letter {
+/* Vignette over the pinned video (in Backdrop), so it follows the screen and never ends at a section edge. */
+.page-vignette {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 24%, transparent 55%, rgba(0, 0, 0, 0.55)),
+    radial-gradient(ellipse at 44% 54%, transparent 30%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+:root {
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --glass-bg: linear-gradient(145deg, rgba(24, 22, 20, 0.8), rgba(5, 12, 14, 0.86));
+  --glass-shadow: 0 2px 10px rgba(0, 0, 0, 0.44), 0 0 0 3px rgba(255, 255, 255, 0.035) inset, 0 0 0 1px rgba(0, 0, 0, 0.9);
+  --glass-radius: clamp(12px, 1.52vh, 18px);
+}
+
+.vh-glass {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(108%);
+  backdrop-filter: blur(14px) saturate(108%);
+}
+
+.vh-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-size);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  -webkit-text-stroke: 0.12px currentColor;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.44);
+}
+
+.vh-line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders inside the clip */
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.vh-line > span {
   display: inline-block;
-  animation: letter-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  transform-origin: 0 100%;
 }
-
-/* A slow band of light that sweeps across the two runtime words. */
-@keyframes sheen {
-  0%,
-  55% {
-    background-position: 160% 0;
-  }
-  100% {
-    background-position: -60% 0;
+@media (min-width: 640px) {
+  .vh-line > span {
+    white-space: nowrap;
   }
 }
 
-.hero-sheen {
-  background-image: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.75) 50%, transparent 60%);
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: sheen 7s ease-in-out 1.6s infinite;
+/* Entrance timeline: header, then the two headline lines, copy, CTA, and finally the card. */
+@keyframes vh-fade {
+  from { opacity: 0; transform: translate3d(0, 7px, 0) scale(0.97); }
+}
+@keyframes vh-line {
+  from { transform: translate3d(0, 110%, 0) skewY(2deg); }
+}
+@keyframes vh-copy {
+  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.99); }
+}
+@keyframes vh-card {
+  from { opacity: 0; transform: translate3d(0, 12px, 0) scale(0.968); }
 }
 
-@keyframes sky-drift {
-  from {
-    transform: scale(1.08) translate3d(-1.5%, 0, 0);
-  }
-  to {
-    transform: scale(1.14) translate3d(1.5%, -1%, 0);
-  }
+.vh-in {
+  animation: vh-fade 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.vh-line > span {
+  animation: vh-line 820ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.vh-copy {
+  animation: vh-copy 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.vh-card {
+  transform-origin: 82% 50%;
+  animation: vh-card 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.hero-sky {
-  animation: sky-drift 38s ease-in-out infinite alternate;
-  will-change: transform;
+.vh-screen a,
+.vh-screen button,
+.vh-nav a {
+  transition: filter 140ms ease, opacity 140ms ease;
 }
-
-@keyframes cloud-pass {
-  from {
-    transform: translate3d(-40vw, 0, 0);
-  }
-  to {
-    transform: translate3d(120vw, 0, 0);
-  }
+.vh-screen a:hover,
+.vh-screen button:hover {
+  filter: brightness(1.08);
 }
-
-.hero-cloud {
-  animation: cloud-pass linear infinite;
-  will-change: transform;
-}
-
-
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-letter,
-  .hero-sheen,
-  .hero-sky,
-  .hero-cloud {
+  .vh-in,
+  .vh-line > span,
+  .vh-copy,
+  .vh-card {
     animation: none !important;
-    opacity: 1;
-    filter: none;
   }
+}
+
+/* Section cards: the hero's glass, rounded, with cell hairlines inside.
+   The inner grid overhangs by 1px so the cells' outer right/bottom lines tuck under the frame's border. */
+.glass-frame {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow), 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+.glass-frame > .glass-inner {
+  margin: 0 -1px -1px 0;
+}
+
+/* Frosted layer over the pinned hero video; its opacity follows scroll (see Backdrop in Hero.tsx). */
+.page-veil {
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(36px) saturate(115%);
+  backdrop-filter: blur(36px) saturate(115%);
 }

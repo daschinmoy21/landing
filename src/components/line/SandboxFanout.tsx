@@ -86,9 +86,9 @@ const SandboxCard: React.FC<{ box: Box; ms: number; i: number }> = ({ box, ms, i
 
   return (
     <div
-      className={`bg-cell flex h-full flex-col border font-mono text-[12.5px] transition-[opacity,transform,border-color,box-shadow] ${
+      className={`bg-cell flex h-full flex-col overflow-hidden rounded-[10px] border font-mono text-[12.5px] transition-[opacity,transform,border-color,box-shadow] ${
         shown ? 'duration-500' : 'duration-0'
-      } ${verdict && winner ? 'border-vm shadow-[0_0_0_3px_rgba(90,61,196,0.12)]' : 'border-line'} ${
+      } ${verdict && winner ? 'border-vm shadow-[0_0_0_3px_rgba(195,170,255,0.14)]' : 'border-line'} ${
         shown ? (verdict && !winner ? 'opacity-50' : 'opacity-100') : 'translate-y-2 opacity-0'
       }`}
     >
@@ -202,7 +202,7 @@ export const SandboxFanout: React.FC = () => {
       </div>
 
       {/* The prompt. */}
-      <div className="border-line bg-cell mx-auto mt-4 max-w-[720px] border px-5 py-4 sm:px-6">
+      <div className="border-line bg-cell mx-auto mt-4 max-w-[720px] rounded-[10px] border px-5 py-4 sm:px-6">
         <div className="text-dimmer font-mono text-[12.5px]">
           You, to{' '}
           <span

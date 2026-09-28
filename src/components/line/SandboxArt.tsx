@@ -24,7 +24,7 @@ const Panel: React.FC<{
   step: Step;
   children: React.ReactNode;
 }> = ({ innerRef, label, right, step, children }) => (
-  <div ref={innerRef} className="border-line bg-night flex h-full flex-col border font-mono text-[12.5px]">
+  <div ref={innerRef} className="border-line bg-night flex h-full flex-col overflow-hidden rounded-[10px] border font-mono text-[12.5px]">
     <div className="border-line text-dimmer flex justify-between gap-3 border-b px-4 py-2 text-[11px]">
       <span>{label}</span>
       <span>{right}</span>
@@ -269,7 +269,7 @@ export const SharedTerminal: React.FC = () => {
   return (
     <div
       ref={ref}
-      className="theme-dark bg-night flex h-full flex-col overflow-hidden rounded-[10px] border border-black/10 font-mono text-[12px] shadow-[0_24px_60px_-24px_rgba(20,35,60,0.45)]"
+      className="theme-dark bg-night flex h-full flex-col overflow-hidden rounded-[10px] border border-white/10 font-mono text-[12px] shadow-[0_24px_60px_-24px_rgba(0,0,0,0.8)]"
     >
       <div className="bg-raise relative flex h-8 shrink-0 items-center px-3">
         <span className="flex gap-1.5" aria-hidden>

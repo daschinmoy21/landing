@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Hero, Nav } from './Hero';
+import { Backdrop, Hero, Nav } from './Hero';
 import { Runtimes } from './Runtimes';
 import { Benchmarks } from './Benchmarks';
 import { Operate } from './Operate';
@@ -25,7 +25,8 @@ export const LineLanding: React.FC = () => {
   }, []);
 
   return (
-    <div className="isolate min-h-screen overflow-x-clip bg-sky font-sans text-fg antialiased selection:bg-vm selection:text-night">
+    <div className="isolate min-h-screen overflow-x-clip font-sans text-fg antialiased selection:bg-vm selection:text-night">
+      <Backdrop />
       <Nav />
       <main>
         <Hero />
