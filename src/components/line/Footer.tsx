@@ -1,5 +1,5 @@
 import React from 'react';
-import { GithubIcon, PrimaryButton, VIEWS } from './primitives';
+import { GITHUB, GithubIcon, PrimaryButton, VIEWS } from './primitives';
 
 export const Footer: React.FC = () => (
   <footer className="mt-24 sm:mt-32 border-t border-line">
@@ -14,13 +14,14 @@ export const Footer: React.FC = () => (
         <PrimaryButton onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth' })}>
           Try the CLI
         </PrimaryButton>
-        <span
-          aria-disabled="true"
-          title="Coming soon"
-          className="vh-glass inline-flex h-11 items-center gap-2 rounded-[7px] px-5 text-[15px] text-white/60 cursor-not-allowed select-none"
+        <a
+          href={GITHUB}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="vh-glass inline-flex h-11 items-center gap-2 rounded-[7px] px-5 text-[15px] text-white/85 hover:text-white"
         >
-          <GithubIcon className="h-4 w-4" /> View on GitHub <span className="font-mono text-[11px]">soon</span>
-        </span>
+          <GithubIcon className="h-4 w-4" /> View on GitHub
+        </a>
       </div>
     </div>
 

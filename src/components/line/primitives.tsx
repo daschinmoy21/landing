@@ -59,6 +59,8 @@ export function useLoop(period: number, active: boolean, rest = 1) {
   return t;
 }
 
+export const GITHUB = 'https://github.com/daschinmoy21/russel';
+
 /** The dashboard's views, numbered so 1–4 on the keyboard jump between them. */
 export const VIEWS = [
   { id: 'runtimes', label: 'runtimes' },

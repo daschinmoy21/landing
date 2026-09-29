@@ -1,17 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { GithubIcon, PrimaryButton } from './primitives';
+import { GITHUB, GithubIcon, PrimaryButton } from './primitives';
 import { HeroTerminal } from './HeroTerminal';
 import { AGENTS, AgentMark } from './agentLogos';
 
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-
-const LINKS = [
-  { id: 'runtimes', label: 'Runtimes' },
-  { id: 'benchmarks', label: 'Benchmarks' },
-  { id: 'sandboxes', label: 'Sandboxes' },
-  { id: 'try', label: 'Deploy' },
-] as const;
 
 /** True at the very top of the page; once anything scrolls under the nav it gets a frosted bar. */
 function useAtTop() {
@@ -31,32 +24,10 @@ function useAtTop() {
 
 export const Nav: React.FC = () => {
   const top = useAtTop();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  // Escape or a click outside closes the small-screen menu.
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
-    const onDown = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('pointerdown', onDown);
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('pointerdown', onDown);
-    };
-  }, [open]);
-
-  const jump = (id: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    setOpen(false);
-    go(id);
-  };
 
   // Clear over the hero video; once content scrolls under it the bar turns to dark frosted glass.
   return (
     <header
-      ref={ref}
       className={`fixed inset-x-0 top-0 z-30 border-b transition-colors duration-300 ${
         top ? 'border-transparent bg-transparent' : 'border-white/10 bg-black/55 backdrop-blur-xl backdrop-saturate-[1.1]'
       }`}
@@ -70,70 +41,23 @@ export const Nav: React.FC = () => {
           <span className="text-[12px] text-white/55">v0.1</span>
         </a>
 
-        <div className="hidden items-center gap-[clamp(24px,2.6vw,40px)] md:flex">
-          {LINKS.map((l, i) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              onClick={jump(l.id)}
-              className={`vh-in text-[15px] tracking-[-0.01em] text-white/75 hover:text-white ${top ? '[text-shadow:0_1px_3px_rgba(0,0,0,.55)]' : ''}`}
-              style={{ animationDelay: `${130 + i * 45}ms` }}
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
-
-        <span
-          aria-disabled="true"
-          title="Coming soon"
-          className="vh-in vh-glass ml-auto hidden h-10 shrink-0 cursor-not-allowed items-center gap-2 rounded-[7px] px-4 text-[14px] text-white/85 select-none [animation-delay:220ms] md:inline-flex"
+        <a
+          href={GITHUB}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="vh-in vh-glass ml-auto inline-flex h-10 shrink-0 items-center gap-2 rounded-[7px] px-4 text-[14px] text-white/85 hover:text-white [animation-delay:140ms]"
         >
           <GithubIcon className="h-4 w-4" />
-          GitHub · soon
-        </span>
-
-        <button
-          type="button"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="hero-menu"
-          onClick={() => setOpen((o) => !o)}
-          className="vh-in vh-glass ml-auto grid h-11 w-11 cursor-pointer place-items-center rounded-[11px] text-white [animation-delay:140ms] md:hidden"
-        >
-          <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
-            <path d={open ? 'M5 5l10 10' : 'M3 7h14'} className="transition-all duration-200" />
-            <path d={open ? 'M15 5L5 15' : 'M3 13h14'} className="transition-all duration-200" />
-          </svg>
-        </button>
+          GitHub
+        </a>
       </nav>
-
-      <div
-        id="hero-menu"
-        inert={!open}
-        className={`vh-glass absolute top-[64px] right-[clamp(20px,4.1vw,96px)] w-[min(320px,calc(100vw-40px))] origin-top-right rounded-2xl p-2 transition-all duration-200 md:hidden ${
-          open ? 'visible translate-y-0 scale-100 opacity-100' : 'invisible -translate-y-2 scale-[0.985] opacity-0'
-        }`}
-      >
-        {LINKS.map((l) => (
-          <a
-            key={l.id}
-            href={`#${l.id}`}
-            onClick={jump(l.id)}
-            className="block rounded-[10px] px-4 py-3 text-[16px] text-white/85 hover:bg-white/5 hover:text-white"
-          >
-            {l.label}
-          </a>
-        ))}
-        <span className="mt-1 flex items-center gap-2 border-t border-white/10 px-4 pt-3 pb-2 text-[14px] text-white/50">
-          <GithubIcon className="h-4 w-4" /> GitHub · soon
-        </span>
-      </div>
     </header>
   );
 };
 
 const VIDEO = '/hero.mp4';
+// First frame of the video, shown until it can play so the swap is seamless.
+const POSTER = '/hero-poster.webp';
 
 /**
  * The hero video, pinned behind the whole page. It plays clear behind the hero; as the hero scrolls
@@ -171,6 +95,7 @@ export const Backdrop: React.FC = () => {
       <video
         className="h-full w-full object-cover select-none"
         src={VIDEO}
+        poster={POSTER}
         autoPlay
         muted
         loop
