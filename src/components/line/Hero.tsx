@@ -192,20 +192,16 @@ export const Hero: React.FC = () => (
   >
     <div className="relative z-10 mt-auto flex flex-col items-start gap-10 px-[var(--gutter)] pt-32 pb-[var(--hero-bottom)] lg:absolute lg:inset-x-0 lg:bottom-0 lg:flex-row lg:items-end lg:justify-between lg:pt-0">
       <div className="flex min-w-0 flex-col items-start">
-        <h1 className="vh-title" aria-label="Containers or microVMs. Same command.">
+        <h1 className="vh-title" aria-label="Self-hosted, reliable deployments for the agentic era.">
           <span className="vh-line" aria-hidden>
-            <span className="[animation-delay:300ms]">
-              <span className="text-[#8ec2ff]">Containers</span> or <span className="text-[#c3aaff]">microVMs</span>.
+            <span className="[animation-delay:300ms]">Self-hosted, reliable deployments</span>
+          </span>
+          <span className="vh-line" aria-hidden>
+            <span className="text-[rgba(211,207,207,.78)] [animation-delay:440ms]">
+              for the <span className="vh-shimmer">agentic era</span>.
             </span>
           </span>
-          <span className="vh-line" aria-hidden>
-            <span className="text-[rgba(211,207,207,.78)] [animation-delay:440ms]">Same command.</span>
-          </span>
         </h1>
-
-        <p className="vh-copy mt-[clamp(15px,2.08vh,24px)] max-w-[44ch] text-[clamp(16px,2vh,20px)] leading-snug tracking-[0.01em] text-[rgba(226,229,228,.84)] [animation-delay:740ms] [text-shadow:0_1px_3px_rgba(0,0,0,.7)]">
-          Self-hosted, reliable deployments for the agentic era.
-        </p>
 
         <a
           href="#sandboxes"
@@ -213,7 +209,7 @@ export const Hero: React.FC = () => (
             e.preventDefault();
             go('sandboxes');
           }}
-          className="vh-copy vh-glass mt-4 inline-flex items-center gap-2 rounded-[7px] px-3 py-1.5 font-mono text-[12.5px] text-white/80 [animation-delay:820ms] hover:text-white"
+          className="vh-copy vh-glass mt-[clamp(18px,2.6vh,30px)] inline-flex items-center gap-2 rounded-[7px] px-3 py-1.5 font-mono text-[12.5px] text-white/80 [animation-delay:820ms] hover:text-white"
         >
           {/* A small window of agent logos drifting left, fading out at the right edge. */}
           <span className="flex w-[76px] overflow-hidden [mask-image:linear-gradient(90deg,#000_55%,transparent)]" aria-hidden>

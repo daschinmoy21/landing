@@ -7,6 +7,7 @@ import { ControlPlane } from './ControlPlane';
 import { Compare } from './Compare';
 import { Sandboxes } from './Sandboxes';
 import { Deploy } from './Deploy';
+import { Roadmap } from './Roadmap';
 import { Footer } from './Footer';
 import { VIEWS } from './primitives';
 
@@ -37,6 +38,7 @@ export const LineLanding: React.FC = () => {
         <Compare />
         <Sandboxes />
         <Deploy />
+        <Roadmap />
       </main>
       <Footer />
     </div>
