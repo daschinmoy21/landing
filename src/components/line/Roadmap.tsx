@@ -1,5 +1,5 @@
 import React from 'react';
-import { GuestArt, HardenedArt, PushArt, ReplicasArt, ResizeArt } from './RoadmapArt';
+import { GuestArt, HardenedArt, MetricsArt, PushArt, ReplicasArt, ResizeArt } from './RoadmapArt';
 import { Cell, Grid, Section, SectionTitle, TileBody, TileTitle } from './primitives';
 
 // Planned work from russel-dev issues (#507, #505, #506, #335, #340, #341, #234, #334)
@@ -50,6 +50,15 @@ const ITEMS: { title: string; body: string; rows: [string, string][]; art: React
       ['microvm', 'volumes + extra ports'],
     ],
   },
+  {
+    title: 'Metrics',
+    art: MetricsArt,
+    body: 'See CPU, memory, restarts and deploy times for every service, and scrape them with Prometheus.',
+    rows: [
+      ['endpoint', 'GET /metrics, Prometheus format'],
+      ['dashboard', 'live CPU + memory per service'],
+    ],
+  },
 ];
 
 export const Roadmap: React.FC = () => (
@@ -57,37 +66,24 @@ export const Roadmap: React.FC = () => (
     <SectionTitle lead="Coming soon." rest="What we’re building next." />
 
     <Grid className="sm:grid-cols-2 lg:grid-cols-3">
-      {ITEMS.map(({ title, body, rows, art: Art }, i) => {
-        // Five tiles: the last one spans two columns (art beside text) so no grid slot is left empty.
-        const wide = i === ITEMS.length - 1;
-        return (
-          <Cell
-            key={title}
-            className={
-              wide
-                ? 'flex flex-col p-6 sm:col-span-2 sm:grid sm:grid-cols-2 sm:items-center sm:gap-x-10 sm:p-8'
-                : 'flex flex-col p-6 sm:p-8'
-            }
-          >
-            {/* Same panel height in each tile so the titles below line up. */}
-            <div className="mx-auto h-[270px] w-full max-w-[400px]">
-              <Art />
-            </div>
-            <div className={wide ? 'flex flex-col pt-8 sm:pt-0' : 'flex flex-1 flex-col pt-8'}>
-              <TileTitle>{title}</TileTitle>
-              <TileBody>{body}</TileBody>
-              <dl className="mt-auto grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-1 pt-6 font-mono text-[13px]">
-                {rows.map(([k, v]) => (
-                  <div key={k} className="contents">
-                    <dt className="text-dimmer">{k}</dt>
-                    <dd className="min-w-0 break-words text-mute">{v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </Cell>
-        );
-      })}
+      {ITEMS.map(({ title, body, rows, art: Art }) => (
+        <Cell key={title} className="flex flex-col p-6 sm:p-8">
+          {/* Same panel height in each tile so the titles below line up. */}
+          <div className="mx-auto h-[270px] w-full max-w-[400px]">
+            <Art />
+          </div>
+          <TileTitle className="pt-8">{title}</TileTitle>
+          <TileBody>{body}</TileBody>
+          <dl className="mt-auto grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-1 pt-6 font-mono text-[13px]">
+            {rows.map(([k, v]) => (
+              <div key={k} className="contents">
+                <dt className="text-dimmer">{k}</dt>
+                <dd className="min-w-0 break-words text-mute">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </Cell>
+      ))}
     </Grid>
   </Section>
 );

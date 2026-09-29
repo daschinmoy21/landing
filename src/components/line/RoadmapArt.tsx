@@ -390,3 +390,75 @@ export const GuestArt: React.FC = () => {
   );
 };
 
+
+/* ------------------------------------------------------------------ metrics */
+
+// Deterministic, gently noisy samples so the charts look live without random reflows.
+const CPU = Array.from({ length: 48 }, (_, i) => 0.38 + 0.18 * Math.sin(i * 0.55) + 0.08 * Math.sin(i * 1.7));
+const MEM = Array.from({ length: 48 }, (_, i) => 196 + 14 * Math.sin(i * 0.3) + 5 * Math.sin(i * 1.3));
+
+/** Live CPU and memory for a service, and the same numbers scraped as Prometheus text. */
+export const MetricsArt: React.FC = () => {
+  const [ref, seen] = useInView<SVGSVGElement>(0.4);
+  const t = useLoop(24 * 600, seen, 0);
+  const off = Math.floor(t * 24);
+  const WIN = 24;
+  const cpu = CPU.slice(off, off + WIN);
+  const mem = MEM.slice(off, off + WIN);
+  const line = (vals: number[], x0: number, w: number, y0: number, h: number, lo: number, hi: number) =>
+    vals.map((v, i) => `${i ? 'L' : 'M'}${(x0 + (i / (WIN - 1)) * w).toFixed(1)} ${(y0 + h - ((v - lo) / (hi - lo)) * h).toFixed(1)}`).join(' ');
+  const c = cpu[WIN - 1];
+  const m = mem[WIN - 1];
+  const charts = [
+    { label: 'cpu', value: `${Math.round(c * 100)}%`, d: line(cpu, 36, 150, 70, 52, 0, 1) },
+    { label: 'memory', value: `${Math.round(m)} MiB`, d: line(mem, 214, 150, 70, 52, 160, 230) },
+  ];
+  const prom: [string, string][] = [
+    ['cpu_usage', c.toFixed(2)],
+    ['memory_bytes', (m * 1048576).toExponential(2)],
+    ['restarts_total', '0'],
+    ['deploy_seconds', '41'],
+  ];
+  return (
+    <svg ref={ref} {...svgProps('Live CPU and memory charts for a service, and the same metrics served as Prometheus text at GET /metrics')}>
+      <rect x="20" y="16" width="360" height="130" fill={PAPER} stroke={INK} strokeWidth="1.3" />
+      <line x1="20" y1="44" x2="380" y2="44" stroke={LINE} />
+      <T x={36} y={35} anchor="start" size={11.5}>
+        api
+      </T>
+      <circle cx={364} cy={31} r="3.5" fill={OK} />
+      <T x={354} y={35} anchor="end" size={10} fill={OK}>
+        live
+      </T>
+
+      {charts.map((ch, i) => {
+        const x = i ? 214 : 36;
+        return (
+          <g key={ch.label}>
+            <T x={x} y={62} anchor="start" size={10} fill={MUTE}>
+              {ch.label}
+            </T>
+            <T x={x + 150} y={62} anchor="end" size={10} fill={INK}>
+              {ch.value}
+            </T>
+            <line x1={x} y1="122" x2={x + 150} y2="122" stroke={LINE} />
+            <path d={ch.d} fill="none" stroke={i ? CT : VM} strokeWidth="1.5" strokeLinejoin="round" />
+          </g>
+        );
+      })}
+      <T x={36} y={138} anchor="start" size={9.5} fill={DIM}>
+        restarts 0 · last deploy 41s
+      </T>
+
+      <T x={20} y={176} anchor="start" size={11}>
+        GET /metrics <tspan fill={DIM}>· prometheus format</tspan>
+      </T>
+      {prom.map(([k, v], i) => (
+        <T key={k} x={20} y={198 + i * 17} anchor="start" size={10.5} fill={MUTE}>
+          {k}
+          <tspan fill={DIM}>{'{service="api"}'}</tspan> <tspan fill={INK}>{v}</tspan>
+        </T>
+      ))}
+    </svg>
+  );
+};

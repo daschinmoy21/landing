@@ -483,7 +483,7 @@ export const ControlPlane: React.FC = () => {
       </SectionTitle>
 
       <Grid innerRef={ref} className="xl:grid-cols-[320px_minmax(0,1fr)]">
-        <Cell className="grid content-start sm:grid-cols-3 xl:grid-cols-1">
+        <Cell className="grid sm:grid-cols-3 xl:grid-cols-1 xl:grid-rows-[repeat(3,1fr)]">
           {SCENARIOS.map((s, i) => {
             const on = i === frame.idx;
             return (
@@ -492,7 +492,7 @@ export const ControlPlane: React.FC = () => {
                 type="button"
                 onClick={() => pick(i)}
                 aria-pressed={on}
-                className={`relative flex cursor-pointer flex-col items-start border-b border-line p-6 text-left last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0 xl:border-r-0 xl:border-b xl:last:border-b-0 ${on ? 'bg-raise/40' : 'hover:bg-raise/20'}`}
+                className={`relative flex cursor-pointer flex-col items-start border-b border-line p-6 text-left last:border-b-0 xl:p-8 sm:border-b-0 sm:border-r sm:last:border-r-0 xl:border-r-0 xl:border-b xl:last:border-b-0 ${on ? 'bg-raise/40' : 'hover:bg-raise/20'}`}
               >
                 <span
                   className="absolute inset-x-0 top-0 h-1 origin-left bg-fg"
