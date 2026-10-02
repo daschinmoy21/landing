@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { GITHUB, GithubIcon, PrimaryButton } from './primitives';
+import { ArrowRight, Check, Copy } from 'lucide-react';
+import { DOCS, GITHUB, GithubIcon, PrimaryButton } from './primitives';
 import { HeroTerminal } from './HeroTerminal';
 import { AGENTS, AgentMark } from './agentLogos';
 
@@ -110,13 +110,62 @@ export const Backdrop: React.FC = () => {
   );
 };
 
+// Option A from the installation docs: installs russel-ctrl on the server.
+const INSTALL =
+  'curl -fsSL https://raw.githubusercontent.com/daschinmoy21/russel/main/contrib/install.sh | sudo RUSSEL_VERSION=v0.1.0 bash -s -- host';
+
+/** The install one-liner, shortened for display; the button copies the full command. */
+const InstallCommand: React.FC<{ className?: string }> = ({ className = '' }) => {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(INSTALL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {}
+  };
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      title={INSTALL}
+      aria-label="Copy install command"
+      className={`vh-glass inline-flex max-w-full cursor-pointer items-center gap-3 rounded-[7px] pr-2 pl-2.5 font-mono text-[13px] text-white/80 hover:text-white ${className}`}
+    >
+      <span className="shrink-0 rounded-[4px] bg-white/10 px-1.5 py-0.5 text-[11px] text-white/70">Linux</span>
+      <span className="min-w-0 truncate">
+        <span className="text-white/45">$ </span>curl -fsSL …/install.sh | sudo bash -s -- host
+      </span>
+      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-[5px] bg-white/10">
+        {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+      </span>
+    </button>
+  );
+};
+
+/** The installer is Linux-only for now; macOS and Windows are on the way. */
+const OtherPlatforms: React.FC = () => (
+  <span
+    className="inline-flex items-center gap-2 font-mono text-[12.5px] text-white/45"
+    aria-label="macOS and Windows support coming soon"
+  >
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-white/70" aria-hidden>
+      <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
+    </svg>
+    <svg viewBox="0 0 24 24" className="h-3 w-3 fill-white/70" aria-hidden>
+      <path d="M0 3.449 9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+    </svg>
+    soon
+  </span>
+);
+
 export const Hero: React.FC = () => (
   <section
     id="top"
     className="vh-screen relative isolate flex min-h-[100svh] flex-col overflow-hidden text-white lg:block lg:h-[100svh] lg:min-h-[720px]"
   >
     <div className="relative z-10 mt-auto flex flex-col items-start gap-10 px-[var(--gutter)] pt-32 pb-[var(--hero-bottom)] lg:absolute lg:inset-x-0 lg:bottom-0 lg:flex-row lg:items-end lg:justify-between lg:pt-0">
-      <div className="flex min-w-0 flex-col items-start">
+      <div className="flex min-w-0 max-w-full flex-col items-start">
         <h1 className="vh-title" aria-label="Self-hosted, reliable deployments for the agentic era.">
           <span className="vh-line" aria-hidden>
             <span className="[animation-delay:300ms]">Self-hosted, reliable deployments</span>
@@ -151,12 +200,13 @@ export const Hero: React.FC = () => (
           <ArrowRight className="h-3.5 w-3.5" />
         </a>
 
-        <PrimaryButton
-          onClick={() => go('runtimes')}
-          className="vh-in mt-[clamp(24px,3.11vh,36px)] h-[clamp(40px,4.2vh,46px)] text-[clamp(15px,1.75vh,18px)] [animation-delay:960ms]"
-        >
-          Read the specs
-        </PrimaryButton>
+        <div className="vh-in mt-[clamp(24px,3.11vh,36px)] flex max-w-full flex-wrap items-center gap-3 [animation-delay:960ms]">
+          <PrimaryButton href={DOCS} className="h-[clamp(40px,4.2vh,46px)] text-[clamp(15px,1.75vh,18px)]">
+            Read the docs
+          </PrimaryButton>
+          <InstallCommand className="h-[clamp(40px,4.2vh,46px)]" />
+          <OtherPlatforms />
+        </div>
       </div>
 
 

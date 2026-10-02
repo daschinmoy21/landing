@@ -60,6 +60,7 @@ export function useLoop(period: number, active: boolean, rest = 1) {
 }
 
 export const GITHUB = 'https://github.com/daschinmoy21/russel';
+export const DOCS = 'https://russel.mintlify.site/';
 
 /** The dashboard's views, numbered so 1–4 on the keyboard jump between them. */
 export const VIEWS = [
@@ -134,24 +135,34 @@ export const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 /** The hero's white call to action: label on the left, arrow in a dark box on the right. */
-export const PrimaryButton: React.FC<{ onClick?: () => void; children: React.ReactNode; className?: string }> = ({
-  onClick,
-  children,
-  className = '',
-}) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={twMerge(
-      'inline-flex h-11 cursor-pointer items-center gap-6 rounded-[7px] bg-white pr-[5px] pl-4 text-[16px] tracking-[-0.02em] text-[#111] shadow-[0_1px_5px_rgba(0,0,0,.38)] transition-[filter] hover:brightness-110',
-      className,
-    )}
-  >
-    {children}
-    <span className="grid h-[calc(100%-10px)] aspect-[33/32] place-items-center rounded-[6px] bg-[#070909]">
-      <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M2.5 7h9M7.5 3l4 4-4 4" />
-      </svg>
-    </span>
-  </button>
-);
+export const PrimaryButton: React.FC<{
+  onClick?: () => void;
+  /** Renders a link (opening in a new tab) instead of a button. */
+  href?: string;
+  children: React.ReactNode;
+  className?: string;
+}> = ({ onClick, href, children, className = '' }) => {
+  const cls = twMerge(
+    'inline-flex h-11 cursor-pointer items-center gap-6 rounded-[7px] bg-white pr-[5px] pl-4 text-[16px] tracking-[-0.02em] text-[#111] shadow-[0_1px_5px_rgba(0,0,0,.38)] transition-[filter] hover:brightness-110',
+    className,
+  );
+  const inner = (
+    <>
+      {children}
+      <span className="grid h-[calc(100%-10px)] aspect-[33/32] place-items-center rounded-[6px] bg-[#070909]">
+        <svg viewBox="0 0 14 14" className="h-3.5 w-3.5" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M2.5 7h9M7.5 3l4 4-4 4" />
+        </svg>
+      </span>
+    </>
+  );
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+      {inner}
+    </a>
+  ) : (
+    <button type="button" onClick={onClick} className={cls}>
+      {inner}
+    </button>
+  );
+};
